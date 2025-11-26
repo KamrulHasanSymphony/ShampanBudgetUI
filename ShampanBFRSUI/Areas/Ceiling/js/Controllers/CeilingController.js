@@ -8,9 +8,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         var getBudgetType = $("#BudgetType").val() || 0;
 
         var getTransactionType = $("#TransactionType").val() || '';
+        var getMenuType = $("#MenuType").val() || '';
 
         if (parseInt(getId) == 0 && getOperation == '') {
-            GetGridDataList(getTransactionType);
+            GetGridDataList(getTransactionType, getMenuType);
         }
 
         if (parseInt(getFiscalYearId) > 0 && parseInt(getBudgetSetNo) > 0 && getBudgetType !== '') {
@@ -208,7 +209,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
     };
 
     // Fetch grid data
-    var GetGridDataList = function (getTransactionType) {
+    var GetGridDataList = function (getTransactionType, getMenuType) {
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -223,7 +224,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     type: "POST",
                     dataType: "json",
                     cache: false,
-                    data: { TransactionType: getTransactionType }
+                    data: { TransactionType: getTransactionType, MenuType: getMenuType }
                 },
                 parameterMap: function (options) {
                     if (options.sort) {
@@ -374,7 +375,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             columns: [
                 {
                     title: "Action",
-                    width: 40,
+                    width: 60,
                     template: function (dataItem) {
                         return `
                             <a href="/Ceiling/Ceiling/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">

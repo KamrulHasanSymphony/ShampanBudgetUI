@@ -46,7 +46,9 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             {
                 companyVm = JsonConvert.DeserializeObject<List<CompanyProfileVM>>(companyData.DataVM.ToString()).FirstOrDefault();
                 yearStartDate = companyVm.FYearStart;
-                year = DateTime.ParseExact(yearStartDate, "yyyy-MM-dd", null).Year;
+
+                year = Convert.ToDateTime(yearStartDate).Year;
+                ////year = DateTime.ParseExact(yearStartDate, "yyyy-MM-dd", null).Year;
                 vm.YearStart = yearStartDate;
                 vm.Year = year;
             }
@@ -289,7 +291,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         public JsonResult GetFiscalYearsGrid(GridOptions options)
         {
 
-            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new FiscalYearsRepo();
 
             try

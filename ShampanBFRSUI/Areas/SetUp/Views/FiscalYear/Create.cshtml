@@ -1,4 +1,4 @@
-﻿@model ShampanBFRS.Models.FiscalYearVM
+﻿@model ShampanBFRS.Models.SetUpVMs.FiscalYearVM
 @{
     ViewBag.Title = "Fiscal Year Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,7 +25,7 @@
         {
             <button type="button" class="button btnsave sslUpdate">Update</button>
 
-            <button style="float:right;" type="button" title="Add New" data-url="/DMS/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+            <button style="float: right;" type="button" title="Add New" data-url="/Setup/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
         }
@@ -34,7 +34,7 @@
 
             <button style="float:left;" class="button btnsave sslSave" type="button" id="">Save</button>
 
-            <button style="float: right;" type="button" title="Add New" data-url="/DMS/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+            <button style="float: right;" type="button" title="Add New" data-url="/Setup/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
         }

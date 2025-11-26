@@ -78,6 +78,8 @@ namespace ShampanBFRS.Models.Ceiling
         {
             PeramModel = new PeramModel();
         }
+        public string? MenuType { get; set; }
+
 
     }
 }

@@ -22,10 +22,11 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
         CommonRepo _commonRepo = new CommonRepo();
 
         // GET: Ceiling/Ceiling
-        public ActionResult Index(string TransactionType = "")
+        public ActionResult Index(string TransactionType = "", string MenuType = "")
         {
             CeilingVM ceilingVM = new CeilingVM();
             ceilingVM.TransactionType = TransactionType;
+            ceilingVM.MenuType = MenuType;
 
             var currentBranchId = 0;
             if (Session["CurrentBranch"] != null)
@@ -193,16 +194,24 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
 
         [HttpPost]
-        public JsonResult GetGridData(GridOptions options)
+        public JsonResult GetGridData(GridOptions options, string TransactionType, string MenuType)
         {
             ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new CeilingRepo();
 
             try
             {
+                options.vm.UserId = Session["UserId"].ToString();
+                options.vm.TransactionType = TransactionType;
+
+                if (!string.IsNullOrWhiteSpace(MenuType) && MenuType.ToLower() == "all")
+                {
+                    options.vm.UserId = "";
+                }
+
                 result = _repo.GetGridData(options);
 
-                if (result.Status == "Success" && result.DataVM != null)
+                if (result.Status == MessageModel.Success && result.DataVM != null)
                 {
                     var gridData = JsonConvert.DeserializeObject<GridEntity<CeilingVM>>(result.DataVM.ToString());
 
