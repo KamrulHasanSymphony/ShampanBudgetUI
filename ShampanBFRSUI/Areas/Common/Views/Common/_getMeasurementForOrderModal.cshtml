@@ -1,0 +1,141 @@
+﻿@model ShampanBFRS.Models.QuestionVM.OrderMeasurementDetailVM
+
+<style>
+    .dataTable {
+        width: 100% !important;
+    }
+    #modalData_wrapper .row .col-sm-12.col-md-6 .dataTables_length, #modalData_wrapper .row .col-sm-12.col-md-6 #modalData_filter, #modalData_wrapper .row .col-sm-12.col-md-5 .dataTables_info, #modalData_wrapper .row .col-sm-12.col-md-7 #modalData_paginate {
+        display: none !important
+    }
+</style>
+
+
+<div class="modal-dialog draggable modal-lg" role="document">
+
+    <div class="modal-content">
+        <form id="frmaEntry">
+            @Html.HiddenFor(m => m.Id)
+            <div class="modal-header">
+                <h4 class="modal-title"> Measurement Entry </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-bordered table-sm" id="modalData">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>ItemId</th>
+                            <th>MasterId</th>
+                            <th>DetailId</th>
+                            <th>MeasureemntId</th>
+                            <th>Measurement Code</th>
+                            <th>Measurement Name</th>
+                            <th>Measurement Value</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        
+        <div class="modal-footer">
+            <button type="button" id="btnSaveMeasurements" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    $('#btnSaveMeasurements').on('click', function () {
+        SaveMeasurements();
+    });
+
+    function SaveMeasurements() {
+        debugger;
+
+        debugger;
+        var measurements = [];
+
+        // Loop through each row in the modalData table
+        $('#modalData tbody tr').each(function () {
+            var row = $(this);
+
+            // Get the hidden field values
+            var measurementId = row.find("td:eq(4)").text().trim();  // Hidden MeasurementId (first column)
+            var itemId = row.find("td:eq(1)").text().trim();  // Hidden ItemId (second column)
+            var orderMasterId = row.find("td:eq(2)").text().trim();  // Hidden OrderMasterId (third column)
+            var orderMakingChargeDetailId = row.find("td:eq(3)").text().trim();  // Hidden OrderMasterId (third column)
+            var measurementCode = row.find("td:eq(5)").text().trim();  // Measurement Code (fourth column)
+            var name = row.find("td:eq(6)").text().trim();  // Measurement Name (fifth column)
+            var value = row.find("td:eq(7)").find("input").val();  // Entered value (sixth column)
+            var remarks = row.find("td:eq(8)").text().trim(); // Status (eighth column)
+
+            // Create the measurement object to save
+            var measurement = {
+                MeasureemntId: measurementId,
+                ItemId: itemId,
+                OrderMasterId: orderMasterId,
+                OrderMakingChargeDetailId: orderMakingChargeDetailId,
+                MeasurementCode: measurementCode,
+                Name: name,
+                MeasureemntValue: value,
+                Remarks: remarks
+            };
+
+            measurements.push(measurement);
+        });
+
+        console.log("Measurements to save:", measurements);
+
+
+
+        var model = serializeInputs("frmaEntry");
+        model.OrderMeasurementDetailList = measurements;
+
+        //console.log(model.orderMeasurementDetailList);
+        //// Use FormData to append fields for sending
+        //var formData = new FormData();
+        //for (var key in model) {
+        //    if (model.hasOwnProperty(key)) {
+        //        formData.append(key, model[key]);
+        //    }
+        //}
+
+        //// Append measurement detail list
+        //model.OrderMeasurementDetailList.forEach(function (detail, i) {
+        //    for (var key in detail) {
+        //        if (detail.hasOwnProperty(key)) {
+        //            formData.append(`OrderMeasurementDetailList[${i}].${key}`, detail[key]);
+        //        }
+        //    }
+        //});
+
+        // Send data to the server
+        CommonAjaxService.finalSave("/Tailors/OrderMeasurementDetail/CreateEdit", model, saveDone, saveFail);
+    }
+
+
+    function saveDone(result) {
+        if (result.Status == 200) {
+                ShowNotification(1, result.Message);
+        } else if (result.Status == 400) {
+            ShowNotification(3, result.Message);
+        } else {
+            ShowNotification(2, result.Message);
+        }
+    }
+
+    // Handle failure
+    function saveFail(result) {
+        ShowNotification(3, "Query Exception!");
+    }
+
+
+
+</script>
+

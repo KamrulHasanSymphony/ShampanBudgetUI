@@ -1,0 +1,104 @@
+﻿@model ShampanBFRS.Models.AccountVMs.LoginResource
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card">
+            <div class="card-header text-center">
+                <a href="https://www.symphonysofttech.com/" target="_blank">
+                    <img src="~/Content/Images/Logo/BudgetaryLogo.png" alt="Company Logo" class="logo">
+                </a>
+            </div>
+
+            <h5 style="font-weight:800;font-size:18px;padding-top:7px;"> Shampan BFRS System </h5>
+
+            <div class="card-body login-card-body">
+
+                @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+
+                    @Html.HiddenFor(model => model.returnUrl)
+                    @Html.HiddenFor(model => model.dbName)
+
+                    <div class="input-group mb-3">
+                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "User Name" })
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.UserName)
+
+                    <div class="input-group mb-3">
+                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", type = "password", @placeholder = "Password" })
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Password)
+
+                    <div class="input-group mb-3">
+                        <select id="CompanyId" name="CompanyId" class="form-control">
+                            @foreach (var item in Model.CompanyInfos)
+                            {
+                                <option value="@item.CompanyId">@item.CompanyName</option>
+                            }
+                        </select>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-building"></i></span>
+                        </div>
+                    </div>
+
+                    @Html.ValidationMessageFor(model => model.Message)
+
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="row" style="text-align:left !important;">
+            <div class="col-md-2">
+                <a href="https://www.symphonysofttech.com/" target="_blank">
+                    <img src="~/Content/AdminLte/dist/img/logo.png" alt="Symphony Logo" class="logo" height="30">
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+
+</html>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.7.0.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $(".fa-key").on("click", function () {
+            debugger;
+            let passwordInput = $("#Password");
+            let type = passwordInput.attr("type") === "password" ? "text" : "password";
+            passwordInput.attr("type", type);
+            // Toggle icon class
+            $(this).toggleClass("fa-eye fa-eye-slash");
+        });
+    });
+
+</script>
+
+

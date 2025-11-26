@@ -1,0 +1,46 @@
+﻿@model ShampanBFRS.Models.SettingsModel
+
+
+@using (Html.BeginForm("Edit", "Settings", FormMethod.Post, new { @Id = "frmSettings" }))
+{
+    <div class="row mt-1">
+        <div class="col-md-2">
+
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.SettingGroup, new { @class = " required form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.SettingGroup)
+            </div>
+        </div>
+        <div class="col-md-2 ">
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.SettingName, new { @class = " required form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.SettingName)
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.SettingValue, new { @class = "  required form-control" })
+
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.SettingType, new { @class = " required form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.SettingType)
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Remarks, new { @class = "  form-control" })
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="submit" onclick="pageSubmit('frmSettings');" value="Update" class="btn btn-success">Update</button>
+        </div>
+    </div>
+}
+
+
+

@@ -1,0 +1,138 @@
+﻿@using ShampanBFRS.Models;
+@model ShampanBFRS.Models.RoleMenuVM
+@{
+    ViewData["Title"] = "Role Menu Create Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var type = @Model.Type;
+    var url = type == "User Group" ? "/SetUp/MenuAuthorization/UserGroup" : "/SetUp/MenuAuthorization/RoleMenu";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> @type Wise Menu Entry </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    @*<li class="breadcrumb-item"><a href="@url">Index</a></li>
+        <li class="breadcrumb-item active">Index</li>*@
+                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-header p-2">
+            <button class="button btnRoleMenuSave sslSave" type="button" id="">Submit</button>
+        </div>
+    </div>
+
+    <form id="frm_UserAccess">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title"> @type Wise Menu Entry</h3>
+
+            </div>
+
+            <div class="card-body">
+
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Operation)
+                @Html.HiddenFor(model => model.UserGroupId)
+                @Html.HiddenFor(model => model.UserGroupName)
+                @Html.HiddenFor(model => model.RoleId, new { @class = " UserRoleId form-control form-control-sm" })
+
+                <div class="form-group row">
+
+                    <div class="col-sm-4">
+                        <label> @type </label>
+                        @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control form-control-sm", autocomplete = "off", @readonly = "readonly" })
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+    <div class="card card-secondary">
+        <div class="card-header">
+            <h3 class="card-title"> @type Wise Menu Details </h3>
+        </div>
+        <div class="card-body">
+
+            <div class="card-body">
+                <div class="Tablescroll">
+                    <div class="clearfix">&nbsp;</div>
+
+                    <table class="table table-bordered table-striped table-sm" id="MenuAccessLists">
+                        <thead>
+                            <tr>
+                                <th data-type="text" style="width: 5%;text-align:center;"> <input type="checkbox" class="chkAll" /> &nbsp; Action  </th>
+                                <th hidden data-type="text" style="width: 5%;">Id</th>
+                                <th data-type="text" style="width: 20%;">Menu Name</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="MenuAccessBody">
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model.roleMenuList)
+                                {
+                                    <tr class="tablerow" id="@item.MenuId">
+                                        <td>
+                                            <input type="checkbox" id="@item.ParentId" class=" @item.MenuId mainCheckbox form-control form-control-sm dSelected" name="IsChecked" value="@item.IsChecked" @(item.IsChecked ? "checked" : "") />
+                                        </td>
+
+                                        <td hidden>@item.ParentId</td>
+                                        <td hidden>@item.MenuId</td>
+                                        <td>@item.MenuName</td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header p-2">
+
+            <button class="button btnRoleMenuSave sslSave" type="button" id="">Submit</button>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+
+    <script src="~/Areas/SetUp/js/Services/MenuAuthorizationService.js"></script>
+    <script src="~/Areas/SetUp/js/Controller/MenuAuthorizationController.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            MenuAuthorizationController.init();
+
+        });
+
+    </script>
+
+}

@@ -1,0 +1,193 @@
+﻿@model List<ShampanBFRS.Models.SetUpVMs.UserMenu>
+
+@*<style>
+        .nav-item > a:hover {
+            background-color: grey !important;
+            color: white !important;
+        }
+
+        .nav-item > a {
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        @@media (min-width:786px) and (max-width:1606px) {
+            .leftSidebar {
+                height: 62vh !important;
+                width: 247px !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+            }
+        }
+
+        @@media (min-width:1607px) and (max-width:2660px) {
+            .leftSidebar {
+                height: 78vh !important;
+                width: 247px !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+            }
+        }
+    </style>*@
+@*@if (ViewBag.ShouldRenderMenu)
+    {
+        <div class="leftSidebar">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                @foreach (var menuItem in Model.Where(m => m.ParentId == 0))
+                {
+                    var hasSubmenu = Model.Any(m => m.ParentId == menuItem.MenuId);
+                    var totalChild = menuItem.TotalChild != 0 ? menuItem.TotalChild.ToString() : string.Empty;
+
+                    <li class="nav-item">
+                        <a class="bg-light nav-link @menuItem.MenuName @(hasSubmenu ? "has-treeview" : "")" href="@menuItem.Url" data-menu-id="@menuItem.MenuId">
+                            <i class="@menuItem.IconClass"></i>
+                            <p>
+                                @menuItem.MenuName
+                                @if (hasSubmenu)
+                                {
+                                    <i class="fas fa-angle-left right"></i>
+                                }
+                                @if (menuItem.TotalChild > 0)
+                                {
+                                    <span class="badge badge-info right">@totalChild</span>
+                                }
+                            </p>
+                        </a>
+
+                        @if (hasSubmenu)
+                        {
+                            <ul class="nav nav-treeview">
+                                @foreach (var subMenu in Model.Where(m => m.ParentId == menuItem.MenuId))
+                                {
+                                    var hasSubSubmenu = Model.Any(m => m.SubParentId == subMenu.MenuId);
+                                    var totalSubChild = subMenu.TotalChild != 0 ? subMenu.TotalChild.ToString() : string.Empty;
+
+                                    <li class="nav-item">
+                                        <a style="background:#818195 !important;" class="bg-light nav-link @(hasSubSubmenu ? "has-treeview-a" : "")" href="@subMenu.Url" data-menu-id="@subMenu.MenuId">
+                                            <i class="@subMenu.IconClass"></i>
+                                            <p>
+                                                @subMenu.MenuName
+                                                @if (hasSubSubmenu)
+                                                {
+                                                    <i class="fas fa-angle-left right"></i>
+                                                }
+                                                @if (subMenu.TotalChild > 0)
+                                                {
+                                                    <span class="badge badge-info right">@totalSubChild</span>
+                                                }
+                                            </p>
+                                        </a>
+
+                                        @if (hasSubSubmenu)
+                                        {
+                                            <ul class="nav nav-treeview">
+                                                @foreach (var subSubMenu in Model.Where(m => m.SubParentId == subMenu.MenuId))
+                                                {
+                                                    <li class="nav-item">
+                                                        <a style="background:lightblue !important;" class="bg-light nav-link" href="@subSubMenu.Url" data-menu-id="@subSubMenu.MenuId">
+                                                            <i class="@subSubMenu.IconClass"></i>
+                                                            <p>@subSubMenu.MenuName</p>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    }*@
+
+<style>
+    .nav-item > a:hover {
+        background-color: #448aff !important;
+        color: white !important;
+    }
+
+    .nav-item > a {
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .leftSidebar {
+        height: calc(100vh - 180px) !important;
+        width: 247px !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+    }
+</style>
+
+@if (ViewBag.ShouldRenderMenu)
+{
+    <div class="leftSidebar">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            @foreach (var menuItem in Model.Where(m => m.ParentId == 0))
+            {
+                var hasSubmenu = Model.Any(m => m.ParentId == menuItem.MenuId);
+                var totalChild = menuItem.TotalChild != 0 ? menuItem.TotalChild.ToString() : string.Empty;
+
+                <li class="nav-item">
+                    <a class="nav-link @menuItem.MenuName @(hasSubmenu ? "has-treeview" : "")" href="@menuItem.Url" data-menu-id="@menuItem.MenuId">
+                        <i class="@menuItem.IconClass"></i>
+                        <p>
+                            @menuItem.MenuName
+                            @if (hasSubmenu)
+                            {
+                                <i class="fas fa-angle-left right"></i>
+                            }
+                            @if (menuItem.TotalChild > 0)
+                            {
+                                <span class="badge badge-info right">@totalChild</span>
+                            }
+                        </p>
+                    </a>
+
+                    @if (hasSubmenu)
+                    {
+                        <ul class="nav nav-treeview">
+                            @foreach (var subMenu in Model.Where(m => m.ParentId == menuItem.MenuId))
+                            {
+                                var hasSubSubmenu = Model.Any(m => m.SubParentId == subMenu.MenuId);
+                                var totalSubChild = subMenu.TotalChild != 0 ? subMenu.TotalChild.ToString() : string.Empty;
+
+                                <li class="nav-item">
+                                    <a class="nav-link @(hasSubSubmenu ? "has-treeview-a" : "")" href="@subMenu.Url" data-menu-id="@subMenu.MenuId">
+                                        <i class="@subMenu.IconClass"></i>
+                                        <p>
+                                            @subMenu.MenuName
+                                            @if (hasSubSubmenu)
+                                            {
+                                                <i class="fas fa-angle-left right"></i>
+                                            }
+                                            @if (subMenu.TotalChild > 0)
+                                            {
+                                                <span class="badge badge-info right">@totalSubChild</span>
+                                            }
+                                        </p>
+                                    </a>
+
+                                    @if (hasSubSubmenu)
+                                    {
+                                        <ul class="nav nav-treeview">
+                                            @foreach (var subSubMenu in Model.Where(m => m.SubParentId == subMenu.MenuId))
+                                            {
+                                                <li class="nav-item">
+                                                    <a style="" class=" nav-link" href="@subSubMenu.Url" data-menu-id="@subSubMenu.MenuId">
+                                                        <i class="@subSubMenu.IconClass"></i>
+                                                        <p>@subSubMenu.MenuName</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+}

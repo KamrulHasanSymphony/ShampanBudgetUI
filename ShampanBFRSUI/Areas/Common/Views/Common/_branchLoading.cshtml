@@ -1,0 +1,126 @@
+﻿@model ShampanBFRS.Models.SetUpVMs.UserBranchProfileVM
+
+
+<div class="modal-dialog draggable modal-lg" role="document" id="accModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title"> Add Branch Info </h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Operation)
+            @Html.HiddenFor(model => model.UserId)
+
+            <div class="form-group row">
+                <div class="col-sm-8">
+                    <label> Branch Name </label>
+
+                    <select id="multiBranchId" class="form-control form-control-sm select2" multiple="multiple">
+                    </select>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="button btnsave sslSave" type="button" id="">Save</button>
+            <button style="display:none;" class="button btnUpdate sslSave" type="button" id="">Update</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    var selectedValues = null;
+
+    $(document).ready(function () {
+        var dropdown = $('#multiBranchId');
+        dropdown.on('change', function () {
+
+            selectedValues = $(this).val();
+            console.log("Selected values:", selectedValues);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+
+        UserBranchList();
+
+        $('.sslSave').click('click', function (e) {
+            var userId = $('#UserId').val();
+            var gtId = $('#Id').val();
+            var id = 0;
+            var operation = "add";
+
+            if (gtId != "" && gtId != "0") {
+                id = gtId;
+                operation = "update";
+            }
+
+            var master = {
+                Id: id,
+                UserId: userId,
+                IDs: selectedValues,
+                Operation: operation,
+            };
+
+            var url = "/SetUp/UserBranchProfile/CreateEdit";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: master,
+                success: function (response) {
+
+                    if (response.Status == "200") {
+                        ShowNotification(1, response.Message);
+                    }
+                    else {
+                        ShowNotification(3, response.Message);
+                    }
+                    if (response.Data != null && response.Status == "200") {
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
+                    }
+                },
+                error: function (error) {
+                    ShowNotification(3, "Something error! " + error);
+                }
+            });
+
+        });
+
+        function UserBranchList() {
+            var url = "/Common/Common/GetBranchList?value=";
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (response) {
+
+                    response = response.filter(function(data) {
+                        return data.Id !== 0;
+                    });
+                    var selectElement = $("#multiBranchId");
+                    selectElement.html("");
+                    selectElement.append("<option value='" + '' + "'>" + '--Select--' + "</option>");
+                    $.each(response, function (index, data) {
+
+                        selectElement.append("<option value='" + data.Id + "'>" + data.Code + "~" + data.Name + "</option>");
+                    });
+
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        };
+
+    });
+</script>

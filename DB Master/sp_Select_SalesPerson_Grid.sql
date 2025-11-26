@@ -1,0 +1,107 @@
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[sp_Select_SalesPerson_Grid]'))
+BEGIN
+DROP PROCEDURE  sp_Select_SalesPerson_Grid
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+--		EXECUTE sp_Select_SalesPerson_Grid 'get_summary',0,10,'','H.Id','','','','','','','','','',''
+ 
+ 
+CREATE PROCEDURE [dbo].[sp_Select_SalesPerson_Grid]
+    @calltype VARCHAR(200) = 'call for nothing',
+    @skip INT,  
+    @take INT,               
+    @filter VARCHAR(200) = '',
+    @orderby VARCHAR(200) = '',
+    @param1 VARCHAR(200) = '',
+    @param2 VARCHAR(200) = '',
+    @param3 VARCHAR(200) = '',
+    @param4 VARCHAR(200) = '',
+    @param5 VARCHAR(200) = '',
+    @param6 VARCHAR(200) = '',
+    @param7 VARCHAR(200) = '',
+    @param8 VARCHAR(200) = '',
+    @param9 VARCHAR(200) = '',
+    @param10 VARCHAR(200) = ''
+AS
+BEGIN
+    IF @calltype = 'get_summary' 
+    BEGIN
+        DECLARE @sql NVARCHAR(MAX);
+        DECLARE @params NVARCHAR(MAX) = N'@param1 VARCHAR(200),@param2 VARCHAR(200),@param3 VARCHAR(200),@param4 VARCHAR(200),@param5 VARCHAR(200), @filter NVARCHAR(200), @skip INT, @take INT, @orderby NVARCHAR(200)';
+
+         -- Common query parts
+		SET @sql = N'
+					         SELECT COUNT(DISTINCT H.Id) AS totalcount
+							 FROM SalesPersons H';
+			
+		IF (@filter <> '')
+		BEGIN
+			SET @sql = @sql + ' AND (' + @filter + ')';
+		END	        
+					
+		PRINT @sql;
+		EXEC sp_executesql @sql, @params, @param1,@param2,@param3,@param4,@param5, @filter, @skip, @take, @orderby;
+
+        SET @sql = N'
+            SELECT * 
+            FROM (
+                SELECT 
+				ROW_NUMBER() OVER(ORDER BY ' + @orderby + ') AS rowindex
+				                ,ISNULL(H.Id, 0) AS Id
+								,ISNULL(H.Code, '''') AS Code
+								,ISNULL(H.Name, '''') AS Name
+								,ISNULL(H.BranchId, 0) AS BranchId
+								,ISNULL(H.ParentId, 0) AS ParentId
+								,ISNULL(H.EnumTypeId, 0) AS EnumTypeId
+								,ISNULL(H.BanglaName, '''') AS BanglaName
+								,ISNULL(H.Comments, '''') AS Comments
+								,ISNULL(H.City, '''') AS City
+								,ISNULL(H.FaxNo, '''') AS FaxNo
+								,ISNULL(H.NIDNo, '''') AS NIDNo
+								,ISNULL(H.Mobile, '''') AS Mobile
+								,ISNULL(H.Mobile2, '''') AS Mobile2
+								,ISNULL(H.Phone, '''') AS Phone
+								,ISNULL(H.Phone2, '''') AS Phone2
+								,ISNULL(H.EmailAddress, '''') AS EmailAddress
+								,ISNULL(H.EmailAddress2, '''') AS EmailAddress2
+								,ISNULL(H.Fax, '''') AS Fax
+								,ISNULL(H.Address, '''') AS Address
+								,ISNULL(H.ZipCode, '''') AS ZipCode
+								,ISNULL(H.IsArchive, 0) AS IsArchive
+								,ISNULL(H.IsActive, 0) AS IsActive
+								,CASE WHEN ISNULL(H.IsActive, 0) = 1 THEN ''Active'' ELSE ''Inactive'' END AS Status
+								,ISNULL(H.CreatedBy, '''') AS CreatedBy
+								,ISNULL(FORMAT(H.CreatedOn, ''yyyy-MM-dd HH:mm''), ''1900-01-01'') AS CreatedOn
+								,ISNULL(H.LastModifiedBy, '''') AS LastModifiedBy
+								,ISNULL(FORMAT(H.LastModifiedOn, ''yyyy-MM-dd HH:mm''), ''1900-01-01'') AS LastModifiedOn
+								,ISNULL(H.CreatedFrom, '''') AS CreatedFrom
+								,ISNULL(H.LastUpdateFrom, '''') AS LastUpdateFrom
+							FROM SalesPersons H ';        
+        
+		IF (@filter <> '')
+		BEGIN
+			SET @sql = @sql + ' AND (' + @filter + ')';
+		END
+
+        SET @sql = @sql + '               
+        ) AS a
+        WHERE rowindex > @skip AND (@take = 0 OR rowindex <= @take)';
+
+        PRINT @sql;
+        -- Execute main query
+        EXEC sp_executesql @sql, @params, @param1,@param2,@param3,@param4,@param5, @filter, @skip, @take, @orderby;
+        RETURN;
+    END
+    ELSE
+    BEGIN
+        RAISERROR(@calltype, 16, 1);
+        RETURN;
+    END
+END
+

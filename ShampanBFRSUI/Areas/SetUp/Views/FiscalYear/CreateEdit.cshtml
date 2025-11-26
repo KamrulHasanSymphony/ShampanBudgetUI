@@ -1,0 +1,253 @@
+﻿@model ShampanBFRS.Models.FiscalYearVM
+@{
+    ViewBag.Title = "Fiscal Year Create Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Fiscal Year Entry </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header p-2">
+
+        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+        {
+            <button type="button" class="button btnsave sslUpdate">Update</button>
+
+            <button style="float:right;" type="button" title="Add New" data-url="/DMS/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+        }
+        else
+        {
+
+            <button style="float:left;" class="button btnsave sslSave" type="button" id="">Save</button>
+
+            <button style="float: right;" type="button" title="Add New" data-url="/DMS/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+        }
+
+    </div>
+</div>
+
+<div class="container-fluid">
+    <form id="frmEntry">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Fiscal Year Info</h3>
+            </div>
+            <div class="card-body">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.YearPeriod)
+                @Html.HiddenFor(model => model.Operation)
+
+                <div class="form-group row">
+
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.Year)
+                        <div class="input-group">
+                            @Html.DropDownListFor(model => model.Year, new List<SelectListItem>(), "Select Year", new { @class = "form-control form-control-sm" })
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.YearStart)
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.YearStart, new { @class = "form-control form-control-sm dateRange", @readonly = "readonly" })
+                            <div class="input-group-append">
+                                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        @Html.LabelFor(model => model.YearEnd)
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.YearEnd, new { @class = "form-control form-control-sm dateRange", @readonly = "readonly" })
+                            <div class="input-group-append">
+                                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.Remarks)
+                        <div class="input-group ">
+                            @Html.TextAreaFor(model => model.Remarks, new { @class = "  form-control form-control-sm " })
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Remarks)
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="input-group">
+                            @Html.CheckBoxFor(model => model.YearLock, new { placeholder="Enter Remarks", @class = "md-md-2 form-control form-control-sm", style = "margin-top: 29px;position: absolute;width:25%;", id = "YearLockCheckbox" })
+                            @Html.LabelFor(model => model.YearLock, "Year Lock")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card card-secondary">
+            @*<div class="card-header">
+                    <h3 class="card-title">Fiscal Year Details</h3>
+                </div>*@
+            <div class="card-body">
+                <div id="fiscalYearDRows">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.fiscalYearDetails.FirstOrDefault().MonthName)
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.fiscalYearDetails.FirstOrDefault().MonthStart)
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.fiscalYearDetails.FirstOrDefault().MonthEnd)
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.fiscalYearDetails.FirstOrDefault().MonthLock)
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.fiscalYearDetails.FirstOrDefault().Remarks)
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.fiscalYearDetails != null)
+                    {
+
+                        Html.RenderPartial("_period", Model.fiscalYearDetails);
+
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
+        <div class="card-header p-2">
+            @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/DMS/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                    New
+                </button>
+            }
+            else
+            {
+                <div style="display:none;" class="divUpdate">
+                    <button type="button" class="button btnsave sslUpdate">Update</button>
+                    <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/DMS/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                        New
+                    </button>
+                </div>
+                <div class="divSave">
+                    <button class="button btnsave sslSave" type="button" id="">Save</button>
+                </div>
+            }
+        </div>
+
+        <div class="auditshow"><img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>
+
+    </div>
+
+    <div class="card card-secondary auditcard">
+
+        <div class="card-header">
+            <h3 class="card-title">Audit Details</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="row">
+                        @Html.Label("Type")
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.Label("Created")
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.Label("Updated")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.Label("By")<br /><div class="clearfix">&nbsp;</div>
+                            @Html.Label("On")<br /><div class="clearfix">&nbsp;</div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(model => model.CreatedBy, new { @class = "CreatedBy  form-control form-control-sm ", @readonly = "readonly" })
+                            <div class="clearfix">&nbsp;</div>
+                            @Html.TextBoxFor(model => model.CreatedOn, new { @class = "CreatedOn  form-control form-control-sm ", @readonly = "readonly" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(model => model.LastModifiedBy, new { @class = "LastUpdateBy  form-control form-control-sm lub", @readonly = "readonly" })
+                            <div class="clearfix">&nbsp;</div>
+                            @Html.TextBoxFor(model => model.LastModifiedOn, new { @class = "LastUpdateOn  form-control form-control-sm luo", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/DMS/js/Controllers/FiscalYearsController.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#YearStart').data('daterangepicker').isInvalidDate = function () {
+                return true;
+            };
+            $('#YearEnd').data('daterangepicker').isInvalidDate = function () {
+                return true;
+            };           
+
+            FiscalYearsController.init();
+
+        });
+
+    </script>
+
+
+}

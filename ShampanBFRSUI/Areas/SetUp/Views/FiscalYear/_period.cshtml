@@ -1,0 +1,51 @@
+﻿@model List<ShampanBFRS.Models.FiscalYearDetailVM>
+
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <div class="card-body">
+        <div class="row period-row fiscalYearRow">
+            <div class="col-md-2">
+                <div class="editor-field">
+                    @Html.HiddenFor(model => item.Id)
+                    @Html.TextBoxFor(model => item.MonthName, new { @readonly = "readonly", @class = "periodName form-control" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => item.MonthStart, new { @readonly = "readonly", @class = "Start  form-control" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => item.MonthEnd, new { @readonly = "readonly", @class = "End form-control" })
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="editor-field">
+                    <div class="form-check mt-3">
+                        @Html.CheckBoxFor(model => item.MonthLock, new { @class = " PeriodLock form-check-input" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => item.Remarks, new { @placeholder = "Period Remarks", @class = " form-control" })
+                </div>
+            </div>
+            <div class="col-md-1" style="display:none">
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => item.MonthId, new { @class = "End form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

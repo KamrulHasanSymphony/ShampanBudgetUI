@@ -1,0 +1,41 @@
+﻿@model ShampanBFRS.Models.QuestionVM.OrderMeasurementDetailVM
+<style>
+    .dataTable {
+        width: 100% !important;
+    }
+</style>
+
+
+<div class="modal-dialog draggable modal-lg" role="document">
+
+    <div class="modal-content">
+        <form id="frmaEntry">
+            @Html.HiddenFor(m => m.Id)
+            <div class="modal-header">
+                <h4 class="modal-title"> Measurement Entry </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <table class="table table-bordered table-sm" id="modalData">
+                    <thead>
+                        <tr>
+                            <th hidden>Id</th>
+                            <th hidden>ItemId</th>
+                            <th hidden>OrderMasterId</th>
+                            <th>Measurement Code</th>
+                            <th>Measurement Name</th>
+                            <th>Measurement Value</th>
+                            <th hidden>Remarks</th>
+                            <th hidden>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>

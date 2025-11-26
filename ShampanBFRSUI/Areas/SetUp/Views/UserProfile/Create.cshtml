@@ -1,0 +1,203 @@
+﻿@model ShampanBFRS.Models.UserProfileVM
+@{
+    ViewBag.Title = "User Profile Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var operation = @Model.Operation == "add" ? "Create" : "Update";
+    var mode = @Model.Mode == "passwordchange" ? "Password" : "Profile";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> @operation User @mode </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <form id="frmEntry">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title"> User Profile Info</h3>
+            </div>
+            <div class="card-body">
+
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Operation)
+                @Html.HiddenFor(model => model.Mode)
+
+                <div class="form-group row">
+
+                    @if (Model.Operation.Equals("add", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.UserName)
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </div>
+                    }
+                    else if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.UserName)
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", autocomplete = "off", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </div>
+                    }
+                    @if (Model.Mode.Equals("passwordchange", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.TextBoxFor(model => model.Password, new { @type = "password", @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.ConfirmPassword)
+                            @Html.TextBoxFor(model => model.ConfirmPassword, new { @type = "password", @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                        </div>
+
+                        @Html.HiddenFor(model => model.FullName)
+                        @Html.HiddenFor(model => model.Email)
+                        @Html.HiddenFor(model => model.PhoneNumber)
+                    }
+                    else if (Model.Mode.Equals("profileupdate", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.FullName)
+                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.FullName)
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.Email)
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+
+                        @Html.HiddenFor(model => model.Password)
+                        @Html.HiddenFor(model => model.ConfirmPassword)
+                    }
+                    else
+                    {
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.FullName)
+                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.FullName)
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.TextBoxFor(model => model.Password, new { @type = "password", @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.ConfirmPassword)
+                            @Html.TextBoxFor(model => model.ConfirmPassword, new { @type = "password", @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.Email)
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+
+                    }
+
+                </div>
+
+                @if (Model.Mode !="passwordchange")
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.PhoneNumber)
+                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control form-control-sm", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber)
+                        </div>
+
+                        <div class="col-sm-1">
+                            @Html.LabelFor(model => model.IsHeadOffice)
+                            <div class="Onoffbtn">
+                                <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                    <input id="IsHeadOffice"
+                                           value="@Model.IsHeadOffice"
+                                           type="checkbox"
+                                           name="my-checkbox"
+                                           @(Model.IsHeadOffice ? "checked" : "")
+                                           data-bootstrap-switch
+                                           data-off-color="danger"
+                                           data-on-color="success"
+                                           data-on-text="Yes"
+                                           data-off-text="No">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+
+            </div>
+
+        </div>
+    </form>
+
+    <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
+        <div class="card-header p-2">
+            @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/SetUp/UserProfile/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                    New
+                </button>
+            }
+            else
+            {
+                <div style="display:none;" class="divUpdate">
+                    <button type="button" class="button btnsave sslUpdate">Update</button>
+                    <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/SetUp/UserProfile/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                        New
+                    </button>
+                </div>
+                <div class="divSave">
+                    <button class="button btnsave sslSave" type="button" id="">Save</button>
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/SetUp/js/Controller/UserProfileController.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#IsHeadOffice").bootstrapSwitch();
+            $("#IsSalePerson").bootstrapSwitch();
+
+            UserProfileController.init();
+        });
+
+
+    </script>
+
+
+}
+

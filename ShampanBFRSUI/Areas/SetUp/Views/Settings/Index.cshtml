@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ShampanBFRS.Models.SettingsModel>
+@{
+    ViewBag.Title = "Settings Model Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid"> 
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-secondary">
+
+                <div class="card-header">
+                    <p class="card-title">
+                        <strong>All Settings</strong>
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="editor-label">
+                                <label>Setting Group</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="editor-label">
+                                <label>Setting Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="editor-label">
+                                <label>Setting Value</label>
+                                <span class="text-red">*</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="editor-label">
+                                <label>Setting Type</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="editor-label">
+                                <label>Remark</label>
+                            </div>
+                        </div>
+                    </div>
+                    @foreach (var item in Model)
+                    {
+                        @Html.Partial("~/Areas/SetUp/Views/Settings/_Setting.cshtml", item);
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var searchButton = document.getElementById("searchButton");
+        var searchInput = document.getElementById("searchInput");
+        var settings = document.getElementsByClassName("setting-item");
+
+        searchButton.addEventListener("click", function () {
+            var searchTerm = searchInput.value.toLowerCase();
+
+            // Loop through each setting item
+            for (var i = 0; i < settings.length; i++) {
+                var settingItem = settings[i];
+                var settingName = settingItem.getAttribute("data-setting-name").toLowerCase();
+                var settingGroup = settingItem.getAttribute("data-setting-group").toLowerCase();
+
+                // Check if either setting name or setting group matches the search term
+                if (settingName.includes(searchTerm) || settingGroup.includes(searchTerm)) {
+                    settingItem.style.display = "block"; // Show the matching setting item
+                } else {
+                    settingItem.style.display = "none"; // Hide the non-matching setting item
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        var message = '@(TempData["UpdateSettings"])';
+        if (message) {
+            ShowNotification(1, message);
+        }
+    });
+</script>
+

@@ -1,0 +1,149 @@
+﻿@using System.Security.Claims;
+@using ShampanBFRS.Models
+@{
+    var currentBranchName = Session["CurrentBranchName"] != null ? Session["CurrentBranchName"].ToString() : "";
+    var UserId = Session["UserId"] != null ? Session["UserId"].ToString() : "";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <style>
+        .RboxScroll {
+            position: fixed;
+            top: -125px;
+        }
+
+        .rnavmain {
+            top: -125px;
+            transition: 0.5s;
+            z-index: 9999;
+            right: 320px;
+            position: fixed;
+        }
+
+        .rnav {
+            position: absolute;
+            -webkit-box-shadow: 1px 1px 12px 0px rgba(50, 50, 50, 0.88);
+            -moz-box-shadow: 1px 1px 12px 0px rgba(50, 50, 50, 0.88);
+            box-shadow: 1px 1px 12px 0px rgba(50, 50, 50, 0.88);
+            border-radius: 0px 0px 5px 5px;
+            height: 120px;
+            width: 300px;
+            text-align: center;
+            background-color: #ffd800;
+        }
+
+        .Rbox {
+            position: absolute;
+            background-color: #FE5621;
+            border-radius: 0px 0px 22px 22px;
+            height: 40px;
+            width: 40px;
+            left: 250px;
+            top: 120px;
+            text-align: center;
+        }
+
+        .RboxScroll {
+            top: -120px;
+            transition: 0.5s;
+            right: 320px;
+            position: fixed;
+        }
+
+        .intop {
+            top: 0px;
+            transition: 0.5s;
+        }
+
+        .user-panel {
+            text-align: left;
+        }
+
+        .image {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .rnav div {
+            text-align: left;
+        }
+
+        .custom-label {
+            padding-left: 20px;
+            display: block;
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="" style="position:relative">
+        <div class="rnavmain">
+            <div id="Rnav" class="rnav">
+                <div class="user-panel d-flex">
+                    <div class="image">
+                        <img src="~/Content/AdminLte/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                </div>
+                <div style="font-size:15px; text-align: left; margin-top: 10px;">
+
+                    <div class="col-md-12">
+                        <label class="custom-label">
+                            <a href="#" class="d-block">
+                                <b>User : </b>  @UserId
+                            </a>
+                        </label>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="custom-label">
+                            <b style="color: darkcyan;">
+                                Branch Name : @currentBranchName
+                            </b>
+                            <br />
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="Rbox">
+                <div class="LogoutButton" style="text-align:center; margin:5px;">
+                    <a title="User Logout" href="/Login/LogOff" style="text-align:center">
+                        <img src="~/Content/css/ButtonsIcons/exit.png" alt="User Logout" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        $(function () {
+            var rnav = document.getElementById('rnav');
+            var ssm = document.getElementById('scroll-side-menu');
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 0) {
+                    $(".rnavmain").addClass('RboxScroll');
+                }
+                else {
+                    $(".rnavmain").removeClass('RboxScroll');
+                }
+            });
+            $(".rnavmain").hover(function () {
+                $(".rnavmain").toggleClass("intop");
+            });
+        });
+    </script>
+
+</body>
+</html>

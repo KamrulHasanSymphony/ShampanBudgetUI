@@ -1,0 +1,51 @@
+﻿@using ShampanBFRS.Models;
+@model ShampanBFRS.Models.UserMenuVM
+@{
+    ViewData["Title"] = "User Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> User Wise Menu </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    @*<li class="breadcrumb-item"><a href="/SetUp/MenuAuthorization/UserMenu">Index</a></li>
+                    <li class="breadcrumb-item active">Index</li>*@
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card card-secondary">
+        <div class="card-header">
+            <h3 class="card-title">
+                List Of Data
+            </h3>
+        </div>
+        <div class="card-body">
+            <div id="UserMenuIndexDataList"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script src="~/Areas/SetUp/js/Services/MenuAuthorizationService.js"></script>
+    <script src="~/Areas/SetUp/js/Controller/MenuAuthorizationController.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            MenuAuthorizationController.init();
+
+        });
+
+    </script>
+
+}

@@ -1,0 +1,287 @@
+﻿@model List<ShampanBFRS.Models.SetUpVMs.BranchProfileVM>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    .chart-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 10px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .pie-chart-container {
+        width: 100%;
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .small-box {
+        position: relative;
+        overflow: hidden;
+        Prevents content from overflowing padding: 15px;
+        Adds spacing inside
+    }
+
+        .small-box .inner {
+            text-align: center;
+        }
+
+    #orderPurchasePieChart {
+        width: 100% !important; /* Ensures it fills the container */
+        height: 80% !important; /* Fixed height */
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    #salesPieChart {
+        width: 100% !important; /* Ensures it fills the container */
+        height: 80% !important; /* Fixed height */
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /*#pendingSalesChartCanvas {
+        background-color: white;
+        border: 1px solid #ddd;*/ /* Optional: Adds a light border around the canvas */
+    /*}*/
+
+    /* Set the background to white */
+    .small-box.bg-info {
+        background-color: white !important;
+        color: #333; /* Dark text for contrast */
+        border: 1px solid #ccc; /* Optional: Add a subtle border */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+    }
+
+        /* Adjust text color for visibility */
+        .small-box.bg-info h3,
+        .small-box.bg-info p {
+            color: #333 !important; /* Dark grey for readability */
+        }
+
+        /* Change the icon color for contrast */
+        .small-box.bg-info .icon i {
+            color: #007bff !important; /* A bold blue for better visibility */
+        }
+
+
+    .lbl {
+        text-align: left !important;
+    }
+
+    .small-box {
+        height: 330px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        .small-box.bg-info.PO {
+            height: 420px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .small-box table {
+            height: 100%;
+            margin: 0;
+            table-layout: fixed;
+        }
+
+            .small-box table th, .small-box table td {
+                vertical-align: middle;
+            }
+</style>
+
+
+
+<div class="container-fluid">
+
+    <!--<div class="row">        
+        <div class="col-lg-3 col-6">-->
+            <!-- small box -->
+            <!--<div class="small-box bg-primary">
+                <div class="inner">
+                    <h3>0<sup style="font-size: 20px">%</sup></h3>
+
+                    <p>Quantity</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>-->
+        <!-- ./col -->
+        <!--<div class="col-lg-3 col-6">-->
+            <!-- small box -->
+            <!--<div class="small-box bg-success">
+                <div class="inner">
+                    <h3>0<sup style="font-size: 20px">%</sup></h3>
+
+                    <p>Rate</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>-->
+        <!-- ./col -->
+        <!--<div class="col-lg-3 col-6">-->
+            <!-- small box -->
+            <!--<div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>0</h3>
+
+                    <p>User Registrations</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>-->
+        <!-- ./col -->
+        <!--<div class="col-lg-3 col-6">-->
+            <!-- small box -->
+            <!--<div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>0</h3>
+
+                    <p>Unique Visitors</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>-->
+        <!-- ./col -->
+    <!--</div>-->
+
+    <div class="clearfix"></div>
+
+    <div class="modal fade" id="branchProfiles" tabindex="-1" role="dialog" aria-labelledby="Branch Profiles" data-backdrop="static">
+        <div class="modal-dialog draggable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"> Select Branch </h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Hidden("md-branch", Model)
+                    <table class="table table-bordered  table-sm table-hover full-width" id="tBranchProfiles">
+                        <thead>
+                            <tr>
+                                <th> Branch Code</th>
+                                <th> Branch Name</th>
+                                <th style="display: none;">User Id</th>  <!-- Hides the header for 'User Id' -->
+                            </tr>
+                        </thead>
+                        <tbody id="tbdBranchProfiles" class="cursorHand">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/Content/js/app/Controllers/DashController.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            // Dashboard Initialization
+            DashController.init(@Model.Count);
+
+            // TempData Message Handling
+            var message = '@(TempData["DbUpdate"])';
+            if (message) {
+                alert(message);
+                if (window.location.search.includes('message=')) {
+                    var urlWithoutMessage = window.location.origin + window.location.pathname;
+                    window.location.href = urlWithoutMessage + "?branchChange=False";
+                }
+            }
+
+
+            //Branch Combo
+            var branch = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetBranchList?value=",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "Id",
+                        fields: {
+                            Id: { type: "number" },
+                            Name: { type: "string" }
+                        }
+                    }
+                }
+            });
+
+            $("#Branchs").kendoComboBox({
+                dataTextField: "Name",
+                dataValueField: "Id",
+                dataSource: branch,
+                filter: "contains",
+                suggest: true,
+                index: 0,
+                dataBound: function () {
+                    var comboBox = this;
+                    var branchId = $("#BranchId").val() || 0;
+                    setTimeout(function () {
+                        if (comboBox.dataSource.data().length > 0) {
+                            var item = comboBox.dataSource.get(branchId);
+                            if (item) {
+                                comboBox.value(branchId);
+                                comboBox.text(item.Name);
+                                comboBox.trigger("change");
+                            }
+                        }
+                    }, 300);
+                },
+                change: function () {
+                    // Update the hidden field with the selected branch id
+                    var selectedValue = this.value();
+                    $("#BranchId").val(selectedValue);
+                }
+            });            
+
+           
+
+});
+    </script>
+}
+

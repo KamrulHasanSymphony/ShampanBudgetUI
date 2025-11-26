@@ -1,0 +1,68 @@
+﻿@model ShampanBFRS.Models.SetUpVMs.BranchProfileVM
+@{
+    ViewBag.Title = "Branch Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> Branch List </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header p-2">
+            <button type="button" title="Add New" data-url="/DMS/BranchProfile/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+            <button type="button" title="Delete" class="button sslUnPost btnDelete"> Delete </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="card card-secondary">
+        <div class="card-header">
+            <h3 class="card-title">
+                Branch Data List
+            </h3>
+        </div>
+        <div class="card-body">
+            <div id="GridDataList"></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script src="~/Areas/Common/js/Services/CommonService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Content/js/app/Services/BranchProfileService.js"></script>
+    <script src="~/Areas/DMS/js/Controllers/BranchProfileController.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            BranchProfileController.init();
+        });
+
+    </script>
+
+
+}
+
+
