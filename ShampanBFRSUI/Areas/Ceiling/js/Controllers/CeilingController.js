@@ -840,7 +840,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     { field: "AccountId", width: 50, hidden: true, sortable: true },
                     { field: "Serial", title: "SL", sortable: true, width: 70, editable: false },
                     { field: "COACode", title: "COA Code", sortable: true, width: 170, editable: false },
-                    { field: "COAName", title: "COA Code", sortable: true, width: 170, editable: false },
+                    { field: "COAName", title: "COA Name", sortable: true, width: 170, editable: false },
                     { field: "AccountCode", title: "Sabre Code", sortable: true, width: 170, editable: false },
                     { field: "AccountName", title: "Sabre Name", width: 320, sortable: true, editable: false },
                     {
