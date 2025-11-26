@@ -535,6 +535,12 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     parameterMap: function (options) {
                         if (options.sort) {
                             options.sort.forEach(function (param) {
+                                if (param.field === "COACode") {
+                                    param.field = "COAs.Code";
+                                }
+                                if (param.field === "COAName") {
+                                    param.field = "COAs.Name";
+                                }
                                 if (param.field === "AccountCode") {
                                     param.field = "Sabres.Code";
                                 }
@@ -583,6 +589,12 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         if ((options.filter && options.filter.filters)) {
                             options.filter.filters.forEach(function (param) {
 
+                                if (filter.field === "COACode") {
+                                    filter.field = "COAs.Code";
+                                }
+                                if (filter.field === "COAName") {
+                                    filter.field = "COAs.Name";
+                                }
                                 if (filter.field === "AccountCode") {
                                     filter.field = "Sabres.Code";
                                 }
@@ -827,9 +839,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
                     { field: "AccountId", width: 50, hidden: true, sortable: true },
                     { field: "Serial", title: "SL", sortable: true, width: 70, editable: false },
-                    { field: "AccountCode", title: "Account Code", sortable: true, width: 170, editable: false },
-                    { field: "AccountName", title: "Account Name", width: 320, sortable: true, editable: false },
-
+                    { field: "COACode", title: "COA Code", sortable: true, width: 170, editable: false },
+                    { field: "COAName", title: "COA Code", sortable: true, width: 170, editable: false },
+                    { field: "AccountCode", title: "Sabre Code", sortable: true, width: 170, editable: false },
+                    { field: "AccountName", title: "Sabre Name", width: 320, sortable: true, editable: false },
                     {
                         field: "January", title: "January", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
                         , footerTemplate: function () {
@@ -985,7 +998,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         width: 180, editable: false
                     },
 
-                    { field: "AccountCode", title: "Account Code", sortable: true, width: 170, editable: false },
+                    { field: "AccountCode", title: "Sabre Code", sortable: true, width: 170, editable: false },
                 ],
                 footer: true,
                 selectable: "row",
