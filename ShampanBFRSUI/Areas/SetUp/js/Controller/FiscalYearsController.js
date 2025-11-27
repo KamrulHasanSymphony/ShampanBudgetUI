@@ -59,6 +59,7 @@
         });        
 
         $("#Year").on('change', function () {
+            dubugger;
             
             var year = $('#Year').val();
             var yearStartDate = $('#YearStart').val();

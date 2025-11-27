@@ -7,6 +7,7 @@ using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.SetUpRepo;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -26,37 +27,92 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             return View();
         }
 
+        //public ActionResult Create()
+        //{
+        //    FiscalYearsRepo _fiscalRepo = new FiscalYearsRepo();
+        //    CompanyProfileRepo _repo = new CompanyProfileRepo();
+        //    CommonVM param = new CommonVM();
+        //    FiscalYearVM vm = new FiscalYearVM();
+        //    CompanyProfileVM companyVm = new CompanyProfileVM();
+        //    List<FiscalYearVM> fiscalYearLists = new List<FiscalYearVM>();
+
+        //    string yearStartDate = "";
+
+        //    int year;
+
+        //    var companyId = Session["CompanyId"];
+        //    param.Id = companyId.ToString();
+        //    ResultVM companyData = _repo.List(param);
+        //    if (companyData.Status == "Success" && companyData.DataVM != null)
+        //    {
+        //        companyVm = JsonConvert.DeserializeObject<List<CompanyProfileVM>>(companyData.DataVM.ToString()).FirstOrDefault();
+        //        yearStartDate = companyVm.FYearStart;
+
+        //        year = Convert.ToDateTime(yearStartDate).Year;
+        //        ////year = DateTime.ParseExact(yearStartDate, "yyyy-MM-dd", null).Year;
+        //        vm.YearStart = yearStartDate;
+        //        vm.Year = year;
+        //    }
+        //    else
+        //    {
+        //        vm = null;
+        //    }
+
+        //    List<FiscalYearDetailVM> detailVMs = new List<FiscalYearDetailVM>();
+        //    FiscalYearDetailVM dvm;
+        //    vm.fiscalYearDetails = detailVMs;
+        //    vm = DesignFiscalYear(vm);
+        //    vm.Operation = "add";
+        //    return View("Create", vm);
+        //}
+
+        //private FiscalYearVM DesignFiscalYear(FiscalYearVM model)
+        //{
+        //    try
+        //    {
+        //        DateTime start_date;
+        //        bool parsed = DateTime.TryParseExact(model.YearStart, new[] { "yyyy/MM/dd", "yyyy-MM-dd" }, null, System.Globalization.DateTimeStyles.None, out start_date);
+
+        //        if (!parsed)
+        //        {
+        //            throw new FormatException($"Invalid date format for YearStart: {model.YearStart}");
+        //        }
+
+        //        model.YearEnd = start_date.AddYears(1).AddDays(-1).ToString("yyyy/MM/dd");
+        //        model.Year = start_date.AddYears(1).AddDays(-1).Year;
+
+        //        var fvms = Enumerable.Range(0, 12)
+        //                             .Select(i => new FiscalYearDetailVM
+        //                             {
+        //                                 MonthName = start_date.AddMonths(i).ToString("MMM-yy"),
+        //                                 MonthStart = start_date.AddMonths(i).ToString("yyyy/MM/dd"),
+        //                                 MonthEnd = start_date.AddMonths(i + 1).AddDays(-1).ToString("yyyy/MM/dd"),
+        //                                 MonthId = Convert.ToInt32(start_date.AddMonths(i).ToString("yyyyMM"))
+        //                             })
+        //                             .ToList();
+
+        //        model.fiscalYearDetails = fvms;
+        //        return model;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
         public ActionResult Create()
         {
-            FiscalYearsRepo _fiscalRepo = new FiscalYearsRepo();
             CompanyProfileRepo _repo = new CompanyProfileRepo();
             CommonVM param = new CommonVM();
+            FiscalYearsRepo _fiscalRepo = new FiscalYearsRepo();
             FiscalYearVM vm = new FiscalYearVM();
-            CompanyProfileVM companyVm = new CompanyProfileVM();
             List<FiscalYearVM> fiscalYearLists = new List<FiscalYearVM>();
-
             string yearStartDate = "";
-
             int year;
-
-            var companyId = Session["CompanyId"];
-            param.Id = companyId.ToString();
-            ResultVM companyData = _repo.List(param);
-            if (companyData.Status == "Success" && companyData.DataVM != null)
-            {
-                companyVm = JsonConvert.DeserializeObject<List<CompanyProfileVM>>(companyData.DataVM.ToString()).FirstOrDefault();
-                yearStartDate = companyVm.FYearStart;
-
-                year = Convert.ToDateTime(yearStartDate).Year;
-                ////year = DateTime.ParseExact(yearStartDate, "yyyy-MM-dd", null).Year;
-                vm.YearStart = yearStartDate;
-                vm.Year = year;
-            }
-            else
-            {
-                vm = null;
-            }
-
+            yearStartDate = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd");
+            vm.YearStart = yearStartDate;
+            year = DateTime.ParseExact(yearStartDate, "yyyy-MM-dd", null).Year;
+            vm.Year = year;
             List<FiscalYearDetailVM> detailVMs = new List<FiscalYearDetailVM>();
             FiscalYearDetailVM dvm;
             vm.fiscalYearDetails = detailVMs;
@@ -64,11 +120,11 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             vm.Operation = "add";
             return View("Create", vm);
         }
-
         private FiscalYearVM DesignFiscalYear(FiscalYearVM model)
         {
             try
             {
+                // Attempt to parse the input date string using the correct format
                 DateTime start_date;
                 bool parsed = DateTime.TryParseExact(model.YearStart, new[] { "yyyy/MM/dd", "yyyy-MM-dd" }, null, System.Globalization.DateTimeStyles.None, out start_date);
 
