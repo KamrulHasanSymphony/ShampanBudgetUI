@@ -66,7 +66,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         });
 
         function GetFiscalYearComboBox() {
-            debugger;
             var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -92,7 +91,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         };
 
         function GetBudgetSetComboBox() {
-            debugger;
             var BudgetSetComboBox = $("#BudgetSetNo").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -118,7 +116,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         };
 
         function GetBudgetTypeComboBox() {
-            debugger;
             var BudgetTypeComboBox = $("#BudgetType").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Name",
@@ -177,7 +174,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
     };
 
     function GenerateDatePicker() {
-        $("#TransactionDate").kendoDateTimePicker({
+        $("#TransactionDate").kendoDatePicker({
             format: "yyyy-MM-dd",
             max: new Date()
         });
@@ -413,7 +410,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
     // Save the form data
     function save() {
-        
+
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
@@ -482,15 +479,49 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
     // Handle success
     function saveDone(result) {
-        if (result.Status == 200) {
-            ShowNotification(1, result.Message);
-            $(".divSave").hide();
-            $(".divUpdate").show();
-            $("#Id").val(result.Data.Id);
-            $("#Operation").val("update");
-            $("#Code").val(result.Data.Code);
 
+        alert(result.Status);
+
+        if (result.Status == 200) {
+
+            if (result.Data.Operation == "add") {
+
+                ShowNotification(1, result.Message);
+                $(".divSave").hide();
+                $(".divUpdate").show();
+
+                $("#Code").val(result.Data.Code);
+                $("#Id").val(result.Data.Id);
+                $("#Operation").val("update");
+                $("#CreatedBy").val(result.Data.CreatedBy);
+                $("#CreatedOn").val(result.Data.CreatedOn);
+
+            } else {
+
+                ShowNotification(1, result.Message);
+                $("#LastModifiedBy").val(result.Data.LastModifiedBy);
+                $("#LastModifiedOn").val(result.Data.LastModifiedOn);
+            }
+
+        } else if (result.Status == 400) {
+            ShowNotification(3, result.Message);
+
+        } else {
+            ShowNotification(2, result.Message);
         }
+
+        //if (result.Status == 200) {
+        //    ShowNotification(1, result.Message);
+        //    $(".divSave").hide();
+        //    $(".divUpdate").show();
+        //    $("#Id").val(result.Data.Id);
+        //    $("#Operation").val("update");
+        //    $("#Code").val(result.Data.Code);
+
+        //}
+        //else {
+
+        //}
     }
 
     // Handle fail
@@ -750,6 +781,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                             serial: { editable: false },
                             AccountCode: { editable: false },
                             AccountName: { editable: false },
+                            InputTotal: { type: "number", defaultValue: 0, validation: { min: 0 } },
                             January: { type: "number", defaultValue: 0, validation: { min: 0 } },
                             February: { type: "number", defaultValue: 0, validation: { min: 0 } },
                             March: { type: "number", defaultValue: 0, validation: { min: 0 } },
@@ -768,6 +800,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 },
                 aggregate: [
 
+                    { field: "InputTotal", aggregate: "sum" },
                     { field: "January", aggregate: "sum" },
                     { field: "February", aggregate: "sum" },
                     { field: "March", aggregate: "sum" },
@@ -782,6 +815,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     { field: "December", aggregate: "sum" },
                     { field: "LineTotal", aggregate: "sum" }
                 ]
+
             });
 
             $("#CeilingDetailsData").kendoGrid({
@@ -828,6 +862,30 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 },
                 save: function (e) {
                     const grid = this;
+
+                    if (e.values && e.values.InputTotal !== undefined) {
+
+                        var dataItem = e.model;
+                        var perMonth = parseFloat(e.values.InputTotal) / 12;
+
+                        debugger;
+
+                        // Set each month
+                        dataItem.January = perMonth;
+                        dataItem.February = perMonth;
+                        dataItem.March = perMonth;
+                        dataItem.April = perMonth;
+                        dataItem.May = perMonth;
+                        dataItem.June = perMonth;
+                        dataItem.July = perMonth;
+                        dataItem.August = perMonth;
+                        dataItem.September = perMonth;
+                        dataItem.October = perMonth;
+                        dataItem.November = perMonth;
+                        dataItem.December = perMonth;
+
+                        //dataItem.set("LineTotal", perMonth * 12);
+                    }
                     setTimeout(function () {
                         grid.dataSource.aggregate();
                         grid.refresh();
@@ -835,6 +893,15 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         $(e.container).find('input').focus();
                     }, 0);
                 },
+                //save: function (e) {
+                //    const grid = this;
+                //    setTimeout(function () {
+                //        grid.dataSource.aggregate();
+                //        grid.refresh();
+                //        $('#CeilingDetailsData .k-grid-content').scrollLeft(horizontalScrollLeft);
+                //        $(e.container).find('input').focus();
+                //    }, 0);
+                //},
 
                 columns: [
 
@@ -844,6 +911,36 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     { field: "COAName", title: "COA Name", sortable: true, width: 170, editable: false },
                     { field: "AccountCode", title: "Sabre Code", sortable: true, width: 170, editable: false },
                     { field: "AccountName", title: "Sabre Name", width: 320, sortable: true, editable: false },
+                    //{
+                    //    field: "InputTotal",
+                    //    title: "InputTotal",
+                    //    editor: InputTotalEditor,
+                    //    template: function (dataItem) {
+                    //        return dataItem.InputTotal || "";
+                    //    },
+                    //    //footerTemplate: function () {
+
+                    //    //    var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
+                    //    //    var sum = 0;
+                    //    //    for (var i = 0; i < data.length; i++) {
+                    //    //        sum += (data[i].InputTotal || 0);
+                    //    //    }
+                    //    //    return kendo.toString(sum, "n2");
+                    //    //},
+                    //    width: 160
+                    //},
+                    {
+                        field: "InputTotal", title: "Input Total", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
+                        , footerTemplate: function () {
+
+                            var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
+                            var sum = 0;
+                            for (var i = 0; i < data.length; i++) {
+                                sum += (data[i].InputTotal || 0);
+                            }
+                            return kendo.toString(sum, "n2");
+                        }
+                    },
                     {
                         field: "January", title: "January", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
                         , footerTemplate: function () {
@@ -980,6 +1077,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     {
                         title: "Line Total",
                         template: function (dataItem) {
+
                             var total = (dataItem.January || 0) + (dataItem.February || 0) + (dataItem.March || 0) + (dataItem.April || 0)
                                 + (dataItem.May || 0) + (dataItem.June || 0) + (dataItem.July || 0) + (dataItem.August || 0)
                                 + (dataItem.September || 0) + (dataItem.October || 0) + (dataItem.November || 0) + (dataItem.December || 0);
@@ -1017,6 +1115,94 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         }
 
     };
+
+    function InputTotalEditor(container, options) {
+        var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
+
+        // Input field
+        var input = $('<input type="text" class="form-control inputTotal"/>')
+            .val(options.model.InputTotal || 0)
+            .appendTo(wrapper);
+
+        // Button with icon
+        $('<div class="input-group-append">')
+            .append(
+                $('<button class="btn btn-light" type="button">')
+                    .append('<i class="fa fa-calculator"></i>')
+                    .on("mousedown", function (e) {
+                        e.preventDefault(); // prevent input losing focus
+                    })
+                    .on("click", function () {
+
+                        var grid = $("#CeilingDetailsData").data("kendoGrid");
+                        var dataItem = options.model;
+
+                        // Get input value directly
+                        var inputVal = parseFloat(input.val()) || 0;
+                        var perMonth = parseFloat((inputVal / 12).toFixed(2));
+
+                        // Update months
+                        dataItem.set("January", perMonth);
+                        dataItem.set("February", perMonth);
+                        dataItem.set("March", perMonth);
+                        dataItem.set("April", perMonth);
+                        dataItem.set("May", perMonth);
+                        dataItem.set("June", perMonth);
+                        dataItem.set("July", perMonth);
+                        dataItem.set("August", perMonth);
+                        dataItem.set("September", perMonth);
+                        dataItem.set("October", perMonth);
+                        dataItem.set("November", perMonth);
+                        dataItem.set("December", perMonth);
+
+                        dataItem.set("LineTotal", inputVal);
+                        dataItem.set("InputTotal", inputVal);
+
+                        input.val(inputVal);
+
+                        setTimeout(function () {
+                            grid.dataSource.aggregate();
+                            grid.refresh();
+                        }, 0);
+                    })
+            )
+            .appendTo(wrapper);
+
+        kendo.bind(wrapper, options.model);
+    }
+
+    $("#CeilingDetailsData").on("click", ".btnCalculate", function () {
+        var grid = $("#CeilingDetailsData").data("kendoGrid");
+        var row = $(this).closest("tr");
+        var dataItem = grid.dataItem(row);
+
+        var inputVal = parseFloat(row.find(".inputTotal").val()) || 0;
+        var perMonth = parseFloat((inputVal / 12).toFixed(2));
+
+        // Set monthly values
+        dataItem.January = perMonth;
+        dataItem.February = perMonth;
+        dataItem.March = perMonth;
+        dataItem.April = perMonth;
+        dataItem.May = perMonth;
+        dataItem.June = perMonth;
+        dataItem.July = perMonth;
+        dataItem.August = perMonth;
+        dataItem.September = perMonth;
+        dataItem.October = perMonth;
+        dataItem.November = perMonth;
+        dataItem.December = perMonth;
+
+        // Set LineTotal
+        dataItem.LineTotal = inputVal;
+
+        // Update InputTotal in the model
+        dataItem.InputTotal = inputVal;
+
+        // Refresh grid and aggregates
+        grid.dataSource.aggregate();
+        grid.refresh();
+    });
 
 
     return {
