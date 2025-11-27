@@ -155,11 +155,11 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 isValid = false;
                 ShowNotification(3, 'Fiscal Year Required.');
             }
-            if (parseInt(budgetSetNo) <= 0) {
+            else if (parseInt(budgetSetNo) <= 0) {
                 isValid = false;
                 ShowNotification(3, 'Budget Set Required.');
             }
-            if (budgetType === 'xx' || budgetType === '') {
+            else if (budgetType === 'xx' || budgetType === '') {
                 isValid = false;
                 ShowNotification(3, 'Budget Type Required.');
             }
