@@ -18,6 +18,7 @@ namespace ShampanBFRS.Models.Ceiling
         public string? PeriodStart { get; set; }
         public string? PeriodEnd { get; set; }
         public decimal? Amount { get; set; }
+        public decimal? InputTotal { get; set; }
         public decimal? January { get; set; }
         public decimal? February { get; set; }
         public decimal? March { get; set; }
