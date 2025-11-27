@@ -100,6 +100,7 @@
     <Compile Include="QuestionVM\QuestionSetDetailVM.cs" />
     <Compile Include="QuestionVM\QuestionSetHeaderVM.cs" />
     <Compile Include="QuestionVM\QuestionSubjectVM.cs" />
+    <Compile Include="SetUpVMs\SabresVM.cs" />
     <Compile Include="SetUpVMs\UserBranchProfileVM.cs" />
     <Compile Include="SetUpVMs\UserProfileVM.cs" />
     <Compile Include="SetUpVMs\CompanyProfileVM.cs" />
