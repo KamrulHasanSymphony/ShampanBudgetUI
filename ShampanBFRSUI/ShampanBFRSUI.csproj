@@ -2602,8 +2602,8 @@
     <Content Include="Areas\SetUp\Views\Sabre\Index.cshtml" />
     <Content Include="Areas\SetUp\Views\Department\Create.cshtml" />
     <Content Include="Areas\SetUp\Views\Department\Index.cshtml" />
-    <Content Include="Areas\SetUp\Views\DepartmentSabreRepo\Create.cshtml" />
-    <Content Include="Areas\SetUp\Views\DepartmentSabreRepo\Index.cshtml" />
+    <Content Include="Areas\SetUp\Views\DepartmentSabre\Create.cshtml" />
+    <Content Include="Areas\SetUp\Views\DepartmentSabre\Index.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />

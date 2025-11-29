@@ -103,18 +103,18 @@
                                 param.field = "H.SabreId";
                             }
                             
-                            if (param.field === "Status") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-                                param.field = "H.IsActive";
-                                param.operator = "eq";
-                            }
+                            //if (param.field === "Status") {
+                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+                            //    if (statusValue.startsWith("a")) {
+                            //        param.value = 1;
+                            //    } else if (statusValue.startsWith("i")) {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
+                            //    param.field = "H.IsActive";
+                            //    param.operator = "eq";
+                            //}
                         });
                     }
 
@@ -126,20 +126,20 @@
                             if (param.field === "SabreId") {
                                 param.field = "H.SabreId";
                             }
-                            if (param.field === "Status") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+                            //if (param.field === "Status") {
+                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
+                            //    if (statusValue.startsWith("a")) {
+                            //        param.value = 1;
+                            //    } else if (statusValue.startsWith("i")) {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
 
-                                param.field = "H.IsActive";
-                                param.operator = "eq";
-                            }
+                            //    param.field = "H.IsActive";
+                            //    param.operator = "eq";
+                            //}
                         });
                     }
 
@@ -231,7 +231,7 @@
                     width: 40,
                     template: function (dataItem) {
                         return `
-                            <a href="/SetUp/Department/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
+                            <a href="/SetUp/DepartmentSabre/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>`;
                     }
@@ -242,7 +242,7 @@
 
             ],
             editable: false,
-            selectable: "multiple row",
+            selectable: " row",
             navigatable: true,
             columnMenu: true
         });
