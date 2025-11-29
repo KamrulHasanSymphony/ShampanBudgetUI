@@ -453,7 +453,8 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     October: x.October,
                     November: x.November,
                     December: x.December,
-                    LineTotal: x.LineTotal
+                    LineTotal: x.LineTotal,
+                    InputTotal: x.InputTotal
                 });
 
             });

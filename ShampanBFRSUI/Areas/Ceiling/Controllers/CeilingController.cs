@@ -22,11 +22,12 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
         CommonRepo _commonRepo = new CommonRepo();
 
         // GET: Ceiling/Ceiling
-        public ActionResult Index(string TransactionType = "", string MenuType = "")
+        public ActionResult Index(string TransactionType = "", string MenuType = "", string BudgetType = "")
         {
             CeilingVM ceilingVM = new CeilingVM();
             ceilingVM.TransactionType = TransactionType;
             ceilingVM.MenuType = MenuType;
+            ceilingVM.BudgetType = BudgetType;
 
             var currentBranchId = 0;
             if (Session["CurrentBranch"] != null)
@@ -37,7 +38,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             return View(ceilingVM);
         }
 
-        public ActionResult Create(string TransactionType = "")
+        public ActionResult Create(string TransactionType = "", string MenuType = "", string BudgetType = "")
         {
             CeilingVM vm = new CeilingVM();
             vm.Operation = "add";
