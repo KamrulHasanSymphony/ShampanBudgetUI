@@ -1,15 +1,13 @@
-﻿var SabreController = function (CommonService, CommonAjaxService) {
+﻿var DepartmentController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
-        debugger;
         var getId = $("#Id").val() || 0;
         var getOperation = $("#Operation").val() || '';
-
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
         }
-
+        // Save button click handler
         $('.btnsave').click('click', function () {
             var getId = $('#Id').val();
             var status = "Save";
@@ -23,7 +21,7 @@
             });
         });
 
-
+        // Delete button click handler
         $('.btnDelete').on('click', function () {
             Confirmation("Are you sure? Do You Want to Delete Data?", function (result) {
                 if (result) {
@@ -32,23 +30,27 @@
             });
         });
 
-
+        // Previous button click handler
         $('#btnPrevious').click('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
-                window.location.href = "/SetUp/Sabre/NextPrevious?id=" + getId + "&status=Previous";
+                window.location.href = "/SetUp/Department/NextPrevious?id=" + getId + "&status=Previous";
             }
         });
 
-
+        // Next button click handler
         $('#btnNext').click('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
-                window.location.href = "/SetUp/Sabre/NextPrevious?id=" + getId + "&status=Next";
+                window.location.href = "/SetUp/Department/NextPrevious?id=" + getId + "&status=Next";
             }
         });
+
+
+
     };
 
+    // Select data for delete
     function SelectData() {
         var IDs = [];
 
@@ -68,13 +70,13 @@
             IDs: IDs
         };
 
-        var url = "/SetUp/Sabre/Delete";
+        var url = "/SetUp/Department/Delete";
 
         CommonAjaxService.deleteData(url, model, deleteDone, saveFail);
     };
 
+    // Fetch grid data
     var GetGridDataList = function () {
-        debugger;
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -85,7 +87,7 @@
             pageSize: 10,
             transport: {
                 read: {
-                    url: "/SetUp/Sabre/GetGridData",
+                    url: "/SetUp/Department/GetGridData",
                     type: "POST",
                     dataType: "json",
                     cache: false
@@ -93,17 +95,18 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            if (param.field === "Code") {
-                                param.field = "H.Code";
-                            }
-                           
+                          
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
-                           
+                            if (param.field === "Description") {
+                                param.field = "H.Description";
+                            }
+                            if (param.field === "Reference") {
+                                param.field = "H.Reference";
+                            }
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
-
                             }
                             if (param.field === "Status") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
@@ -122,19 +125,18 @@
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-                            if (param.field === "Code") {
-                                param.field = "H.Code";
-                            }
-
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
-
+                            if (param.field === "Description") {
+                                param.field = "H.Description";
+                            }
+                            if (param.field === "Reference") {
+                                param.field = "H.Reference";
+                            }
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
-
                             }
- 
                             if (param.field === "Status") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
@@ -197,14 +199,14 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Code","Name"]
+                fields: ["Name"]
             },
             excel: {
-                fileName: `Sabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
+                fileName: `Department_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `Sabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
+                fileName: `Department_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
@@ -215,7 +217,7 @@
                 $(".k-floatwrap").hide();
 
                 var companyName = "Shampan Tailoring System.";
-                var fileName = `Examinees_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
+                var fileName = `Department_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
 
                 e.sender.options.pdf = {
                     paperSize: "A4",
@@ -239,20 +241,20 @@
                     title: "Action",
                     width: 40,
                     template: function (dataItem) {
-                        console.log(dataItem);
                         return `
-                            <a href="/SetUp/Sabre/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
+                            <a href="/SetUp/Department/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>`;
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", sortable: true, width: 200 },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
+                { field: "Description", title: "Description", sortable: true, width: 200 },
+                { field: "Reference", title: "Reference", sortable: true, width: 200 },
                 { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
             ],
             editable: false,
-            selectable: "row",
+            selectable: "multiple row",
             navigatable: true,
             columnMenu: true
         });
@@ -280,7 +282,7 @@
         formData.append("IsActive", $('#IsActive').prop('checked'));
         formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
 
-        var url = "/SetUp/Sabre/CreateEdit";
+        var url = "/SetUp/Department/CreateEdit";
         CommonAjaxService.finalImageSave(url, formData, saveDone, saveFail);
     }
 
