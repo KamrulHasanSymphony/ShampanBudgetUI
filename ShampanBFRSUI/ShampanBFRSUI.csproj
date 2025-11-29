@@ -414,6 +414,7 @@
     <Compile Include="Areas\Questions\Controllers\QuestionSetController.cs" />
     <Compile Include="Areas\Questions\Controllers\QuestionSubjectController.cs" />
     <Compile Include="Areas\SetUp\Controllers\FiscalYearController.cs" />
+    <Compile Include="Areas\SetUp\Controllers\SabreController.cs" />
     <Compile Include="Areas\SetUp\Controllers\ProductController.cs" />
     <Compile Include="Areas\SetUp\Controllers\SettingsController.cs" />
     <Compile Include="Areas\SetUp\Controllers\BranchProfileController.cs" />
@@ -447,6 +448,7 @@
     <Content Include="Areas\SetUp\js\Controller\FiscalYearsController.js" />
     <Content Include="Areas\SetUp\js\Controller\ProductController.js" />
     <Content Include="Areas\SetUp\js\Controller\BranchProfileController.js" />
+    <Content Include="Areas\SetUp\js\Controller\SabreController.js" />
     <Content Include="Areas\SetUp\js\Controller\UserBranchProfileController.js" />
     <Content Include="Areas\SetUp\js\Controller\UserProfileController.js" />
     <Content Include="Areas\SetUp\js\Controller\CompanyProfileController.js" />
@@ -2592,6 +2594,8 @@
     <Content Include="Areas\Ceiling\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Ceiling\Views\Ceiling\Index.cshtml" />
     <Content Include="Areas\Ceiling\Views\Ceiling\Create.cshtml" />
+    <Content Include="Areas\SetUp\Views\Sabre\Create.cshtml" />
+    <Content Include="Areas\SetUp\Views\Sabre\Index.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />

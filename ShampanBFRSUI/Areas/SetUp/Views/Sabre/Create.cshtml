@@ -1,0 +1,280 @@
+﻿
+@model ShampanBFRS.Models.SetUpVMs.SabresVM
+@{
+    ViewBag.Title = "Sabre Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                {
+                    <h1 class="m-0"> Sabre Update </h1>
+                }
+                else
+                {
+            <h1 class="m-0"> Sabre Create</h1>
+                }
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-header p-2">
+
+        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+        {
+            <button type="button" class="button btnsave sslUpdate">Update</button>
+
+            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/Sabre/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+
+        }
+        else
+        {
+            <div style="display:none;" class="divUpdate">
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+
+            </div>
+            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/Sabre/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+            <div class="divSave">
+                <button class="button btnsave sslSave" type="button" id="">Save</button>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="mt-3">
+
+        <form id="frmEntry">
+            <div class="card card-secondary">
+                <div class="card-header">
+                    <h3 class="card-title">Sabre Info</h3>
+                </div>
+                <div class="card-body">
+
+                    @Html.HiddenFor(model => model.Id)
+                    @*@Html.HiddenFor(model => model.IDs)*@
+                    @Html.HiddenFor(model => model.Operation)
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Code)
+                            <div style="display: flex; align-items: center;">
+                                <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
+                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Code Auto Generate", @class = " csCode  form-control form-control-sm", @readonly = "readonly", @style = "width:140px;" }) &nbsp;
+                                <span id="btnNext" class="fa fa-forward" style="color: darkseagreen;"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.COAId)
+                            <div class="input-group ">
+                                @Html.TextBoxFor(model => model.COAId, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                            </div>
+                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Name)
+                            <div class="input-group ">
+                                @Html.TextBoxFor(model => model.Name, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                            </div>
+                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                        </div>
+
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Remarks)
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Policy Name", @class = " required form-control form-control-sm", required = "required" })
+                            </div>
+                            <span id="PolicyNameError" class="text-danger" style="display:none;"></span>
+
+                        </div>
+
+
+                    </div>
+                    <div class="form-group row">
+                    
+                        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.Status)
+                                <div class="Onoffbtn">
+                                    <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                        <input id="IsActive"
+                                               value="@Model.IsActive"
+                                               type="checkbox"
+                                               name="my-checkbox"
+                                               @(Model.IsActive ? "checked" : "")
+                                               data-bootstrap-switch
+                                               data-off-color="danger"
+                                               data-on-color="success"
+                                               data-on-text="Yes"
+                                               data-off-text="No">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-2 cStatus" style="display:none;">
+                                @Html.LabelFor(model => model.Status)
+                                <div class="Onoffbtn">
+                                    <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                        <input id="IsActive"
+                                               value="@Model.IsActive"
+                                               type="checkbox"
+                                               name="my-checkbox"
+                                               @(Model.IsActive ? "checked" : "")
+                                               data-bootstrap-switch
+                                               data-off-color="danger"
+                                               data-on-color="success"
+                                               data-on-text="Yes"
+                                               data-off-text="No">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+       
+
+
+
+        <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
+            <div class="card-header p-2">
+
+
+                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                { /*On Edit*/
+                    <button style="float:left;" type="button" class="button btnsave sslUpdate">Update</button>
+
+                }
+                else
+                {
+                    <div style="display:none;" class="divUpdate">
+                        @*after save*@
+                        <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                    </div>
+                    <div class="divSave">
+                        @*NEW Entry*@
+                        <button class="button btnsave sslSave" type="button" id="">Save</button>
+                    </div>
+                }
+
+            </div>
+
+            @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div> @*audit*@
+
+            }
+            else
+            {
+                <div class="auditshow" style="display:none;"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div> @*audit*@
+            }
+        </div>
+
+
+        <div class="card card-secondary auditcard">
+
+            <div class="card-header">
+                <h3 class="card-title">Audit Details</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="row">
+                            @Html.Label("Type")
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.Label("Created")
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.Label("Updated")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @Html.Label("By")<br /><div class="clearfix">&nbsp;</div>
+                                @Html.Label("On")<br /><div class="clearfix">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.CreatedBy, new { @class = "CreatedBy  form-control form-control-sm ", @readonly = "readonly" })
+                                <div class="clearfix">&nbsp;</div>
+                                @Html.TextBoxFor(model => model.CreatedOn, new { @class = "CreatedAt form-control form-control-sm ", @readonly = "readonly" })
+                            </div>
+
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.LastUpdateBy, new { @class = "LastUpdateBy  form-control form-control-sm lub", @readonly = "readonly" })
+                                <div class="clearfix">&nbsp;</div>
+                                @Html.TextBoxFor(model => model.LastUpdateAt, new { @class = "LastUpdateAt  form-control form-control-sm luo", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/Areas/Common/js/Services/CommonService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/SetUp/js/Controller/SabreController.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            SabreController.init();
+        });
+
+    </script>
+}
+
+
