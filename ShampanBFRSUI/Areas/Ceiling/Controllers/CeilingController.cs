@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.EMMA;
 using Newtonsoft.Json;
 using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
@@ -28,6 +29,8 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             ceilingVM.TransactionType = TransactionType;
             ceilingVM.MenuType = MenuType;
             ceilingVM.BudgetType = BudgetType;
+            ceilingVM.BudgetSetNo = 1;
+            ceilingVM.TransactionDate = DateTime.Now.ToString("yyyy-MM-dd");
 
             var currentBranchId = 0;
             if (Session["CurrentBranch"] != null)
@@ -44,6 +47,8 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             vm.Operation = "add";
             vm.IsActive = true;
             vm.TransactionType = TransactionType;
+            vm.BudgetSetNo = 1;
+            vm.TransactionDate = DateTime.Now.ToString("yyyy-MM-dd");
 
             return View("Create", vm);
         }
@@ -77,7 +82,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                         if (resultVM.Status == ResultStatus.Success.ToString())
                         {
                             model = JsonConvert.DeserializeObject<CeilingVM>(resultVM.DataVM.ToString());
-                            model.Operation = "Update";
+                            //model.Operation = "Update";
                             Session["result"] = resultVM.Status + "~" + resultVM.Message;
                             result = new ResultModel<CeilingVM>()
                             {
@@ -195,7 +200,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
 
         [HttpPost]
-        public JsonResult GetGridData(GridOptions options, string TransactionType, string MenuType)
+        public JsonResult GetGridData(GridOptions options, string TransactionType, string MenuType, string BudgetType = "")
         {
             ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new CeilingRepo();
@@ -204,6 +209,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             {
                 options.vm.UserId = Session["UserId"].ToString();
                 options.vm.TransactionType = TransactionType;
+                options.vm.BudgetType = BudgetType;
 
                 if (!string.IsNullOrWhiteSpace(MenuType) && MenuType.ToLower() == "all")
                 {
@@ -248,6 +254,8 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 options.vm.BudgetSetNo = budgetSetNo;
                 options.vm.BudgetType = budgetType;
                 options.vm.BranchId = currentBranchId.ToString();
+
+                options.vm.UserId = Session["UserId"].ToString();
 
                 result = _repo.GetAllSabreDataForDetails(options);
 

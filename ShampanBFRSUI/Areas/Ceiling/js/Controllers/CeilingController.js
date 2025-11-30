@@ -11,7 +11,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         var getMenuType = $("#MenuType").val() || '';
 
         if (parseInt(getId) == 0 && getOperation == '') {
-            GetGridDataList(getTransactionType, getMenuType);
+            GetGridDataList(getTransactionType, getMenuType, getBudgetType);
         }
 
         if (parseInt(getFiscalYearId) > 0 && parseInt(getBudgetSetNo) > 0 && getBudgetType !== '') {
@@ -21,9 +21,9 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
-        GetBudgetSetComboBox();
-        GetBudgetTypeComboBox();
-        GenerateDatePicker();
+        //GetBudgetSetComboBox();
+        //GetBudgetTypeComboBox();
+        //GenerateDatePicker();
 
 
         // Save button click handler
@@ -206,7 +206,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
     };
 
     // Fetch grid data
-    var GetGridDataList = function (getTransactionType, getMenuType) {
+    var GetGridDataList = function (getTransactionType, getMenuType, getBudgetType) {
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -221,7 +221,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     type: "POST",
                     dataType: "json",
                     cache: false,
-                    data: { TransactionType: getTransactionType, MenuType: getMenuType }
+                    data: { TransactionType: getTransactionType, MenuType: getMenuType, BudgetType: getBudgetType }
                 },
                 parameterMap: function (options) {
                     if (options.sort) {
@@ -480,8 +480,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
     // Handle success
     function saveDone(result) {
-
-        alert(result.Status);
 
         if (result.Status == 200) {
 
