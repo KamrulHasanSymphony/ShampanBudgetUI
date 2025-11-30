@@ -29,7 +29,7 @@ namespace ShampanBFRS.Models.Ceiling
         public string BudgetType { get; set; }
 
         
-        [Display(Name = "Ceiling Code")]
+        [Display(Name = "Code")]
         public string? Code { get; set; }
 
         
