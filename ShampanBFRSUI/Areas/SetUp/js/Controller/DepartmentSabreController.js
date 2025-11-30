@@ -1,21 +1,20 @@
-﻿var SabreController = function (CommonService, CommonAjaxService) {
+﻿var DepartmentSabreController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
-        debugger;
         var getId = $("#Id").val() || 0;
-        getCOAId = $("#COAId").val() || 0;
-        if (getOperation != "") {
-            GetCOAComboBox();
-        }
-
-
+        getDepartmentId = $("#DepartmentId").val() || 0;
+        getSabreId = $("#SabreId").val() || 0;
         var getOperation = $("#Operation").val() || '';
 
+        if (getOperation != "") {
+            GetDepartmentComboBox();
+            GetSabreComboBox();
+        }
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
         }
-
+        // Save button click handler
         $('.btnsave').click('click', function () {
             var getId = $('#Id').val();
             var status = "Save";
@@ -29,7 +28,7 @@
             });
         });
 
-
+        // Delete button click handler
         $('.btnDelete').on('click', function () {
             Confirmation("Are you sure? Do You Want to Delete Data?", function (result) {
                 if (result) {
@@ -38,26 +37,55 @@
             });
         });
 
-
+        // Previous button click handler
         $('#btnPrevious').click('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
-                window.location.href = "/SetUp/Sabre/NextPrevious?id=" + getId + "&status=Previous";
+                window.location.href = "/SetUp/DepartmentSabre/NextPrevious?id=" + getId + "&status=Previous";
             }
         });
 
-
+        // Next button click handler
         $('#btnNext').click('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
-                window.location.href = "/SetUp/Sabre/NextPrevious?id=" + getId + "&status=Next";
+                window.location.href = "/SetUp/DepartmentSabre/NextPrevious?id=" + getId + "&status=Next";
             }
         });
+
+
+
     };
-    function GetCOAComboBox() {
-        var COAComboBox = $("#COAId").kendoMultiColumnComboBox({
+
+    function GetDepartmentComboBox() {
+        var DepartmentComboBox = $("#DepartmentId").kendoMultiColumnComboBox({
+            dataTextField: "Id",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "Name", title: "Name", width: 150 },
+                { field: "Remarks", title: "Remarks", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Name", "Remarks"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetDepartmentList"
+                }
+            },
+            placeholder: "Select Department",
+            value: "",
+            dataBound: function (e) {
+                if (getDepartmentId) {
+                    this.value(parseInt(getDepartmentId));
+                }
+            }
+        }).data("kendoMultiColumnComboBox");
+    }; 
+    function GetSabreComboBox() {
+        var SabreComboBox = $("#SabreId").kendoMultiColumnComboBox({
             dataTextField: "Code",
-            dataValueField: "ID",
+            dataValueField: "Id",
             height: 400,
             columns: [
                 { field: "Code", title: "Code", width: 100 },
@@ -67,20 +95,20 @@
             filterFields: ["Code", "Name"],
             dataSource: {
                 transport: {
-                    read: "/Common/Common/GetCOAList"
+                    read: "/Common/Common/GetSabreList"
                 }
             },
-            placeholder: "Select COA",
+            placeholder: "Select Sabre",
             value: "",
             dataBound: function (e) {
-                if (getCOAId) {
-                    this.value(parseInt(getCOAId));
+                if (getSabreId) {
+                    this.value(parseInt(getSabreId));
                 }
             }
         }).data("kendoMultiColumnComboBox");
     };  
 
-
+    // Select data for delete
     function SelectData() {
         var IDs = [];
 
@@ -100,13 +128,13 @@
             IDs: IDs
         };
 
-        var url = "/SetUp/Sabre/Delete";
+        var url = "/SetUp/DepartmentSabre/Delete";
 
         CommonAjaxService.deleteData(url, model, deleteDone, saveFail);
     };
 
+    // Fetch grid data
     var GetGridDataList = function () {
-        debugger;
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -117,7 +145,7 @@
             pageSize: 10,
             transport: {
                 read: {
-                    url: "/SetUp/Sabre/GetGridData",
+                    url: "/SetUp/DepartmentSabre/GetGridData",
                     type: "POST",
                     dataType: "json",
                     cache: false
@@ -125,62 +153,51 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            if (param.field === "Code") {
-                                param.field = "H.Code";
-                            }
-                           
-                            if (param.field === "Name") {
-                                param.field = "H.Name";
-                            }
-                           
-                            if (param.field === "Remarks") {
-                                param.field = "H.Remarks";
 
+                            if (param.field === "DepartmentId") {
+                                param.field = "H.DepartmentId";
                             }
-                            if (param.field === "Status") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-                                param.field = "H.IsActive";
-                                param.operator = "eq";
+                            if (param.field === "SabreId") {
+                                param.field = "H.SabreId";
                             }
+                            
+                            //if (param.field === "Status") {
+                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+                            //    if (statusValue.startsWith("a")) {
+                            //        param.value = 1;
+                            //    } else if (statusValue.startsWith("i")) {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
+                            //    param.field = "H.IsActive";
+                            //    param.operator = "eq";
+                            //}
                         });
                     }
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-                            if (param.field === "Code") {
-                                param.field = "H.Code";
+                            if (param.field === "DepartmentId") {
+                                param.field = "H.DepartmentId";
                             }
-
-                            if (param.field === "Name") {
-                                param.field = "H.Name";
+                            if (param.field === "SabreId") {
+                                param.field = "H.SabreId";
                             }
+                            //if (param.field === "Status") {
+                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
-                            if (param.field === "Remarks") {
-                                param.field = "H.Remarks";
+                            //    if (statusValue.startsWith("a")) {
+                            //        param.value = 1;
+                            //    } else if (statusValue.startsWith("i")) {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
 
-                            }
- 
-                            if (param.field === "Status") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-
-                                param.field = "H.IsActive";
-                                param.operator = "eq";
-                            }
+                            //    param.field = "H.IsActive";
+                            //    param.operator = "eq";
+                            //}
                         });
                     }
 
@@ -229,14 +246,14 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Code","Name"]
+                fields: ["Name"]
             },
             excel: {
-                fileName: `Sabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
+                fileName: `DepartmentSabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `Sabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
+                fileName: `DepartmentSabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
@@ -246,8 +263,8 @@
                 $(".k-grouping-header").hide();
                 $(".k-floatwrap").hide();
 
-                var companyName = "Shampan Tailoring System.";
-                var fileName = `Examinees_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
+                var companyName = "Shampan Budget System.";
+                var fileName = `DepartmentSabre_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
 
                 e.sender.options.pdf = {
                     paperSize: "A4",
@@ -271,20 +288,19 @@
                     title: "Action",
                     width: 40,
                     template: function (dataItem) {
-                        console.log(dataItem);
                         return `
-                            <a href="/SetUp/Sabre/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
+                            <a href="/SetUp/DepartmentSabre/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>`;
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", sortable: true, width: 200 },
-                { field: "Name", title: "Name", sortable: true, width: 200 },
-                { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
+                { field: "DepartmentId", title: "Department", sortable: true, width: 200 },
+                { field: "SabreId", title: "Sabre", sortable: true, width: 200 }
+
             ],
             editable: false,
-            selectable: "row",
+            selectable: " row",
             navigatable: true,
             columnMenu: true
         });
@@ -312,7 +328,7 @@
         formData.append("IsActive", $('#IsActive').prop('checked'));
         formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
 
-        var url = "/SetUp/Sabre/CreateEdit";
+        var url = "/SetUp/DepartmentSabre/CreateEdit";
         CommonAjaxService.finalImageSave(url, formData, saveDone, saveFail);
     }
 

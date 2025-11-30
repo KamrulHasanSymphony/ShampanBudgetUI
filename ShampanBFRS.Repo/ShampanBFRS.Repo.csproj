@@ -56,6 +56,8 @@
     <Compile Include="QuestionRepo\QuestionChapterRepo.cs" />
     <Compile Include="QuestionRepo\QuestionSetRepo.cs" />
     <Compile Include="QuestionRepo\QuestionSubjectRepo.cs" />
+    <Compile Include="SetUpRepo\DepartmentSabreRepo.cs" />
+    <Compile Include="SetUpRepo\DepartmentRepo.cs" />
     <Compile Include="SetUpRepo\SabreRepo.cs" />
     <Compile Include="SetUpRepo\UserBranchProfileRepo.cs" />
     <Compile Include="SetUpRepo\UserProfileRepo.cs" />
