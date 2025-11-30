@@ -398,8 +398,8 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "SabreCode", title: "Sabre Code", sortable: true, width: 200 },
-                { field: "SabreName", title: "Sabre Name", sortable: true, width: 200 },
+                { field: "SabreCode", title: "Sabre Code", sortable: true, hidden: true },
+                { field: "SabreName", title: "Sabre Name", sortable: true, hidden: true },
                 { field: "DepName", title: "Department Name", sortable: true, width: 200 },
                 { field: "Remark", title: "Remark", sortable: true, width: 200 },
                 { field: "DepartmentId", title: "Department", sortable: true,hidden:true },
