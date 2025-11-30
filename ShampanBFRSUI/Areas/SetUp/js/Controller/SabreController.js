@@ -3,6 +3,12 @@
     var init = function () {
         debugger;
         var getId = $("#Id").val() || 0;
+        getCOAId = $("#COAId").val() || 0;
+        if (getOperation != "") {
+            GetCOAComboBox();
+        }
+
+
         var getOperation = $("#Operation").val() || '';
 
 
@@ -48,6 +54,32 @@
             }
         });
     };
+    function GetCOAComboBox() {
+        var COAComboBox = $("#COAId").kendoMultiColumnComboBox({
+            dataTextField: "Code",
+            dataValueField: "ID",
+            height: 400,
+            columns: [
+                { field: "Code", title: "Code", width: 100 },
+                { field: "Name", title: "Name", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetCOAList"
+                }
+            },
+            placeholder: "Select COA",
+            value: "",
+            dataBound: function (e) {
+                if (getCOAId) {
+                    this.value(parseInt(getCOAId));
+                }
+            }
+        }).data("kendoMultiColumnComboBox");
+    };  
+
 
     function SelectData() {
         var IDs = [];

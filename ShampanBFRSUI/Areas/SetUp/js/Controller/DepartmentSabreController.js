@@ -2,7 +2,14 @@
 
     var init = function () {
         var getId = $("#Id").val() || 0;
+        getDepartmentId = $("#DepartmentId").val() || 0;
+        getSabreId = $("#SabreId").val() || 0;
         var getOperation = $("#Operation").val() || '';
+
+        if (getOperation != "") {
+            GetDepartmentComboBox();
+            GetSabreComboBox();
+        }
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
@@ -49,6 +56,57 @@
 
 
     };
+
+    function GetDepartmentComboBox() {
+        var DepartmentComboBox = $("#DepartmentId").kendoMultiColumnComboBox({
+            dataTextField: "Id",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "Name", title: "Name", width: 150 },
+                { field: "Remarks", title: "Remarks", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Name", "Remarks"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetDepartmentList"
+                }
+            },
+            placeholder: "Select Department",
+            value: "",
+            dataBound: function (e) {
+                if (getDepartmentId) {
+                    this.value(parseInt(getDepartmentId));
+                }
+            }
+        }).data("kendoMultiColumnComboBox");
+    }; 
+    function GetSabreComboBox() {
+        var SabreComboBox = $("#SabreId").kendoMultiColumnComboBox({
+            dataTextField: "Code",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "Code", title: "Code", width: 100 },
+                { field: "Name", title: "Name", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetSabreList"
+                }
+            },
+            placeholder: "Select Sabre",
+            value: "",
+            dataBound: function (e) {
+                if (getSabreId) {
+                    this.value(parseInt(getSabreId));
+                }
+            }
+        }).data("kendoMultiColumnComboBox");
+    };  
 
     // Select data for delete
     function SelectData() {
