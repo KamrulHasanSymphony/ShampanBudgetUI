@@ -56,7 +56,7 @@
     };
     function GetCOAComboBox() {
         var COAComboBox = $("#COAId").kendoMultiColumnComboBox({
-            dataTextField: "Code",
+            dataTextField: "Name",
             dataValueField: "ID",
             height: 400,
             columns: [

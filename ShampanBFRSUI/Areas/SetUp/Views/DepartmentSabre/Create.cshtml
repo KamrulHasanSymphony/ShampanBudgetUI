@@ -1,4 +1,5 @@
-﻿@model ShampanBFRS.Models.SetUpVMs.DepartmentSabreVM
+﻿@using Newtonsoft.Json
+@model ShampanBFRS.Models.SetUpVMs.DepartmentSabreVM
 @{
     ViewBag.Title = "DepartmentSabre Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -107,82 +108,106 @@
             <div id="tabs-1">
                 <form id="frmEntry">
                     <div class="card card-secondary">
-                        <div class="card-header">
+                        @*<div class="card-header">
                             <h3 class="card-title">Department Sabre Info</h3>
-                        </div>
+                        </div>*@
                         <div class="card-body">
                             @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model => model.Operation)
+                            @Html.Hidden("TransferIssueDetailsJson", JsonConvert.SerializeObject(Model.SabreList ?? new List<ShampanBFRS.Models.SetUpVMs.DepartmentSabreVM>()))
 
                             <div class="form-group row">
 
-                                <div class="col-sm-3">
-                                    @Html.LabelFor(model => model.DepartmentId)
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(model => model.DepartmentId, new { placeholder = "Enter Department", @class = "form-control form-control-sm" })
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.DepartmentId)
-                                </div>
 
                                 <div class="col-sm-3">
-                                    @Html.LabelFor(model => model.SabreId)
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(model => model.SabreId, new { placeholder = "Enter Sabre", @class = "form-control form-control-sm" })
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.SabreId)
+                                        @Html.LabelFor(model => model.DepartmentId)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.DepartmentId, new { placeholder = "Enter Department", @class = "form-control form-control-sm" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.DepartmentId)
                                 </div>
 
-                                
+
                             </div>
 
 
                             @*<div class="form-group row">
 
-                                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    <div class="col-sm-2">
-                                        @Html.LabelFor(model => model.Status)
-                                        <div class="Onoffbtn">
-                                            <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                                <input id="IsActive"
-                                                       value="@Model.IsActive"
-                                                       type="checkbox"
-                                                       name="my-checkbox"
-                                                       @(Model.IsActive ? "checked" : "")
-                                                       data-bootstrap-switch
-                                                       data-off-color="danger"
-                                                       data-on-color="success"
-                                                       data-on-text="Yes"
-                                                       data-off-text="No">
+                                    @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <div class="col-sm-2">
+                                            @Html.LabelFor(model => model.Status)
+                                            <div class="Onoffbtn">
+                                                <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                                    <input id="IsActive"
+                                                           value="@Model.IsActive"
+                                                           type="checkbox"
+                                                           name="my-checkbox"
+                                                           @(Model.IsActive ? "checked" : "")
+                                                           data-bootstrap-switch
+                                                           data-off-color="danger"
+                                                           data-on-color="success"
+                                                           data-on-text="Yes"
+                                                           data-off-text="No">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-sm-2 cStatus" style="display:none;">
-                                        @Html.LabelFor(model => model.Status)
-                                        <div class="Onoffbtn">
-                                            <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                                <input id="IsActive"
-                                                       value="@Model.IsActive"
-                                                       type="checkbox"
-                                                       name="my-checkbox"
-                                                       @(Model.IsActive ? "checked" : "")
-                                                       data-bootstrap-switch
-                                                       data-off-color="danger"
-                                                       data-on-color="success"
-                                                       data-on-text="Yes"
-                                                       data-off-text="No">
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-2 cStatus" style="display:none;">
+                                            @Html.LabelFor(model => model.Status)
+                                            <div class="Onoffbtn">
+                                                <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                                    <input id="IsActive"
+                                                           value="@Model.IsActive"
+                                                           type="checkbox"
+                                                           name="my-checkbox"
+                                                           @(Model.IsActive ? "checked" : "")
+                                                           data-bootstrap-switch
+                                                           data-off-color="danger"
+                                                           data-on-color="success"
+                                                           data-on-text="Yes"
+                                                           data-off-text="No">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
-                            </div>*@
+                                    }
+                                </div>*@
                         </div>
 
                     </div>
                 </form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Sabres</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="departments"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Added Sabre</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="sabres"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="departmentsWindow" style="display:none;">
+                    <div id="departmentsGrid"></div>
+                </div>
+
+                <div id="sabresWindow" style="display:none;">
+                    <div id="sabresGrid"></div>
+                </div>
 
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">

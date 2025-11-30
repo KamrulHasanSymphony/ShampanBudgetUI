@@ -1,5 +1,9 @@
 ﻿var DepartmentSabreController = function (CommonService, CommonAjaxService) {
 
+    var sabreList;
+    var getDepartmentId = 0;
+    var getSabreId = 0;
+
     var init = function () {
         var getId = $("#Id").val() || 0;
         getDepartmentId = $("#DepartmentId").val() || 0;
@@ -8,14 +12,15 @@
 
         if (getOperation != "") {
             GetDepartmentComboBox();
+            LoadItemsGrid();
             GetSabreComboBox();
         }
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
         }
-        // Save button click handler
-        $('.btnsave').click('click', function () {
+
+        $('.btnsave').on('click', function () {
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
@@ -38,7 +43,7 @@
         });
 
         // Previous button click handler
-        $('#btnPrevious').click('click', function () {
+        $('#btnPrevious').on('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
                 window.location.href = "/SetUp/DepartmentSabre/NextPrevious?id=" + getId + "&status=Previous";
@@ -46,20 +51,75 @@
         });
 
         // Next button click handler
-        $('#btnNext').click('click', function () {
+        $('#btnNext').on('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
                 window.location.href = "/SetUp/DepartmentSabre/NextPrevious?id=" + getId + "&status=Next";
             }
         });
 
+        // Load existing detail rows (edit mode)
+        var transferIssueDetailList = JSON.parse($("#TransferIssueDetailsJson").val() || "[]");
 
+        sabreList = new kendo.data.DataSource({
+            data: transferIssueDetailList,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        SLNo: { editable: false },
+                        Id: { type: "number", defaultValue: 0 },
+                        TransferIssueId: { type: "number", defaultValue: null },
+                        BranchId: { type: "number", defaultValue: null },
+                        DepartmentId: { type: "string", defaultValue: "", editable: false },
+                        SabreId: { type: "string", defaultValue: "", editable: false },
+                        Code: { type: "string", defaultValue: "", editable: false },
+                        Name: { type: "string", defaultValue: "", editable: false }
+                    }
+                }
+            }
+        });
 
-    };
+        $("#sabres").kendoGrid({
+            dataSource: sabreList,
+            //toolbar: [{ name: "create", text: "Add" }],
+            editable: {
+                mode: "incell",
+                createAt: "bottom"
+            },
+            save: function () {
+                var grid = this;
+                setTimeout(function () {
+                    grid.refresh();
+                }, 0);
+            },
+            columns: [
+                {
+                    field: "SLNo",
+                    title: "SL",
+                    width: 50,
+                    template: function (dataItem) {
+                        var grid = $("#sabres").data("kendoGrid");
+                        return grid.dataSource.indexOf(dataItem) + 1;
+                    },
+                    editable: false
+                },
+                { field: "Code", title: "Sabre Code", width: 80, editable: false },
+                { field: "DepartmentId", hidden: true },
+                { field: "Name", title: "Sabre Name", width: 80, editable: false },
+                {
+                    command: [{ name: "destroy", iconClass: "k-icon k-i-trash", text: "" }],
+                    title: "&nbsp;",
+                    width: 40
+                }
+            ]
+        });
+
+    }; // end init
 
     function GetDepartmentComboBox() {
         var DepartmentComboBox = $("#DepartmentId").kendoMultiColumnComboBox({
-            dataTextField: "Id",
+            dataTextField: "Name",
             dataValueField: "Id",
             height: 400,
             columns: [
@@ -80,11 +140,19 @@
                     this.value(parseInt(getDepartmentId));
                 }
             }
+            //,
+            //change: function (e) {
+            //    var selectedValue = this.value();
+            //    if (selectedValue) {
+            //        LoadItemsGrid();
+            //    }
+            //}
         }).data("kendoMultiColumnComboBox");
-    }; 
+    }
+
     function GetSabreComboBox() {
         var SabreComboBox = $("#SabreId").kendoMultiColumnComboBox({
-            dataTextField: "Code",
+            dataTextField: "Name",
             dataValueField: "Id",
             height: 400,
             columns: [
@@ -106,7 +174,77 @@
                 }
             }
         }).data("kendoMultiColumnComboBox");
-    };  
+    }
+
+    function LoadItemsGrid() {
+        $("#departments").empty();
+
+        $("#departments").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetSabreList",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    data: function (res) { return res; },
+                    total: function (res) { return res.length; }
+                },
+                pageSize: 10
+            },
+            sortable: true,
+            filterable: true,
+            pageable: true,
+            selectable: "row",
+            columns: [
+                { field: "Id", hidden: true },
+                { field: "Code", title: "Code", width: 100 },
+                { field: "Name", title: "Name", width: 150 },
+                {
+                    title: "Action",
+                    width: 90,
+                    template:
+                        `<button class='k-button k-primary addToDetails'
+             data-id='#: Id #'
+             data-code='#: Code #'
+             data-name='#: Name #'
+        > Add </button>`
+                }
+            ],
+            dataBound: function () {
+                $(".addToDetails").off("click").on("click", function () {
+                    var qty = $(this).closest("tr").find(".qtyInput").val();
+                    qty = qty ? parseFloat(qty) : 1;
+
+                    var item = {
+                        Id: $(this).data("id"),
+                        Code: $(this).data("code"),
+                        Name: $(this).data("name")
+                    };
+
+                    Addtosabre(item);
+                });
+            }
+        });
+    }
+
+    function Addtosabre(item) {
+        var ds = sabreList;
+
+         //duplicate check (optional) - uncomment and adapt if needed
+         var exists = ds.data().some(function(x) { return x.SabreId == item.Id; });
+         if (exists) { kendo.alert("This item already added!"); return; }
+
+        ds.add({
+            Id: 0,
+            TransferIssueId: null,
+            BranchId: $("#BranchId").val() || null,
+            SabreId: item.Id,
+            Code: item.Code,
+            Name: item.Name
+        });
+    }
 
     // Select data for delete
     function SelectData() {
@@ -114,7 +252,7 @@
 
         var selectedRows = $("#GridDataList").data("kendoGrid").select();
 
-        if (selectedRows.length === 0) {
+        if (!selectedRows || selectedRows.length === 0) {
             ShowNotification(3, "You are requested to Select checkbox!");
             return;
         }
@@ -124,14 +262,11 @@
             IDs.push(dataItem.Id);
         });
 
-        var model = {
-            IDs: IDs
-        };
-
+        var model = { IDs: IDs };
         var url = "/SetUp/DepartmentSabre/Delete";
 
         CommonAjaxService.deleteData(url, model, deleteDone, saveFail);
-    };
+    }
 
     // Fetch grid data
     var GetGridDataList = function () {
@@ -153,26 +288,12 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-
                             if (param.field === "DepartmentId") {
                                 param.field = "H.DepartmentId";
                             }
                             if (param.field === "SabreId") {
                                 param.field = "H.SabreId";
                             }
-                            
-                            //if (param.field === "Status") {
-                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-                            //    if (statusValue.startsWith("a")) {
-                            //        param.value = 1;
-                            //    } else if (statusValue.startsWith("i")) {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-                            //    param.field = "H.IsActive";
-                            //    param.operator = "eq";
-                            //}
                         });
                     }
 
@@ -184,20 +305,6 @@
                             if (param.field === "SabreId") {
                                 param.field = "H.SabreId";
                             }
-                            //if (param.field === "Status") {
-                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-
-                            //    if (statusValue.startsWith("a")) {
-                            //        param.value = 1;
-                            //    } else if (statusValue.startsWith("i")) {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-
-                            //    param.field = "H.IsActive";
-                            //    param.operator = "eq";
-                            //}
                         });
                     }
 
@@ -221,9 +328,7 @@
                 pageSizes: [10, 20, 50, "all"]
             },
             noRecords: true,
-            messages: {
-                noRecords: "No Record Found!"
-            },
+            messages: { noRecords: "No Record Found!" },
             scrollable: true,
             filterable: {
                 extra: true,
@@ -245,9 +350,7 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: {
-                fields: ["Name"]
-            },
+            search: { fields: ["Name"] },
             excel: {
                 fileName: `DepartmentSabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
@@ -295,16 +398,19 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "DepartmentId", title: "Department", sortable: true, width: 200 },
-                { field: "SabreId", title: "Sabre", sortable: true, width: 200 }
-
+                { field: "SabreCode", title: "Sabre Code", sortable: true, width: 200 },
+                { field: "SabreName", title: "Sabre Name", sortable: true, width: 200 },
+                { field: "DepName", title: "Department Name", sortable: true, width: 200 },
+                { field: "Remark", title: "Remark", sortable: true, width: 200 },
+                { field: "DepartmentId", title: "Department", sortable: true,hidden:true },
+                { field: "SabreId", title: "Sabre", sortable: true, hidden:true }
             ],
             editable: false,
             selectable: " row",
             navigatable: true,
             columnMenu: true
         });
-    };
+    }; // end GetGridDataList
 
     // Save the form data
     function save() {
@@ -315,9 +421,7 @@
         var result = validator.form();
 
         if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
+            validator.focusInvalid();
             return;
         }
 
@@ -325,11 +429,39 @@
             formData.append(key, model[key]);
         }
 
-        formData.append("IsActive", $('#IsActive').prop('checked'));
-        formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
+        var department = model.DepartmentId;
+
+        var grid = $("#sabres").data("kendoGrid");
+        var details = [];
+
+
+
+        if (grid) {
+            var dataItems = grid.dataSource.view();
+
+            for (var i = 0; i < dataItems.length; i++) {
+                var item = dataItems[i];
+
+                details.push({
+                    Id: item.Id,
+                    SabreId: item.SabreId,
+                    DepartmentId: department
+                });
+            }
+        }
+
+        if (details.length === 0) {
+            ShowNotification(3, "At least one detail entry is required.");
+            return;
+        }
+
+        model.SabreList = details;
+
+        debugger;
+
 
         var url = "/SetUp/DepartmentSabre/CreateEdit";
-        CommonAjaxService.finalImageSave(url, formData, saveDone, saveFail);
+        CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 
     // Handle success
@@ -360,7 +492,9 @@
         }
     }
 
+    // final return — must be inside wrapper
     return {
         init: init
-    }
+    };
+
 }(CommonService, CommonAjaxService);
