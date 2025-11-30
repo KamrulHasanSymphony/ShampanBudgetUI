@@ -413,6 +413,7 @@
     <Compile Include="Areas\Questions\Controllers\QuestionChapterController.cs" />
     <Compile Include="Areas\Questions\Controllers\QuestionSetController.cs" />
     <Compile Include="Areas\Questions\Controllers\QuestionSubjectController.cs" />
+    <Compile Include="Areas\SetUp\Controllers\COAGroupController.cs" />
     <Compile Include="Areas\SetUp\Controllers\DepartmentSabreController.cs" />
     <Compile Include="Areas\SetUp\Controllers\FiscalYearController.cs" />
     <Compile Include="Areas\SetUp\Controllers\DepartmentController.cs" />
@@ -447,6 +448,7 @@
     <Content Include="Areas\Questions\js\Controllers\QuestionChapterController.js" />
     <Content Include="Areas\Questions\js\Controllers\QuestionSetController.js" />
     <Content Include="Areas\Questions\js\Controllers\QuestionSubjectController.js" />
+    <Content Include="Areas\SetUp\js\Controller\COAGroupController.js" />
     <Content Include="Areas\SetUp\js\Controller\DepartmentController.js" />
     <Content Include="Areas\SetUp\js\Controller\DepartmentSabreController.js" />
     <Content Include="Areas\SetUp\js\Controller\FiscalYearsController.js" />
@@ -2604,6 +2606,8 @@
     <Content Include="Areas\SetUp\Views\Department\Index.cshtml" />
     <Content Include="Areas\SetUp\Views\DepartmentSabre\Create.cshtml" />
     <Content Include="Areas\SetUp\Views\DepartmentSabre\Index.cshtml" />
+    <Content Include="Areas\SetUp\Views\COAGroup\Index.cshtml" />
+    <Content Include="Areas\SetUp\Views\COAGroup\Create.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />
