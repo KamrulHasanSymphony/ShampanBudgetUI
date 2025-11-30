@@ -58,6 +58,23 @@
             }
         });
 
+        $("#sabres").on("click", ".custom-delete", function (e) {
+            e.preventDefault();
+
+            var grid = $("#sabres").data("kendoGrid");
+            var tr = $(this).closest("tr");
+            var dataItem = grid.dataItem(tr);
+
+            var msg = "Are you sure? Do you want to Delete this Data?";
+
+            Confirmation(msg, function (result) {
+                if (result) {
+                    grid.dataSource.remove(dataItem);
+                    grid.dataSource.sync();
+                }
+            });
+        });
+
         // Load existing detail rows (edit mode)
         var transferIssueDetailList = JSON.parse($("#TransferIssueDetailsJson").val() || "[]");
 
@@ -108,9 +125,9 @@
                 { field: "DepartmentId", hidden: true },
                 { field: "Name", title: "Sabre Name", width: 80, editable: false },
                 {
-                    command: [{ name: "destroy", iconClass: "k-icon k-i-trash", text: "" }],
                     title: "&nbsp;",
-                    width: 40
+                    width: 40,
+                    template: '<a class="k-button k-button-icon custom-delete" href="\\#"><span class="k-icon k-i-trash"></span></a>'
                 }
             ]
         });
