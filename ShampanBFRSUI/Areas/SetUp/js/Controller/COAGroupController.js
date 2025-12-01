@@ -2,7 +2,14 @@
 
     var init = function () {
         var getId = $("#Id").val() || 0;
+        getCategoryType = $("#Category").val() || 0;
         var getOperation = $("#Operation").val() || '';
+
+
+        if (getOperation != "") {
+            GetCategoryComboBox();
+
+        }
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
@@ -49,6 +56,52 @@
 
 
     };
+    function GetCategoryComboBox(cat) {
+
+        var CategoryTypeComboBox = $("#Category").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "Name", title: "Name", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetEnumTypeList",
+                        data: {
+                            EnumType: "Category"
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            console.log("CategoryType loaded successfully:", response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error fetching CategoryType list:", error);
+                            alert("Error fetching CategoryType list.");
+                        }
+                    }
+                }
+            },
+            placeholder: "Select CategoryType",
+            value: "",
+            dataBound: function (e) {
+
+                if (getCategoryType && getCategoryType !== 0) {
+                    this.value(getCategoryType);
+                }
+            },
+            change: function (e) {
+                var selectedDiseaseId = this.value();
+                console.log("Selected Disease ID:", selectedDiseaseId);
+            }
+        }).data("kendoMultiColumnComboBox");
+    }
+
+
+
 
     // Select data for delete
     function SelectData() {
