@@ -161,7 +161,7 @@
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
                             }
-                            if (param.field === "Status") {
+                            if (param.field === "Active") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
                                 if (statusValue.startsWith("a")) {
                                     param.value = 1;
@@ -190,7 +190,7 @@
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
                             }
-                            if (param.field === "Status") {
+                            if (param.field === "Active") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
                                 if (statusValue.startsWith("a")) {
@@ -315,30 +315,25 @@
     };
 
     // Save the form data
+
     function save() {
+        debugger;
         var validator = $("#frmEntry").validate();
-        var formData = new FormData();
         var model = serializeInputs("frmEntry");
 
         var result = validator.form();
 
         if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
+            validator.focusInvalid();
             return;
         }
 
-        for (var key in model) {
-            formData.append(key, model[key]);
-        }
-
-        formData.append("IsActive", $('#IsActive').prop('checked'));
-        formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
-
+        // Append checkbox values directly into model
+        model.IsActive = $('#IsActive').prop('checked');
         var url = "/SetUp/COAGroup/CreateEdit";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
+    
 
     // Handle success
     function saveDone(result) {

@@ -1,6 +1,6 @@
 ﻿@model ShampanBFRS.Models.SetUpVMs.COAGroupVM
 @{
-    ViewBag.Title = "COAGroup Create";
+    ViewBag.Title = "COA Group Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,11 +13,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> COAGroup Update </h1>
+                    <h1 class="m-0"> COA Group Update </h1>
                 }
                 else
                 {
-                    <h1 class="m-0"> COAGroup Create</h1>
+                    <h1 class="m-0"> COA Group Create</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -69,7 +69,7 @@
         <form id="frmEntry">
             <div class="card card-secondary">
                 <div class="card-header">
-                    <h3 class="card-title">COAGroup Info</h3>
+                    <h3 class="card-title">COA Group Entry</h3>
                 </div>
                 <div class="card-body">
 
@@ -89,12 +89,12 @@
                         </div>
 
                         @*<div class="col-sm-2">
-                @Html.LabelFor(model => model.GroupSL)
-                <div class="input-group ">
-                    @Html.TextBoxFor(model => model.GroupSL, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
-                </div>
-                <span id="titleError2" class="text-danger" style="display:none;"></span>
-            </div>*@
+            @Html.LabelFor(model => model.GroupSL)
+            <div class="input-group ">
+                @Html.TextBoxFor(model => model.GroupSL, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+            </div>
+            <span id="titleError2" class="text-danger" style="display:none;"></span>
+        </div>*@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Category)
                             <div class="input-group ">
@@ -106,7 +106,7 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Name)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Name, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name ", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
@@ -114,20 +114,16 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Remarks)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Policy Name", @class = " required form-control form-control-sm", required = "required" })
+                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks ", @class = " required form-control form-control-sm", required = "required" })
                             </div>
                             <span id="PolicyNameError" class="text-danger" style="display:none;"></span>
 
                         </div>
 
-
-                    </div>
-                    <div class="form-group row">
-
                         @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                         {
                             <div class="col-sm-2">
-                                @Html.LabelFor(model => model.Status)
+                                @Html.LabelFor(model => model.IsActive)
                                 <div class="Onoffbtn">
                                     <div class="input-group" style="margin-bottom: -26px; width: 78%;">
                                         <input id="IsActive"
@@ -147,7 +143,7 @@
                         else
                         {
                             <div class="col-sm-2 cStatus" style="display:none;">
-                                @Html.LabelFor(model => model.Status)
+                                @Html.LabelFor(model => model.IsActive)
                                 <div class="Onoffbtn">
                                     <div class="input-group" style="margin-bottom: -26px; width: 78%;">
                                         <input id="IsActive"
@@ -164,7 +160,52 @@
                                 </div>
                             </div>
                         }
+
+
                     </div>
+                    @*<div class="form-group row">
+
+                        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.IsActive)
+                                <div class="Onoffbtn">
+                                    <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                        <input id="IsActive"
+                                               value="@Model.IsActive"
+                                               type="checkbox"
+                                               name="my-checkbox"
+                                               @(Model.IsActive ? "checked" : "")
+                                               data-bootstrap-switch
+                                               data-off-color="danger"
+                                               data-on-color="success"
+                                               data-on-text="Yes"
+                                               data-off-text="No">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-2 cStatus" style="display:none;">
+                                @Html.LabelFor(model => model.IsActive)
+                                <div class="Onoffbtn">
+                                    <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                        <input id="IsActive"
+                                               value="@Model.IsActive"
+                                               type="checkbox"
+                                               name="my-checkbox"
+                                               @(Model.IsActive ? "checked" : "")
+                                               data-bootstrap-switch
+                                               data-off-color="danger"
+                                               data-on-color="success"
+                                               data-on-text="Yes"
+                                               data-off-text="No">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>*@
 
                 </div>
             </div>

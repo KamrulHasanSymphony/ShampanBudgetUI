@@ -6,6 +6,7 @@
         getReportType = $("#ReportType").val() || 0;
         getCOAType = $("#COAType").val() || 0;
         getCOAGroup = $("#COAGroupId").val() || 0;
+        getStructure = $("#StructureId").val() || 0;
         var getOperation = $("#Operation").val() || '';
 
 
@@ -14,6 +15,7 @@
             GetReportComboBox();
             GetCOATypeComboBox();
             GetCOAGroupComboBox();
+            GetStructureComboBox();
 
         }
         $("[data-bootstrap-switch]").bootstrapSwitch();
@@ -108,7 +110,7 @@
     }
     function GetReportComboBox() {
 
-        var NatureTypeComboBox = $("#ReportType").kendoMultiColumnComboBox({
+        var ReportTypeComboBox = $("#ReportType").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Name",
             height: 400,
@@ -151,7 +153,7 @@
     }
     function GetCOATypeComboBox() {
 
-        var NatureTypeComboBox = $("#COAType").kendoMultiColumnComboBox({
+        var COATypeComboBox = $("#COAType").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Name",
             height: 400,
@@ -193,7 +195,7 @@
         }).data("kendoMultiColumnComboBox");
     }
     function GetCOAGroupComboBox() {
-        var CustomerComboBox = $("#COAGroupId").kendoMultiColumnComboBox({
+        var COAGroupComboBox = $("#COAGroupId").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Id",
             height: 400,
@@ -218,7 +220,49 @@
         }).data("kendoMultiColumnComboBox");
     };  
 
+    function GetStructureComboBox() {
 
+        var StrutureComboBox = $("#StructureId").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Name",
+            height: 400,
+            columns: [
+                { field: "Name", title: "Name", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetEnumTypeList",
+                        data: {
+                            EnumType: "StructureType"
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            console.log("Structure loaded successfully:", response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error fetching Structure list:", error);
+                            alert("Error fetching Structure list.");
+                        }
+                    }
+                }
+            },
+            placeholder: "Select Structure",
+            value: "",
+            dataBound: function (e) {
+
+                if (getStructure && getStructure !== 0) {
+                    this.value(getStructure);
+                }
+            },
+            change: function (e) {
+                var selectedDiseaseId = this.value();
+                console.log("Selected Disease ID:", selectedDiseaseId);
+            }
+        }).data("kendoMultiColumnComboBox");
+    }
 
 
      //Select data for delete
