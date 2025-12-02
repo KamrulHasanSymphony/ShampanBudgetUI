@@ -109,7 +109,7 @@
                 <form id="frmEntry">
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">Department Info</h3>
+                            <h3 class="card-title">Department Entry </h3>
                         </div>
                         <div class="card-body">
                             @Html.HiddenFor(model => model.Id)
@@ -117,7 +117,7 @@
 
                             <div class="form-group row">
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     @Html.LabelFor(model => model.Name)
                                     <div class="input-group">
                                         @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name", @class = "form-control form-control-sm" })
@@ -125,7 +125,7 @@
                                     @Html.ValidationMessageFor(model => model.Name)
                                 </div>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     @Html.LabelFor(model => model.Description)
                                     <div class="input-group">
                                         @Html.TextBoxFor(model => model.Description, new { placeholder = "Enter Description", @class = "form-control form-control-sm" })
@@ -133,7 +133,7 @@
                                     @Html.ValidationMessageFor(model => model.Description)
                                 </div>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     @Html.LabelFor(model => model.Reference)
                                     <div class="input-group">
                                         @Html.TextBoxFor(model => model.Reference, new { placeholder = "Enter Reference", @class = "form-control form-control-sm" })
@@ -141,59 +141,57 @@
                                     @Html.ValidationMessageFor(model => model.Reference)
                                 </div>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     @Html.LabelFor(model => model.Remarks)
                                     <div class="input-group">
                                         @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks", @class = "form-control form-control-sm" })
                                     </div>
                                     @Html.ValidationMessageFor(model => model.Remarks)
                                 </div>
+
+                                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <div class="col-sm-2">
+                                        @Html.LabelFor(model => model.IsActive)
+                                        <div class="Onoffbtn">
+                                            <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                                <input id="IsActive"
+                                                       value="@Model.IsActive"
+                                                       type="checkbox"
+                                                       name="my-checkbox"
+                                                       @(Model.IsActive ? "checked" : "")
+                                                       data-bootstrap-switch
+                                                       data-off-color="danger"
+                                                       data-on-color="success"
+                                                       data-on-text="Yes"
+                                                       data-off-text="No">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-2 cStatus" style="display:none;">
+                                        @Html.LabelFor(model => model.IsActive)
+                                        <div class="Onoffbtn">
+                                            <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                                                <input id="IsActive"
+                                                       value="@Model.IsActive"
+                                                       type="checkbox"
+                                                       name="my-checkbox"
+                                                       @(Model.IsActive ? "checked" : "")
+                                                       data-bootstrap-switch
+                                                       data-off-color="danger"
+                                                       data-on-color="success"
+                                                       data-on-text="Yes"
+                                                       data-off-text="No">
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
 
-                               
-                                <div class="form-group row">
 
-                                    @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        <div class="col-sm-2">
-                                            @Html.LabelFor(model => model.Status)
-                                            <div class="Onoffbtn">
-                                                <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                                    <input id="IsActive"
-                                                           value="@Model.IsActive"
-                                                           type="checkbox"
-                                                           name="my-checkbox"
-                                                           @(Model.IsActive ? "checked" : "")
-                                                           data-bootstrap-switch
-                                                           data-off-color="danger"
-                                                           data-on-color="success"
-                                                           data-on-text="Yes"
-                                                           data-off-text="No">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="col-sm-2 cStatus" style="display:none;">
-                                            @Html.LabelFor(model => model.Status)
-                                            <div class="Onoffbtn">
-                                                <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                                    <input id="IsActive"
-                                                           value="@Model.IsActive"
-                                                           type="checkbox"
-                                                           name="my-checkbox"
-                                                           @(Model.IsActive ? "checked" : "")
-                                                           data-bootstrap-switch
-                                                           data-off-color="danger"
-                                                           data-on-color="success"
-                                                           data-on-text="Yes"
-                                                           data-off-text="No">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
                         </div>
 
                     </div>
