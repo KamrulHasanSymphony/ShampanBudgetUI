@@ -458,6 +458,30 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult GetCOAGroupList(string value)
+        {
+            try
+            {
+                List<COAGroupVM> lst = new List<COAGroupVM>();
+                CommonVM param = new CommonVM();
+                param.Value = value;
+                ResultVM result = _repo.GetCOAGroupList(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<COAGroupVM>>(result.DataVM.ToString());
+                }
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
 
 
 

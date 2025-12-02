@@ -60,7 +60,7 @@
 
         var CategoryTypeComboBox = $("#Category").kendoMultiColumnComboBox({
             dataTextField: "Name",
-            dataValueField: "Id",
+            dataValueField: "Name",
             height: 400,
             columns: [
                 { field: "Name", title: "Name", width: 150 },
