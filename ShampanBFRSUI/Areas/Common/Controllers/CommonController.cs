@@ -216,13 +216,13 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
         //}
 
         [HttpGet]
-        public ActionResult GetEnumTypeList(string value)
+        public ActionResult GetEnumTypeList(string EnumType)
         {
             try
             {
                 List<EnumTypeVM> lst = new List<EnumTypeVM>();
                 CommonVM param = new CommonVM();
-                param.Value = value;
+                param.Value = EnumType.ToString();
                 ResultVM result = _repo.GetEnumTypeList(param);
 
                 if (result.Status == "Success" && result.DataVM != null)
@@ -457,6 +457,7 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
 
 
 
