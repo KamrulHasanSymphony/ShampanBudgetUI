@@ -1,6 +1,6 @@
 ﻿@model ShampanBFRS.Models.SetUpVMs.COAVM
 @{
-    ViewBag.Title = "COA Create";
+    ViewBag.Title = "iBAS Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,11 +13,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> COA Update </h1>
+                    <h1 class="m-0"> iBAS Update </h1>
                 }
                 else
                 {
-                    <h1 class="m-0"> COA Create</h1>
+                    <h1 class="m-0"> iBAS Add</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -70,7 +70,7 @@
             <div class="card card-secondary">
                 <div class="card-header col-md-12">
                     <h3 class="card-title col-md-12">
-                        COA Data Entry
+                        iBAS Data Entry
                     </h3>
                 </div>
                 <div class="card-body">
