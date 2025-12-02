@@ -1,15 +1,22 @@
-﻿var COAGroupController = function (CommonService, CommonAjaxService) {
+﻿var COAController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
         var getId = $("#Id").val() || 0;
-        getCategoryType = $("#Category").val() || 0;
+        getNatureType = $("#Nature").val() || 0;
+        getReportType = $("#ReportType").val() || 0;
+        getCOAType = $("#COAType").val() || 0;
+        getCOAGroup = $("#COAGroupId").val() || 0;
         var getOperation = $("#Operation").val() || '';
 
 
         if (getOperation != "") {
-            GetCategoryComboBox();
+            GetNatureComboBox();
+            GetReportComboBox();
+            GetCOATypeComboBox();
+            GetCOAGroupComboBox();
 
         }
+        $("[data-bootstrap-switch]").bootstrapSwitch();
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
@@ -41,7 +48,7 @@
         $('#btnPrevious').click('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
-                window.location.href = "/SetUp/COAGroup/NextPrevious?id=" + getId + "&status=Previous";
+                window.location.href = "/SetUp/COA/NextPrevious?id=" + getId + "&status=Previous";
             }
         });
 
@@ -49,16 +56,16 @@
         $('#btnNext').click('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
-                window.location.href = "/SetUp/COAGroup/NextPrevious?id=" + getId + "&status=Next";
+                window.location.href = "/SetUp/COA/NextPrevious?id=" + getId + "&status=Next";
             }
         });
 
 
 
     };
-    function GetCategoryComboBox(cat) {
+    function GetNatureComboBox() {
 
-        var CategoryTypeComboBox = $("#Category").kendoMultiColumnComboBox({
+        var NatureTypeComboBox = $("#Nature").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Name",
             height: 400,
@@ -72,25 +79,25 @@
                     read: {
                         url: "/Common/Common/GetEnumTypeList",
                         data: {
-                            EnumType: "Category"
+                            EnumType: "Nature"
                         },
                         dataType: "json",
                         success: function (response) {
-                            console.log("CategoryType loaded successfully:", response);
+                            console.log("Nature loaded successfully:", response);
                         },
                         error: function (xhr, status, error) {
-                            console.error("Error fetching CategoryType list:", error);
-                            alert("Error fetching CategoryType list.");
+                            console.error("Error fetching Nature list:", error);
+                            alert("Error fetching Nature list.");
                         }
                     }
                 }
             },
-            placeholder: "Select CategoryType",
+            placeholder: "Select Nature",
             value: "",
             dataBound: function (e) {
 
-                if (getCategoryType && getCategoryType !== 0) {
-                    this.value(getCategoryType);
+                if (getNatureType && getNatureType !== 0) {
+                    this.value(getNatureType);
                 }
             },
             change: function (e) {
@@ -99,11 +106,122 @@
             }
         }).data("kendoMultiColumnComboBox");
     }
+    function GetReportComboBox() {
+
+        var NatureTypeComboBox = $("#ReportType").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Name",
+            height: 400,
+            columns: [
+                { field: "Name", title: "Name", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetEnumTypeList",
+                        data: {
+                            EnumType: "ReportType"
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            console.log("ReportType loaded successfully:", response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error fetching ReportType list:", error);
+                            alert("Error fetchingReportType list.");
+                        }
+                    }
+                }
+            },
+            placeholder: "Select ReportType",
+            value: "",
+            dataBound: function (e) {
+
+                if (getReportType && getReportType !== 0) {
+                    this.value(getReportType);
+                }
+            },
+            change: function (e) {
+                var selectedDiseaseId = this.value();
+                console.log("Selected Disease ID:", selectedDiseaseId);
+            }
+        }).data("kendoMultiColumnComboBox");
+    }
+    function GetCOATypeComboBox() {
+
+        var NatureTypeComboBox = $("#COAType").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Name",
+            height: 400,
+            columns: [
+                { field: "Name", title: "Name", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetEnumTypeList",
+                        data: {
+                            EnumType: "COAType"
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            console.log("COAType loaded successfully:", response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error fetching COAType list:", error);
+                            alert("Error fetching COAType list.");
+                        }
+                    }
+                }
+            },
+            placeholder: "Select COAType",
+            value: "",
+            dataBound: function (e) {
+
+                if (getCOAType && getCOAType !== 0) {
+                    this.value(getCOAType);
+                }
+            },
+            change: function (e) {
+                var selectedDiseaseId = this.value();
+                console.log("Selected Disease ID:", selectedDiseaseId);
+            }
+        }).data("kendoMultiColumnComboBox");
+    }
+    function GetCOAGroupComboBox() {
+        var CustomerComboBox = $("#COAGroupId").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "Code", title: "Code", width: 100 },
+                { field: "Name", title: "Name", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetCOAGroupList"
+                }
+            },
+            placeholder: "Select COAGroup",
+            value: "",
+            dataBound: function (e) {
+                if (getCOAGroup) {
+                    this.value(parseInt(getCOAGroup));
+                }
+            }
+        }).data("kendoMultiColumnComboBox");
+    };  
 
 
 
 
-    // Select data for delete
+     //Select data for delete
     function SelectData() {
         var IDs = [];
 
@@ -123,7 +241,7 @@
             IDs: IDs
         };
 
-        var url = "/SetUp/COAGroup/Delete";
+        var url = "/SetUp/COA/Delete";
 
         CommonAjaxService.deleteData(url, model, deleteDone, saveFail);
     };
@@ -140,7 +258,7 @@
             pageSize: 10,
             transport: {
                 read: {
-                    url: "/SetUp/COAGroup/GetGridData",
+                    url: "/SetUp/COA/GetGridData",
                     type: "POST",
                     dataType: "json",
                     cache: false
@@ -149,60 +267,61 @@
                     if (options.sort) {
                         options.sort.forEach(function (param) {
 
+                            if (param.field === "Id") {
+                                param.field = "C.Id";
+                            }
                             if (param.field === "Name") {
-                                param.field = "H.Name";
+                                param.field = "C.Name";
                             }
-                            if (param.field === "Description") {
-                                param.field = "H.Description";
+                            if (param.field === "Category") {
+                                param.field = "C.Category";
                             }
-                            if (param.field === "Reference") {
-                                param.field = "H.Reference";
+                            if (param.field === "Code") {
+                                param.field = "C.Code";
+                            }
+
+                            if (param.field === "Nature") {
+                                param.field = "C.Nature";
+                            }
+                            if (param.field === "ReportType") {
+                                param.field = "C.ReportType";
                             }
                             if (param.field === "Remarks") {
-                                param.field = "H.Remarks";
+                                param.field = "C.Remarks";
                             }
-                            if (param.field === "Status") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-                                param.field = "H.IsActive";
-                                param.operator = "eq";
+                            if (param.field === "IsActive") {
+                                param.field = "C.IsActive";
                             }
+
                         });
                     }
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
+                            if (param.field === "Id") {
+                                param.field = "C.Id";
+                            }
                             if (param.field === "Name") {
-                                param.field = "H.Name";
+                                param.field = "C.Name";
                             }
-                            if (param.field === "Description") {
-                                param.field = "H.Description";
+                            if (param.field === "Category") {
+                                param.field = "C.Category";
                             }
-                            if (param.field === "Reference") {
-                                param.field = "H.Reference";
+                            if (param.field === "Code") {
+                                param.field = "C.Code";
+                            }
+
+                            if (param.field === "Nature") {
+                                param.field = "C.Nature";
+                            }
+                            if (param.field === "ReportType") {
+                                param.field = "C.ReportType";
                             }
                             if (param.field === "Remarks") {
-                                param.field = "H.Remarks";
+                                param.field = "C.Remarks";
                             }
-                            if (param.field === "Status") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-
-                                param.field = "H.IsActive";
-                                param.operator = "eq";
+                            if (param.field === "IsActive") {
+                                param.field = "C.IsActive";
                             }
                         });
                     }
@@ -255,11 +374,11 @@
                 fields: ["Name"]
             },
             excel: {
-                fileName: `COAGroup_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
+                fileName: `COA_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `COAGroup_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
+                fileName: `COA_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
@@ -295,17 +414,35 @@
                     width: 40,
                     template: function (dataItem) {
                         return `
-                            <a href="/SetUp/COAGroup/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
+                            <a href="/SetUp/COA/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>`;
                     }
                 },
-                { field: "Id", width: 50, hidden: true, sortable: true },             
-                { field: "Code", title: "Code", sortable: true, width: 200 },
-                { field: "GroupSL", width: 50, hidden: true, sortable: true },
-                { field: "Category", title: "Category", sortable: true, width: 200 },
-                { field: "Name", title: "Name", sortable: true, width: 200 },
-                { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
+                { field: "id", title: "ID", width: 50, hidden: true },
+                { field: "Code", title: "Account Code", width: 150, sortable: true },
+                { field: "Name", title: "Account Name", width: 250, sortable: true },
+                { field: "Nature", title: "Account Nature", width: 110 },
+                { field: "COAGroupId", title: "Group Name", width: 110 },
+                { field: "COAType", title: "Account Type", width: 110 },
+                { field: "ReportType", title: "Report Type", width: 110 },
+               /* { field: "Remarks", title: "Remarks", width: 250 },*/
+                //{
+                //    field: "isActive", title: "Status", sortable: true, width: 90,
+                //    filterable: {
+                //        ui: function (element) {
+                //            element.kendoDropDownList({
+                //                dataSource: [
+                //                    { text: "Active", value: "1" },
+                //                    { text: "Inactive", value: "0" }
+                //                ],
+                //                dataTextField: "text",
+                //                dataValueField: "value",
+                //                optionLabel: "Select Option"
+                //            });
+                //        }
+                //    }
+                //}
             ],
             editable: false,
             selectable: "multiple row",
@@ -336,7 +473,7 @@
         formData.append("IsActive", $('#IsActive').prop('checked'));
         formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
 
-        var url = "/SetUp/COAGroup/CreateEdit";
+        var url = "/SetUp/COA/CreateEdit";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 

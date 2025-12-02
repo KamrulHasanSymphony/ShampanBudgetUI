@@ -1,0 +1,365 @@
+﻿@model ShampanBFRS.Models.SetUpVMs.COAVM
+@{
+    ViewBag.Title = "COA Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                {
+                    <h1 class="m-0"> COAV Update </h1>
+                }
+                else
+                {
+                    <h1 class="m-0"> COA Create</h1>
+                }
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-header p-2">
+
+        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+        {
+            <button type="button" class="button btnsave sslUpdate">Update</button>
+
+            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/COA/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+
+        }
+        else
+        {
+            <div style="display:none;" class="divUpdate">
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+
+            </div>
+            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/COA/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+            <div class="divSave">
+                <button class="button btnsave sslSave" type="button" id="">Save</button>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="mt-3">
+
+        <form id="frmEntry">
+            <div class="card card-secondary">
+                <div class="card-header col-md-12">
+                    <h3 class="card-title col-md-12">
+                        COA Data Entry
+                    </h3>
+                </div>
+                <div class="card-body">
+
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Operation)
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.StructureId)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.StructureId, new { placeholder = "Enter Structure", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.StructureId)
+
+                        </div>
+
+
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Code)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Enter Code", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Code)
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Name)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Name)
+
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Nature)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.Nature, new { placeholder = "Enter Nature", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Nature)
+
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.COAGroupId)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.COAGroupId, new { placeholder = "Enter COAGroup", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.COAGroupId)
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.COAType)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.COAType, new { placeholder = "Enter COAType", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.COAType)
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.ReportType)
+                            <div class="input-group ">
+                                @Html.TextBoxFor(model => model.ReportType, new { placeholder = "Enter ReportType", @class = "  form-control form-control-sm " })
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.COASL)
+                            <div class="input-group ">
+                                @Html.TextBoxFor(model => model.COASL, new { placeholder = "Enter COASL", @class = "  form-control form-control-sm " })
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.PID)
+                            <div class="input-group ">
+                                @Html.TextBoxFor(model => model.PID, new { placeholder = "Enter PID", @class = "  form-control form-control-sm " })
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.Remarks)
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks", @class = "form-control form-control-sm" })
+
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Remarks)
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-10">
+                            <div style="display: flex;gap: 25px">
+                                <div class="">
+                                    @Html.LabelFor(model => model.IsActive)
+                                    <div class="input-group" style="margin-bottom: -10px; width: 65px;">
+                                        <input id="IsActive"
+                                               value="@Model.IsActive"
+                                               type="checkbox"
+                                               name="my-checkbox"
+                                               @(Model.IsActive ? "checked" : "")
+                                               data-bootstrap-switch
+                                               data-off-color="danger"
+                                               data-on-color="success"
+                                               data-on-text="ON"
+                                               data-off-text="OFF">
+
+                                    </div>
+
+                                </div>
+                                <div class="">
+                                    @Html.LabelFor(model => model.IsRetainedEarning)
+                                    <div class="input-group" style="margin-bottom: -10px; width: 65px;">
+                                        <input id="IsRetainedEarning" class="IsCheckBox"
+                                               value="@Model.IsRetainedEarning"
+                                               type="checkbox"
+                                               name="my-checkbox"
+                                               @(Model.IsRetainedEarning ? "checked" : "")
+                                               data-bootstrap-switch
+                                               data-off-color="danger"
+                                               data-on-color="success"
+                                               data-on-text="ON"
+                                               data-off-text="OFF">
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    @Html.LabelFor(model => model.IsNetProfit)
+                                    <div class="input-group" style="margin-bottom: -10px; width: 65px;">
+                                        <input id="IsNetProfit" class="IsCheckBox"
+                                               value="@Model.IsNetProfit"
+                                               type="checkbox"
+                                               name="my-checkbox"
+                                               @(Model.IsNetProfit ? "checked" : "")
+                                               data-bootstrap-switch
+                                               data-off-color="danger"
+                                               data-on-color="success"
+                                               data-on-text="ON"
+                                               data-off-text="OFF">
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    @Html.LabelFor(model => model.IsDepreciation)
+                                    <div class="input-group" style="margin-bottom: -10px; width: 65px;">
+                                        <input id="IsDepreciation" class="IsCheckBox"
+                                               value="@Model.IsDepreciation"
+                                               type="checkbox"
+                                               name="my-checkbox"
+                                               @(Model.IsDepreciation ? "checked" : "")
+                                               data-bootstrap-switch
+                                               data-off-color="danger"
+                                               data-on-color="success"
+                                               data-on-text="ON"
+                                               data-off-text="OFF">
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+        <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
+            <div class="card-header p-2">
+
+
+                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                { /*On Edit*/
+                    <button style="float:left;" type="button" class="button btnsave sslUpdate">Update</button>
+
+                }
+                else
+                {
+                    <div style="display:none;" class="divUpdate">
+                        @*after save*@
+                        <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                    </div>
+                    <div class="divSave">
+                        @*NEW Entry*@
+                        <button class="button btnsave sslSave" type="button" id="">Save</button>
+                    </div>
+                }
+
+            </div>
+
+            @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div> @*audit*@
+
+            }
+            else
+            {
+                <div class="auditshow" style="display:none;"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div> @*audit*@
+            }
+        </div>
+
+
+        <div class="card card-secondary auditcard">
+
+            <div class="card-header">
+                <h3 class="card-title">Audit Details</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="row">
+                            @Html.Label("Type")
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.Label("Created")
+                            </div>
+                            <div class="col-sm-3">
+                                @Html.Label("Updated")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @Html.Label("By")<br /><div class="clearfix">&nbsp;</div>
+                                @Html.Label("On")<br /><div class="clearfix">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.CreatedBy, new { @class = "CreatedBy  form-control form-control-sm ", @readonly = "readonly" })
+                                <div class="clearfix">&nbsp;</div>
+                                @Html.TextBoxFor(model => model.CreatedOn, new { @class = "CreatedAt form-control form-control-sm ", @readonly = "readonly" })
+                            </div>
+
+                            <div class="col-sm-3">
+                                @Html.TextBoxFor(model => model.LastUpdateBy, new { @class = "LastUpdateBy  form-control form-control-sm lub", @readonly = "readonly" })
+                                <div class="clearfix">&nbsp;</div>
+                                @Html.TextBoxFor(model => model.LastUpdateAt, new { @class = "LastUpdateAt  form-control form-control-sm luo", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/Areas/Common/js/Services/CommonService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/SetUp/js/Controller/COAController.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            COAController.init();
+        });
+
+    </script>
+}
+
+

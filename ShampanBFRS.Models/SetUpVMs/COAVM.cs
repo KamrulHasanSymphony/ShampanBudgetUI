@@ -16,21 +16,22 @@ namespace ShampanBFRS.Models.SetUpVMs
         public int? PID { get; set; }
 
         public int? COASL { get; set; }
-
+        [Display(Name = "Structure Code")]
         public int? StructureId { get; set; }
 
+        [Display(Name = "COA Group")]
         public int? COAGroupId { get; set; }
 
-        [Display(Name = "Code")]
+        [Display(Name = "Account Code")]
         public string? Code { get; set; }
 
-        [Display(Name = "Name")]
+        [Display(Name = "Account Name")]
         public string? Name { get; set; }
 
-        [Display(Name = "Nature")]
+        [Display(Name = "Account Nature")]
         public string? Nature { get; set; }
 
-        [Display(Name = "COA Type")]
+        [Display(Name = "Account Type")]
         public string? COAType { get; set; }
 
         [Display(Name = "Report Type")]
@@ -46,13 +47,13 @@ namespace ShampanBFRS.Models.SetUpVMs
         public bool IsArchive { get; set; }
 
         [Display(Name = "Is Retained Earnings")]
-        public bool? IsRetainedEarning { get; set; }
+        public bool IsRetainedEarning { get; set; }
 
         [Display(Name = "Is Net Profit")]
-        public bool? IsNetProfit { get; set; }
+        public bool IsNetProfit { get; set; }
 
         [Display(Name = "Is Depreciation")]
-        public bool? IsDepreciation { get; set; }
+        public bool IsDepreciation { get; set; }
 
         public string? Segement01 { get; set; }
         public string? Segement02 { get; set; }
