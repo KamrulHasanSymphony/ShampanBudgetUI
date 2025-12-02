@@ -40,6 +40,17 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             });
         });
 
+        // Download button click handler
+        $('.btnDownload').click('click', function () {
+            var status = "Download";
+            
+            Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
+                if (result) {
+                    Download();
+                }
+            });
+        });
+
         // Delete button click handler
         $('.btnDelete').on('click', function () {
             Confirmation("Are you sure? Do You Want to Delete Data?", function (result) {
@@ -478,6 +489,23 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 
+    function Download() {
+        var model = serializeInputs("frmEntry");
+
+        var form = $('<form method="post" action="/Ceiling/Ceiling/BudgetFinalReport"></form>');
+
+        for (var key in model) {
+            if (model.hasOwnProperty(key)) {
+                form.append('<input type="hidden" name="' + key + '" value="' + model[key] + '" />');
+            }
+        }
+
+        $('body').append(form);
+        form.submit(); 
+        form.remove();
+    }
+
+
     // Handle success
     function saveDone(result) {
 
@@ -525,7 +553,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
     // Handle fail
     function saveFail(result) {
-        alert(111);
         ShowNotification(3, "Query Exception!");
     }
 

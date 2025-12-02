@@ -55,6 +55,7 @@ namespace ShampanBFRS.Repo.Ceiling
                 throw ex;
             }
         }
+
         public ResultVM GetGridData(GridOptions options)
         {
             try
@@ -117,5 +118,6 @@ namespace ShampanBFRS.Repo.Ceiling
             }
         }
 
+        
     }
 }

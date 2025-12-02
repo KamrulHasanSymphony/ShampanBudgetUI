@@ -1,18 +1,17 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.EMMA;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
 using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
 using ShampanBFRS.Models.Helper;
 using ShampanBFRS.Models.KendoCommon;
-using ShampanBFRS.Models.QuestionVM;
 using ShampanBFRS.Repo.Ceiling;
 using ShampanBFRS.Repo.CommonRepo;
-using ShampanBFRS.Repo.QuestionRepo;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ShampanBFRSUI.Areas.Ceiling.Controllers
@@ -259,7 +258,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
                 result = _repo.GetAllSabreDataForDetails(options);
 
-                if (result.Status == "Success" && result.DataVM != null)
+                if (result.Status == MessageModel.Success && result.DataVM != null)
                 {
                     var gridData = JsonConvert.DeserializeObject<GridEntity<CeilingDetailVM>>(result.DataVM.ToString());
 
@@ -279,6 +278,6 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
-
+        
     }
 }
