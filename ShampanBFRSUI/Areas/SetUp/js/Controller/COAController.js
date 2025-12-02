@@ -92,7 +92,7 @@
                     }
                 }
             },
-            placeholder: "Select Nature",
+            placeholder: "Select Account Nature",
             value: "",
             dataBound: function (e) {
 
@@ -135,7 +135,7 @@
                     }
                 }
             },
-            placeholder: "Select ReportType",
+            placeholder: "Select Report Type",
             value: "",
             dataBound: function (e) {
 
@@ -178,7 +178,7 @@
                     }
                 }
             },
-            placeholder: "Select COAType",
+            placeholder: "Select COA Type",
             value: "",
             dataBound: function (e) {
 
@@ -208,7 +208,7 @@
                     read: "/Common/Common/GetCOAGroupList"
                 }
             },
-            placeholder: "Select COAGroup",
+            placeholder: "Select COA Group",
             value: "",
             dataBound: function (e) {
                 if (getCOAGroup) {
