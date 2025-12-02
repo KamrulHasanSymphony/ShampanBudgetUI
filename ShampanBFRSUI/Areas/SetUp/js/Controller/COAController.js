@@ -453,26 +453,24 @@
 
     // Save the form data
     function save() {
+        debugger;
         var validator = $("#frmEntry").validate();
-        var formData = new FormData();
         var model = serializeInputs("frmEntry");
 
         var result = validator.form();
 
         if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
+            validator.focusInvalid();
             return;
         }
 
-        for (var key in model) {
-            formData.append(key, model[key]);
-        }
+        // Append checkbox values directly into model
+        model.IsActive = $('#IsActive').prop('checked');
+        model.IsRetainedEarning = $('#IsRetainedEarning').prop('checked');
+        model.IsNetProfit = $('#IsNetProfit').prop('checked');
+        model.IsDepreciation = $('#IsDepreciation').prop('checked');
 
-        formData.append("IsActive", $('#IsActive').prop('checked'));
-        formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
-
+        debugger;
         var url = "/SetUp/COA/CreateEdit";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
