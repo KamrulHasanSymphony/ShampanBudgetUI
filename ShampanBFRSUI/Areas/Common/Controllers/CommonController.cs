@@ -481,6 +481,30 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult GetStructureList(string value)
+        {
+            try
+            {
+                List<StructureVM> lst = new List<StructureVM>();
+                CommonVM param = new CommonVM();
+                param.Value = value;
+                ResultVM result = _repo.GetStructureList(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<StructureVM>>(result.DataVM.ToString());
+                }
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
 
 
 
