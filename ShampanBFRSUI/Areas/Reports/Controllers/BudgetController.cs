@@ -76,9 +76,11 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         ws.Cells[1, 1].Style.Font.Bold = true;
                         ws.Cells[1, 1].Style.Font.Size = 14;
                         ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
                         // 2. Leave 2 blank rows, start data from row 4
                         int startRow = 4;
+                        ws.Cells[startRow, 1, startRow, totalCols].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
                         // 3. Add Serial column
                         DataTable dtWithSerial = dt.Copy();
@@ -89,6 +91,26 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         // 4. Load data into worksheet
                         ws.Cells[startRow, 1].LoadFromDataTable(dtWithSerial, true);
 
+                        // Fix header names (multi-line)
+                        for (int col = 1; col <= totalCols; col++)
+                        {
+                            var cell = ws.Cells[startRow, col];  // Header row is startRow (4)
+
+                            string header = cell.Text;
+
+                            if (header.Contains("(") && header.Contains(")"))
+                            {
+                                int start = header.IndexOf("(");
+                                int end = header.IndexOf(")");
+
+                                string part1 = header.Substring(0, start).Trim();              // Estimated
+                                string part2 = header.Substring(start + 1, end - start - 1);   // 2025-2026
+
+                                cell.Value = part1 + "\n" + part2;
+                                cell.Style.WrapText = true;
+                            }
+                        }
+
                         int totalRows = dtWithSerial.Rows.Count;
                         int footerRow = startRow + totalRows + 1; // leave one row empty before footer
 
@@ -97,6 +119,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         {
                             headerRange.Style.Font.Bold = true;
                             headerRange.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            headerRange.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                             headerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                             headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
                         }
