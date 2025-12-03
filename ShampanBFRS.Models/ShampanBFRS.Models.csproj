@@ -88,6 +88,7 @@
     <Compile Include="AccountVMs\ApplicationUser.cs" />
     <Compile Include="Ceiling\CeilingDetailVM.cs" />
     <Compile Include="Ceiling\CeilingVM.cs" />
+    <Compile Include="Ceiling\ProductVM.cs" />
     <Compile Include="CommonVMs\Audit.cs" />
     <Compile Include="AccountVMs\AspNetUsersVM.cs" />
     <Compile Include="CommonVMs\DashboardData.cs" />
