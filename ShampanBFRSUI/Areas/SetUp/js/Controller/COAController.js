@@ -7,6 +7,7 @@
         getCOAType = $("#COAType").val() || 0;
         getCOAGroup = $("#COAGroupId").val() || 0;
         getStructure = $("#StructureId").val() || 0;
+
         var getOperation = $("#Operation").val() || '';
 
 
@@ -75,7 +76,7 @@
                 { field: "Name", title: "Name", width: 150 },
             ],
             filter: "contains",
-            filterFields: ["Code", "Name"],
+            filterFields: ["Name"],
             dataSource: {
                 transport: {
                     read: {
@@ -221,10 +222,9 @@
     };  
 
     function GetStructureComboBox() {
-
-        var StrutureComboBox = $("#StructureId").kendoMultiColumnComboBox({
+        var StructureComboBox = $("#StructureId").kendoMultiColumnComboBox({
             dataTextField: "Name",
-            dataValueField: "Name",
+            dataValueField: "Id",
             height: 400,
             columns: [
                 { field: "Name", title: "Name", width: 150 },
@@ -233,36 +233,18 @@
             filterFields: ["Code", "Name"],
             dataSource: {
                 transport: {
-                    read: {
-                        url: "/Common/Common/GetEnumTypeList",
-                        data: {
-                            EnumType: "StructureType"
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            console.log("Structure loaded successfully:", response);
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error fetching Structure list:", error);
-                            alert("Error fetching Structure list.");
-                        }
-                    }
+                    read: "/Common/Common/GetStructureList"
                 }
             },
             placeholder: "Select Structure",
             value: "",
             dataBound: function (e) {
-
-                if (getStructure && getStructure !== 0) {
-                    this.value(getStructure);
+                if (getStructure) {
+                    this.value(parseInt(getStructure));
                 }
-            },
-            change: function (e) {
-                var selectedDiseaseId = this.value();
-                console.log("Selected Disease ID:", selectedDiseaseId);
             }
         }).data("kendoMultiColumnComboBox");
-    }
+    };  
 
 
      //Select data for delete
