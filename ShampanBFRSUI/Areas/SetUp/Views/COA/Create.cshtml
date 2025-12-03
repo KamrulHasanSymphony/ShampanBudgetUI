@@ -76,7 +76,6 @@
                 <div class="card-body">
 
                     @Html.HiddenFor(model => model.Id)
-                    @Html.HiddenFor(model => model.COASL)
                     @Html.HiddenFor(model => model.Operation)
 
                     <div class="form-group row">
@@ -148,13 +147,14 @@
                             </div>
                         </div>
 
-                        <!-- PID -->
-                        <div class="col-sm-2">
-                            @Html.LabelFor(model => model.PID)
+                        <div class="col-sm-">
+                            @Html.LabelFor(model => model.COASL)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.PID,
-                                    new { placeholder = "Enter PID", @class = "form-control form-control-sm" })
+                                @Html.TextBoxFor(model => model.COASL, new { placeholder = "Enter COASL", @class = "form-control form-control-sm" })
+
                             </div>
+                            @Html.ValidationMessageFor(model => model.COASL)
+
                         </div>
 
                         <!-- Checkboxes (Flex inside column) -->
@@ -206,16 +206,24 @@
 
 
                     <div class="form-group row">
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.PID)
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.PID,
+                                    new { placeholder = "Enter PID", @class = "form-control form-control-sm" })
+                            </div>
+                        </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             @Html.LabelFor(model => model.Remarks)
-                            <div class="input-group date">
+                            <div class="input-group">
                                 @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks", @class = "form-control form-control-sm" })
 
                             </div>
                             @Html.ValidationMessageFor(model => model.Remarks)
 
                         </div>
+
 
 
 
