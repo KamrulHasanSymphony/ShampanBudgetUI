@@ -1,21 +1,14 @@
-﻿var SabreController = function (CommonService, CommonAjaxService) {
+﻿var SegmentController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
-        debugger;
         var getId = $("#Id").val() || 0;
-        getCOAId = $("#COAId").val() || 0;
-        if (getOperation != "") {
-            GetCOAComboBox();
-        }
-
-
         var getOperation = $("#Operation").val() || '';
 
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
         }
-
+        // Save button click handler
         $('.btnsave').click('click', function () {
             var getId = $('#Id').val();
             var status = "Save";
@@ -29,7 +22,7 @@
             });
         });
 
-
+        // Delete button click handler
         $('.btnDelete').on('click', function () {
             Confirmation("Are you sure? Do You Want to Delete Data?", function (result) {
                 if (result) {
@@ -38,49 +31,27 @@
             });
         });
 
-
+        // Previous button click handler
         $('#btnPrevious').click('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
-                window.location.href = "/SetUp/Sabre/NextPrevious?id=" + getId + "&status=Previous";
+                window.location.href = "/SetUp/Segment/NextPrevious?id=" + getId + "&status=Previous";
             }
         });
 
-
+        // Next button click handler
         $('#btnNext').click('click', function () {
             var getId = $('#Id').val();
             if (parseInt(getId) > 0) {
-                window.location.href = "/SetUp/Sabre/NextPrevious?id=" + getId + "&status=Next";
+                window.location.href = "/SetUp/Segment/NextPrevious?id=" + getId + "&status=Next";
             }
         });
+
+
+
     };
-    function GetCOAComboBox() {
-        var COAComboBox = $("#COAId").kendoMultiColumnComboBox({
-            dataTextField: "Name",
-            dataValueField: "Id",
-            height: 400,
-            columns: [
-                { field: "Code", title: "Code", width: 100 },
-                { field: "Name", title: "Name", width: 150 },
-            ],
-            filter: "contains",
-            filterFields: ["Code", "Name"],
-            dataSource: {
-                transport: {
-                    read: "/Common/Common/GetCOAList"
-                }
-            },
-            placeholder: "Select iBAS",
-            value: "",
-            dataBound: function (e) {
-                if (getCOAId) {
-                    this.value(parseInt(getCOAId));
-                }
-            }
-        }).data("kendoMultiColumnComboBox");
-    };  
-
-
+  
+    // Select data for delete
     function SelectData() {
         var IDs = [];
 
@@ -100,13 +71,13 @@
             IDs: IDs
         };
 
-        var url = "/SetUp/Sabre/Delete";
+        var url = "/SetUp/Segment/Delete";
 
         CommonAjaxService.deleteData(url, model, deleteDone, saveFail);
     };
 
+    // Fetch grid data
     var GetGridDataList = function () {
-        debugger;
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -117,7 +88,7 @@
             pageSize: 10,
             transport: {
                 read: {
-                    url: "/SetUp/Sabre/GetGridData",
+                    url: "/SetUp/Segment/GetGridData",
                     type: "POST",
                     dataType: "json",
                     cache: false
@@ -125,19 +96,17 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            if (param.field === "Code") {
-                                param.field = "H.Code";
-                            }
-                           
+
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
-                           
+                            if (param.field === "Length") {
+                                param.field = "H.Length";
+                            }
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
-
                             }
-                            if (param.field === "Status") {
+                            if (param.field === "Active") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
                                 if (statusValue.startsWith("a")) {
                                     param.value = 1;
@@ -154,20 +123,16 @@
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-                            if (param.field === "Code") {
-                                param.field = "H.Code";
-                            }
-
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
-
+                            if (param.field === "Length") {
+                                param.field = "H.Length";
+                            }
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
-
                             }
- 
-                            if (param.field === "Status") {
+                            if (param.field === "Active") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
                                 if (statusValue.startsWith("a")) {
@@ -229,14 +194,14 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Code","Name"]
+                fields: ["Name"]
             },
             excel: {
-                fileName: `Sabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
+                fileName: `Segment_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `Sabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
+                fileName: `Segment_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
@@ -247,7 +212,7 @@
                 $(".k-floatwrap").hide();
 
                 var companyName = "Shampan Tailoring System.";
-                var fileName = `Examinees_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
+                var fileName = `Segment_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
 
                 e.sender.options.pdf = {
                     paperSize: "A4",
@@ -271,51 +236,45 @@
                     title: "Action",
                     width: 40,
                     template: function (dataItem) {
-                        console.log(dataItem);
                         return `
-                            <a href="/SetUp/Sabre/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
+                            <a href="/SetUp/Segment/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>`;
                     }
                 },
-                { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Sabre Code", sortable: true, width: 200 },
-                { field: "Name", title: "Sabre Name", sortable: true, width: 200 },
-                { field: "iBASCode", title: "iBAS Code", sortable: true, width: 200 },
-                { field: "iBASName", title: "iBAS Name", sortable: true, width: 200 },
+                { field: "Id", width: 50, hidden: true, sortable: true },             
+                { field: "Code", title: "Code", sortable: true, width: 200 },
+                { field: "Name", title: "Name", sortable: true, width: 200 },
+                { field: "Length", title: "Length", sortable: true, width: 200 },
+                { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
             ],
             editable: false,
-            selectable: "row",
+            selectable: "multiple row",
             navigatable: true,
             columnMenu: true
         });
     };
 
     // Save the form data
+
     function save() {
+        debugger;
         var validator = $("#frmEntry").validate();
-        var formData = new FormData();
         var model = serializeInputs("frmEntry");
 
         var result = validator.form();
 
         if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
+            validator.focusInvalid();
             return;
         }
 
-        for (var key in model) {
-            formData.append(key, model[key]);
-        }
-
-        formData.append("IsActive", $('#IsActive').prop('checked'));
-        formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
-
-        var url = "/SetUp/Sabre/CreateEdit";
-        CommonAjaxService.finalImageSave(url, formData, saveDone, saveFail);
+        // Append checkbox values directly into model
+        model.IsActive = $('#IsActive').prop('checked');
+        var url = "/SetUp/Segment/CreateEdit";
+        CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
+    
 
     // Handle success
     function saveDone(result) {

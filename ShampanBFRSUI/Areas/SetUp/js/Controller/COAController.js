@@ -446,12 +446,12 @@
                     }
                 },
                 { field: "id", title: "ID", width: 50, hidden: true },
-                { field: "Code", title: "Account Code", width: 150, sortable: true },
-                { field: "Name", title: "Account Name", width: 250, sortable: true },
+                { field: "Code", title: "iBAS Code", width: 150, sortable: true },
+                { field: "Name", title: "iBAS Name", width: 250, sortable: true },
                 { field: "Nature", title: "Account Nature", width: 110 },
-                { field: "COAGroupId", title: "Group Name", width: 110 },
+                { field: "GroupName", title: "iBAS Group Name", width: 110 },
                 { field: "COAType", title: "Account Type", width: 110 },
-                { field: "ReportType", title: "Report Type", width: 110 },
+               /* { field: "ReportType", title: "Report Type", width: 110 },*/
                /* { field: "Remarks", title: "Remarks", width: 250 },*/
                 //{
                 //    field: "isActive", title: "Status", sortable: true, width: 90,

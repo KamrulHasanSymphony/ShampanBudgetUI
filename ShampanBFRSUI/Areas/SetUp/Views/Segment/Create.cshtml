@@ -1,7 +1,6 @@
-﻿
-@model ShampanBFRS.Models.SetUpVMs.SabresVM
+﻿@model ShampanBFRS.Models.SetUpVMs.SegmentVM
 @{
-    ViewBag.Title = "Sabre Create";
+    ViewBag.Title = "Segment Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,11 +13,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> Sabre Update </h1>
+                    <h1 class="m-0"> Segment Update </h1>
                 }
                 else
                 {
-            <h1 class="m-0"> Sabre Create</h1>
+                    <h1 class="m-0"> Segment Add</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -38,7 +37,7 @@
         {
             <button type="button" class="button btnsave sslUpdate">Update</button>
 
-            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/Sabre/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/Segment/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
 
@@ -50,7 +49,7 @@
 
 
             </div>
-            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/Sabre/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/Segment/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
             <div class="divSave">
@@ -70,7 +69,7 @@
         <form id="frmEntry">
             <div class="card card-secondary">
                 <div class="card-header">
-                    <h3 class="card-title">Sabre Data Entry</h3>
+                    <h3 class="card-title">Segment Data Entry</h3>
                 </div>
                 <div class="card-body">
 
@@ -81,37 +80,40 @@
 
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Code)
-                            <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Enter Code", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;" })
+                            <div style="display: flex; align-items: center;">
+                                <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
+                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Code Auto Generate", @class = " csCode  form-control form-control-sm", @readonly = "readonly", @style = "width:140px;" }) &nbsp;
+                                <span id="btnNext" class="fa fa-forward" style="color: darkseagreen;"></span>
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
+
+
 
                         <div class="col-sm-3">
                             @Html.LabelFor(model => model.Name)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;" })
+                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name ", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
 
                         <div class="col-sm-3">
-                            @Html.LabelFor(model => model.COAId)
+                            @Html.LabelFor(model => model.Length)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.COAId, new { placeholder = "Enter iBAS", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;" })
+                                @Html.TextBoxFor(model => model.Length, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;",  })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
 
-
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Remarks)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks", @class = " required form-control form-control-sm" })
+                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks ", @class = " required form-control form-control-sm", required = "required" })
                             </div>
                             <span id="PolicyNameError" class="text-danger" style="display:none;"></span>
 
                         </div>
+
                         @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                         {
                             <div class="col-sm-2">
@@ -152,60 +154,13 @@
                                 </div>
                             </div>
                         }
-
 
 
                     </div>
-                    @*<div class="form-group row">
-                    
-                        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-                        {
-                            <div class="col-sm-2">
-                                @Html.LabelFor(model => model.IsActive)
-                                <div class="Onoffbtn">
-                                    <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                        <input id="IsActive"
-                                               value="@Model.IsActive"
-                                               type="checkbox"
-                                               name="my-checkbox"
-                                               @(Model.IsActive ? "checked" : "")
-                                               data-bootstrap-switch
-                                               data-off-color="danger"
-                                               data-on-color="success"
-                                               data-on-text="Yes"
-                                               data-off-text="No">
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-sm-2 cStatus" style="display:none;">
-                                @Html.LabelFor(model => model.IsActive)
-                                <div class="Onoffbtn">
-                                    <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                        <input id="IsActive"
-                                               value="@Model.IsActive"
-                                               type="checkbox"
-                                               name="my-checkbox"
-                                               @(Model.IsActive ? "checked" : "")
-                                               data-bootstrap-switch
-                                               data-off-color="danger"
-                                               data-on-color="success"
-                                               data-on-text="Yes"
-                                               data-off-text="No">
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>*@
-
+                   
                 </div>
             </div>
         </form>
-
-       
-
 
 
         <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
@@ -306,14 +261,16 @@
 @section scripts {
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    <script src="~/Areas/SetUp/js/Controller/SabreController.js"></script>
+    <script src="~/Areas/SetUp/js/Controller/SegmentController.js"></script>
     <script>
         $(document).ready(function () {
 
-            SabreController.init();
+            SegmentController.init();
         });
 
     </script>
 }
+
+
 
 

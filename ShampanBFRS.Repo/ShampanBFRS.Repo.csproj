@@ -57,6 +57,7 @@
     <Compile Include="QuestionRepo\QuestionSetRepo.cs" />
     <Compile Include="QuestionRepo\QuestionSubjectRepo.cs" />
     <Compile Include="Reports\ReportRepo.cs" />
+    <Compile Include="SetUpRepo\SegementRepo.cs" />
     <Compile Include="SetUpRepo\COARepo.cs" />
     <Compile Include="SetUpRepo\COAGroupRepo.cs" />
     <Compile Include="SetUpRepo\DepartmentSabreRepo.cs" />

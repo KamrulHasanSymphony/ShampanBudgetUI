@@ -23,6 +23,8 @@ namespace ShampanBFRS.Models.SetUpVMs
 
         [Display(Name = "Remarks")]
         public string? Remarks { get; set; }
+        public string? iBASName { get; set; }
+        public string? iBASCode { get; set; }
 
     }
 }
