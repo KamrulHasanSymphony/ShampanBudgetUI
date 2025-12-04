@@ -118,7 +118,7 @@
                             if (param.field === "CIFCharge") {
                                 param.field = "M.CIFCharge";
                             }                         
-                            if (param.field === "A") {
+                            if (param.field === "Active") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
                                 if (statusValue.startsWith("a")) {
@@ -129,7 +129,7 @@
                                     param.value = null;
                                 }
 
-                                param.field = "H.IsActive";
+                                param.field = "M.IsActive";
                                 param.operator = "eq";
                             }
                         });
@@ -138,46 +138,33 @@
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
                             if (param.field === "Id") {
-                                param.field = "H.ID";
+                                param.field = "M.Id";
                             }
                             if (param.field === "Code") {
-                                param.field = "H.Code";
+                                param.field = "M.Code";
                             }
                             if (param.field === "Name") {
-                                param.field = "H.Name";
+                                param.field = "M.Name";
                             }
-                            if (param.field === "Description") {
-                                param.field = "H.Description";
+                            if (param.field === "ConversionFactor") {
+                                param.field = "M.ConversionFactor";
                             }
-                            if (param.field === "Comments") {
-                                param.field = "H.Comments";
+
+                            if (param.field === "CIFCharge") {
+                                param.field = "M.CIFCharge";
                             }
-                            
-                            if (param.field === "ProductGroupName") {
-                                param.field = "PG.Name";
-                            }
-                            if (param.field === "UOMName") {
-                                param.field = "uom.Name";
-                            }
-                            if (param.field === "Status") {
+                            if (param.field === "Active") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
                                 if (statusValue.startsWith("a")) {
                                     param.value = 1;
                                 } else if (statusValue.startsWith("i")) {
                                     param.value = 0;
-                                }
-                                else if (statusValue == "1") {
-                                    param.value = 1;
-                                }
-                                else if (statusValue == "0") {
-                                    param.value = 0;
-                                }
-                                else {
+                                } else {
                                     param.value = null;
                                 }
 
-                                param.field = "H.IsActive";
+                                param.field = "M.IsActive";
                                 param.operator = "eq";
                             }
                         });
@@ -227,7 +214,7 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Code", "Name", "Description","Status"]
+                fields: ["Code", "Name"]
             },
             excel: {
                 fileName: "Products.xlsx",
@@ -269,9 +256,7 @@
                 }, 1000);
             },
             columns: [
-                {
-                    selectable: true, width: 30
-                },
+               
                 {
                     title: "Action",
                     width: 40,
@@ -286,24 +271,25 @@
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", width: 150, sortable: true },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
-                { field: "Description", title: "Description", sortable: true, width: 200 },
-                {
-                    field: "Status", title: "Status", sortable: true, width: 100,
-                    filterable: {
-                        ui: function (element) {
-                            element.kendoDropDownList({
-                                dataSource: [
-                                    { text: "Active", value: "1" },
-                                    { text: "Inactive", value: "0" }
-                                ],
-                                dataTextField: "text",
-                                dataValueField: "value",
-                                optionLabel: "Select Option"
-                            });
-                        }
-                    }
-                },
-                { field: "CompanyName", title: "Company Name", width: 200, hidden: true, sortable: true },
+                { field: "ConversionFactor", title: "Conversion Factor", sortable: true, width: 200 },
+                { field: "CIFCharge", title: "CIF Charge", sortable: true, width: 200 },
+                //{
+                //    field: "Status", title: "Status", sortable: true, width: 100,
+                //    filterable: {
+                //        ui: function (element) {
+                //            element.kendoDropDownList({
+                //                dataSource: [
+                //                    { text: "Active", value: "1" },
+                //                    { text: "Inactive", value: "0" }
+                //                ],
+                //                dataTextField: "text",
+                //                dataValueField: "value",
+                //                optionLabel: "Select Option"
+                //            });
+                //        }
+                //    }
+                //},
+               
             ],
             editable: false,
             selectable: "multiple row",

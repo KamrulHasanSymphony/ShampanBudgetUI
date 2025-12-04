@@ -81,6 +81,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
                         model.CreatedBy = Session["UserId"].ToString();
                         model.CreatedOn = DateTime.Now.ToString();
                         model.CreatedFrom = Ordinary.GetLocalIpAddress();
+                        model.IsActive = true; 
 
                         resultVM = _repo.Insert(model);
 
