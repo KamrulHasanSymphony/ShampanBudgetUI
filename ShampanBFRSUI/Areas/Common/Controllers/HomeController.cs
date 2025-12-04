@@ -73,7 +73,8 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 CommonVM vm = new CommonVM();
                 List<BranchProfileVM> lst = new List<BranchProfileVM>();
 
-                if (Session["UserId"] != null && Session["UserId"].ToString().ToLower() == "erp")
+                //if (Session["UserId"] != null && Session["UserId"].ToString().ToLower() == "erp")
+                if (Session["UserId"] != null)
                 {
 
                     vm.UserId = Session["UserId"].ToString();

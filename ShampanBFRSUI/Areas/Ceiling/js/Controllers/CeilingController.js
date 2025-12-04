@@ -246,12 +246,15 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                             if (param.field === "BudgetType") {
                                 param.field = "c.BudgetType";
                             }
-                            if (param.field === "BudgetSetNo") {
-                                param.field = "c.BudgetSetNo";
+                            if (param.field === "YearName") {
+                                param.field = "fy.YearName";
                             }
-                            if (param.field === "TransactionDate") {
-                                param.field = "c.TransactionDate";
-                            }
+                            //if (param.field === "BudgetSetNo") {
+                            //    param.field = "c.BudgetSetNo";
+                            //}
+                            //if (param.field === "TransactionDate") {
+                            //    param.field = "c.TransactionDate";
+                            //}
                             if (param.field === "IsActive") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
                                 if (statusValue.startsWith("a")) {
@@ -278,12 +281,15 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                             if (param.field === "BudgetType") {
                                 param.field = "c.BudgetType";
                             }
-                            if (param.field === "BudgetSetNo") {
-                                param.field = "c.BudgetSetNo";
+                            if (param.field === "YearName") {
+                                param.field = "fy.YearName";
                             }
-                            if (param.field === "TransactionDate") {
-                                param.field = "c.TransactionDate";
-                            }
+                            //if (param.field === "BudgetSetNo") {
+                            //    param.field = "c.BudgetSetNo";
+                            //}
+                            //if (param.field === "TransactionDate") {
+                            //    param.field = "c.TransactionDate";
+                            //}
                             if (param.field === "IsActive") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
@@ -394,14 +400,15 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", sortable: true, width: 200 },
                 { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
-                { field: "BudgetSetNo", title: "Budget Set No", sortable: true, width: 200 },
-                {
-                    field: "TransactionDate",
-                    title: "Document Date",
-                    width: 200,
-                    sortable: true,
-                    template: "#= kendo.toString(kendo.parseDate(TransactionDate), 'dd-MMM-yyyy') #"
-                },
+                { field: "YearName", title: "Year", sortable: true, width: 200 },
+                //{ field: "BudgetSetNo", title: "Budget Set No", sortable: true, width: 200 },
+                //{
+                //    field: "TransactionDate",
+                //    title: "Document Date",
+                //    width: 200,
+                //    sortable: true,
+                //    template: "#= kendo.toString(kendo.parseDate(TransactionDate), 'dd-MMM-yyyy') #"
+                //},
                 {
                     field: "IsActive",
                     title: "Active",

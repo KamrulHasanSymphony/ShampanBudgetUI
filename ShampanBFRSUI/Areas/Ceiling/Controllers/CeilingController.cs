@@ -48,6 +48,8 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             vm.TransactionType = TransactionType;
             vm.BudgetSetNo = 1;
             vm.TransactionDate = DateTime.Now.ToString("yyyy-MM-dd");
+            vm.MenuType = MenuType;
+            vm.BudgetType = BudgetType;
 
             return View("Create", vm);
         }
@@ -76,7 +78,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                         model.CreatedFrom = Ordinary.GetLocalIpAddress();
                         model.IsActive = true;
 
-                        resultVM = _repo.Insert(model);
+                        resultVM = _repo.Insert(model, model.CreatedBy);
 
                         if (resultVM.Status == ResultStatus.Success.ToString())
                         {
@@ -164,7 +166,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, string MenuType = "")
         {
             try
             {

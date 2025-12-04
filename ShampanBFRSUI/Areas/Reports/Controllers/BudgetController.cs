@@ -224,16 +224,19 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                 // Try to detect numeric columns
                 var firstValue = list[0][key];
                 Type colType = typeof(string);
-
-                if (firstValue != null)
+                if (key!= "iBAS Code" && key != "Sabre Code")
                 {
-                    if (decimal.TryParse(firstValue.ToString(), out _))
-                        colType = typeof(decimal);
-                    else if (double.TryParse(firstValue.ToString(), out _))
-                        colType = typeof(double);
-                    else if (int.TryParse(firstValue.ToString(), out _))
-                        colType = typeof(int);
+                    if (firstValue != null)
+                    {
+                        if (decimal.TryParse(firstValue.ToString(), out _))
+                            colType = typeof(decimal);
+                        else if (double.TryParse(firstValue.ToString(), out _))
+                            colType = typeof(double);
+                        else if (int.TryParse(firstValue.ToString(), out _))
+                            colType = typeof(int);
+                    }
                 }
+                
 
                 dt.Columns.Add(key, colType);
             }
