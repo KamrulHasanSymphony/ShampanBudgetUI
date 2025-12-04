@@ -75,32 +75,30 @@
                 <div class="card-body">
 
                     @Html.HiddenFor(model => model.Id)
-                    @*@Html.HiddenFor(model => model.IDs)*@
                     @Html.HiddenFor(model => model.Operation)
 
                     <div class="form-group row">
 
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Code)
-                            <div style="display: flex; align-items: center;">
-                                <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
-                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Code Auto Generate", @class = " csCode  form-control form-control-sm", @readonly = "readonly", @style = "width:140px;" }) &nbsp;
-                                <span id="btnNext" class="fa fa-forward" style="color: darkseagreen;"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            @Html.LabelFor(model => model.COAId)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.COAId, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Enter Code", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;" })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             @Html.LabelFor(model => model.Name)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Name, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;" })
+                            </div>
+                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.COAId)
+                            <div class="input-group ">
+                                @Html.TextBoxFor(model => model.COAId, new { placeholder = "Enter iBAS", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;" })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
@@ -109,7 +107,7 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Remarks)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Policy Name", @class = " required form-control form-control-sm", required = "required" })
+                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks", @class = " required form-control form-control-sm" })
                             </div>
                             <span id="PolicyNameError" class="text-danger" style="display:none;"></span>
 
@@ -157,7 +155,7 @@
 
 
 
-                </div>
+                    </div>
                     @*<div class="form-group row">
                     
                         @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))

@@ -70,7 +70,7 @@
                     read: "/Common/Common/GetCOAList"
                 }
             },
-            placeholder: "Select COA",
+            placeholder: "Select iBAS",
             value: "",
             dataBound: function (e) {
                 if (getCOAId) {
@@ -279,9 +279,10 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", sortable: true, width: 200 },
-                { field: "Name", title: "Name", sortable: true, width: 200 },
-                { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
+                { field: "Code", title: "Sabre Code", sortable: true, width: 200 },
+                { field: "Name", title: "Sabre Name", sortable: true, width: 200 },
+                { field: "iBASCode", title: "iBAS Code", sortable: true, width: 200 },
+                { field: "iBASName", title: "iBAS Name", sortable: true, width: 200 },
             ],
             editable: false,
             selectable: "row",

@@ -19,13 +19,13 @@ namespace ShampanBFRS.Models.SetUpVMs
         [Display(Name = "Structure Code")]
         public int? StructureId { get; set; }
 
-        [Display(Name = "COA Group")]
+        [Display(Name = "iBAS Group")]
         public int? COAGroupId { get; set; }
 
-        [Display(Name = "Account Code")]
+        [Display(Name = "iBAS Code")]
         public string? Code { get; set; }
 
-        [Display(Name = "Account Name")]
+        [Display(Name = "iBAS Name")]
         public string? Name { get; set; }
 
         [Display(Name = "Account Nature")]
@@ -39,6 +39,7 @@ namespace ShampanBFRS.Models.SetUpVMs
 
         [Display(Name = "Remarks")]
         public string? Remarks { get; set; }
+        public string? GroupName { get; set; }
 
         [Display(Name = "Active")]
         public bool IsActive { get; set; }

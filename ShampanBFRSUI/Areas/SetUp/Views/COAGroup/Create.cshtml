@@ -95,18 +95,20 @@
             </div>
             <span id="titleError2" class="text-danger" style="display:none;"></span>
         </div>*@
-                        <div class="col-sm-2">
-                            @Html.LabelFor(model => model.Category)
+
+
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.Name)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Category, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name ", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
 
-                        <div class="col-sm-2">
-                            @Html.LabelFor(model => model.Name)
+                        <div class="col-sm-3">
+                            @Html.LabelFor(model => model.Category)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name ", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                                @Html.TextBoxFor(model => model.Category, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
