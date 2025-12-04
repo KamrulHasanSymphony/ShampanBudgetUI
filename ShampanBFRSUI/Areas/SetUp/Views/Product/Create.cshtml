@@ -247,12 +247,8 @@
                                 @Html.ValidationMessageFor(model => model.VATRate)
                             </div>
 
-                        </div>
-
-
-
-                        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-                        {
+                            @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+{
                             <div class="col-sm-2">
                                 @Html.LabelFor(model => model.IsActive)
                                 <div class="Onoffbtn">
@@ -270,9 +266,9 @@
                                     </div>
                                 </div>
                             </div>
-                        }
-                        else
-                        {
+}
+else
+{
                             <div class="col-sm-2 cStatus" style="display:none;">
                                 @Html.LabelFor(model => model.IsActive)
                                 <div class="Onoffbtn">
@@ -290,7 +286,10 @@
                                     </div>
                                 </div>
                             </div>
-                        }
+}
+
+                        </div>
+
 
 
                     </div>
