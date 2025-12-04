@@ -6,26 +6,29 @@ namespace ShampanBFRS.Models.SetUpVMs
     public class ProductVM : Audit
     {
         public int Id { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
 
-        [Display(Name = "Product Code")]
-        public string? Code { get; set; }
+        public decimal? ConversionFactor { get; set; }
+        public decimal? CIFCharge { get; set; }
+        public decimal? ExchangeRateUsd { get; set; }
+        public decimal? InsuranceRate { get; set; }
+        public decimal? BankCharge { get; set; }
+        public decimal? OceanLoss { get; set; }
+        public decimal? CPACharge { get; set; }
+        public decimal? HandelingCharge { get; set; }
+        public decimal? LightCharge { get; set; }
+        public decimal? Survey { get; set; }
+        public decimal? CostLiterExImport { get; set; }
 
-        [Display(Name = "Product Name")]
-        public string? Name { get; set; }
-
-        [Display(Name = "Description")]
-        public string? Description { get; set; }
-
-        [Display(Name = "Image Path")]
-        public string? ImagePath { get; set; }
-
-        public string? FromDate { get; set; }
-        public int? ProductId { get; set; }
-        public int? BranchId { get; set; }
-        public string? ProductCode { get; set; }
-        public string? ProductName { get; set; }
-        public string?[] IDs { get; set; }
-
+        public decimal? ExERLRate { get; set; }
+        public decimal? DutyPerLiter { get; set; }
+        public decimal? Refined { get; set; }
+        public decimal? Crude { get; set; }
+        public decimal? SDRate { get; set; }
+        public decimal? DutyInTariff { get; set; }
+        public decimal? ATRate { get; set; }
+        public decimal? VATRate { get; set; }
 
         public PeramModel PeramModel { get; set; }
 

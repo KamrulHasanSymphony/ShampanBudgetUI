@@ -130,8 +130,8 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 vm.PeramModel.BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0";
                 vm.PeramModel.FromDate = Request.Form["FromDate"];
 
-                vm.ProductCode = search;
-                vm.ProductName = search;
+                //vm.ProductCode = search;
+                //vm.ProductName = search;
                 vm.Status = search;
 
                 ResultVM result = _repo.GetProductModalData(vm);

@@ -50,43 +50,7 @@
             }
         });
 
-        // Handle file input change to preview image
-        $("#imageUpload").on("change", function (event) {
-            $("#imageUpload").prop("disabled", true);
-            var file = event.target.files[0];
-
-            if (!file) {
-                console.error("No file selected!");
-                return;
-            }
-
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                console.log("File loaded successfully!"); // Debugging
-
-                // Update the preview image and make it visible
-                $("#imagePreview").attr("src", e.target.result).show();
-                $("#deleteImageBtn").show();
-            };
-
-            reader.onerror = function (error) {
-                console.error("Error reading file:", error);
-            };
-
-            reader.readAsDataURL(file);
-        });
-
-        $("#deleteImageBtn").on("click", function () {
-            $(this).addClass("clicked");
-            $("#imagePreview").attr("src", "").hide(); // Hide preview
-            $("#ImagePath").val(""); // Clear hidden field
-            $("#deleteImageBtn").hide();
-            $("#imageUpload").val("");// Hide delete button
-            $("#imageUpload").prop("disabled", false);
-
-        });
-
+      
 
 
     };
@@ -138,29 +102,23 @@
                     
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            if (param.field === "ID") {
-                                param.field = "H.Id";
+                            if (param.field === "Id") {
+                                param.field = "M.Id";
                             }
                             if (param.field === "Code") {
-                                param.field = "H.Code";
+                                param.field = "M.Code";
                             }
                             if (param.field === "Name") {
-                                param.field = "H.Name";
-                            }
-                            if (param.field === "Description") {
-                                param.field = "H.Description";
-                            }
-                            if (param.field === "Comments") {
-                                param.field = "H.Comments";
+                                param.field = "M.Name";
+                            }                      
+                            if (param.field === "ConversionFactor") {
+                                param.field = "M.ConversionFactor";
                             }
                          
-                            if (param.field === "ProductGroupName") {
-                                param.field = "PG.Name";
-                            }
-                            if (param.field === "UOMName") {
-                                param.field = "uom.Name";
-                            }
-                            if (param.field === "Status") {
+                            if (param.field === "CIFCharge") {
+                                param.field = "M.CIFCharge";
+                            }                         
+                            if (param.field === "A") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
                                 if (statusValue.startsWith("a")) {
@@ -359,98 +317,34 @@
     function save() {       
         debugger;
         var validator = $("#frmEntry").validate();
-        var formData = new FormData();
-
         var model = serializeInputs("frmEntry");
 
         var result = validator.form();
 
         if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
+            validator.focusInvalid();
             return;
         }
 
-        for (var key in model) {
-            formData.append(key, model[key]);
-        }
+        // Append checkbox values directly into model
+        model.IsActive = $('#IsActive').prop('checked');
 
-        // Handle checkbox value
-        formData.append("IsActive", $('#IsActive').prop('checked'));
-
-        // Check if delete button was clicked to remove image
-        var deleteImageClicked = $("#deleteImageBtn").hasClass("clicked");
-        if (deleteImageClicked) {
-            formData.append("ImagePath", "");  // Mark image for deletion
-            $("#imagePreview").remove();
-            $("#ImagePath").val("");
-        }
-
-        var fileInput = document.getElementById("imageUpload");
-        if (fileInput.files.length > 0) {
-            var file = fileInput.files[0];
-
-            // ✅ Validate file size (Max 25MB)
-            if (file.size > 26214400) { // 25MB in bytes
-                ShowNotification(3, "Image size cannot exceed 25MB.");
-                return;
-            }
-
-            formData.append("file", file);
-        } else if (!deleteImageClicked) {
-            var existingImagePath = $("#ImagePath").val();
-            if (existingImagePath) {
-                formData.append("ImagePath", existingImagePath);
-            }
-        }
 
         var url = "/SetUp/Product/CreateEdit";
 
-        CommonAjaxService.finalImageSave(url, formData, saveDone, saveFail);
+        CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 
 
     function saveDone(result) {
-        
         if (result.Status == 200) {
-            if (result.Data.Operation == "add") {
-                ShowNotification(1, result.Message);
-                $(".divSave").hide();
-                $(".divUpdate").show();
-                $("#Code").val(result.Data.Code);
-                $("#Id").val(result.Data.Id);
-                $("#Operation").val("update");
-                $("#CreatedBy").val(result.Data.CreatedBy);
-                $("#CreatedOn").val(result.Data.CreatedOn);
-            }
-            else {
-                ShowNotification(1, result.Message);
-                $("#LastModifiedBy").val(result.Data.LastModifiedBy);
-                $("#LastModifiedOn").val(result.Data.LastModifiedOn);
-            }
-
-            if (result.Data.ImagePath) {
-                var imagePath = result.Data.ImagePath;
-                if (!imagePath.startsWith("http") && !imagePath.startsWith("/")) {
-                    imagePath = "/" + imagePath; // Ensure it starts with "/"
-                }
-                $("#imagePreview").attr("src", imagePath + "?t=" + new Date().getTime()).show();
-                $("#deleteImageBtn").show();
-                $("#ImagePath").val(imagePath); // Update hidden field with new path
-            }
-            else {
-                $("#imagePreview").hide();
-                $("#deleteImageBtn").hide();
-            }
+            ShowNotification(1, result.Message);
+            $(".divSave").hide();
+            $(".divUpdate").show();
+            $("#Id").val(result.Data.Id);
+            $("#Operation").val("update");
         }
-        else if (result.Status == 400) {
-            ShowNotification(3, result.Message);
-        }
-        else {
-            ShowNotification(2, result.Message);
-        }
-    };
+    }
 
     function saveFail(result) {
         
