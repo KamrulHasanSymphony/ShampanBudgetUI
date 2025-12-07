@@ -1,7 +1,7 @@
 ﻿@model ShampanBFRS.Models.Ceiling.CeilingVM
 
 @{
-    ViewBag.Title = "Ceiling";
+    ViewBag.Title = "Budget";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -144,28 +144,28 @@
                                 </div>
 
                                 @*<div class="col-sm-2">
-                                    @Html.LabelFor(model => model.BudgetSetNo)
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(model => model.BudgetSetNo, new { placeholder = "Enter Budget Set No", @class = "form-control form-control-sm" })
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.BudgetSetNo)
-                                </div>*@
+                            @Html.LabelFor(model => model.BudgetSetNo)
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.BudgetSetNo, new { placeholder = "Enter Budget Set No", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.BudgetSetNo)
+                        </div>*@
 
                                 @*<div class="col-sm-2">
-                                        @Html.LabelFor(model => model.BudgetType)
-                                        <div class="input-group">
-                                            @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.BudgetType)
-                                    </div>*@
+                            @Html.LabelFor(model => model.BudgetType)
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.BudgetType)
+                        </div>*@
 
                                 @*<div class="col-sm-2">
-                                    @Html.LabelFor(model => model.TransactionDate)
-                                    <div class="input-group ">
-                                        @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm", @style = "width: 100%; height:32px;" })
-                                    </div>
-                                    <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
-                                </div>*@
+                            @Html.LabelFor(model => model.TransactionDate)
+                            <div class="input-group ">
+                                @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm", @style = "width: 100%; height:32px;" })
+                            </div>
+                            <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
+                        </div>*@
 
                             </div>
 
@@ -214,6 +214,12 @@
                 </form>
 
 
+                @if (Model.MenuType == "Self")
+                {
+
+
+
+                }
 
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">
@@ -222,7 +228,7 @@
                         {
                             <button type="button" class="button btnsave sslUpdate">Update</button>
 
-                            <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/Ceiling/Ceiling/Create?TransactionType=@Model.TransactionType" onclick="GoTo(this)" class="button NewButton addNewButton">
+                            <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/Ceiling/Ceiling/Create?TransactionType=@Model.TransactionType&MenuType=@Model.MenuType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
                                 New
                             </button>
                         }
@@ -230,7 +236,8 @@
                         {
                             <div style="display:none;" class="divUpdate">
                                 <button type="button" class="button btnsave sslUpdate">Update</button>
-                                <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/Ceiling/Ceiling/Create?TransactionType=@Model.TransactionType" onclick="GoTo(this)" class="button NewButton addNewButton">
+                                <button style="float: right; margin-left: 5px;" type="button" title="Add New"
+                                        data-url="/Ceiling/Ceiling/Create?TransactionType=@Model.TransactionType&MenuType=@Model.MenuType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
                                     New
                                 </button>
                             </div>
@@ -240,12 +247,13 @@
                         }
 
                         @*<div class="divSave">
-                            <button class="button btnDownload sslSave" type="button" id="">Download</button>
-                        </div>*@
+                    <button class="button btnDownload sslSave" type="button" id="">Download</button>
+                </div>*@
 
                     </div>
                     <div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>
                 </div>
+
 
                 <div class="card card-secondary auditcard">
 

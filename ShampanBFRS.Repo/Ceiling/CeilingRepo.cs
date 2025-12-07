@@ -16,7 +16,7 @@ namespace ShampanBFRS.Repo.Ceiling
     public class CeilingRepo
     {
 
-        public ResultVM Insert(CeilingVM model)
+        public ResultVM Insert(CeilingVM model, string UserName)
         {
             try
             {
@@ -118,6 +118,6 @@ namespace ShampanBFRS.Repo.Ceiling
             }
         }
 
-        
+
     }
 }
