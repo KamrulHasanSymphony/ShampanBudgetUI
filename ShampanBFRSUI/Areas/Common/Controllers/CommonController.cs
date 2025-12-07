@@ -78,6 +78,10 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
         public ActionResult _getItemModal()
         {
             return PartialView("_getItemModal");
+        } [HttpGet]
+        public ActionResult _getSegmentModal()
+        {
+            return PartialView("_getSegmentModal");
         }
 
         [HttpGet]
@@ -142,6 +146,74 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                     if (jArray != null)
                     {
                         var data = jArray.ToObject<List<ProductVM>>();
+                        return Json(new
+                        {
+                            draw = Request.Form["draw"],
+                            recordsTotal = result.Count,
+                            recordsFiltered = result.Count,
+                            data = data
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+
+                return Json(new
+                {
+                    draw = Request.Form["draw"],
+                    recordsTotal = 0,
+                    recordsFiltered = 0,
+                    data = new List<ProductVM>()
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Session["result"] = "Fail" + "~" + e.Message;
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new
+                {
+                    draw = Request.Form["draw"],
+                    recordsTotal = 0,
+                    recordsFiltered = 0,
+                    data = new List<ProductVM>()
+                }, JsonRequestBehavior.AllowGet);
+            }
+        } 
+        
+        [HttpPost]
+        public ActionResult GetSegmentData()
+        {
+            try
+            {
+                _repo = new CommonRepo();
+
+                SegmentVM vm = new SegmentVM();
+                var search = Request.Form["search[value]"].Trim();
+
+                var startRec = Request.Form["start"].ToString();
+                var pageSize = Request.Form["length"].ToString();
+                var orderColumnIndex = Request.Form["order[0][column]"].ToString();
+                var orderDir = Request.Form["order[0][dir]"].ToString();
+                var orderName = Request.Form[$"columns[{orderColumnIndex}][name]"].ToString();
+
+                vm.PeramModel.SearchValue = search;
+                vm.PeramModel.OrderName = orderName == "" ? "P.Id" : orderName;
+                vm.PeramModel.orderDir = orderDir;
+                vm.PeramModel.startRec = Convert.ToInt32(startRec);
+                vm.PeramModel.pageSize = Convert.ToInt32(pageSize);
+                vm.PeramModel.BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0";
+                vm.PeramModel.FromDate = Request.Form["FromDate"];
+
+                //vm.ProductCode = search;
+                //vm.ProductName = search;
+                vm.Status = search;
+
+                ResultVM result = _repo.GetSegmentData(vm);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    var jArray = result.DataVM as JArray;
+                    if (jArray != null)
+                    {
+                        var data = jArray.ToObject<List<SegmentVM>>();
                         return Json(new
                         {
                             draw = Request.Form["draw"],

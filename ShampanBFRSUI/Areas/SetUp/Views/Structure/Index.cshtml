@@ -1,0 +1,105 @@
+﻿@model ShampanBFRS.Models.SetUpVMs.StructureVM
+@{
+    ViewBag.Title = "Structure Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"> Structure List </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="accordion" id="filterAccordion">
+        <div class="card">
+
+            <div class="card-header p-2" id="filtersHeading">
+                <div class="card card-primary">
+                    <div class="card-header" id="responseTab">
+                        <h3 class="card-title" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">Filters</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="filtersCollapse" class="collapse" aria-labelledby="filtersHeading" data-bs-parent="#filterAccordion">
+                <div class="card-body p-2">
+
+                    @Html.HiddenFor(model => model.Id)
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header p-2">
+            <button type="button" title="Add New" data-url="/SetUp/Structure/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+
+            <button type="button" title="Post data" id="btnPost" class="button sslPost">
+                Post
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card card-secondary">
+        <div class="card-header">
+            <h3 class="card-title">
+                List Of Data
+            </h3>
+        </div>
+        <div class="card-body">
+            <div id="GridDataList"></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script src="~/Areas/Common/js/Services/CommonService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/SetUp/js/Controller/StructureController.js"></script>
+
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            StructureController.init();
+
+            var message = '@(TempData["Message"])';
+            if (message) {
+                alert(message);
+                window.close();
+            }
+
+        });
+
+    </script>
+
+
+}
+
+
+

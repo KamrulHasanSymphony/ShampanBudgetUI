@@ -106,6 +106,7 @@
     <Compile Include="SetUpVMs\DepartmentVM.cs" />
     <Compile Include="SetUpVMs\SabresVM.cs" />
     <Compile Include="SetUpVMs\SegmentVM.cs" />
+    <Compile Include="SetUpVMs\StructureDetailsVM.cs" />
     <Compile Include="SetUpVMs\StructureVM.cs" />
     <Compile Include="SetUpVMs\UserBranchProfileVM.cs" />
     <Compile Include="SetUpVMs\UserProfileVM.cs" />

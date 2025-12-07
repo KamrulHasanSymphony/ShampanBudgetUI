@@ -23,5 +23,12 @@ namespace ShampanBFRS.Models.SetUpVMs
         public string? LastUpdateBy { get; set; }
         public string? LastUpdateOn { get; set; }
         public string? LastUpdateFrom { get; set; }
+
+        public PeramModel PeramModel { get; set; }
+
+        public SegmentVM()
+        {
+            PeramModel = new PeramModel();
+        }
     }
 }
