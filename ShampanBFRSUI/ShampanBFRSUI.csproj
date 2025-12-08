@@ -404,6 +404,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Ceiling\CeilingAreaRegistration.cs" />
     <Compile Include="Areas\Ceiling\Controllers\CeilingController.cs" />
+    <Compile Include="Areas\Ceiling\Controllers\ProductBudgetController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\Common\Controllers\CommonController.cs" />
     <Compile Include="Areas\Common\Controllers\HomeController.cs" />
@@ -444,6 +445,7 @@
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\Ceiling\js\Controllers\CeilingController.js" />
+    <Content Include="Areas\Ceiling\js\Controllers\ProductBudgetController.js" />
     <Content Include="Areas\Common\js\Services\CommonAjaxService.js" />
     <Content Include="Areas\Common\js\Services\CommonService.js" />
     <Content Include="Areas\Questions\js\Controllers\ExamineeController.js" />
@@ -2623,6 +2625,7 @@
     <Content Include="Areas\Reports\Views\Budget\Index.cshtml" />
     <Content Include="Areas\SetUp\Views\Segment\Index.cshtml" />
     <Content Include="Areas\SetUp\Views\Segment\Create.cshtml" />
+    <Content Include="Areas\Ceiling\Views\ProductBudget\Index.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />
