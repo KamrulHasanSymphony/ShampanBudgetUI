@@ -56,10 +56,11 @@
             else {
                 $(".YearLock").attr('checked', true);
             }
-        });        
-
+        });
+        debugger;
         $("#Year").on('change', function () {
-            dubugger;
+
+            debugger;
             
             var year = $('#Year').val();
             var yearStartDate = $('#YearStart').val();
@@ -78,13 +79,17 @@
 
             
             $('#YearEnd').val(updatedYearEndDate);
+
+
+            //add
+            detailsFiscalYear();
         });
         
         $("#btnFDt").on('click', function () {
             $('#fiscalYearDetails').show();           
             //$("#dtMHeader").show();
             
-
+            debugger;
             var yearStart = $('#YearStart').val();
             var yearEnd = $('#YearEnd').val();
 
@@ -99,6 +104,33 @@
                 $('#fiscalYearDetails').html('<div class="error-message">Failed to load data. Please try again later.</div>');
             });
         });
+
+
+        function detailsFiscalYear() {
+            debugger;
+
+            $('#fiscalYearDetails').show();
+            //$("#dtMHeader").show();
+
+            debugger;
+            var yearStart = $('#YearStart').val();
+            var yearEnd = $('#YearEnd').val();
+
+            // Correcting the URL construction to ensure proper formatting
+            let url = '/SetUp/FiscalYear/FiscalYearSet?YearStart=' + yearStart + '&YearEnd=' + yearEnd;
+            $('#fiscalYearDetails').html('');
+            $.get(url, function (data) {
+
+                $('#fiscalYearDetails').append(data);
+
+            }).fail(function (xhr, status, error) {
+                $('#fiscalYearDetails').html('<div class="error-message">Failed to load data. Please try again later.</div>');
+            });
+
+
+        }
+
+
         $('#YearLock').change(function () {
             var isChecked = $(this).prop('checked');
 
