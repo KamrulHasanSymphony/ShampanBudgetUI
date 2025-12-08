@@ -12,8 +12,9 @@ namespace ShampanBFRS.Models.Ceiling
         public int CompanyId { get; set; }
         public int BranchId { get; set; }
         public int GLFiscalYearId { get; set; }
-        public int BudgetSetNo { get; set; }
+        public string BudgetSetNo { get; set; }
         public string BudgetType { get; set; }
+        public int ProductGroupId { get; set; }
         public int ProductId { get; set; }
 
         public decimal ConversionFactor { get; set; }
@@ -66,6 +67,8 @@ namespace ShampanBFRS.Models.Ceiling
         public string Operation { get; set; }
 
         public string? TransactionType { get; set; }
+
+        public string? UserId { get; set; }
 
 
     }
