@@ -102,6 +102,25 @@ namespace ShampanBFRS.Repo.CommonRepo
             }
         }
 
+         public ResultVM GetSegmentData(SegmentVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Common/GetSegmentData", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion                
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
         public ResultModel<List<CommonDropDown>> GetBooleanDropDown()
         {

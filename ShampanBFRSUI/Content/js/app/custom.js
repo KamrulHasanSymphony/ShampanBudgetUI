@@ -2058,7 +2058,7 @@ function LoadApprovalLevelList($table) {
 };
 
 function addRow($table) {
-
+    debugger;
     var $row = $('<tr>');
 
     var serialNo = $table.find('tbody tr').length + 1; // Get the current row count + 1  

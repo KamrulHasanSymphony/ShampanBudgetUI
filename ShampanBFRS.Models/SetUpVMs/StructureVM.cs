@@ -10,16 +10,13 @@ namespace ShampanBFRS.Models.SetUpVMs
     public class StructureVM :Audit
     {
         public int Id { get; set; }
-        public string ?Code { get; set; }
+        public string? Code { get; set; }
         public string Name { get; set; }
         public string? Remarks { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsArchive { get; set; }
-        public string? CreatedBy { get; set; }
-        public string? CreatedOn { get; set; }
-        public string? CreatedFrom { get; set; }
-        public string ?LastUpdateBy { get; set; }
-        public string? LastUpdateOn { get; set; }
-        public string? LastUpdateFrom { get; set; }
+        public List<StructureDetailsVM> StructureDetails { get; set; }
+        public StructureVM()
+        {
+            StructureDetails = new List<StructureDetailsVM>();
+        }
     }
 }
