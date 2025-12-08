@@ -94,11 +94,11 @@
                 <div class="col-sm-6">
                     @if (Model.Operation == "add")
                     {
-                        <h1 class="m-0">Budget Create</h1>
+                    <h1 class="m-0">Budget Create</h1>
                     }
                     else
                     {
-                        <h1 class="m-0">Budget Edit</h1>
+                    <h1 class="m-0">Budget Edit</h1>
                     }
                 </div>
                 <div class="col-sm-6">
@@ -126,7 +126,7 @@
                             @Html.HiddenFor(model => model.BudgetSetNo)
 
                             <div class="form-group row">
-                                
+
                                 <div class="col-sm-2">
                                     @Html.LabelFor(model => model.GLFiscalYearId)
                                     <div class="input-group">
@@ -137,7 +137,19 @@
 
                             </div>
 
-                            
+                            <div class="form-group row">
+
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.pro)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.GLFiscalYearId)
+                                </div>
+
+                            </div>
+
+
 
 
 
@@ -163,24 +175,24 @@
 
                         @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                         {
-                            <button type="button" class="button btnsave sslUpdate">Update</button>
+                        <button type="button" class="button btnsave sslUpdate">Update</button>
 
-                            <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/Ceiling/ProductBudget/Create?TransactionType=@Model.TransactionType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
-                                New
-                            </button>
+                        <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/Ceiling/ProductBudget/Create?TransactionType=@Model.TransactionType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
+                            New
+                        </button>
                         }
                         else
                         {
-                            <div style="display:none;" class="divUpdate">
-                                <button type="button" class="button btnsave sslUpdate">Update</button>
-                                <button style="float: right; margin-left: 5px;" type="button" title="Add New"
-                                        data-url="/Ceiling/ProductBudget/Create?TransactionType=@Model.TransactionType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
-                                    New
-                                </button>
-                            </div>
-                            <div class="divSave">
-                                <button class="button btnsave sslSave" type="button" id="">Save</button>
-                            </div>
+                        <div style="display:none;" class="divUpdate">
+                            <button type="button" class="button btnsave sslUpdate">Update</button>
+                            <button style="float: right; margin-left: 5px;" type="button" title="Add New"
+                                    data-url="/Ceiling/ProductBudget/Create?TransactionType=@Model.TransactionType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
+                                New
+                            </button>
+                        </div>
+                        <div class="divSave">
+                            <button class="button btnsave sslSave" type="button" id="">Save</button>
+                        </div>
                         }
 
                     </div>

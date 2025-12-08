@@ -19,7 +19,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
-        //GetBudgetSetComboBox();
+        ProductGroupComboBox();
         //GetBudgetTypeComboBox();
         //GenerateDatePicker();
 
@@ -34,17 +34,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
                     save();
-                }
-            });
-        });
-
-        // Download button click handler
-        $('.btnDownload').click('click', function () {
-            var status = "Download";
-
-            Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
-                if (result) {
-                    Download();
                 }
             });
         });
@@ -99,8 +88,8 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             }).data("kendoMultiColumnComboBox");
         };
 
-        function GetBudgetSetComboBox() {
-            var BudgetSetComboBox = $("#BudgetSetNo").kendoMultiColumnComboBox({
+        function ProductGroupComboBox() {
+            var ProductGroupComboBox = $("#BudgetSetNo").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
                 height: 400,
@@ -111,7 +100,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 filterFields: ["Name"],
                 dataSource: {
                     transport: {
-                        read: "/Common/Common/GetEnumTypeList?value=BudgetSet"
+                        read: "/Common/Common/GetProductGroupList"
                     }
                 },
                 placeholder: "Select Budget Set",
