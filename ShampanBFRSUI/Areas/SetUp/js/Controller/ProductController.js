@@ -4,7 +4,12 @@
     var init = function () {
         
         var getId = $("#Id").val() || 0;
+        getProductGroup = $("#ProductGroupId").val() || 0;
         var getOperation = $("#Operation").val() || '';
+        if (getOperation != "") {
+            GetProductGroupComboBox();
+        }
+
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
@@ -54,6 +59,31 @@
 
 
     };
+
+    function GetProductGroupComboBox() {
+        var CustomerComboBox = $("#ProductGroupId").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "Name", title: "Name", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["Name"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetProductGroupList"
+                }
+            },
+            placeholder: "Select Product Group",
+            value: "",
+            dataBound: function (e) {
+                if (getProductGroup) {
+                    this.value(parseInt(getProductGroup));
+                }
+            }
+        }).data("kendoMultiColumnComboBox");
+    };  
 
     function SelectData() {
         
