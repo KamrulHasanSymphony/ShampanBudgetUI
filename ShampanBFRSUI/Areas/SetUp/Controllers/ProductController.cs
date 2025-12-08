@@ -50,31 +50,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             {
                 try
                 {
-                    //if (file != null && file.ContentLength > 0)
-                    //{
-                    //    string uploadsFolder = Server.MapPath("~/Content/Products");
-
-                    //    if (!Directory.Exists(uploadsFolder))
-                    //    {
-                    //        Directory.CreateDirectory(uploadsFolder);
-                    //    }
-
-                    //    string fileExtension = Path.GetExtension(file.FileName).ToLower();
-                    //    string[] validImageTypes = { ".jpg", ".jpeg", ".png", ".gif" };
-
-                    //    if (!validImageTypes.Contains(fileExtension))
-                    //    {
-                    //        result.Message = "Invalid image file type.";
-                    //        return Json(result);
-                    //    }
-
-                    //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    //    string filePath = Path.Combine(uploadsFolder, fileName);
-
-                    //    file.SaveAs(filePath);
-
-                    //    model.ImagePath = "/Content/Products/" + fileName;
-                    //}
+                    
 
                     if (model.Operation.ToLower() == "add")
                     {

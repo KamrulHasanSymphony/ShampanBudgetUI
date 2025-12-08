@@ -25,7 +25,7 @@
         {
             <button type="button" class="button btnsave sslUpdate">Update</button>
 
-            <button style="float: right;" type="button" title="Add New" data-url="/SetUp/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+            <button style="float:right;" type="button" title="Add New" data-url="/SetUp/FiscalYear/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
         }
@@ -91,7 +91,7 @@
 
                     <div class="col-sm-1">
                         <div class="input-group">
-                            @Html.CheckBoxFor(model => model.YearLock, new { placeholder="Enter Remarks", @class = "md-md-2 form-control form-control-sm", style = "margin-top: 29px;position: absolute;width:25%;", id = "YearLockCheckbox" })
+                            @Html.CheckBoxFor(model => model.YearLock, new { placeholder = "Enter Remarks", @class = "md-md-2 form-control form-control-sm", style = "margin-top: 29px;position: absolute;width:25%;", id = "YearLockCheckbox" })
                             @Html.LabelFor(model => model.YearLock, "Year Lock")
                         </div>
                     </div>
@@ -232,8 +232,8 @@
 @section scripts{
 
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    @*<script src="~/Areas/SetUp/js/Controllers/FiscalYearsController.js"></script>*@
     <script src="~/Areas/SetUp/js/Controller/FiscalYearsController.js"></script>
+
     <script>
         $(document).ready(function () {
 
@@ -242,7 +242,7 @@
             };
             $('#YearEnd').data('daterangepicker').isInvalidDate = function () {
                 return true;
-            };           
+            };
 
             FiscalYearsController.init();
 
