@@ -162,6 +162,18 @@
                             if (param.field === "Remarks") {
                                 param.field = "M.Remarks";
                             }
+                            if (param.field === "Status") {
+                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+                                if (statusValue.startsWith("a")) {
+                                    param.value = 1;
+                                } else if (statusValue.startsWith("i")) {
+                                    param.value = 0;
+                                } else {
+                                    param.value = null;
+                                }
+                                param.field = "M.IsActive";
+                                param.operator = "eq";
+                            }
 
                         });
                     }
@@ -183,6 +195,19 @@
 
                             if (param.field === "Remarks") {
                                 param.field = "M.Remarks";
+                            }
+
+                            if (param.field === "Status") {
+                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+                                if (statusValue.startsWith("a")) {
+                                    param.value = 1;
+                                } else if (statusValue.startsWith("i")) {
+                                    param.value = 0;
+                                } else {
+                                    param.value = null;
+                                }
+                                param.field = "M.IsActive";
+                                param.operator = "eq";
                             }
 
                         });
@@ -351,7 +376,8 @@
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", sortable: true, width: 200 },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
-                { field: "Remarks", title: "Remarks", sortable: true, width: 250 }             
+                { field: "Remarks", title: "Remarks", sortable: true, width: 250 },
+                { field: "Status", title: "Status", sortable: true, width: 250 }   
 
             ],
             editable: false,
@@ -403,6 +429,8 @@
             ShowNotification(3, errorMessage);
             return;
         }
+        model.IsActive = ("IsActive", $('#IsActive').prop('checked'));
+
         model.StructureDetails = details;
 
         var url = "/SetUp/Structure/CreateEdit";
