@@ -10,6 +10,9 @@ namespace ShampanBFRS.Models.SetUpVMs
 
         [Display(Name = "Year")]
         public int Year { get; set; }
+
+        [Display(Name = "Year Name")]
+        public string? YearName { get; set; }
         public int? YearPeriod { get; set; }
 
         [Display(Name = "Year Start Date")]

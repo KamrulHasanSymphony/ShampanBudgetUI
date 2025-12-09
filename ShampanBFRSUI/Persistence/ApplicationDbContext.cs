@@ -15,6 +15,7 @@ namespace ShampanBFRSUI.Persistence
         }
 
         public static ApplicationDbContext Create()
+        
         {
             return new ApplicationDbContext();
         }

@@ -35,17 +35,36 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             List<FiscalYearVM> fiscalYearLists = new List<FiscalYearVM>();
             string yearStartDate = "";
             int year;
-            // yearStartDate = new DateTime(DateTime.Now.Year, 1, 1).ToString("yyyy-MM-dd");
-            yearStartDate = new DateTime(DateTime.Now.Year, 7, 1).ToString("yyyy-MM-dd");
-            vm.YearStart = yearStartDate;
-            year = DateTime.ParseExact(yearStartDate, "yyyy-MM-dd", null).Year;
-            vm.Year = year;
+
+            ResultVM result = _repo.NewFiscalYear(param);
+
             List<FiscalYearDetailVM> detailVMs = new List<FiscalYearDetailVM>();
-            FiscalYearDetailVM dvm;
-            vm.fiscalYearDetails = detailVMs;
-            vm = DesignFiscalYear(vm);
+            //FiscalYearDetailVM dvm;
+            //vm.fiscalYearDetails = detailVMs;
+            //vm = DesignFiscalYear(vm);
             vm.Operation = "add";
+            if (result.Status == "Success" && result.DataVM != null)
+            {
+                vm = JsonConvert.DeserializeObject<FiscalYearVM>(result.DataVM.ToString());
+                vm.Operation = "add";
+                // vm = JsonConvert.DeserializeObject<List<FiscalYearVM>>(result.DataVM.ToString()).FirstOrDefault();
+            }
+            else
+            {
+                vm = null;
+            }
+
             return View("Create", vm);
+            //yearStartDate = new DateTime(DateTime.Now.Year, 7, 1).ToString("yyyy-MM-dd");
+            //vm.YearStart = yearStartDate;
+            //year = DateTime.ParseExact(yearStartDate, "yyyy-MM-dd", null).Year;
+            //vm.Year = year;
+            //List<FiscalYearDetailVM> detailVMs = new List<FiscalYearDetailVM>();
+            //FiscalYearDetailVM dvm;
+            //vm.fiscalYearDetails = detailVMs;
+            //vm = DesignFiscalYear(vm);
+            //vm.Operation = "add";
+            //return View("Create", vm);
         }
         private FiscalYearVM DesignFiscalYear(FiscalYearVM model)
         {
@@ -300,6 +319,9 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
                 return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+
+
 
 
     }
