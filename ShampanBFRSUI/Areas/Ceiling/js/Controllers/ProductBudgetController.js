@@ -6,6 +6,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         var getOperation = $("#Operation").val() || '';
 
         var getTransactionType = $("#TransactionType").val() || '';
+        var getTransactionType = $("#TransactionType").val() || '';
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList(getTransactionType, getMenuType, getBudgetType);
@@ -18,7 +19,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
-        //GetBudgetSetComboBox();
+        ProductGroupComboBox();
         //GetBudgetTypeComboBox();
         //GenerateDatePicker();
 
@@ -33,17 +34,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
                     save();
-                }
-            });
-        });
-
-        // Download button click handler
-        $('.btnDownload').click('click', function () {
-            var status = "Download";
-
-            Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
-                if (result) {
-                    Download();
                 }
             });
         });
@@ -98,8 +88,8 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             }).data("kendoMultiColumnComboBox");
         };
 
-        function GetBudgetSetComboBox() {
-            var BudgetSetComboBox = $("#BudgetSetNo").kendoMultiColumnComboBox({
+        function ProductGroupComboBox() {
+            var ProductGroupComboBox = $("#BudgetSetNo").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
                 height: 400,
@@ -110,7 +100,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 filterFields: ["Name"],
                 dataSource: {
                     transport: {
-                        read: "/Common/Common/GetEnumTypeList?value=BudgetSet"
+                        read: "/Common/Common/GetProductGroupList"
                     }
                 },
                 placeholder: "Select Budget Set",
@@ -398,14 +388,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 { field: "Code", title: "Code", sortable: true, width: 200 },
                 { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
                 { field: "YearName", title: "Year", sortable: true, width: 200 },
-                //{ field: "BudgetSetNo", title: "Budget Set No", sortable: true, width: 200 },
-                //{
-                //    field: "TransactionDate",
-                //    title: "Document Date",
-                //    width: 200,
-                //    sortable: true,
-                //    template: "#= kendo.toString(kendo.parseDate(TransactionDate), 'dd-MMM-yyyy') #"
-                //},
                 {
                     field: "IsActive",
                     title: "Active",
@@ -482,13 +464,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
 
         model.CeilingDetailList = details;
 
-        //for (var key in model) {
-        //    formData.append(key, model[key]);
-        //}
-
-        //formData.append("IsActive", $('#IsActive').prop('checked'));
-        //formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
-
         var url = "/Ceiling/Ceiling/CreateEdit";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
@@ -541,18 +516,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             ShowNotification(2, result.Message);
         }
 
-        //if (result.Status == 200) {
-        //    ShowNotification(1, result.Message);
-        //    $(".divSave").hide();
-        //    $(".divUpdate").show();
-        //    $("#Id").val(result.Data.Id);
-        //    $("#Operation").val("update");
-        //    $("#Code").val(result.Data.Code);
-
-        //}
-        //else {
-
-        //}
     }
 
     // Handle fail
@@ -572,7 +535,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         }
     }
 
-    var GetCeilingDetailsData = function () {
+    var GetProductBudgetDetailsData = function () {
         var yearId = $('#GLFiscalYearId').val() || 0;
         var budgetSetNo = $('#BudgetSetNo').val() || 0;
         var budgetType = $('#BudgetType').val() || '';
@@ -588,7 +551,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 pageSize: 10,
                 transport: {
                     read: {
-                        url: "/Ceiling/Ceiling/GetAllSabreDataForDetails",
+                        url: "/Ceiling/ProductBudget/GetProductBudgetDataForDetailsLoad",
                         type: "POST",
                         dataType: "json",
                         cache: false,
