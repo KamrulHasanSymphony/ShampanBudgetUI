@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
+using ShampanBFRS.Models.Helper;
 using ShampanBFRS.Models.KendoCommon;
 using ShampanBFRS.Repo.Ceiling;
 using System;
@@ -18,7 +19,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
         // GET: Ceiling/ProductBudget
         public ActionResult Index(string TransactionType = "", string BudgetType = "")
         {
-            ProductBudgetVM vm = new ProductBudgetVM();
+            ProductBudgetMasterVM vm = new ProductBudgetMasterVM();
             vm.TransactionType = TransactionType;
             vm.BudgetSetNo = "1";
             vm.BudgetType = BudgetType;
@@ -33,13 +34,125 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
         public ActionResult Create(string TransactionType = "", string BudgetType = "")
         {
-            ProductBudgetVM vm = new ProductBudgetVM();
+            ProductBudgetMasterVM vm = new ProductBudgetMasterVM();
             vm.Operation = "add";
             vm.TransactionType = TransactionType;
             vm.BudgetSetNo = "1";
             vm.BudgetType = BudgetType;
 
             return View("Create", vm);
+        }
+
+        public ActionResult CreateEdit(ProductBudgetMasterVM model)
+        {
+            ResultModel<ProductBudgetMasterVM> result = new ResultModel<ProductBudgetMasterVM>();
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            _repo = new ProductBudgetRepo();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var currentBranchId = 0;
+                    if (Session["CurrentBranch"] != null)
+                        int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
+
+                    model.BranchId = currentBranchId;
+                    model.CompanyId = 9;
+
+                    if (model.Operation.ToLower() == "add")
+                    {
+                        model.CreatedBy = Session["UserId"].ToString();
+                        model.CreatedOn = DateTime.Now.ToString();
+                        model.CreatedFrom = Ordinary.GetLocalIpAddress();
+                        model.IsActive = true;
+
+                        resultVM = _repo.Insert(model, model.CreatedBy);
+
+                        if (resultVM.Status == ResultStatus.Success.ToString())
+                        {
+                            model = JsonConvert.DeserializeObject<ProductBudgetMasterVM>(resultVM.DataVM.ToString());
+                            //model.Operation = "Update";
+                            Session["result"] = resultVM.Status + "~" + resultVM.Message;
+                            result = new ResultModel<ProductBudgetMasterVM>()
+                            {
+                                Success = true,
+                                Status = Status.Success,
+                                Message = resultVM.Message,
+                                Data = model
+                            };
+                            return Json(result);
+                        }
+                        else
+                        {
+                            Session["result"] = "Fail" + "~" + resultVM.Message;
+
+                            result = new ResultModel<ProductBudgetMasterVM>()
+                            {
+                                Status = Status.Fail,
+                                Message = resultVM.Message,
+                                Data = model
+                            };
+                            return Json(result);
+                        }
+
+                    }
+                    else if (model.Operation.ToLower() == "update")
+                    {
+                        model.LastModifiedBy = Session["UserId"].ToString();
+                        model.LastModifiedOn = DateTime.Now.ToString();
+                        model.LastUpdateFrom = Ordinary.GetLocalIpAddress();
+
+                        //resultVM = _repo.Update(model);
+
+                        if (resultVM.Status == ResultStatus.Success.ToString())
+                        {
+                            Session["result"] = resultVM.Status + "~" + resultVM.Message;
+                            result = new ResultModel<ProductBudgetMasterVM>()
+                            {
+                                Success = true,
+                                Status = Status.Success,
+                                Message = resultVM.Message,
+                                Data = model
+                            };
+                            return Json(result);
+                        }
+                        else
+                        {
+                            Session["result"] = MessageModel.Fail + "~" + resultVM.Message;
+
+                            result = new ResultModel<ProductBudgetMasterVM>()
+                            {
+                                Status = Status.Fail,
+                                Message = resultVM.Message,
+                                Data = model
+                            };
+                            return Json(result);
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Session["result"] = MessageModel.Fail + "~" + e.Message;
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                    return View("Create", model);
+                }
+            }
+            else
+            {
+                result = new ResultModel<ProductBudgetMasterVM>()
+                {
+                    Success = false,
+                    Status = Status.Fail,
+                    Message = "Model State Error!",
+                    Data = model
+                };
+                return Json(result);
+            }
         }
 
         [HttpPost]
@@ -108,6 +221,15 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
                 if (result.Status == MessageModel.Success && result.DataVM != null)
                 {
+                    ////var list = JsonConvert.DeserializeObject<List<ProductBudgetVM>>(result.DataVM.ToString());
+
+                    ////// Then return JSON
+                    ////return Json(new
+                    ////{
+                    ////    Items = list,
+                    ////    TotalCount = list.Count
+                    ////}, JsonRequestBehavior.AllowGet);
+
                     var gridData = JsonConvert.DeserializeObject<GridEntity<ProductBudgetVM>>(result.DataVM.ToString());
 
                     return Json(new

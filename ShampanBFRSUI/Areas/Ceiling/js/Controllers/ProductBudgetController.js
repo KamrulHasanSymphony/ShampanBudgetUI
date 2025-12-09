@@ -36,6 +36,10 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             });
         });
 
+        $('.btnLoad').click('click', function () {
+            validateAndFetchProductBudgetData();
+        });
+
         // Delete button click handler
         $('.btnDelete').on('click', function () {
             Confirmation("Are you sure? Do You Want to Delete Data?", function (result) {
@@ -111,11 +115,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             }).data("kendoMultiColumnComboBox");
         };
 
-
-        $('#GLFiscalYearId, #ProductGroupId').on('change', validateAndFetchCeilingData);
-        function validateAndFetchCeilingData() {
-
-            alert(11111);
+        function validateAndFetchProductBudgetData() {
 
             var isValid = true;
             var yearId = $('#GLFiscalYearId').val() || 0;
@@ -351,8 +351,8 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
 
-        var isActiveValue = $('#IsActive').prop('checked');
-        model.IsActive = isActiveValue;
+        //var isActiveValue = $('#IsActive').prop('checked');
+        //model.IsActive = isActiveValue;
 
         var result = validator.form();
 
@@ -362,48 +362,39 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             }
             return;
         }
-        var details = [];
+        var DetailList = [];
 
-        var grid = $("#CeilingDetailsData").data("kendoGrid");
+        var grid = $("#ProductBudgetDetailsData").data("kendoGrid");
         if (grid) {
 
             var items = grid.dataSource.view();
 
             items.forEach(function (x, index) {
 
-                details.push({
-                    AccountId: x.AccountId,
-                    AccountCode: x.AccountCode,
-                    AccountName: x.AccountName,
-                    PeriodSl: x.PeriodSl,
-                    serial: x.serial,
-                    January: x.January,
-                    February: x.February,
-                    March: x.March,
-                    April: x.April,
-                    May: x.May,
-                    June: x.June,
-                    July: x.July,
-                    August: x.August,
-                    September: x.September,
-                    October: x.October,
-                    November: x.November,
-                    December: x.December,
-                    LineTotal: x.LineTotal,
-                    InputTotal: x.InputTotal
+                DetailList.push({
+                    GLFiscalYearId: model.GLFiscalYearId,
+                    ProductId: x.ProductId,
+                    ProductCode: x.ProductCode,
+                    ProductName: x.ProductName,
+                    BLQuantityMT: x.BLQuantityMT,
                 });
 
             });
         }
 
-        if (details.length === 0) {
+        if (DetailList.length === 0) {
             ShowNotification(3, "At least one item is required.");
             return;
         }
 
-        model.CeilingDetailList = details;
+        model.DetailList = DetailList;
 
-        var url = "/Ceiling/Ceiling/CreateEdit";
+        //var dataToSend = {
+        //    model: model,
+        //    DetailList: DetailList
+        //};
+
+        var url = "/Ceiling/ProductBudget/CreateEdit";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 
@@ -423,8 +414,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         form.remove();
     }
 
-
-    // Handle success
     function saveDone(result) {
 
         if (result.Status == 200) {
@@ -475,7 +464,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
     }
 
     var GetProductBudgetDetailsData = function () {
-        alert(22);
         var yearId = $('#GLFiscalYearId').val() || 0;
         var ProductGroupId = $('#ProductGroupId').val() || 0;
 
@@ -531,7 +519,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                         fields: {
                             serial: { editable: false },
                             ProductCode: { editable: false },
-                            ProductName: { editable: false },
+                            ProductCode: { editable: false },
                             BLQuantityMT: { type: "number", defaultValue: 0, validation: { min: 0 } },
                             
                         }
@@ -626,13 +614,13 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                     { field: "ProductName", title: "Product Name", sortable: true, width: 170, editable: false },
                     
                     {
-                        field: "BLQuantityMT", title: "Input Total", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
+                        field: "BLQuantityMT", title: "Input Value", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
                         , footerTemplate: function () {
 
                             var data = $("#ProductBudgetDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
                             for (var i = 0; i < data.length; i++) {
-                                sum += (data[i].InputTotal || 0);
+                                sum += (data[i].BLQuantityMT || 0);
                             }
                             return kendo.toString(sum, "n2");
                         }
@@ -646,7 +634,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             });
 
             let horizontalScrollLeft = 0;
-            $('#CeilingDetailsData .k-grid-content').on('scroll', function () {
+            $('#ProductBudgetDetailsData .k-grid-content').on('scroll', function () {
                 horizontalScrollLeft = $(this).scrollLeft();
             });
         }
@@ -655,95 +643,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         }
 
     };
-
-    function InputTotalEditor(container, options) {
-        var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
-
-        // Input field
-        var input = $('<input type="text" class="form-control inputTotal"/>')
-            .val(options.model.InputTotal || 0)
-            .appendTo(wrapper);
-
-        // Button with icon
-        $('<div class="input-group-append">')
-            .append(
-                $('<button class="btn btn-light" type="button">')
-                    .append('<i class="fa fa-calculator"></i>')
-                    .on("mousedown", function (e) {
-                        e.preventDefault(); // prevent input losing focus
-                    })
-                    .on("click", function () {
-
-                        var grid = $("#CeilingDetailsData").data("kendoGrid");
-                        var dataItem = options.model;
-
-                        // Get input value directly
-                        var inputVal = parseFloat(input.val()) || 0;
-                        var perMonth = parseFloat((inputVal / 12).toFixed(2));
-
-                        // Update months
-                        dataItem.set("January", perMonth);
-                        dataItem.set("February", perMonth);
-                        dataItem.set("March", perMonth);
-                        dataItem.set("April", perMonth);
-                        dataItem.set("May", perMonth);
-                        dataItem.set("June", perMonth);
-                        dataItem.set("July", perMonth);
-                        dataItem.set("August", perMonth);
-                        dataItem.set("September", perMonth);
-                        dataItem.set("October", perMonth);
-                        dataItem.set("November", perMonth);
-                        dataItem.set("December", perMonth);
-
-                        dataItem.set("LineTotal", inputVal);
-                        dataItem.set("InputTotal", inputVal);
-
-                        input.val(inputVal);
-
-                        setTimeout(function () {
-                            grid.dataSource.aggregate();
-                            grid.refresh();
-                        }, 0);
-                    })
-            )
-            .appendTo(wrapper);
-
-        kendo.bind(wrapper, options.model);
-    }
-
-    $("#CeilingDetailsData").on("click", ".btnCalculate", function () {
-        var grid = $("#CeilingDetailsData").data("kendoGrid");
-        var row = $(this).closest("tr");
-        var dataItem = grid.dataItem(row);
-
-        var inputVal = parseFloat(row.find(".inputTotal").val()) || 0;
-        var perMonth = parseFloat((inputVal / 12).toFixed(2));
-
-        // Set monthly values
-        dataItem.January = perMonth;
-        dataItem.February = perMonth;
-        dataItem.March = perMonth;
-        dataItem.April = perMonth;
-        dataItem.May = perMonth;
-        dataItem.June = perMonth;
-        dataItem.July = perMonth;
-        dataItem.August = perMonth;
-        dataItem.September = perMonth;
-        dataItem.October = perMonth;
-        dataItem.November = perMonth;
-        dataItem.December = perMonth;
-
-        // Set LineTotal
-        dataItem.LineTotal = inputVal;
-
-        // Update InputTotal in the model
-        dataItem.InputTotal = inputVal;
-
-        // Refresh grid and aggregates
-        grid.dataSource.aggregate();
-        grid.refresh();
-    });
-
 
     return {
         init: init

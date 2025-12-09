@@ -15,6 +15,45 @@ namespace ShampanBFRS.Repo.Ceiling
     public class ProductBudgetRepo
     {
 
+        public ResultVM Insert(ProductBudgetMasterVM model, string UserName)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/ProductBudget/Insert", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ResultVM Update(ProductBudgetMasterVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/ProductBudget/Update", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public ResultVM GetProductBudgetDataForDetailsLoad(ProductBudgetVM vm)
         {
             try
