@@ -55,12 +55,21 @@
 
                 <div class="form-group row">
 
+
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.Year)
-                        <div class="input-group">
-                            @Html.DropDownListFor(model => model.Year, new List<SelectListItem>(), "Select Year", new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                        <div class="input-group ">
+                            @Html.TextBoxFor(model => model.Year, new { placeholder = "Enter Year Name", @class = "  form-control form-control-sm ", @readonly = "readonly" })
+
                         </div>
+                        @Html.ValidationMessageFor(model => model.Year)
                     </div>
+                    @*<div class="col-sm-2">
+            @Html.LabelFor(model => model.Year)
+            <div class="input-group">
+                @Html.DropDownListFor(model => model.Year, new List<SelectListItem>(), "Select Year", new { @class = "form-control form-control-sm", @readonly = "readonly" })
+            </div>
+        </div>*@
 
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearName)
@@ -70,23 +79,24 @@
                         </div>
                         @Html.ValidationMessageFor(model => model.YearName)
                     </div>
+
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearStart)
                         <div class="input-group date">
-                            @Html.TextBoxFor(model => model.YearStart, new { @class = "form-control form-control-sm dateRange", @readonly = "readonly" })
-                            <div class="input-group-append">
-                                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                            </div>
+                            @Html.TextBoxFor(model => model.YearStart, new { @class = "form-control form-control-sm ", @readonly = "readonly" })
+                            @*<div class="input-group-append">
+                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                </div>*@
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearEnd)
                         <div class="input-group date">
-                            @Html.TextBoxFor(model => model.YearEnd, new { @class = "form-control form-control-sm dateRange", @readonly = "readonly" })
-                            <div class="input-group-append">
-                                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                            </div>
+                            @Html.TextBoxFor(model => model.YearEnd, new { @class = "form-control form-control-sm ", @readonly = "readonly" })
+                            @*<div class="input-group-append">
+                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                </div>*@
                         </div>
                     </div>
                     <div class="col-sm-2">
