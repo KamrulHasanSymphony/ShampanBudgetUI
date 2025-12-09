@@ -85,7 +85,7 @@ namespace ShampanBFRS.Repo.SetUpRepo
 
                 #region Invoke API
                 var data = httpRequestHelper.PostData("api/ProductGroup/List", authModel, JsonConvert.SerializeObject(model));
-                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                 ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
                 #endregion
 
                 return result;
