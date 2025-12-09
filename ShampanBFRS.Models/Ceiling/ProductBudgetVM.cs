@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,16 @@ namespace ShampanBFRS.Models.Ceiling
         public int Id { get; set; }
         public int CompanyId { get; set; }
         public int BranchId { get; set; }
+
+
+        [Display(Name = "Fiscal Year")]
         public int GLFiscalYearId { get; set; }
         public string BudgetSetNo { get; set; }
         public string BudgetType { get; set; }
+
+        [Display(Name = "Product Group")]
         public int ProductGroupId { get; set; }
+
         public int ProductId { get; set; }
 
         public decimal ConversionFactor { get; set; }
@@ -70,6 +77,8 @@ namespace ShampanBFRS.Models.Ceiling
 
         public string? UserId { get; set; }
 
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
 
     }
 }
