@@ -153,7 +153,7 @@
 
         CommonAjaxService.deleteData(url, model, deleteDone, saveFail);
     };
-
+    //
     function generateYearList(getYearValue) {
         
         var yearList = [];
