@@ -115,7 +115,7 @@
                         <div class="card-body">
 
                             <div class="form-group row">
-                                
+
                                 <div class="col-sm-2">
                                     @Html.LabelFor(model => model.GLFiscalYearId)
                                     <div class="input-group">
@@ -124,10 +124,19 @@
                                     @Html.ValidationMessageFor(model => model.GLFiscalYearId)
                                 </div>
 
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.ReportType)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.ReportType, new { placeholder = "Enter Report Type", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ReportType)
+                                </div>
+
 
                             </div>
 
                         </div>
+
 
                     </div>
 

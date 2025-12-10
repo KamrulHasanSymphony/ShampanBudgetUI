@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShampanBFRS.Models.CommonVMs
 {
@@ -30,6 +31,7 @@ namespace ShampanBFRS.Models.CommonVMs
         public string? BudgetSetNo { get; set; }
         public string? BudgetType { get; set; }
         public string? TransactionType { get; set; }
+        public string? ReportType { get; set; }
 
     }
 
