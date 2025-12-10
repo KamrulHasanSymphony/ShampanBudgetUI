@@ -83,7 +83,7 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearStart)
                         <div class="input-group date">
-                            @Html.TextBoxFor(model => model.YearStart, new { @class = "form-control form-control-sm ", @readonly = "readonly" })
+                            @Html.TextBoxFor(model => model.YearStart, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                             @*<div class="input-group-append">
                     <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                 </div>*@
@@ -93,7 +93,7 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearEnd)
                         <div class="input-group date">
-                            @Html.TextBoxFor(model => model.YearEnd, new { @class = "form-control form-control-sm ", @readonly = "readonly" })
+                            @Html.TextBoxFor(model => model.YearEnd, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                             @*<div class="input-group-append">
                     <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                 </div>*@
@@ -232,12 +232,12 @@
     <script>
         $(document).ready(function () {
 
-            $('#YearStart').data('daterangepicker').isInvalidDate = function () {
-                return true;
-            };
-            $('#YearEnd').data('daterangepicker').isInvalidDate = function () {
-                return true;
-            };
+            //$('#YearStart').data('daterangepicker').isInvalidDate = function () {
+            //    return true;
+            //};
+            //$('#YearEnd').data('daterangepicker').isInvalidDate = function () {
+            //    return true;
+            //};
 
 
             FiscalYearsController.init();
