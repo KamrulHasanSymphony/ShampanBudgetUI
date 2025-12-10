@@ -45,7 +45,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         public ActionResult CreateEdit(StructureVM model)
         {
             ResultModel<StructureVM> result = new ResultModel<StructureVM>();
-            ResultVM resultVM = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new StructureRepo();
 
             if (ModelState.IsValid)
@@ -175,7 +175,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         public JsonResult GetStructureDetailDataById(int masterId, GridOptions options)
         {
 
-            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new StructureRepo();
 
             try
@@ -234,7 +234,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         [HttpPost]
         public JsonResult GetGridData(GridOptions options, string branchId, string fromDate, string toDate)
         {
-            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new StructureRepo();
             try
             { 

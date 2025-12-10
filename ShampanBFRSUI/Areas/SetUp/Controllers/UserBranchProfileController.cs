@@ -40,7 +40,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         public ActionResult CreateEdit(UserBranchProfileVM model)
         {
             ResultModel<UserBranchProfileVM> result = new ResultModel<UserBranchProfileVM>();
-            ResultVM resultVM = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new UserBranchProfileRepo();
 
             if (ModelState.IsValid)
@@ -181,7 +181,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         [HttpPost]
         public JsonResult GetGridData(GridOptions options, string userId)
         {
-            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new UserBranchProfileRepo();
 
             try

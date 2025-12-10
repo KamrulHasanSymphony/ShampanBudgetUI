@@ -40,7 +40,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         {
             _repo = new UserProfileRepo();
             ResultModel<UserProfileVM> result = new ResultModel<UserProfileVM>();
-            ResultVM resultVM = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
 
             if (ModelState.IsValid)
             {
@@ -199,7 +199,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         [HttpPost]
         public JsonResult GetGridData(GridOptions options)
         {
-            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new UserProfileRepo();
 
             try

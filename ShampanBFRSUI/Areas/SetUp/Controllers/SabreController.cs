@@ -65,7 +65,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
                     // Session guards
                     var userId = Session?["UserId"]?.ToString();
                     if (string.IsNullOrWhiteSpace(userId))
-                        return Json(new { Success = false, Status = "Fail", Message = "Session expired. Please log in again." });
+                        return Json(new { Success = false, Status = MessageModel.Fail, Message = "Session expired. Please log in again." });
 
                     model.CreatedBy = userId;
                     model.CreatedFrom = Ordinary.GetLocalIpAddress() ?? string.Empty;

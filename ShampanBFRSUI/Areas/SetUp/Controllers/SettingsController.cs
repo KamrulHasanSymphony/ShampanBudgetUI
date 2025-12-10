@@ -21,7 +21,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         // GET: SetUp/Settings
         public ActionResult Index()
         {
-            ResultVM resultVM = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             try
             {
                 List<SettingsModel> lst = new List<SettingsModel>();

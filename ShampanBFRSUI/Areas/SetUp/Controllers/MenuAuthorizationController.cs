@@ -66,7 +66,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         public ActionResult RoleCreateEdit(UserRoleVM model)
         {
             ResultModel<UserRoleVM> result = new ResultModel<UserRoleVM>();
-            ResultVM resultVM = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new MenuAuthorizationRepo();
 
             if (ModelState.IsValid)
@@ -661,7 +661,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         public ActionResult UserMenuCreateEdit(UserMenuVM model)
         {
             ResultModel<UserMenuVM> result = new ResultModel<UserMenuVM>();
-            ResultVM resultVM = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new MenuAuthorizationRepo();
 
             if (ModelState.IsValid)
