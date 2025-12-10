@@ -963,7 +963,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     //    width: 160
                     //},
                     {
-                        field: "InputTotal", title: "Input Total", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
+                        field: "InputTotal", title: "Input Total", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
                         , footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
@@ -975,7 +975,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "January", title: "January", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
+                        field: "January", title: "January", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
                         , footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
@@ -985,9 +985,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                             }
                             return kendo.toString(sum, "n2");
                         }
+
                     },
                     {
-                        field: "February", title: "February", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "February", title: "February", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -998,7 +999,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "March", title: "March", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "March", title: "March", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1009,7 +1010,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "April", title: "April", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "April", title: "April", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1020,7 +1021,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "May", title: "May", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "May", title: "May", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1031,7 +1032,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "June", title: "June", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "June", title: "June", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1042,7 +1043,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "July", title: "July", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "July", title: "July", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1053,7 +1054,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "August", title: "August", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "August", title: "August", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1064,7 +1065,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "September", title: "September", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "September", title: "September", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1075,7 +1076,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "October", title: "October", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "October", title: "October", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1086,7 +1087,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "November", title: "November", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "November", title: "November", sortable: true, hidden: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1097,7 +1098,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        field: "December", title: "December", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
+                        field: "December", title: "December", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }, footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
@@ -1108,7 +1109,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         }
                     },
                     {
-                        title: "Line Total",
+                        title: "Line Total", hidden: true,
                         template: function (dataItem) {
 
                             var total = (dataItem.January || 0) + (dataItem.February || 0) + (dataItem.March || 0) + (dataItem.April || 0)
@@ -1130,7 +1131,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                         width: 180, editable: false
                     },
 
-                    { field: "AccountCode", title: "Sabre Code", sortable: true, width: 170, editable: false },
+                    { field: "AccountCode", title: "Sabre Code", sortable: true, width: 170, hidden: true, editable: false },
                 ],
                 footer: true,
                 selectable: "row",

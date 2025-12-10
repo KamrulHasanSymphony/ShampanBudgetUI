@@ -42,6 +42,9 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                     commonVM.YearId = model.GLFiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
                     commonVM.UserId = Session["UserId"].ToString();
+                    commonVM.ReportType = model.ReportType.ToString();
+                  
+
 
                     resultVM = _repo.BudgetFinalReport(commonVM);
 
