@@ -153,7 +153,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
         $('#GLFiscalYearId, #BudgetSetNo, #BudgetType').on('change', validateAndFetchCeilingData);
         function validateAndFetchCeilingData() {
-
+            debugger;
             var isValid = true;
             var yearId = $('#GLFiscalYearId').val() || 0;
             var budgetSetNo = $('#BudgetSetNo').val() || 0;
@@ -444,6 +444,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             }
             return;
         }
+
         var details = [];
 
         var grid = $("#CeilingDetailsData").data("kendoGrid");
