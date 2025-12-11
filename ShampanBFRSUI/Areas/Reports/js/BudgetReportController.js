@@ -77,6 +77,7 @@ var BudgetReportController = function (CommonService, CommonAjaxService) {
             var yearId = $('#GLFiscalYearId').val() || 0;
             //var budgetSetNo = $('#BudgetSetNo').val() || 0;
             //var budgetType = $('#BudgetType').val() || '';
+            var ReportType = $('#ReportType').val() || '';
 
             if (yearId === 'xx' || parseInt(yearId) <= 0) {
                 isValid = false;
@@ -103,8 +104,8 @@ var BudgetReportController = function (CommonService, CommonAjaxService) {
     var GetCeilingDetailsData = function () {
         debugger;
         var yearId = $('#GLFiscalYearId').val() || 0;
-        var budgetSetNo = $('#BudgetSetNo').val() || 0;
-        var budgetType = $('#BudgetType').val() || '';
+        //var budgetSetNo = $('#BudgetSetNo').val() || 0;
+        var getReportType = $('#BudgetType').val() || '';
 
         //if (parseInt(yearId) > 0 && parseInt(budgetSetNo) > 0 && budgetType !== '') {
         if (parseInt(yearId) > 0) {
@@ -122,7 +123,7 @@ var BudgetReportController = function (CommonService, CommonAjaxService) {
                         type: "POST",
                         dataType: "json",
                         cache: false,
-                        data: { yearId: yearId, budgetSetNo: budgetSetNo, budgetType: budgetType }
+                        data: { yearId: yearId, ReportType: ReportType }
                     },
                     parameterMap: function (options) {
                         if (options.sort) {
