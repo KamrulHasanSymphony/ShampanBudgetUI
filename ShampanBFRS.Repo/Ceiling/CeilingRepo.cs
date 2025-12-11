@@ -117,6 +117,26 @@ namespace ShampanBFRS.Repo.Ceiling
                 throw e;
             }
         }
+        public ResultVM GridDataReportType(GridOptions options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Ceiling/GridDataReportType", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
     }

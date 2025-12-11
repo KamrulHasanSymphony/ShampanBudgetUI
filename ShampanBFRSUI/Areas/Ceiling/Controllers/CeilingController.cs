@@ -280,6 +280,49 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
-        
+        [HttpPost]
+        public JsonResult GridDataReportType(GridOptions options, string yearId, string ReportType)
+        {
+            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            _repo = new CeilingRepo();
+
+            try
+            {
+                var currentBranchId = 0;
+                if (Session["CurrentBranch"] != null)
+                    int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
+
+                options.vm.YearId = yearId;
+                options.vm.BudgetType = ReportType;
+                options.vm.BranchId = currentBranchId.ToString();
+
+                options.vm.UserId = Session["UserId"].ToString();
+
+                result = _repo.GridDataReportType(options);
+
+                //var json = Newtonsoft.Json.JsonConvert.SerializeObject(result.DataVM);
+                //var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
+
+                if (result.Status == MessageModel.Success && result.DataVM != null)
+                {
+                    var gridData = JsonConvert.DeserializeObject<GridEntity<CeilingDetailVM>>(result.DataVM.ToString());
+
+                    return Json(new
+                    {
+                        Items = gridData.Items,
+                        TotalCount = gridData.TotalCount
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }
