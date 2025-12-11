@@ -964,7 +964,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     //    width: 160
                     //},
                     {
-                        field: "InputTotal", title: "Input Total", sortable: true, width: 160, hidden: true, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
+                        field: "InputTotal", title: "Input Total", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
                         , footerTemplate: function () {
 
                             var data = $("#CeilingDetailsData").data("kendoGrid").dataSource.view();
