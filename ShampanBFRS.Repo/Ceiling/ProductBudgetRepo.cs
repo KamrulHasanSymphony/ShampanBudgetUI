@@ -54,26 +54,6 @@ namespace ShampanBFRS.Repo.Ceiling
                 throw ex;
             }
         }
-        public ResultVM GetProductBudgetDataForDetailsLoad(ProductBudgetVM vm)
-        {
-            try
-            {
-                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
-                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
-
-                #region Invoke API
-                var data = httpRequestHelper.PostData("api/ProductBudget/GetProductBudgetDataForDetailsLoad", authModel, JsonConvert.SerializeObject(vm));
-
-                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
-                #endregion
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
         public ResultVM GetProductBudgetDataForDetailsNew(ProductBudgetVM vm)
         {
@@ -96,6 +76,68 @@ namespace ShampanBFRS.Repo.Ceiling
             }
         }
 
+        public ResultVM ProductBudgetList(ProductBudgetMasterVM vm)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/ProductBudget/ProductBudgetList", authModel, JsonConvert.SerializeObject(vm));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ResultVM ProductBudgeDistincttList(ProductBudgetMasterVM vm)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/ProductBudget/ProductBudgeDistincttList", authModel, JsonConvert.SerializeObject(vm));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ResultVM GetGridData(GridOptions options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/ProductBudget/GetGridData", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
     }
