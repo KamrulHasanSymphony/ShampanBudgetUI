@@ -2636,6 +2636,7 @@
     <Content Include="Areas\Ceiling\Views\ProductBudget\Create.cshtml" />
     <Content Include="Areas\SetUp\Views\ProductGroup\Index.cshtml" />
     <Content Include="Areas\SetUp\Views\ProductGroup\Create.cshtml" />
+    <Content Include="Areas\SetUp\Views\Product\_CreatePartial.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />

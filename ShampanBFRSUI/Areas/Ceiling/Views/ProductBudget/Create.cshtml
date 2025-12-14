@@ -142,7 +142,7 @@
                                     </div>
                                     @Html.ValidationMessageFor(model => model.ProductGroupId)
                                 </div>
-                         
+
 
                                 <div class="col-sm-1">
                                     <div class="input-group">
@@ -157,13 +157,10 @@
 
                             </div>
 
-
-
-
-
                         </div>
 
                     </div>
+
 
                     <div class="card card-secondary">
                         <div class="card-header">
@@ -178,6 +175,22 @@
 
                 </form>
 
+                <div class="modal fade" id="productModal" tabindex="-1" >
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="productModalBody">
+                                <!-- Message will be injected here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">
 
@@ -263,6 +276,42 @@
     <script>
         $(document).ready(function () {
             ProductBudgetController.init();
+            $('.productsave').on('click', function () {
+
+                var getId = $("#IdAddress").val() || 0;
+                var status = parseInt(getId) > 0 ? "Update" : "Save";
+
+                var model = serializeInputs("productFrmEntry");
+
+                //if (!CommonValidationHelper.CheckValidation("#productFrmEntry")) return;
+
+                if (confirm("Are you sure? Do you want to save?")) {
+                    pasave();
+                }
+
+            });
+
+            function pasave() {
+
+
+                var validator = $("#productFrmEntry").validate();
+                var model = serializeInputs("productFrmEntry");
+
+                var result = validator.form();
+
+                if (!result) {
+                    if (!result) {
+                        validator.focusInvalid();
+                    }
+                    return;
+                }
+
+                var url = "/SetUp/Product/CreateEdit";
+
+                CommonAjaxService.finalSave(url, model, saveDone, saveFail);
+
+            }
+
         });
 
     </script>

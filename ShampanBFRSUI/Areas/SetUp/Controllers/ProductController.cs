@@ -317,5 +317,43 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             }
         }
 
+
+        public ActionResult CreatePartial(int? id)
+        {
+            ProductVM vm;
+
+            if (id.HasValue && id.Value > 0)
+            {
+                CommonVM param = new CommonVM { Id = id.ToString() };
+                ResultVM result = _repo.List(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    vm = JsonConvert.DeserializeObject<List<ProductVM>>(result.DataVM.ToString()).FirstOrDefault();
+                    vm.Operation = "update";
+
+                    
+                }
+                else
+                {
+                    vm = new ProductVM
+                    {
+                        Operation = "add",
+                        
+                    };
+                }
+            }
+            else
+            {
+                vm = new ProductVM
+                {
+                    Operation = "add",
+                    
+                };
+            }
+
+            return PartialView("~/Areas/SetUp/Views/Product/_CreatePartial.cshtml", vm);
+        }
+
     }
 }

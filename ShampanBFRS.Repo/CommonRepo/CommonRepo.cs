@@ -121,7 +121,6 @@ namespace ShampanBFRS.Repo.CommonRepo
             }
         }
 
-
         public ResultModel<List<CommonDropDown>> GetBooleanDropDown()
         {
             try

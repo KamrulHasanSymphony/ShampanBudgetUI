@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ShampanBFRS.Models.CommonVMs;
 using ShampanBFRS.Models.SetUpVMs;
@@ -6,6 +7,7 @@ using ShampanBFRS.Repo.CommonRepo;
 using ShampanBFRS.Repo.SetUpRepo;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace ShampanBFRSUI.Areas.Common.Controllers
@@ -83,6 +85,11 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
         {
             return PartialView("_getSegmentModal");
         }
+        public ActionResult _getProductBudget()
+        {
+            return PartialView("_getProductBudget");
+        }
+
 
         [HttpGet]
         public ActionResult _getDesignCategoryModal()
@@ -245,7 +252,7 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
         }
-
+       
 
         [HttpGet]
         public ActionResult GetBooleanDropDown()

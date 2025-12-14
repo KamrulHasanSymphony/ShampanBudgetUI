@@ -391,7 +391,8 @@
             url: '/Common/Common/_getItemModal',
             method: 'get',
         }).done(onSuccess).fail(onFail);
-    }; var segmentNameModal = function (done, fail, dblCallBack, closeCallback) {
+    };
+    var segmentNameModal = function (done, fail, dblCallBack, closeCallback) {
         debugger;
         var modalId = "#partialModal";
         var dataTableId = "#modalData";
@@ -479,6 +480,9 @@
             method: 'get',
         }).done(onSuccess).fail(onFail);
     };
+
+    
+
     var ItemModalForMakingCharge = function (done, fail, dblCallBack, closeCallback) {
         debugger;
         var modalId = "#partialModal";
@@ -1532,7 +1536,8 @@
         ItemDesignCategoryModal: ItemDesignCategoryModal,
         customerCodeModal: customerCodeModal,
         branchLoading: branchLoading,
-        validateDropdown: validateDropdown
+        validateDropdown: validateDropdown,
+        productCodeModal: productCodeModal
 
 
     }
