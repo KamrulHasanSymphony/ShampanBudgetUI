@@ -302,7 +302,7 @@
                 { field: "Code", title: "Code", width: 150, sortable: true },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
                 { field: "ConversionFactor", title: "Conversion Factor", sortable: true, width: 200 },
-                { field: "CIFCharge", title: "CIF Charge", sortable: true, width: 200 },
+              /*  { field: "CIFCharge", title: "CIF Charge", sortable: true, width: 200 },*/
                 //{
                 //    field: "Status", title: "Status", sortable: true, width: 100,
                 //    filterable: {
