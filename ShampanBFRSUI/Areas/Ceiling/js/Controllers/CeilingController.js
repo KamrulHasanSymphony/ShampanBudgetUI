@@ -351,6 +351,65 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
+            detailInit: function (e) {
+
+                console.log("Master ID:", e.data);
+
+                $("<div/>").appendTo(e.detailCell).kendoGrid({
+                    dataSource: {
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        serverFiltering: true,
+                        allowUnsort: true,
+                        pageSize: 10,
+
+                        transport: {
+                            read: {
+                                url: "/SetUp/Ceiling/GetCeilingDetailDataById",
+                                type: "GET",
+                                dataType: "json",
+                                cache: false,
+                                data: { masterId: e.data.Id }
+                            },
+                            parameterMap: function (options) {
+                                return options;
+                            }
+                        },
+                        batch: true,
+                        schema: {
+                            data: "Items",
+                            total: "TotalCount"
+                        },
+                        requestEnd: function (e) {
+                            console.log("Response Data:", e.response); // Log server response
+                        }
+                    },
+                    scrollable: false,
+                    sortable: true,
+                    pageable: false,
+                    noRecords: true,
+                    messages: {
+                        noRecords: "No Record Found!"
+                    },
+
+                    columns: [
+                        { field: "Id", width: 50, hidden: true, sortable: true },
+                        { field: "Code", title: "Code", sortable: true, width: 200 },
+                        { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
+                        { field: "YearName", title: "Year", sortable: true, width: 200 },             
+                        {
+                            field: "IsActive",
+                            title: "Active",
+                            sortable: true,
+                            width: 100,
+                            template: function (dataItem) {
+                                return dataItem.IsActive ? "Yes" : "No";
+                            }
+                        }
+                    ]
+                });
+            },
             excel: {
                 fileName: "Ceilings.xlsx",
                 filterable: true

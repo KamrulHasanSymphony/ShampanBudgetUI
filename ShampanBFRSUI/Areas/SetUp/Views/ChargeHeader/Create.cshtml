@@ -20,11 +20,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> ChargeHeader  Update </h1>
+                    <h1 class="m-0"> Charge Header  Update </h1>
                 }
                 else
                 {
-            <h1 class="m-0"> ChargeHeader Create</h1>
+            <h1 class="m-0"> Charge Header Create</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -43,7 +43,6 @@
         @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
         {
             <button type="button" class="button btnsave sslUpdate">Update</button>
-            <button type="button" title="Post data" id="" class="button btnPost sslPost"> Post </button>
             <button style="float:right;" type="button" title="Add New" data-url="/SetUp/ChargeHeader/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
@@ -56,7 +55,6 @@
                 <button style="float:right;" type="button" title="Add New" data-url="/SetUp/ChargeHeader/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                     New
                 </button>
-                <button type="button" title="Post data" id="" class="button btnPost sslPost"> Post </button>
 
             </div>
             <div class="divSave">
@@ -107,36 +105,31 @@
                     <table class="table table-bordered table-striped table-sm" id="details">
                         <thead>
                             <tr>
-
-                                <th data-type="text" data-computed="true" data-required="false" style="width:5%;" data-name="SLNo">SL. No.</th>
-
-                                <th data-type="text" data-search="true" style="width:40%;" data-name="ProductName"> Product Name </th>
-
-                                <th hidden data-type="text" data-search="false" style="width:25%;" data-name="ProductId"> ProductId </th>
-
-                                <th data-type="number" style="width: 60%;" data-name="CIFCharge">CIF Charge</th>
-                                <th data-type="number" style="width: 60%;" data-name="Exchange Rate Usd">Exchange Rate Usd</th>
-                                <th data-type="number" style="width: 60%;" data-name="Insurance Rate">Insurance Rate</th>
-                                <th data-type="number" style="width: 60%;" data-name="Bank Charge">Bank Charge</th>
-                                <th data-type="number" style="width: 60%;" data-name="OceanLoss">Ocean Loss</th>
-                                <th data-type="number" style="width: 60%;" data-name="CPACharge">CPA Charge</th>
-                                <th data-type="number" style="width: 60%;" data-name="HandelingCharge">Handeling Charge</th>
-                                <th data-type="number" style="width: 60%;" data-name="LightCharge">Light Charge</th>
-                                <th data-type="number" style="width: 60%;" data-name="Survey">Survey</th>
-                                <th data-type="number" style="width: 60%;" data-name="CostLiterExImport">Cost Liter ExImport</th>
-                                <th data-type="number" style="width: 60%;" data-name="ExERLRate">ExERL Rate</th>
-                                <th data-type="number" style="width: 60%;" data-name="DutyPerLiter">Duty PerLiter</th>
-                                <th data-type="number" style="width: 60%;" data-name="Refined">Refined</th>
-                                <th data-type="number" style="width: 60%; " data-name="Crude">Crude</th>
-                                <th data-type="number" style="width: 60%;" data-name="SDRate">SD Rate</th>
-                                <th data-type="number" style="width: 60%;" data-name="DutyInTariff">Duty In Tariff</th>
-                                <th data-type="number" style="width: 60%;" data-name="ATRate">AT Rate</th>
-                                <th data-type="number" style="width: 60%;" data-name="AITRate">AIT Rate</th>
-                                <th data-type="number" style="width: 60%;" data-name="VATRate">VAT Rate</th>
-                                <th data-type="number" style="width: 60%;" data-name="ConversionFactorFixedValue">Conversion Factor Fixed Value</th>
-                                <th data-type="number" style="width: 60%;" data-name="VATRateFixed">VAT Rate Fixed</th>
-                                <th data-type="number" style="width: 60%;" data-name="RiverDues">River Dues</th>
-
+                                <th data-type="text" data-computed="true" data-required="false" data-name="SLNo" style="width:3%;">SL.</th>
+                                <th data-type="text" data-search="true" data-name="ProductName" style="width:20%;">Product Name</th>
+                                <th hidden data-type="text" data-search="false" data-name="ProductId" style="width:5%;">ProductId</th>
+                                <th data-type="number" data-name="CIFCharge" style="width:6%;">CIF Charge</th>
+                                <th data-type="number" data-name="Exchange Rate Usd" style="width:4%;">Exchange Rate Usd</th>
+                                <th data-type="number" data-name="Insurance Rate" style="width:4%;">Insurance Rate</th>
+                                <th data-type="number" data-name="Bank Charge" style="width:4%;">Bank Charge</th>
+                                <th data-type="number" data-name="OceanLoss" style="width:4%;">Ocean Loss</th>
+                                <th data-type="number" data-name="CPACharge" style="width:4%;">CPA Charge</th>
+                                <th data-type="number" data-name="HandelingCharge" style="width:4%;">Handeling Charge</th>
+                                <th data-type="number" data-name="LightCharge" style="width:4%;">Light Charge</th>
+                                <th data-type="number" data-name="Survey" style="width:4%;">Survey</th>
+                                <th data-type="number" data-name="CostLiterExImport" style="width:4%;">Cost Liter ExImport</th>
+                                <th data-type="number" data-name="ExERLRate" style="width:4%;">ExERL Rate</th>
+                                <th data-type="number" data-name="DutyPerLiter" style="width:4%;">Duty PerLiter</th>
+                                <th data-type="number" data-name="Refined" style="width:4%;">Refined</th>
+                                <th data-type="number" data-name="Crude" style="width:4%;">Crude</th>
+                                <th data-type="number" data-name="SDRate" style="width:4%;">SD Rate</th>
+                                <th data-type="number" data-name="DutyInTariff" style="width:4%;">Duty In Tariff</th>
+                                <th data-type="number" data-name="ATRate" style="width:4%;">AT Rate</th>
+                                <th data-type="number" data-name="AITRate" style="width:4%;">AIT Rate</th>
+                                <th data-type="number" data-name="VATRate" style="width:4%;">VAT Rate</th>
+                                <th data-type="number" data-name="ConversionFactorFixedValue" style="width:4%;">Conversion Factor Fixed Value</th>
+                                <th data-type="number" data-name="VATRateFixed" style="width:4%;">VAT Rate Fixed</th>
+                                <th data-type="number" data-name="RiverDues" style="width:4%;">River Dues</th>
                             </tr>
                         </thead>
                         <tbody id="SODBody">
@@ -148,7 +141,7 @@
 
                                         <td> @serial </td>
 
-                                        <td> @item.ProductId </td>
+                                        <td> @item.ProductName </td>
                                         <td hidden> @item.ProductId </td>
 
                                         <td>@item.CIFCharge</td>
