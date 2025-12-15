@@ -171,36 +171,6 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             }
         }
 
-        [HttpGet]
-        public JsonResult GetStructureDetailDataById(int masterId, GridOptions options)
-        {
-
-            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
-            _repo = new StructureRepo();
-
-            try
-            {
-                result = _repo.GetStructureDetailDataById(options, masterId);
-
-                if (result.Status == "Success" && result.DataVM != null)
-                {
-                    var gridData = JsonConvert.DeserializeObject<GridEntity<StructureDetailsVM>>(result.DataVM.ToString());
-                    return Json(new
-                    {
-                        Items = gridData.Items,
-                        TotalCount = gridData.TotalCount
-                    }, JsonRequestBehavior.AllowGet);
-                }
-                return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
-            }
-
-            catch (Exception e)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
-            }
-
-        }
 
         [HttpPost]
         public ActionResult MultiplePost(StructureVM vm)

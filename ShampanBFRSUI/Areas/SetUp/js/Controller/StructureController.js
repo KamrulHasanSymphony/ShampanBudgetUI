@@ -266,57 +266,7 @@
             toolbar: ["excel", "pdf", "search"],
             search: ["Code", "Name", "Remarks"],
 
-            detailInit: function (e) {
-
-                console.log("Master ID:", e.data);
-
-                $("<div/>").appendTo(e.detailCell).kendoGrid({
-                    dataSource: {
-                        type: "json",
-                        serverPaging: true,
-                        serverSorting: true,
-                        serverFiltering: true,
-                        allowUnsort: true,
-                        pageSize: 10,
-
-                        transport: {
-                            read: {
-                                url: "/SetUp/Structure/GetStructureDetailDataById",
-                                type: "GET",
-                                dataType: "json",
-                                cache: false,
-                                data: { masterId: e.data.Id }
-                            },
-                            parameterMap: function (options) {
-                                return options;
-                            }
-                        },
-                        batch: true,
-                        schema: {
-                            data: "Items",
-                            total: "TotalCount"
-                        },
-                        requestEnd: function (e) {
-                            console.log("Response Data:", e.response); // Log server response
-                        }
-                    },
-                    scrollable: false,
-                    sortable: true,
-                    pageable: false,
-                    noRecords: true,
-                    messages: {
-                        noRecords: "No Record Found!"
-                    },
-
-                    columns: [
-                        { field: "Id", hidden: true, width: 50 },
-                        { field: "SegmentCode", title: "Segment Code", sortable: true, width: 120 },
-                        { field: "SegmentName", title: "Segment Name", sortable: true, width: 120 },
-                        { field: "Remarks", title: "Remarks", sortable: true, width: 120 }
-
-                    ]
-                });
-            },
+            
             excel: {
                 fileName: `Structure_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
@@ -355,10 +305,6 @@
                 }, 1000);
             },
             columns: [
-
-                {
-                    selectable: true, width: 40
-                },
 
                 {
 
