@@ -1,22 +1,27 @@
 
 var ProductBudgetController = function (CommonService, CommonAjaxService) {
 
+    var getFiscalYearId = 0;
+    var getProductGroupId = 0;
+    var getBudgetType = 0;
+    var getTransactionType = '';
+
+
     var init = function () {
         var getId = $("#Id").val() || 0;
         var getOperation = $("#Operation").val() || '';
-        var getFiscalYearId = $("#GLFiscalYearId").val() || 0;
-        var getProductGroupId = $("#ProductGroupId").val() || 0;
-        var getBudgetType = $("#BudgetType").val() || 0;
 
-        var getTransactionType = $("#TransactionType").val() || '';
+        getFiscalYearId = $("#GLFiscalYearId").val() || 0;
+        getProductGroupId = $("#ProductGroupId").val() || 0;
+        getBudgetType = $("#BudgetType").val() || 0;
+        getTransactionType = $("#TransactionType").val() || '';
+
+
 
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList(getTransactionType, getBudgetType);
         }
 
-        //if (parseInt(getFiscalYearId) > 0 && parseInt(getBudgetSetNo) > 0 && getBudgetType !== '') {
-        //    GetCeilingDetailsData();
-        //};
 
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
@@ -117,7 +122,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         };
 
         function validateAndFetchProductBudgetData() {
-
+            debugger;
             var isValid = true;
             var yearId = $('#GLFiscalYearId').val() || 0;
             var budgetType = $('#ProductGroupId').val() || '';
@@ -141,8 +146,81 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             updateLineTotal($(this));
         });
 
-    };
 
+        $(document).on("click", ".action-edit", function () {
+            debugger;
+            var productId = $(this).data("id");
+
+            $.ajax({
+                url: '/SetUp/Product/CreatePartial',
+                type: 'GET',
+                data: { id: productId },
+                success: function (html) {
+                    $("#productModalBody").html(html);
+                    $("#productModal").modal("show");
+                },
+                error: function () {
+                    alert("Failed to load product data");
+                }
+            });
+        });
+
+        GetProductGroupComboBox();
+
+
+        getProductGroup = $("#ProductGroupId").val() || 0;
+
+        function GetProductGroupComboBox() {
+            var CustomerComboBox = $("#ProductGroupId").kendoMultiColumnComboBox({
+                dataTextField: "Name",
+                dataValueField: "Id",
+                height: 400,
+                columns: [
+                    { field: "Name", title: "Name", width: 150 },
+                ],
+                filter: "contains",
+                filterFields: ["Name"],
+                dataSource: {
+                    transport: {
+                        read: "/Common/Common/GetProductGroupList"
+                    }
+                },
+                placeholder: "Select Product Group",
+                value: "",
+                dataBound: function (e) {
+                    if (getProductGroup) {
+                        this.value(parseInt(getProductGroup));
+                    }
+                }
+            }).data("kendoMultiColumnComboBox");
+        };  
+
+
+
+
+    };
+    //function ProductModalDblClick(row, originalRow) {
+    //    debugger;
+
+    //    var dataTable = $("#modalData").DataTable();
+    //    var rowData = dataTable.row(row).data();
+
+    //    var Id = rowData.Id;
+    //    var Code = rowData.pro;
+    //    var SegmentRemark = rowData.Remarks;
+
+
+    //    var $currentRow = originalRow.closest('tr');
+
+    //    $currentRow.find('.td-Remarks').text(SegmentRemark);
+    //    $currentRow.find('.td-SegmentName').text(SegmentName);
+    //    $currentRow.find('.td-SegmentId').text(Id);
+
+
+    //    $("#partialModal").modal("hide");
+    //    originalRow.closest("td").find("input").data("touched", false).focus();
+
+    //};
     // Fetch grid data
     var GetGridDataList = function (getTransactionType,  getBudgetType) {
         var gridDataSource = new kendo.data.DataSource({
@@ -571,27 +649,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 save: function (e) {
                     const grid = this;
 
-                    //if (e.values && e.values.InputTotal !== undefined) {
-
-                    //    var dataItem = e.model;
-                    //    var perMonth = parseFloat(e.values.InputTotal) / 12;
-
-                       
-                    //    dataItem.January = perMonth;
-                    //    dataItem.February = perMonth;
-                    //    dataItem.March = perMonth;
-                    //    dataItem.April = perMonth;
-                    //    dataItem.May = perMonth;
-                    //    dataItem.June = perMonth;
-                    //    dataItem.July = perMonth;
-                    //    dataItem.August = perMonth;
-                    //    dataItem.September = perMonth;
-                    //    dataItem.October = perMonth;
-                    //    dataItem.November = perMonth;
-                    //    dataItem.December = perMonth;
-
-                    //    //dataItem.set("LineTotal", perMonth * 12);
-                    //}
                     setTimeout(function () {
                         grid.dataSource.aggregate();
                         grid.refresh();
@@ -602,7 +659,21 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 columns: [
 
                     { field: "ProductId", width: 50, hidden: true, sortable: true },
-                    { field: "Serial", title: "SL", sortable: true, width: 70, editable: false },
+                    { field: "Serial", title: "SL", sortable: true, width: 35, editable: false },
+                    /* { field: "Action", title: "Action", sortable: true, width: 70, editable: false },*/
+                    {
+                        title: "Action",
+                        width: 60,
+                        template: function (dataItem) {
+                            return `
+                            <a href="javascript:void(0);"
+                               class="btn btn-primary btn-sm action-edit"
+                               data-id="${dataItem.ProductId}">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        `;
+                        }
+                    },
                     { field: "ProductCode", title: "Product Code", sortable: true, width: 170, editable: false },
                     { field: "ProductName", title: "Product Name", sortable: true, width: 170, editable: false },
                     

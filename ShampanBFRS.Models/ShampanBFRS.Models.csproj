@@ -102,6 +102,8 @@
     <Compile Include="QuestionVM\QuestionSetDetailVM.cs" />
     <Compile Include="QuestionVM\QuestionSetHeaderVM.cs" />
     <Compile Include="QuestionVM\QuestionSubjectVM.cs" />
+    <Compile Include="SetUpVMs\ChargeDetailVM.cs" />
+    <Compile Include="SetUpVMs\ChargeHeaderVM.cs" />
     <Compile Include="SetUpVMs\COAGroupVM.cs" />
     <Compile Include="SetUpVMs\COAVM.cs" />
     <Compile Include="SetUpVMs\DepartmentSabreVM.cs" />

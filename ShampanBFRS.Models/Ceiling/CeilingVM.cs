@@ -82,6 +82,7 @@ namespace ShampanBFRS.Models.Ceiling
         public CeilingVM()
         {
             PeramModel = new PeramModel();
+            CeilingDetailList = new List<CeilingDetailVM>();
         }
         public string? MenuType { get; set; }
 

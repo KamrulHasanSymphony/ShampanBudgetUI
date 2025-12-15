@@ -53,6 +53,8 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     DataTable dt = ConvertListToDataTable(list);
 
+
+
                     if (dt.Rows.Count == 0)
                     {
                         result = new ResultModel<CeilingVM>()
