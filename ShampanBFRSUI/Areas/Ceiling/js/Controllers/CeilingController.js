@@ -353,6 +353,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             toolbar: ["excel", "pdf", "search"],
             detailInit: function (e) {
 
+
                 console.log("Master ID:", e.data);
 
                 $("<div/>").appendTo(e.detailCell).kendoGrid({
@@ -366,7 +367,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
                         transport: {
                             read: {
-                                url: "/SetUp/Ceiling/GetCeilingDetailDataById",
+                                url: "/Ceiling/Ceiling/GetCeilingDetailDataById",
                                 type: "GET",
                                 dataType: "json",
                                 cache: false,
@@ -394,19 +395,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                     },
 
                     columns: [
-                        { field: "Id", width: 50, hidden: true, sortable: true },
-                        { field: "Code", title: "Code", sortable: true, width: 200 },
-                        { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
-                        { field: "YearName", title: "Year", sortable: true, width: 200 },             
-                        {
-                            field: "IsActive",
-                            title: "Active",
-                            sortable: true,
-                            width: 100,
-                            template: function (dataItem) {
-                                return dataItem.IsActive ? "Yes" : "No";
-                            }
-                        }
+                        { field: "Id", hidden: true, sortable: true, width: 50 },
+                        { field: "AccountCode", title: "Sabre Code", sortable: true, width: 150 },
+                        { field: "AccountName", title: "Sabre Name", sortable: true, width: 200 },
+                        { field: "InputTotal", title: "Input Total", sortable: true, width: 120, format: "{0:n2}" }
                     ]
                 });
             },
