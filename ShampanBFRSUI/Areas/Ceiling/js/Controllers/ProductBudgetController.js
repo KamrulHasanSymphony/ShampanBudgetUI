@@ -2,8 +2,9 @@
 var ProductBudgetController = function (CommonService, CommonAjaxService) {
 
     var getFiscalYearId = 0;
-    var getProductGroupId = 0;
+    //var getProductGroupId = 0;
     var getBudgetType = 0;
+    var getChargeGroup = "";
     var getTransactionType = '';
 
 
@@ -12,9 +13,10 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         var getOperation = $("#Operation").val() || '';
 
         getFiscalYearId = $("#GLFiscalYearId").val() || 0;
-        getProductGroupId = $("#ProductGroupId").val() || 0;
+        //getProductGroupId = $("#ProductGroupId").val() || 0;
         getBudgetType = $("#BudgetType").val() || 0;
         getTransactionType = $("#TransactionType").val() || '';
+        getChargeGroup = $("#ChargeGroup").val() || 0;
 
 
 
@@ -26,8 +28,9 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
-        ProductGroupComboBox();
-       
+        //ProductGroupComboBox();
+        GetChargeGroup();
+
         // Save button click handler
         $('.btnsave').click('click', function () {
             var getId = $('#Id').val();
@@ -165,8 +168,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             });
         });
 
-        GetProductGroupComboBox();
-
+        //GetProductGroupComboBox();
 
         getProductGroup = $("#ProductGroupId").val() || 0;
 
@@ -195,33 +197,53 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             }).data("kendoMultiColumnComboBox");
         };  
 
+        function GetChargeGroup() {
+            var ChargeGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
+                dataTextField: "Name",
+                dataValueField: "Name",
+                height: 400,
+                columns: [
+                    { field: "Name", title: "Name", width: 150 },
+                ],
+                filter: "contains",
+                filterFields: ["Code", "Name"],
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/Common/Common/GetEnumTypeList",
+                            data: {
+                                EnumType: "ChargeGroup"
+                            },
+                            dataType: "json",
+                            success: function (response) {
+
+                            },
+                            error: function (xhr, status, error) {
+
+                            }
+                        }
+                    }
+                },
+                placeholder: "Select Charge Group",
+                value: "",
+                dataBound: function (e) {
+
+                    if (getChargeGroup && getChargeGroup !== 0) {
+                        this.value(getChargeGroup);
+                    }
+                },
+                change: function (e) {
+                    var selectedDiseaseId = this.value();
+                }
+            }).data("kendoMultiColumnComboBox");
+        }
+
+
 
 
 
     };
-    //function ProductModalDblClick(row, originalRow) {
-    //    debugger;
-
-    //    var dataTable = $("#modalData").DataTable();
-    //    var rowData = dataTable.row(row).data();
-
-    //    var Id = rowData.Id;
-    //    var Code = rowData.pro;
-    //    var SegmentRemark = rowData.Remarks;
-
-
-    //    var $currentRow = originalRow.closest('tr');
-
-    //    $currentRow.find('.td-Remarks').text(SegmentRemark);
-    //    $currentRow.find('.td-SegmentName').text(SegmentName);
-    //    $currentRow.find('.td-SegmentId').text(Id);
-
-
-    //    $("#partialModal").modal("hide");
-    //    originalRow.closest("td").find("input").data("touched", false).focus();
-
-    //};
-    // Fetch grid data
+    
     var GetGridDataList = function (getTransactionType,  getBudgetType) {
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
