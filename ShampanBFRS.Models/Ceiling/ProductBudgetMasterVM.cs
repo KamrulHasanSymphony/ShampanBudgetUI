@@ -20,6 +20,9 @@ namespace ShampanBFRS.Models.Ceiling
         public string? Operation { get; set; }
         public string? TransactionType { get; set; }
 
+        public int? ChargeGroup { get; set; }
+
+
         public PeramModel PeramModel { get; set; }
 
         public List<ProductBudgetVM> DetailList { set; get; }
