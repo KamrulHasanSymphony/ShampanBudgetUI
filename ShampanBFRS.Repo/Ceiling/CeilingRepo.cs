@@ -138,6 +138,29 @@ namespace ShampanBFRS.Repo.Ceiling
             }
         }
 
+        public ResultVM GetCeilingDetailDataById(GridOptions options, int masterId)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+
+                var data = httpRequestHelper.PostData($"api/Ceiling/GetCeilingDetailDataById?masterId={masterId}", authModel, JsonConvert.SerializeObject(options,
+                    new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    }));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
     }
 }

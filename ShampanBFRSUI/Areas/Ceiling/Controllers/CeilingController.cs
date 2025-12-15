@@ -5,8 +5,10 @@ using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
 using ShampanBFRS.Models.Helper;
 using ShampanBFRS.Models.KendoCommon;
+using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.Ceiling;
 using ShampanBFRS.Repo.CommonRepo;
+using ShampanBFRS.Repo.SetUpRepo;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -304,6 +306,36 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 //var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
 
                 if (result.Status == MessageModel.Success && result.DataVM != null)
+                {
+                    var gridData = JsonConvert.DeserializeObject<GridEntity<CeilingDetailVM>>(result.DataVM.ToString());
+
+                    return Json(new
+                    {
+                        Items = gridData.Items,
+                        TotalCount = gridData.TotalCount
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetCeilingDetailDataById(GridOptions options, int masterId)
+        {
+            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            _repo = new CeilingRepo();
+
+            try
+            {
+                result = _repo.GetCeilingDetailDataById(options, masterId);
+
+                if (result.Status == "Success" && result.DataVM != null)
                 {
                     var gridData = JsonConvert.DeserializeObject<GridEntity<CeilingDetailVM>>(result.DataVM.ToString());
 

@@ -422,6 +422,9 @@
     function save($table) {
 
         debugger;
+        //-
+        //var grid = $("#GridDataList").data("kendoGrid");
+
 
         var model = serializeInputs("frmEntry");
 
