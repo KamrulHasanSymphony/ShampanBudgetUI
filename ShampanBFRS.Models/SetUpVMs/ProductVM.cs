@@ -13,8 +13,9 @@ namespace ShampanBFRS.Models.SetUpVMs
         public int? ProductGroupId { get; set; }
         [Display(Name = "Conversion Factor")]
         public decimal? ConversionFactor { get; set; }
-        [Display(Name= "CIF Charge")]
+        [Display(Name= "CIF Price")]
         public decimal? CIFCharge { get; set; }
+
         [Display(Name = "Exchange Rate Usd")]
         public decimal? ExchangeRateUsd { get; set; }
         [Display(Name = "Insurance Rate")]
