@@ -481,6 +481,97 @@
         }).done(onSuccess).fail(onFail);
     };
 
+    var productNameModal = function (done, fail, dblCallBack, closeCallback) {
+        debugger;
+        var modalId = "#partialModal";
+        var dataTableId = "#modalData";
+        function showModal(html) {
+            $(modalId).html(html);
+            $('.draggable').draggable({
+                handle: ".modal-header"
+            });
+            $(modalId).modal("show");
+        }
+
+        function onSuccess(result) {
+            showModal(result);
+
+            if (typeof done === "function") {
+                done(result);
+            }
+            debugger;
+            bindDoubleClick(dblCallBack);
+            bindModalClose(closeCallback);
+            initializeDataTable();
+        }
+
+        function onFail(result) {
+            if (typeof fail === "function") {
+                fail(result);
+            }
+        }
+
+        function bindDoubleClick(callBack) {
+            $(dataTableId).off("dblclick").on("dblclick", "tr", function () {
+                if (typeof callBack === "function") {
+                    callBack($(this));
+                }
+            });
+        }
+
+        function bindModalClose(closeCallback) {
+            $(modalId).off("hidden.bs.modal").on("hidden.bs.modal", function () {
+                if (typeof closeCallback === "function") {
+                    closeCallback();
+                }
+                $(modalId).html("");
+            });
+        }
+
+        function initializeDataTable() {
+            debugger;
+
+            if ($.fn.DataTable.isDataTable(dataTableId)) {
+                $(dataTableId).DataTable().clear().destroy();
+            }
+            debugger;
+            $(dataTableId).DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,
+                serverSide: false,
+                processing: true,
+                ajax: {
+                    url: '/Common/Common/ProductList',
+                    type: 'POST',
+                    data: function (d) {
+                        console.log(d);
+                        d.FromDate = $('#FromDate').val();
+                    },
+                    error: function (xhr, error, thrown) {
+                        debugger;
+                        console.error("AJAX Error:", error, thrown);
+                        console.error("Response:", xhr.responseText);
+                    }
+                },
+                columns: [
+                    { data: "Id", visible: false },
+                    { data: "Code", title: " Code", width: "10%" },
+                    { data: "Name", title: "Name", width: "15%" },
+                    { data: "ConversionFactor", title: "ConversionFactor", width: "12%" }
+
+                ],
+                columnDefs: [
+                    { width: '10%', targets: 0 }
+                ],
+            });
+        }
+
+        $.ajax({
+            url: '/Common/Common/_getProductList',
+            method: 'get',
+        }).done(onSuccess).fail(onFail);
+    };
+
     
 
     var ItemModalForMakingCharge = function (done, fail, dblCallBack, closeCallback) {
@@ -1537,7 +1628,7 @@
         customerCodeModal: customerCodeModal,
         branchLoading: branchLoading,
         validateDropdown: validateDropdown,
-        productCodeModal: productCodeModal
+        productNameModal: productNameModal
 
 
     }

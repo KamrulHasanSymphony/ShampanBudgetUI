@@ -418,6 +418,7 @@
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\SetUp\Controllers\COAController.cs" />
     <Compile Include="Areas\SetUp\Controllers\ProductGroupController.cs" />
+    <Compile Include="Areas\SetUp\Controllers\ChargeHeaderController.cs" />
     <Compile Include="Areas\SetUp\Controllers\StructureController.cs" />
     <Compile Include="Areas\SetUp\Controllers\SegmentController.cs" />
     <Compile Include="Areas\SetUp\Controllers\COAGroupController.cs" />
@@ -457,6 +458,7 @@
     <Content Include="Areas\Questions\js\Controllers\QuestionSetController.js" />
     <Content Include="Areas\Questions\js\Controllers\QuestionSubjectController.js" />
     <Content Include="Areas\Reports\js\BudgetReportController.js" />
+    <Content Include="Areas\SetUp\js\Controller\ChargeHeaderController.js" />
     <Content Include="Areas\SetUp\js\Controller\COAController.js" />
     <Content Include="Areas\SetUp\js\Controller\ProductGroupController.js" />
     <Content Include="Areas\SetUp\js\Controller\SegmentController.js" />
@@ -2637,6 +2639,9 @@
     <Content Include="Areas\SetUp\Views\ProductGroup\Index.cshtml" />
     <Content Include="Areas\SetUp\Views\ProductGroup\Create.cshtml" />
     <Content Include="Areas\SetUp\Views\Product\_CreatePartial.cshtml" />
+    <Content Include="Areas\SetUp\Views\ChargeHeader\Index.cshtml" />
+    <Content Include="Areas\SetUp\Views\ChargeHeader\Create.cshtml" />
+    <Content Include="Areas\Common\Views\Common\_getProductList.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />

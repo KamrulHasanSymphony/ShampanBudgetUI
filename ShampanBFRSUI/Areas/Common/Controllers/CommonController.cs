@@ -80,10 +80,16 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
         public ActionResult _getItemModal()
         {
             return PartialView("_getItemModal");
-        } [HttpGet]
+        } 
+        [HttpGet]
         public ActionResult _getSegmentModal()
         {
             return PartialView("_getSegmentModal");
+        }
+        [HttpGet]
+        public ActionResult _getProductList()
+        {
+            return PartialView("_getProductList");
         }
         public ActionResult _getProductBudget()
         {
@@ -598,6 +604,36 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                     lst = JsonConvert.DeserializeObject<List<ProductGroupVM>>(result.DataVM.ToString());
                 }
                 return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ProductList(string value)
+        {
+            try
+            {
+                List<ProductVM> lst = new List<ProductVM>();
+                CommonVM param = new CommonVM();
+                param.Value = value;
+                ResultVM result = _repo.ProductList(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<ProductVM>>(result.DataVM.ToString());
+                }
+                return Json(new
+                {
+                    draw = Request["draw"],
+                    recordsTotal = lst.Count,
+                    recordsFiltered = lst.Count,
+                    data = lst
+                }, JsonRequestBehavior.AllowGet);
+                //return Json(lst, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
