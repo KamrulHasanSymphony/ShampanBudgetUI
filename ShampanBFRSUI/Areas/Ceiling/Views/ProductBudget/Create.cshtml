@@ -135,12 +135,20 @@
                                     @Html.ValidationMessageFor(model => model.GLFiscalYearId)
                                 </div>
 
-                                <div class="col-sm-2">
+                                @*<div class="col-sm-2">
                                     @Html.LabelFor(model => model.ProductGroupId)
                                     <div class="input-group">
                                         @Html.TextBoxFor(model => model.ProductGroupId, new { placeholder = "select Product Group", @class = "form-control form-control-sm" })
                                     </div>
                                     @Html.ValidationMessageFor(model => model.ProductGroupId)
+                                </div>*@
+
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.ChargeGroup)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ChargeGroup)
                                 </div>
 
 
