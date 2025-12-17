@@ -138,33 +138,6 @@ namespace ShampanBFRS.Repo.SetUpRepo
             }
         }
 
-        public ResultVM GetStructureDetailDataById(GridOptions options, int masterId)
-        {
-            try
-            {
-                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
-                AuthModel authModel = new AuthModel { token = ClaimNames.token };
-
-                #region Invoke API 
-
-                var data = httpRequestHelper.PostData($"api/Structure/GetStructureDetailDataById?masterId={masterId}", authModel, JsonConvert.SerializeObject(options,
-                    new JsonSerializerSettings
-                    {
-                        NullValueHandling = NullValueHandling.Ignore
-                    }));
-
-                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
-
-                #endregion                
-
-                return result;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
         public Stream ReportPreview(CommonVM model)
         {
             try

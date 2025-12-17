@@ -54,7 +54,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         public ActionResult CreateEdit(ChargeHeaderVM model)
         {
             ResultModel<ChargeHeaderVM> result = new ResultModel<ChargeHeaderVM>();
-            ResultVM resultVM = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ChargeHeaderRepo();
 
 
@@ -354,7 +354,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         [HttpPost]
         public JsonResult GetDetailsGridData(GridOptions options, string branchId, string isPost, string fromDate, string toDate)
         {
-            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ChargeHeaderRepo();
 
             try
@@ -420,7 +420,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(e);
                 TempData["Message"] = e.Message.ToString();
-                return RedirectToAction("Index", "ChargeHeaders", new { area = "FM", message = TempData["Message"] });
+                return RedirectToAction("Index", "ChargeHeaders", new { area = " ", message = TempData["Message"] });
             }
         }
 
