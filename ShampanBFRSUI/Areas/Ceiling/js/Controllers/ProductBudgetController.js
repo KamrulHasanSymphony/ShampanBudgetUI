@@ -18,7 +18,12 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         getTransactionType = $("#TransactionType").val() || '';
         getChargeGroup = $("#ChargeGroup").val() || 0;
 
-        if (parseInt(getId) == 0 && getOperation == '') {
+        if (parseInt(getFiscalYearId) != 0 && getOperation != '' && getChargeGroup != '') {
+            validateAndFetchProductBudgetData();
+        }
+
+        if (parseInt(getId) == 0 && getBudgetType != '') {
+
             GetGridDataList(getTransactionType, getBudgetType);
         }
 
@@ -125,15 +130,16 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             debugger;
             var isValid = true;
             var yearId = $('#GLFiscalYearId').val() || 0;
-            var budgetType = $('#ProductGroupId').val() || '';
+            //var ProductGroup = $('#ProductGroupId').val() || '';
+            var ChargeGroup = $('#ChargeGroup').val() || '';
 
             if (yearId === 'xx' || parseInt(yearId) <= 0) {
                 isValid = false;
                 ShowNotification(3, 'Fiscal Year Required.');
             }
-            else if (parseInt(budgetType) <= 0) {
+            else if (parseInt(ChargeGroup) <= 0) {
                 isValid = false;
-                ShowNotification(3, 'Product Group Required.');
+                ShowNotification(3, 'Charge Group Required.');
             }
 
             if (isValid) {
@@ -261,8 +267,8 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                             if (param.field === "Id") {
                                 param.field = "PB.Id";
                             }
-                            if (param.field === "ProductGroupName") {
-                                param.field = "pg.Name";
+                            if (param.field === "ChargeGroup") {
+                                param.field = "PB.ChargeGroup";
                             }
                             if (param.field === "BudgetType") {
                                 param.field = "PB.BudgetType";
@@ -296,8 +302,8 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                             if (param.field === "Id") {
                                 param.field = "PB.Id";
                             }
-                            if (param.field === "ProductGroupName") {
-                                param.field = "pg.Name";
+                            if (param.field === "ChargeGroup") {
+                                param.field = "PB.ChargeGroup";
                             }
                             if (param.field === "BudgetType") {
                                 param.field = "PB.BudgetType";
@@ -413,15 +419,16 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                     width: 60,
                     template: function (dataItem) {
                         return `
-                            <a href="/Ceiling/ProductBudgets/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>`;
+        <a href="/Ceiling/ProductBudget/Edit?yearId=${dataItem.GLFiscalYearId}&ChargeGroup=${dataItem.ChargeGroup}&budgetType=${dataItem.BudgetType}&branchId=${dataItem.BranchId}"
+           class="btn btn-primary btn-sm mr-2 edit">
+            <i class="fas fa-pencil-alt"></i>
+        </a>`;
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "YearName", title: "Year", sortable: true, width: 200 },
                 { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
-                { field: "ProductGroupName", title: "Product Group", sortable: true, width: 200 },
+                { field: "ChargeGroup", title: "Charge Group", sortable: true, width: 200 },
 
             ],
             editable: false,
@@ -554,6 +561,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         var yearId = $('#GLFiscalYearId').val() || 0;
         var ProductGroupId = $('#ProductGroupId').val() || 0;
         var ChargeGroup = $('#ChargeGroup').val() || 0;
+        var BudgetType = $('#BudgetType').val() || '';
 
         if (parseInt(yearId) > 0 && ChargeGroup != "0") {
             var gridDataSource = new kendo.data.DataSource({
@@ -570,7 +578,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                         type: "POST",
                         dataType: "json",
                         cache: false,
-                        data: { yearId: yearId, ProductGroupId: ProductGroupId }
+                        data: { yearId: yearId, ProductGroupId: ProductGroupId, ChargeGroup: ChargeGroup, BudgetType: BudgetType }
                     },
                     parameterMap: function (options) {
                         if (options.sort) {

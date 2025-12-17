@@ -127,29 +127,52 @@
 
                             <div class="form-group row">
 
-                                <div class="col-sm-2">
-                                    @Html.LabelFor(model => model.GLFiscalYearId)
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <div class="col-sm-2">
+                                        @Html.LabelFor(model => model.GLFiscalYearId)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.GLFiscalYearId)
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.GLFiscalYearId)
-                                </div>
 
+                                    <div class="col-sm-2">
+                                        @Html.LabelFor(model => model.ChargeGroup)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ChargeGroup)
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="col-sm-2">
+                                        @Html.LabelFor(model => model.GLFiscalYearId)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.GLFiscalYearId)
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        @Html.LabelFor(model => model.ChargeGroup)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ChargeGroup)
+                                    </div>
+                                }
                                 @*<div class="col-sm-2">
-                                    @Html.LabelFor(model => model.ProductGroupId)
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(model => model.ProductGroupId, new { placeholder = "select Product Group", @class = "form-control form-control-sm" })
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.ProductGroupId)
-                                </div>*@
+                                        @Html.LabelFor(model => model.ProductGroupId)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.ProductGroupId, new { placeholder = "select Product Group", @class = "form-control form-control-sm" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ProductGroupId)
+                                    </div>*@
 
-                                <div class="col-sm-2">
-                                    @Html.LabelFor(model => model.ChargeGroup)
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm" })
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.ChargeGroup)
-                                </div>
+
 
 
                                 <div class="col-sm-1">
@@ -183,7 +206,7 @@
 
                 </form>
 
-                <div class="modal fade" id="productModal" tabindex="-1" >
+                <div class="modal fade" id="productModal" tabindex="-1">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -198,7 +221,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">
 

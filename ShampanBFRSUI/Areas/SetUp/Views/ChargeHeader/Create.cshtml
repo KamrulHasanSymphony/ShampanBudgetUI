@@ -108,28 +108,29 @@
                                 <th data-type="text" data-computed="true" data-required="false" data-name="SLNo" style="width:3%;">SL.</th>
                                 <th data-type="text" data-search="true" data-name="ProductName" style="width:20%;">Product Name</th>
                                 <th hidden data-type="text" data-search="false" data-name="ProductId" style="width:5%;">ProductId</th>
-                                <th data-type="number" data-name="CIFCharge" style="width:6%;">CIF Charge</th>
                                 <th data-type="number" data-name="Exchange Rate Usd" style="width:4%;">Exchange Rate Usd</th>
-                                <th data-type="number" data-name="Insurance Rate" style="width:4%;">Insurance Rate</th>
-                                <th data-type="number" data-name="Bank Charge" style="width:4%;">Bank Charge</th>
-                                <th data-type="number" data-name="OceanLoss" style="width:4%;">Ocean Loss</th>
-                                <th data-type="number" data-name="CPACharge" style="width:4%;">CPA Charge</th>
-                                <th data-type="number" data-name="HandelingCharge" style="width:4%;">Handeling Charge</th>
-                                <th data-type="number" data-name="LightCharge" style="width:4%;">Light Charge</th>
-                                <th data-type="number" data-name="Survey" style="width:4%;">Survey</th>
-                                <th data-type="number" data-name="CostLiterExImport" style="width:4%;">Cost Liter ExImport</th>
-                                <th data-type="number" data-name="ExERLRate" style="width:4%;">ExERL Rate</th>
-                                <th data-type="number" data-name="DutyPerLiter" style="width:4%;">Duty PerLiter</th>
                                 <th data-type="number" data-name="Refined" style="width:4%;">Refined</th>
                                 <th data-type="number" data-name="Crude" style="width:4%;">Crude</th>
-                                <th data-type="number" data-name="SDRate" style="width:4%;">SD Rate</th>
-                                <th data-type="number" data-name="DutyInTariff" style="width:4%;">Duty In Tariff</th>
+                                <th data-type="number" data-name="CIFCharge" style="width:6%;">CIF Charge</th>
+                                <th data-type="number" data-name="DutyPerLiter" style="width:4%;">Duty PerLiter</th>
+                                <th data-type="number" data-name="VATRate" style="width:4%;">VAT Rate</th>
                                 <th data-type="number" data-name="ATRate" style="width:4%;">AT Rate</th>
                                 <th data-type="number" data-name="AITRate" style="width:4%;">AIT Rate</th>
-                                <th data-type="number" data-name="VATRate" style="width:4%;">VAT Rate</th>
-                                <th data-type="number" data-name="ConversionFactorFixedValue" style="width:4%;">Conversion Factor Fixed Value</th>
-                                <th data-type="number" data-name="VATRateFixed" style="width:4%;">VAT Rate Fixed</th>
+                                <th data-type="number" data-name="HandelingCharge" style="width:4%;">Handeling Charge</th>
                                 <th data-type="number" data-name="RiverDues" style="width:4%;">River Dues</th>
+                                <th data-type="number" data-name="Survey" style="width:4%;">Survey</th>
+                                <th data-type="number" data-name="OceanLoss" style="width:4%;">Ocean Loss</th>
+                                <th data-type="number" data-name="Bank Charge" style="width:4%;">Bank Charge</th>
+                                <th data-type="number" data-name="SDRate" style="width:4%;">SD Rate</th>
+                                <th data-type="number" data-name="ConversionFactorFixedValue" style="width:4%;">Conversion Factor Fixed</th>
+
+                                <th data-type="number" data-name="Insurance Rate" style="width:4%;">Insurance Rate</th>
+                                <th data-type="number" data-name="CPACharge" style="width:4%;">CPA Charge</th>
+                                <th data-type="number" data-name="LightCharge" style="width:4%;">Light Charge</th>
+                                <th data-type="number" data-name="CostLiterExImport" style="width:4%;">Cost Liter ExImport</th>
+                                <th data-type="number" data-name="ExERLRate" style="width:4%;">ExERL Rate</th>
+                                <th data-type="number" data-name="DutyInTariff" style="width:4%;">Duty In Tariff</th>
+                                <th data-type="number" data-name="VATRateFixed" style="width:4%;">VAT Rate Fixed</th>
                             </tr>
                         </thead>
                         <tbody id="SODBody">
@@ -143,29 +144,29 @@
 
                                         <td> @item.ProductName </td>
                                         <td hidden> @item.ProductId </td>
-
-                                        <td>@item.CIFCharge</td>
                                         <td>@item.ExchangeRateUsd</td>
-                                        <td>@item.InsuranceRate</td>
-                                        <td>@item.BankCharge</td>
-                                        <td>@item.OceanLoss</td>
-                                        <td>@item.CPACharge</td>
-                                        <td>@item.HandelingCharge</td>
-                                        <td>@item.LightCharge</td>
-                                        <td>@item.Survey</td>
-                                        <td>@item.CostLiterExImport</td>
-                                        <td>@item.ExERLRate</td>
-                                        <td>@item.DutyPerLiter</td>
                                         <td>@item.Refined</td>
                                         <td>@item.Crude</td>
-                                        <td>@item.SDRate</td>
-                                        <td>@item.DutyInTariff</td>
+                                        <td>@item.CIFCharge</td>
+                                        <td>@item.DutyPerLiter</td>
+                                        <td>@item.VATRate</td>
                                         <td>@item.ATRate</td>
                                         <td>@item.AITRate</td>
-                                        <td>@item.VATRate</td>
-                                        <td>@item.ConversionFactorFixedValue</td>
-                                        <td>@item.VATRateFixed</td>
+                                        <td>@item.HandelingCharge</td>
                                         <td>@item.RiverDues</td>
+                                        <td>@item.Survey</td>
+                                        <td>@item.OceanLoss</td>
+                                        <td>@item.BankCharge</td>
+                                        <td>@item.SDRate</td>
+                                        <td>@item.ConversionFactorFixedValue</td>
+
+                                        <td>@item.InsuranceRate</td>
+                                        <td>@item.CPACharge</td>
+                                        <td>@item.LightCharge</td>
+                                        <td>@item.CostLiterExImport</td>
+                                        <td>@item.ExERLRate</td>
+                                        <td>@item.DutyInTariff</td>s
+                                        <td>@item.VATRateFixed</td>
 
                                         <td> <button class="btn btn-danger btn-sm remove-row-btn"><i class='fa fa-trash'></i></button> </td>
 

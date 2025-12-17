@@ -155,26 +155,34 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
-        public ActionResult Edit(string id, string MenuType = "")
+        public ActionResult Edit(int yearId, string chargeGroup, string budgetType, int branchId)
         {
             try
             {
                 _repo = new ProductBudgetRepo();
 
                 ProductBudgetMasterVM vm = new ProductBudgetMasterVM();
-                CommonVM param = new CommonVM();
-                param.Id = id;
 
-                ResultVM result = _repo.ProductBudgeDistincttList(vm);
+                var currentBranchId = 0;
+                if (Session["CurrentBranch"] != null)
+                    int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
 
-                if (result.Status == MessageModel.Success && result.DataVM != null)
-                {
-                    vm = JsonConvert.DeserializeObject<List<ProductBudgetMasterVM>>(result.DataVM.ToString()).FirstOrDefault();
-                }
-                else
-                {
-                    vm = null;
-                }
+                vm.GLFiscalYearId = Convert.ToInt32(yearId);
+                vm.ChargeGroup = chargeGroup;
+                vm.BudgetType = budgetType;
+                vm.BranchId = currentBranchId;
+
+                //ResultVM result = _repo.ProductBudgeDistincttList(vm);
+
+                //if (result.Status == MessageModel.Success && result.DataVM != null)
+                //{
+                //    var list = JsonConvert.DeserializeObject<List<ProductBudgetMasterVM>>(result.DataVM.ToString());
+
+                //    if (list != null && list.Any())
+                //    {
+                //        vm = list.First();
+                //    }
+                //}
 
                 vm.Operation = "update";
 
@@ -190,7 +198,8 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
 
         [HttpPost]
-        public JsonResult GetProductBudgetDataForDetailsNew(GridOptions options, string yearId, string ProductGroupId, string ChargeGroup)
+        public JsonResult GetProductBudgetDataForDetailsNew(GridOptions options, string yearId, string ProductGroupId
+            , string ChargeGroup, string BudgetType)
         {
             ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ProductBudgetRepo();
@@ -207,6 +216,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 productBudgetVM.ProductGroupId = Convert.ToInt32(ProductGroupId);
                 productBudgetVM.BranchId = currentBranchId;
                 productBudgetVM.ChargeGroup = ChargeGroup;
+                productBudgetVM.BudgetType = BudgetType;
 
                 productBudgetVM.UserId = Session["UserId"].ToString();
 
