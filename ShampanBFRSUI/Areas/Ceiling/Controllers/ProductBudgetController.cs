@@ -190,7 +190,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
 
         [HttpPost]
-        public JsonResult GetProductBudgetDataForDetailsNew(GridOptions options, string yearId, string ProductGroupId)
+        public JsonResult GetProductBudgetDataForDetailsNew(GridOptions options, string yearId, string ProductGroupId, string ChargeGroup)
         {
             ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ProductBudgetRepo();
@@ -206,6 +206,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 productBudgetVM.GLFiscalYearId = Convert.ToInt32(yearId);
                 productBudgetVM.ProductGroupId = Convert.ToInt32(ProductGroupId);
                 productBudgetVM.BranchId = currentBranchId;
+                productBudgetVM.ChargeGroup = ChargeGroup;
 
                 productBudgetVM.UserId = Session["UserId"].ToString();
 

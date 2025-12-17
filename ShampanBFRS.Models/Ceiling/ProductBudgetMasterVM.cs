@@ -30,7 +30,7 @@ namespace ShampanBFRS.Models.Ceiling
         public string? TransactionType { get; set; }
 
         [Display(Name = "Charge Group")]
-        public int? ChargeGroup { get; set; }
+        public string? ChargeGroup { get; set; }
 
         public PeramModel PeramModel { get; set; }
 

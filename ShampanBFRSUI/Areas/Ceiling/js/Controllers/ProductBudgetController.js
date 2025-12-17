@@ -18,12 +18,9 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         getTransactionType = $("#TransactionType").val() || '';
         getChargeGroup = $("#ChargeGroup").val() || 0;
 
-
-
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList(getTransactionType, getBudgetType);
         }
-
 
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
@@ -138,7 +135,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 isValid = false;
                 ShowNotification(3, 'Product Group Required.');
             }
-            
+
             if (isValid) {
                 GetProductBudgetDetailsData();
             }
@@ -195,7 +192,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                     }
                 }
             }).data("kendoMultiColumnComboBox");
-        };  
+        };
 
         function GetChargeGroup() {
             var ChargeGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
@@ -239,12 +236,9 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         }
 
 
-
-
-
     };
-    
-    var GetGridDataList = function (getTransactionType,  getBudgetType) {
+
+    var GetGridDataList = function (getTransactionType, getBudgetType) {
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -428,7 +422,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 { field: "YearName", title: "Year", sortable: true, width: 200 },
                 { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
                 { field: "ProductGroupName", title: "Product Group", sortable: true, width: 200 },
-                
+
             ],
             editable: false,
             selectable: "multiple row",
@@ -559,8 +553,9 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
     var GetProductBudgetDetailsData = function () {
         var yearId = $('#GLFiscalYearId').val() || 0;
         var ProductGroupId = $('#ProductGroupId').val() || 0;
+        var ChargeGroup = $('#ChargeGroup').val() || 0;
 
-        if (parseInt(yearId) > 0 && parseInt(ProductGroupId) > 0) {
+        if (parseInt(yearId) > 0 && ChargeGroup != "0") {
             var gridDataSource = new kendo.data.DataSource({
                 type: "json",
                 serverPaging: false,
@@ -586,7 +581,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                                 if (param.field === "ProductName") {
                                     param.field = "p.Name";
                                 }
-                                
+
                             });
                         }
                         if ((options.filter && options.filter.filters)) {
@@ -598,7 +593,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                                 if (filter.field === "ProductName") {
                                     filter.field = "p.Name";
                                 }
-                                
+
                             });
                         }
                         return options;
@@ -614,14 +609,14 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                             ProductCode: { editable: false },
                             ProductCode: { editable: false },
                             BLQuantityMT: { type: "number", defaultValue: 0, validation: { min: 0 } },
-                            
+
                         }
                     }
                 },
                 aggregate: [
 
                     { field: "BLQuantityMT", aggregate: "sum" },
-                    
+
                 ]
 
             });
@@ -698,7 +693,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                     },
                     { field: "ProductCode", title: "Product Code", sortable: true, width: 170, editable: false },
                     { field: "ProductName", title: "Product Name", sortable: true, width: 170, editable: false },
-                    
+
                     {
                         field: "BLQuantityMT", title: "Input Value", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }
                         , footerTemplate: function () {
@@ -711,7 +706,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                             return kendo.toString(sum, "n2");
                         }
                     },
-                    
+
                 ],
                 footer: true,
                 selectable: "row",
