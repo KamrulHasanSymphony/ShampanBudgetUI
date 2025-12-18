@@ -9,6 +9,8 @@ namespace ShampanBFRS.Models.SetUpVMs
         public string Code { get; set; }
         public string Name { get; set; }
 
+        public string ProductGroupName { get; set; }
+
         [Display(Name = "Product Group")]
         public int? ProductGroupId { get; set; }
         [Display(Name = "Conversion Factor")]
