@@ -156,11 +156,11 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         $(document).on("click", ".action-edit", function () {
             debugger;
             var productId = $(this).data("id");
-
+            var groupId = $("#ChargeGroup").val();
             $.ajax({
                 url: '/SetUp/Product/CreatePartial',
                 type: 'GET',
-                data: { id: productId },
+                data: { id: productId, groupId },
                 success: function (html) {
                     $("#productModalBody").html(html);
                     $("#productModal").modal("show");
@@ -692,10 +692,11 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                         template: function (dataItem) {
                             return `
                             <a href="javascript:void(0);"
-                               class="btn btn-primary btn-sm action-edit"
-                               data-id="${dataItem.ProductId}">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
+                           class="btn btn-primary btn-sm action-edit"
+                           data-id="${dataItem.ProductId}">
+                            <i class="fas fa-search"></i>
+                        </a>
+
                         `;
                         }
                     },

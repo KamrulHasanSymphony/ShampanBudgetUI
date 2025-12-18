@@ -318,13 +318,13 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         }
 
 
-        public ActionResult CreatePartial(int? id)
+        public ActionResult CreatePartial(int? id,string groupId)
         {
             ProductVM vm;
 
             if (id.HasValue && id.Value > 0)
             {
-                CommonVM param = new CommonVM { Id = id.ToString() };
+                CommonVM param = new CommonVM { Id = id.ToString(), ChargeGroupId = groupId };
                 ResultVM result = _repo.List(param);
 
                 if (result.Status == "Success" && result.DataVM != null)

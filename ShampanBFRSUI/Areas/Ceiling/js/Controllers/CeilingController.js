@@ -396,6 +396,8 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
                     columns: [
                         { field: "Id", hidden: true, sortable: true, width: 50 },
+                        { field: "COACode", title: "iBAS Code", sortable: true, width: 150 },
+                        { field: "COAName", title: "iBAS Name", sortable: true, width: 150 },
                         { field: "AccountCode", title: "Sabre Code", sortable: true, width: 150 },
                         { field: "AccountName", title: "Sabre Name", sortable: true, width: 200 },
                         { field: "InputTotal", title: "Input Total", sortable: true, width: 120, format: "{0:n2}" }

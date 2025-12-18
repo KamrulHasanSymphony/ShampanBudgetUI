@@ -87,26 +87,45 @@
 
                             <div class="col-sm-2">
                                 @Html.LabelFor(model => model.Name)
-                                <div class="input-group ">
-                                    @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Product Name", @class = "  form-control form-control-sm " })
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.Name, new
+                                    {
+                                        placeholder = "Enter Product Name",
+                                        @class = "form-control form-control-sm",
+                                        @readonly = "readonly"
+                                    })
                                 </div>
                                 @Html.ValidationMessageFor(model => model.Name)
                             </div>
+
                             <div class="col-sm-2">
-                                @Html.LabelFor(model => model.ProductGroupId)
-                                <div class="input-group ">
-                                    @Html.TextBoxFor(model => model.ProductGroupId, new { placeholder = "Enter Group Name", @class = "  form-control form-control-sm " })
+                                @Html.LabelFor(model => model.ProductGroupName)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ProductGroupName, new
+                                    {
+                                        placeholder = "Enter Group Name",
+                                        @class = "form-control form-control-sm",
+                                        @readonly = "readonly"
+                                    })
                                 </div>
-                                @Html.ValidationMessageFor(model => model.ProductGroupId)
+                                @Html.ValidationMessageFor(model => model.ProductGroupName)
                             </div>
 
                             <div class="col-sm-2">
                                 @Html.LabelFor(model => model.ConversionFactor)
                                 <div class="input-group">
-                                    @Html.TextBoxFor(model => model.ConversionFactor, new { placeholder = "Enter Conversion Factor", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                    @Html.TextBoxFor(model => model.ConversionFactor, new
+                                    {
+                                        placeholder = "Enter Conversion Factor",
+                                        @class = "form-control form-control-sm",
+                                        type = "number",
+                                        step = "any",
+                                        @readonly = "readonly"
+                                    })
                                 </div>
                                 @Html.ValidationMessageFor(model => model.ConversionFactor)
                             </div>
+
 
                             <div class="col-sm-2">
                                 @Html.LabelFor(model => model.CIFCharge)
@@ -116,7 +135,7 @@
                                 @Html.ValidationMessageFor(model => model.CIFCharge)
                             </div>
 
-                            
+
 
 
                         </div>
