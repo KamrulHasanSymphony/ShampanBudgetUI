@@ -355,6 +355,93 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
+        public ActionResult BudgetTransfer(string TransactionType = "", string MenuType = "", string BudgetType = "")
+        {
+            CeilingVM vm = new CeilingVM();
+            vm.Operation = "add";
+            vm.IsActive = true;
+            vm.TransactionType = TransactionType;
+            vm.BudgetSetNo = 1;
+            vm.TransactionDate = DateTime.Now.ToString("yyyy-MM-dd");
+            vm.MenuType = MenuType;
+            vm.BudgetType = BudgetType;
+
+            return View("BudgetTransfer", vm);
+        }
+
+
+        public ActionResult BudgetTransferInsert(CeilingVM model)
+        {
+            ResultModel<CeilingVM> result = new ResultModel<CeilingVM>();
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            _repo = new CeilingRepo();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var currentBranchId = 0;
+                    if (Session["CurrentBranch"] != null)
+                        int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
+
+                    model.BranchId = currentBranchId;
+                    model.CompanyId = 9;
+
+                    model.CreatedBy = Session["UserId"].ToString();
+                    model.CreatedOn = DateTime.Now.ToString();
+                    model.CreatedFrom = Ordinary.GetLocalIpAddress();
+                    model.IsActive = true;
+
+                    resultVM = _repo.BudgetTransfer(model);
+
+                    if (resultVM.Status == ResultStatus.Success.ToString())
+                    {
+                        model = JsonConvert.DeserializeObject<CeilingVM>(resultVM.DataVM.ToString());
+                        //model.Operation = "Update";
+                        Session["result"] = resultVM.Status + "~" + resultVM.Message;
+                        result = new ResultModel<CeilingVM>()
+                        {
+                            Success = true,
+                            Status = Status.Success,
+                            Message = resultVM.Message,
+                            Data = model
+                        };
+                        return Json(result);
+                    }
+                    else
+                    {
+                        Session["result"] = "Fail" + "~" + resultVM.Message;
+
+                        result = new ResultModel<CeilingVM>()
+                        {
+                            Status = Status.Fail,
+                            Message = resultVM.Message,
+                            Data = model
+                        };
+                        return Json(result);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Session["result"] = MessageModel.Fail + "~" + e.Message;
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                    return View("Create", model);
+                }
+            }
+            else
+            {
+                result = new ResultModel<CeilingVM>()
+                {
+                    Success = false,
+                    Status = Status.Fail,
+                    Message = "Model State Error!",
+                    Data = model
+                };
+                return Json(result);
+            }
+        }
+
 
     }
 }

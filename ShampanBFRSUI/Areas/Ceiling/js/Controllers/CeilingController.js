@@ -21,8 +21,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
+        GetToFiscalYearComboBox();
         //GetBudgetSetComboBox();
-        //GetBudgetTypeComboBox();
+        GetBudgetTypeComboBox();
+        GetToBudgetTypeComboBox();
         //GenerateDatePicker();
 
 
@@ -101,6 +103,31 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             }).data("kendoMultiColumnComboBox");
         };
 
+        function GetToFiscalYearComboBox() {
+            var FiscalYearComboBox = $("#ToGLFiscalYearId").kendoMultiColumnComboBox({
+                dataTextField: "Name",
+                dataValueField: "Id",
+                height: 400,
+                columns: [
+                    { field: "Name", title: "Name", width: 150 }
+                ],
+                filter: "contains",
+                filterFields: ["Name"],
+                dataSource: {
+                    transport: {
+                        read: "/Common/Common/GetFiscalYearComboBox"
+                    }
+                },
+                placeholder: "Select Fiscal Year",
+                value: "",
+                dataBound: function (e) {
+                    if (getFiscalYearId) {
+                        this.value(parseInt(getFiscalYearId));
+                    }
+                }
+            }).data("kendoMultiColumnComboBox");
+        };
+
         function GetBudgetSetComboBox() {
             var BudgetSetComboBox = $("#BudgetSetNo").kendoMultiColumnComboBox({
                 dataTextField: "Name",
@@ -150,6 +177,32 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 }
             }).data("kendoMultiColumnComboBox");
         };
+
+        function GetToBudgetTypeComboBox() {
+            var BudgetTypeComboBox = $("#BudgetType").kendoMultiColumnComboBox({
+                dataTextField: "Name",
+                dataValueField: "Name",
+                height: 400,
+                columns: [
+                    { field: "Name", title: "Name", width: 150 }
+                ],
+                filter: "contains",
+                filterFields: ["Name"],
+                dataSource: {
+                    transport: {
+                        read: "/Common/Common/GetEnumTypeList?value=BudgetType"
+                    }
+                },
+                placeholder: "Select Budget Type",
+                value: "",
+                dataBound: function (e) {
+                    if (getBudgetType) {
+                        this.value(getBudgetType);
+                    }
+                }
+            }).data("kendoMultiColumnComboBox");
+        };
+
 
         $('#GLFiscalYearId, #BudgetSetNo, #BudgetType').on('change', validateAndFetchCeilingData);
         function validateAndFetchCeilingData() {

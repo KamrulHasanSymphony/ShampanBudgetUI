@@ -2642,6 +2642,7 @@
     <Content Include="Areas\SetUp\Views\ChargeHeader\Index.cshtml" />
     <Content Include="Areas\SetUp\Views\ChargeHeader\Create.cshtml" />
     <Content Include="Areas\Common\Views\Common\_getProductList.cshtml" />
+    <Content Include="Areas\Ceiling\Views\Ceiling\BudgetTransfer.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />

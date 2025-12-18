@@ -76,6 +76,12 @@ namespace ShampanBFRS.Models.Ceiling
         public int Branchs { get; set; }
         public int? Count { get; set; }
 
+        [Display(Name = "To Year")]
+        public int ToGLFiscalYearId { get; set; }
+        
+        [Display(Name = "To Budget Type")]
+        public string ToBudgetType { get; set; }
+
         public PeramModel PeramModel { get; set; }
 
         public List<CeilingDetailVM> CeilingDetailList { set; get; }
