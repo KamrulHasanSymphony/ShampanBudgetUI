@@ -81,6 +81,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         });
 
         function GetFiscalYearComboBox() {
+            debugger;
             var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -536,6 +537,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
     // Save the form data
     function save() {
+        debugger;
 
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
