@@ -94,11 +94,11 @@
                 <div class="col-sm-6">
                     @if (Model.Operation == "add")
                     {
-                        <h1 class="m-0">Budget Create(@Model.BudgetType)</h1>
+                        <h1 class="m-0">Budget Transfer</h1>
                     }
                     else
                     {
-                        <h1 class="m-0">Budget Edit(@Model.BudgetType)</h1>
+                        <h1 class="m-0">Budget Edit</h1>
                     }
                 </div>
                 <div class="col-sm-6">
@@ -122,9 +122,9 @@
                             @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model => model.Operation)
                             @Html.HiddenFor(model => model.TransactionType)
-                            @Html.HiddenFor(model => model.BudgetType)
+                            @*@Html.HiddenFor(model => model.BudgetType)
                             @Html.HiddenFor(model => model.BudgetSetNo)
-                            @Html.HiddenFor(model => model.TransactionDate)
+                            @Html.HiddenFor(model => model.TransactionDate)*@
 
                             <div class="form-group row">
 
@@ -187,18 +187,13 @@
 @section scripts{
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    <script src="~/Areas/Ceiling/js/Controllers/CeilingController.js"></script>
+    <script src="~/Areas/Ceiling/js/Controllers/BudgetTransferController.js"></script>
 
     <script>
         $(document).ready(function () {
-            CeilingController.init();
+            BudgetTransferController.init();
         });
 
     </script>
-    <script>
-        // bootstrapSwitch initialize
-        $("[data-bootstrap-switch]").each(function () {
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        });
-    </script>
+   
 }

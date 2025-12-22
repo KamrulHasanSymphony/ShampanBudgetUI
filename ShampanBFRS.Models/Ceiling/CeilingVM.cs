@@ -11,7 +11,7 @@ namespace ShampanBFRS.Models.Ceiling
     public class CeilingVM : Audit
     {
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Display(Name = "Company")]
         public int? CompanyId { get; set; }
@@ -19,8 +19,8 @@ namespace ShampanBFRS.Models.Ceiling
         [Display(Name = "Branch")]
         public int BranchId { get; set; }
 
-        [Display(Name = "Fiscal Year")]
-        public int GLFiscalYearId { get; set; }
+        [Display(Name = "Year")]
+        public int? GLFiscalYearId { get; set; }
 
         [Display(Name = "Year Name")]
         public string? YearName { get; set; }
@@ -52,7 +52,7 @@ namespace ShampanBFRS.Models.Ceiling
         public bool IsActive { get; set; }
 
         [Display(Name = "Is Archive")]
-        public bool IsArchive { get; set; }
+        public bool? IsArchive { get; set; }
 
         public string? Module { get; set; }
 
@@ -61,23 +61,23 @@ namespace ShampanBFRS.Models.Ceiling
 
         [Display(Name = "To Date")]
         public string? ToDate { get; set; }
-        public string Operation { get; set; }
+        public string? Operation { get; set; }
         public string? BranchName { get; set; }
         public string? CompanyName { get; set; }
         public string? CompanyAddress { get; set; }
         public string? UserId { get; set; }
         public string? TransactionType { get; set; }
-        public bool IsApproveFinal { set; get; }
+        public bool? IsApproveFinal { set; get; }
         public List<string>? ApproveFinal { get; set; }
         public List<string>? IDs { get; set; }
         public string? TotalAmount { get; set; }
 
         [Display(Name = "Branch Name")]
-        public int Branchs { get; set; }
+        public int? Branchs { get; set; }
         public int? Count { get; set; }
 
         [Display(Name = "To Year")]
-        public int ToGLFiscalYearId { get; set; }
+        public int? ToGLFiscalYearId { get; set; }
         
         [Display(Name = "To Budget Type")]
         public string ToBudgetType { get; set; }
