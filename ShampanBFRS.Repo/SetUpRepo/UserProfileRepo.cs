@@ -51,6 +51,8 @@ namespace ShampanBFRS.Repo.SetUpRepo
             }
         }
 
+       
+
         public ResultVM Insert(UserProfileVM model)
         {
             try
@@ -59,6 +61,25 @@ namespace ShampanBFRS.Repo.SetUpRepo
                 AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
                 #region Invoke API
                 var data = httpRequestHelper.PostData("api/UserLogin/CreateEditAsync", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion                
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public ResultVM UserInformationsInsert(UserInformationVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/UserProfile/UserInformationsInsert", authModel, JsonConvert.SerializeObject(model));
                 ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
                 #endregion                
 
