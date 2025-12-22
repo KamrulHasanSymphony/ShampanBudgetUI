@@ -325,7 +325,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             if (id.HasValue && id.Value > 0)
             {
                 CommonVM param = new CommonVM { Id = id.ToString(), ChargeGroupId = groupId };
-                ResultVM result = _repo.List(param);
+                ResultVM result = _repo.EstimatedList(param);
 
                 if (result.Status == "Success" && result.DataVM != null)
                 {

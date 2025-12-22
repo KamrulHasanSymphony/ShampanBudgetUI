@@ -52,6 +52,26 @@ namespace ShampanBFRS.Repo.SetUpRepo
             }
         }
 
+        public ResultVM EstimatedList(CommonVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Product/EstimatedList", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion                
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
         public ResultVM Insert(ProductVM model)
         {
             try

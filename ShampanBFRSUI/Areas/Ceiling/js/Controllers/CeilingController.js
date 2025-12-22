@@ -4,8 +4,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         var getId = $("#Id").val() || 0;
         var getOperation = $("#Operation").val() || '';
         var getFiscalYearId = $("#GLFiscalYearId").val() || 0;
+        //var getToFiscalYearId = $("#ToGLFiscalYearId").val() || 0;
         var getBudgetSetNo = $("#BudgetSetNo").val() || 0;
         var getBudgetType = $("#BudgetType").val() || 0;
+        //var getToBudgetType = $("#ToBudgetType").val() || 0;
 
         var getTransactionType = $("#TransactionType").val() || '';
         var getMenuType = $("#MenuType").val() || '';
@@ -79,6 +81,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         });
 
         function GetFiscalYearComboBox() {
+            debugger;
             var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -121,8 +124,8 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 placeholder: "Select Fiscal Year",
                 value: "",
                 dataBound: function (e) {
-                    if (getFiscalYearId) {
-                        this.value(parseInt(getFiscalYearId));
+                    if (getToFiscalYearId) {
+                        this.value(parseInt(getToFiscalYearId));
                     }
                 }
             }).data("kendoMultiColumnComboBox");
@@ -165,7 +168,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 filterFields: ["Name"],
                 dataSource: {
                     transport: {
-                        read: "/Common/Common/GetEnumTypeList?value=BudgetType"
+                        read: "/Common/Common/GetEnumTypeList?EnumType=BudgetType"
                     }
                 },
                 placeholder: "Select Budget Type",
@@ -179,7 +182,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         };
 
         function GetToBudgetTypeComboBox() {
-            var BudgetTypeComboBox = $("#BudgetType").kendoMultiColumnComboBox({
+            var ToBudgetTypeComboBox = $("#ToBudgetType").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Name",
                 height: 400,
@@ -190,14 +193,14 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 filterFields: ["Name"],
                 dataSource: {
                     transport: {
-                        read: "/Common/Common/GetEnumTypeList?value=BudgetType"
+                        read: "/Common/Common/GetEnumTypeList?EnumType=BudgetType"
                     }
                 },
                 placeholder: "Select Budget Type",
                 value: "",
                 dataBound: function (e) {
-                    if (getBudgetType) {
-                        this.value(getBudgetType);
+                    if (getToBudgetType) {
+                        this.value(getToBudgetType);
                     }
                 }
             }).data("kendoMultiColumnComboBox");
@@ -534,6 +537,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
     // Save the form data
     function save() {
+        debugger;
 
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
