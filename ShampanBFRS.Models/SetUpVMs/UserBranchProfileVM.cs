@@ -34,7 +34,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         public bool IsActive { get; set; }
 
         public List<string> IDs { get; set; }
-        public string? Operation { get; set; }       
+        public string? Operation { get; set; }
         public string? CreatedFrom { get; set; }
 
         [Display(Name = "Created By")]

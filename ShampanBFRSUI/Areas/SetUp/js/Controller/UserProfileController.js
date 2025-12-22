@@ -35,6 +35,7 @@
             if (getId != '') {
                 status = "Update";
             }
+            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
             Confirmation("Are you sure? Do You Want to " + status + " Data?",
 
                 function (result) {
@@ -43,6 +44,7 @@
                     }
                 });
         });
+       
 
     };
 
@@ -207,9 +209,21 @@
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     };   
 
+    function saveInformation(model) {       
+        debugger;
+        model.UserId = model.Id;
+        model.UserName = model.UserName;
+        model.FullName = model.FullName;
+        model.DepartmentId = 1;
+
+        var url = "/SetUp/UserProfile/UserInformationsInsert";
+
+        CommonAjaxService.finalSave(url, model, saveDonex, saveFail);
+    }; 
     function saveDone(result) {
         
         if (result.Status == 200) {
+            
             if (result.Data.Operation == "add") {
                 ShowNotification(1, result.Message);
                 $(".divSave").hide();
@@ -219,10 +233,47 @@
                 $("#Operation").val("update");
                 $("#Mode").val("profileupdate");
                 $('#UserName').prop('disabled', true);
-
+                debugger;
+                saveInformation(result.Data);
+                
                 setTimeout(function () {
                     window.location.href = "/SetUp/UserProfile/Edit?id=" + result.Data.Id +"&mode=profileupdate";
                 }, 700);
+                
+                
+            }
+            else {
+                ShowNotification(1, result.Message);
+            }
+        }
+        else if (result.Status == 400) {
+            ShowNotification(3, result.Message);
+        }
+        else {
+            ShowNotification(2, result.Message);
+        }
+    };
+    function saveDonex(result) {
+
+        if (result.Status == 200) {
+
+            if (result.Data.Operation == "add") {
+                ShowNotification(1, result.Message);
+                $(".divSave").hide();
+                $(".divUpdate").show();
+                $("#Id").val(result.Data.Id);
+                $("#UserName").val(result.Data.UserName);
+                $("#Operation").val("update");
+                $("#Mode").val("profileupdate");
+                $('#UserName').prop('disabled', true);
+                debugger;
+                //saveInformation(result.Data);
+
+                setTimeout(function () {
+                    window.location.href = "/SetUp/UserProfile/Edit?id=" + result.Data.Id + "&mode=profileupdate";
+                }, 700);
+
+
             }
             else {
                 ShowNotification(1, result.Message);

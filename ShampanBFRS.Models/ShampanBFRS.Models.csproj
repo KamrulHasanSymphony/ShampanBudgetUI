@@ -114,6 +114,7 @@
     <Compile Include="SetUpVMs\StructureDetailsVM.cs" />
     <Compile Include="SetUpVMs\StructureVM.cs" />
     <Compile Include="SetUpVMs\UserBranchProfileVM.cs" />
+    <Compile Include="SetUpVMs\UserInformationVM.cs" />
     <Compile Include="SetUpVMs\UserProfileVM.cs" />
     <Compile Include="SetUpVMs\CompanyProfileVM.cs" />
     <Compile Include="CommonVMs\CommonVM.cs" />

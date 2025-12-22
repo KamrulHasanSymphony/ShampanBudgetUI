@@ -21,10 +21,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
-        GetToFiscalYearComboBox();
+        //GetToFiscalYearComboBox();
         //GetBudgetSetComboBox();
-        GetBudgetTypeComboBox();
-        GetToBudgetTypeComboBox();
+        //GetBudgetTypeComboBox();
+       // GetToBudgetTypeComboBox();
         //GenerateDatePicker();
 
 

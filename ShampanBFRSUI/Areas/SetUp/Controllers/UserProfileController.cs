@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ShampanBFRS.Models;
 using ShampanBFRS.Models.CommonVMs;
+using ShampanBFRS.Models.Helper;
 using ShampanBFRS.Models.KendoCommon;
 using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo;
@@ -34,6 +35,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
 
             return View("Create", vm);
         }
+
 
         [HttpPost]
         public ActionResult CreateEdit(UserProfileVM model)
@@ -155,6 +157,49 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
                     Success = false,
                     Status = Status.Fail,
                     Message = "Model State Error!",
+                    Data = model
+                };
+                return Json(result);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UserInformationsInsert(UserInformationVM model)
+        {
+      
+
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultModel<UserInformationVM> result = new ResultModel<UserInformationVM>();
+
+
+            model.CreatedAt = DateTime.Now.ToString();
+            model.CreatedBy = Session["UserId"].ToString();
+            model.CreatedFrom = Ordinary.GetLocalIpAddress();
+
+            resultVM = _repo.UserInformationsInsert(model);
+
+            if (resultVM.Status == ResultStatus.Success.ToString())
+            {
+                model = JsonConvert.DeserializeObject<UserInformationVM>(resultVM.DataVM.ToString());
+                model.Operation = "add";
+                Session["result"] = resultVM.Status + "~" + resultVM.Message;
+                result = new ResultModel<UserInformationVM>()
+                {
+                    Success = true,
+                    Status = ShampanBFRS.Models.CommonVMs.Status.Success,
+                    Message = resultVM.Message,
+                    Data = model
+                };
+                return Json(result);
+            }
+            else
+            {
+                Session["result"] = "Fail" + "~" + resultVM.Message;
+
+                result = new ResultModel<UserInformationVM>()
+                {
+                    Status = Status.Fail,
+                    Message = resultVM.Message,
                     Data = model
                 };
                 return Json(result);

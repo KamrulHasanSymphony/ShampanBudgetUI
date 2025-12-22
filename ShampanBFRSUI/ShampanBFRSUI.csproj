@@ -451,6 +451,7 @@
     <Content Include="Areas\Ceiling\js\Controllers\ProductBudgetController.js" />
     <Content Include="Areas\Common\js\Services\CommonAjaxService.js" />
     <Content Include="Areas\Common\js\Services\CommonService.js" />
+    <Content Include="Areas\Common\js\Services\CommonValidationHelper.js" />
     <Content Include="Areas\Questions\js\Controllers\ExamineeController.js" />
     <Content Include="Areas\Questions\js\Controllers\ExamineeGroupController.js" />
     <Content Include="Areas\Questions\js\Controllers\QuestionCategoryController.js" />
