@@ -3,7 +3,7 @@ var BudgetTransferController = function (CommonService, CommonAjaxService) {
     var init = function () {
         
         var getFiscalYearId = $("#GLFiscalYearId").val() || 0;
-        var getToFiscalYearId = $("#ToGLFiscalYearId").val() || 0;
+        var getToFiscalYearId = $("#GLFiscalYearId").val() || 0;
         var getBudgetSetNo = $("#BudgetSetNo").val() || 0;
         var getBudgetType = $("#BudgetType").val() || 0;
         var getToBudgetType = $("#ToBudgetType").val() || 0;
@@ -11,7 +11,7 @@ var BudgetTransferController = function (CommonService, CommonAjaxService) {
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
-        GetToFiscalYearComboBox();
+        //GetToFiscalYearComboBox();
         GetBudgetTypeComboBox();
         GetToBudgetTypeComboBox();
         //GenerateDatePicker();
@@ -211,16 +211,7 @@ var BudgetTransferController = function (CommonService, CommonAjaxService) {
             return;
         }
 
-        var details = [];
-
-        if (details.length === 0) {
-            ShowNotification(3, "At least one item is required.");
-            return;
-        }
-
-        model.CeilingDetailList = details;
-
-        var url = "/Ceiling/Ceiling/CreateEdit";
+        var url = "/Ceiling/Ceiling/BudgetTransferInsert";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 

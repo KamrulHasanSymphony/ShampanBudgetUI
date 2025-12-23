@@ -391,6 +391,8 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                     model.CreatedOn = DateTime.Now.ToString();
                     model.CreatedFrom = Ordinary.GetLocalIpAddress();
                     model.IsActive = true;
+                    model.IsArchive = false;
+                    model.ToGLFiscalYearId = model.GLFiscalYearId;
 
                     resultVM = _repo.BudgetTransfer(model);
 
