@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ShampanBFRS.Models;
 using ShampanBFRS.Models.CommonVMs;
+using ShampanBFRS.Models.Helper;
 using ShampanBFRS.Models.KendoCommon;
 using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo;
@@ -35,6 +36,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             return View("Create", vm);
         }
 
+
         [HttpPost]
         public ActionResult CreateEdit(UserProfileVM model)
         {
@@ -46,6 +48,10 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             {
                 try
                 {
+                    model.CreatedOn = DateTime.Now.ToString();
+                    model.CreatedBy = Session["UserId"].ToString();
+                    model.CreatedFrom = Ordinary.GetLocalIpAddress();
+
                     if (model.Operation.ToLower() == "add")
                     {
                         resultVM = _repo.Insert(model);

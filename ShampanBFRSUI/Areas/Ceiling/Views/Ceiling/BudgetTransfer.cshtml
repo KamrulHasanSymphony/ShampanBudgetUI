@@ -122,9 +122,9 @@
                             @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model => model.Operation)
                             @Html.HiddenFor(model => model.TransactionType)
-                            @*@Html.HiddenFor(model => model.BudgetType)
+                            @*@Html.HiddenFor(model => model.BudgetType)*@
                             @Html.HiddenFor(model => model.BudgetSetNo)
-                            @Html.HiddenFor(model => model.TransactionDate)*@
+                            @Html.HiddenFor(model => model.TransactionDate)
 
                             <div class="form-group row">
 
@@ -136,13 +136,13 @@
                                     @Html.ValidationMessageFor(model => model.GLFiscalYearId)
                                 </div>
 
-                                <div class="col-sm-2">
+                                @*<div class="col-sm-2">
                                     @Html.LabelFor(model => model.ToGLFiscalYearId)
                                     <div class="input-group">
                                         @Html.TextBoxFor(model => model.ToGLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
                                     </div>
                                     @Html.ValidationMessageFor(model => model.ToGLFiscalYearId)
-                                </div>
+                                </div>*@
 
                             </div>
 

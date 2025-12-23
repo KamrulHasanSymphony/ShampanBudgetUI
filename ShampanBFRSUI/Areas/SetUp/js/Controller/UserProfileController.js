@@ -1,40 +1,28 @@
 ﻿var UserProfileController = function (CommonAjaxService) {
 
-    var getSalePersonId = 0;
+    var getDepartmentId = 0;
 
     var init = function () {
 
-        getSalePersonId = $("#SalePersonId").val() || 0;
+        getDepartmentId = $("#DepartmentId").val() || 0;
+
 
         var getId = $("#Id").val() || 0;
         var getOperation = $("#Operation").val() || '';
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
+           
         }
-        else
-        {
-            GetSalePersonComboBox();
-        }  
 
-        $("#IsSalePerson").on('switchChange.bootstrapSwitch', function (event, state) {
-            if (state)
-            {
-                $('.salePerson').show();                
-            }
-            else
-            {
-                $('.salePerson').hide();
-            }
-        });
-
-
-
+        GetDepartmentComboBox();
+  
         $('.btnsave').click('click', function () {
             var getId = $('#Id').val();
             var status = "Save";
             if (getId != '') {
                 status = "Update";
             }
+            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
             Confirmation("Are you sure? Do You Want to " + status + " Data?",
 
                 function (result) {
@@ -43,42 +31,36 @@
                     }
                 });
         });
+       
 
     };
 
-    function GetSalePersonComboBox() {
-        if ($('#IsSalePerson').prop('checked')) {
-            $('.salePerson').show();
-        }
-        var SalePersonComboBox = $("#SalePersonId").kendoMultiColumnComboBox({
+    function GetDepartmentComboBox() {
+        var DepartmentComboBox = $("#DepartmentId").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Id",
             height: 400,
             columns: [
-                { field: "Code", title: "Code", width: 100 },
                 { field: "Name", title: "Name", width: 150 },
-                { field: "BanglaName", title: "BanglaName", width: 200 },
+                { field: "Remarks", title: "Remarks", width: 150 },
             ],
             filter: "contains",
-            filterFields: ["Code", "Name", "BanglaName"],
+            filterFields: ["Name", "Remarks"],
             dataSource: {
                 transport: {
-                    read: "/Common/Common/GetSalePersonList"
+                    read: "/Common/Common/GetDepartmentList"
                 }
             },
-            placeholder: "Select Person",
+            placeholder: "Select Department",
             value: "",
             dataBound: function (e) {
-                if (getSalePersonId) {
-                    this.value(parseInt(getSalePersonId));
+                if (getDepartmentId) {
+                    this.value(parseInt(getDepartmentId));
                 }
-            },
-            change: function (e) {
-                
             }
+        
         }).data("kendoMultiColumnComboBox");
-    };
-
+    }
     var GetGridDataList = function () {
 
         var gridDataSource = new kendo.data.DataSource({
@@ -194,10 +176,6 @@
             validator.focusInvalid();
             return;
         }
-
-        if ($('#IsSalePerson').prop('checked')) {
-            model.IsSalePerson = true;
-        }
         if ($('#IsHeadOffice').prop('checked')) {
             model.IsHeadOffice = true;
         }
@@ -210,6 +188,7 @@
     function saveDone(result) {
         
         if (result.Status == 200) {
+            
             if (result.Data.Operation == "add") {
                 ShowNotification(1, result.Message);
                 $(".divSave").hide();
@@ -218,11 +197,12 @@
                 $("#UserName").val(result.Data.UserName);
                 $("#Operation").val("update");
                 $("#Mode").val("profileupdate");
-                $('#UserName').prop('disabled', true);
-
+                $('#UserName').prop('disabled', true);          
                 setTimeout(function () {
                     window.location.href = "/SetUp/UserProfile/Edit?id=" + result.Data.Id +"&mode=profileupdate";
                 }, 700);
+                
+                
             }
             else {
                 ShowNotification(1, result.Message);
@@ -235,6 +215,7 @@
             ShowNotification(2, result.Message);
         }
     };
+   
 
     function saveFail(result) {
         

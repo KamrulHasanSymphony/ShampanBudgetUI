@@ -61,6 +61,10 @@ namespace ShampanBFRS.Models.SetUpVMs
 
         [Display(Name = "Last Modified On")]
         public string? LastModifiedOn { get; set; }
+        [Display(Name = "Department Name")]
+        public int? DepartmentId { get; set; }
+
+        public string? DepartmentName { get; set; }
 
     }
 

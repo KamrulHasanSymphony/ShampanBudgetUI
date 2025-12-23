@@ -248,13 +248,10 @@
                 fileName: "BranchProfile.xlsx",
                 filterable: true
             },
-            columns: [
-                {
-                    selectable: true, width: 40
-                },
+            columns: [       
                 {
                     title: "Action",
-                    width: 50,
+                    width: 60,
                     template: function (dataItem) {
                         
                         return `
@@ -266,29 +263,33 @@
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", width: 130, hidden: true, sortable: true },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
+                { field: "LegalName", title: "Legal Name", sortable: true, width: 200 },
+                { field: "Address", title: "Address", sortable: true, width: 200 },
+                { field: "City", title: "City", sortable: true, width: 200 },
+                { field: "ZipCode", title: "Zip Code", sortable: true, width: 200 },
                 { field: "TelephoneNo", title: "Telephone No.", sortable: true, width: 130 },
-                { field: "VATRegistrationNo", title: "VAT Registration No.", sortable: true, width: 180 },
-                { field: "BIN", title: "BIN", sortable: true, width: 130 },
-                { field: "TINNO", title: "TIN No.", width: 130, sortable: true },
+                { field: "FaxNo", title: "Fax No.", sortable: true, width: 180 },
                 { field: "Email", title: "Email", width: 250, sortable: true },
-                { field: "Comments", title: "Comments", sortable: true, width: 200 },
+               // { field: "ContactPerson", title: "Contact Person", sortable: true, width: 130 }
 
-                {
-                    field: "Status", title: "Status", sortable: true, width: 100,
-                    filterable: {
-                        ui: function (element) {
-                            element.kendoDropDownList({
-                                dataSource: [
-                                    { text: "Active", value: "1" },
-                                    { text: "Inactive", value: "0" }
-                                ],
-                                dataTextField: "text",
-                                dataValueField: "value",
-                                optionLabel: "Select Option"
-                            });
-                        }
-                    }
-                }
+                //{ field: "Comments", title: "Comments", sortable: true, width: 200 },
+
+                //{
+                //    field: "Status", title: "Status", sortable: true, width: 100,
+                //    filterable: {
+                //        ui: function (element) {
+                //            element.kendoDropDownList({
+                //                dataSource: [
+                //                    { text: "Active", value: "1" },
+                //                    { text: "Inactive", value: "0" }
+                //                ],
+                //                dataTextField: "text",
+                //                dataValueField: "value",
+                //                optionLabel: "Select Option"
+                //            });
+                //        }
+                //    }
+                //}
             ],
             editable: false,
             selectable: "multiple row",

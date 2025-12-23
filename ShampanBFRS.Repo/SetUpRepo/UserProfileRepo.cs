@@ -50,7 +50,7 @@ namespace ShampanBFRS.Repo.SetUpRepo
                 throw e;
             }
         }
-
+   
         public ResultVM Insert(UserProfileVM model)
         {
             try
