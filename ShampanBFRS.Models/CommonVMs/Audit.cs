@@ -15,6 +15,7 @@ namespace ShampanBFRS.Models.CommonVMs
         public string? LastModifiedOn { get; set; }
         public string? LastUpdateAt { get; set; }
         public string? LastUpdateFrom { get; set; }
+        public string? LastUpdateOn { get; set; }
 
         public string? PostedBy { get; set; }
         public string? PosterBy { get; set; }

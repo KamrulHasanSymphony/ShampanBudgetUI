@@ -58,6 +58,8 @@
     <Compile Include="QuestionRepo\QuestionSetRepo.cs" />
     <Compile Include="QuestionRepo\QuestionSubjectRepo.cs" />
     <Compile Include="Reports\ReportRepo.cs" />
+    <Compile Include="SalaryAllowance\PersonnelCategoriesRepo.cs" />
+    <Compile Include="SalaryAllowance\SalaryAllowanceRepo.cs" />
     <Compile Include="SetUpRepo\ChargeHeaderRepo.cs" />
     <Compile Include="SetUpRepo\ProductGroupRepo.cs" />
     <Compile Include="SetUpRepo\StructureRepo.cs" />
@@ -90,5 +92,6 @@
       <Name>ShampanExam.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

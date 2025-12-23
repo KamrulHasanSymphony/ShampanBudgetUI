@@ -6,6 +6,7 @@ using ShampanBFRS.Repo.CommonKendo;
 using ShampanBFRS.Repo.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using static ShampanBFRS.Models.CommonVMs.CommonModel;
 
 namespace ShampanBFRS.Repo.CommonRepo
@@ -732,8 +733,23 @@ namespace ShampanBFRS.Repo.CommonRepo
             }
         }
 
+        public ResultVM PersonnelCategoriesList(CommonVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Common/PersonnelCategoriesList", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
 
-
-
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

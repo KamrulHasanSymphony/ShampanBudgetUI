@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ShampanBFRS.Models.CommonVMs;
+using ShampanBFRS.Models.SalaryAllowance;
 using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.CommonRepo;
 using ShampanBFRS.Repo.SetUpRepo;
@@ -91,6 +92,16 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
         {
             return PartialView("_getProductList");
         }
+
+
+        [HttpGet]
+        public ActionResult _getPersonnelCategoriesList()
+        {
+            return PartialView("_getPersonnelCategoriesList");
+        }
+
+
+
         public ActionResult _getProductBudget()
         {
             return PartialView("_getProductBudget");
@@ -641,6 +652,41 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+
+
+
+
+        [HttpPost]
+        public ActionResult PersonnelCategoriesList(string value)
+        {
+            try
+            {
+                List<PersonnelCategoriesVM> lst = new List<PersonnelCategoriesVM>();
+                CommonVM param = new CommonVM();
+                param.Value = value;
+                ResultVM result = _repo.PersonnelCategoriesList(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<PersonnelCategoriesVM>>(result.DataVM.ToString());
+                }
+                return Json(new
+                {
+                    draw = Request["draw"],
+                    recordsTotal = lst.Count,
+                    recordsFiltered = lst.Count,
+                    data = lst
+                }, JsonRequestBehavior.AllowGet);
+                //return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
 
 
