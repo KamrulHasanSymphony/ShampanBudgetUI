@@ -10,13 +10,39 @@ namespace ShampanBFRS.Models.SetUpVMs
         public string? Code { get; set; }
 
         [Display(Name = "Branch Name")]
-        public string? Name { get; set; }       
+        public string? Name { get; set; }
+
+        [Display(Name = "Legal Name")]
+        public string? LegalName { get; set; }
+
+        public bool ActiveStatus { get; set; }
+
+        [Display(Name = "City")]
+        public string? City { get; set; }
+
+        [Display(Name = "Zip Code")]
+        public string? ZipCode { get; set; }
 
         [Display(Name = "Telephone No.")]
         public string? TelephoneNo { get; set; }
 
+        [Display(Name = "Fax No")]
+        public string? FaxNo { get; set; }
+
         [Display(Name = "Email Address")]
         public string? Email { get; set; }
+
+        [Display(Name = "Contact Person")]
+        public string? ContactPerson { get; set; }
+
+        [Display(Name = "Contact Person Designation")]
+        public string? ContactPersonDesignation { get; set; }
+
+        [Display(Name = "Contact Person Telephone")]
+        public string? ContactPersonTelephone { get; set; }
+
+        [Display(Name = "Contact Person Email")]
+        public string? ContactPersonEmail { get; set; }
 
         [Display(Name = "VAT Registration No.")]
         public string? VATRegistrationNo { get; set; }
