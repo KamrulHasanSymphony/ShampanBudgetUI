@@ -90,7 +90,7 @@
                     }
                     else
                     {
-                       
+
                         <div class="col-sm-3">
                             @Html.LabelFor(model => model.FullName)
                             <div class="input-group ">
@@ -98,6 +98,7 @@
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
+
 
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Password)
@@ -111,13 +112,24 @@
                             @Html.ValidationMessageFor(model => model.ConfirmPassword)
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             @Html.LabelFor(model => model.Email)
                             <div class="input-group">
                                 @Html.TextBoxFor(model => model.Email, new { @class = "required form-control form-control-sm", autocomplete = "off" })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
+
+                        @*<div class="col-sm-2">
+                            @Html.LabelFor(model => model.DepartmentId)
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.DepartmentId, new { placeholder = "Enter Department", @class = "form-control form-control-sm" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.DepartmentId)
+
+                        </div>*@
+
+
 
                     }
 
@@ -134,23 +146,32 @@
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
 
-                        <div class="col-sm-1">
-                            @Html.LabelFor(model => model.IsHeadOffice)
-                            <div class="Onoffbtn">
-                                <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                    <input id="IsHeadOffice"
-                                           value="@Model.IsHeadOffice"
-                                           type="checkbox"
-                                           name="my-checkbox"
-                                           @(Model.IsHeadOffice ? "checked" : "")
-                                           data-bootstrap-switch
-                                           data-off-color="danger"
-                                           data-on-color="success"
-                                           data-on-text="Yes"
-                                           data-off-text="No">
-                                </div>
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.DepartmentId)
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.DepartmentId, new { placeholder = "Enter Department", @class = "form-control form-control-sm" })
                             </div>
+                            @Html.ValidationMessageFor(model => model.DepartmentId)
+
                         </div>
+
+                        @*<div class="col-sm-1">
+            @Html.LabelFor(model => model.IsHeadOffice)
+            <div class="Onoffbtn">
+                <div class="input-group" style="margin-bottom: -26px; width: 78%;">
+                    <input id="IsHeadOffice"
+                           value="@Model.IsHeadOffice"
+                           type="checkbox"
+                           name="my-checkbox"
+                           @(Model.IsHeadOffice ? "checked" : "")
+                           data-bootstrap-switch
+                           data-off-color="danger"
+                           data-on-color="success"
+                           data-on-text="Yes"
+                           data-off-text="No">
+                </div>
+            </div>
+        </div>*@
 
                     </div>
                 }
