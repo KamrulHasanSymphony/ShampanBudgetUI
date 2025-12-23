@@ -201,45 +201,30 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         };
 
         function GetChargeGroup() {
-            var ChargeGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
-                dataTextField: "Name",
-                dataValueField: "Name",
+            var COAGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
+                dataTextField: "ChargeGroupText",
+                dataValueField: "ChargeGroupValue",
                 height: 400,
                 columns: [
-                    { field: "Name", title: "Name", width: 150 },
+                    { field: "ChargeGroupText", title: "Charge Group Text", width: 150 },
                 ],
                 filter: "contains",
-                filterFields: ["Code", "Name"],
+                filterFields: ["ChargeGroupValue", "ChargeGroupText"],
                 dataSource: {
                     transport: {
-                        read: {
-                            url: "/Common/Common/GetEnumTypeList",
-                            data: {
-                                EnumType: "ChargeGroup"
-                            },
-                            dataType: "json",
-                            success: function (response) {
-
-                            },
-                            error: function (xhr, status, error) {
-
-                            }
-                        }
+                        read: "/Common/Common/GetChargeGroupList"
                     }
                 },
                 placeholder: "Select Charge Group",
                 value: "",
                 dataBound: function (e) {
-
-                    if (getChargeGroup && getChargeGroup !== 0) {
-                        this.value(getChargeGroup);
+                    if (getChargeGroup) {
+                        this.value(parseInt(getChargeGroup));
                     }
-                },
-                change: function (e) {
-                    var selectedDiseaseId = this.value();
                 }
             }).data("kendoMultiColumnComboBox");
-        }
+        };
+
 
 
     };
