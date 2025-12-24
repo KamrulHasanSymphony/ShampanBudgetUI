@@ -108,6 +108,7 @@
     <Compile Include="Sale\SaleDetailVM.cs" />
     <Compile Include="Sale\SaleHeaderVM.cs" />
     <Compile Include="SetUpVMs\ChargeDetailVM.cs" />
+    <Compile Include="SetUpVMs\ChargeGroupVM.cs" />
     <Compile Include="SetUpVMs\ChargeHeaderVM.cs" />
     <Compile Include="SetUpVMs\COAGroupVM.cs" />
     <Compile Include="SetUpVMs\COAVM.cs" />

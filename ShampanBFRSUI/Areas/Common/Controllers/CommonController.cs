@@ -653,11 +653,6 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             }
         }
 
-        
-
-
-
-
 
         [HttpPost]
         public ActionResult PersonnelCategoriesList(string value)
@@ -689,7 +684,28 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult GetChargeGroupList(string value)
+        {
+            try
+            {
+                List<ChargeGroupVM> lst = new List<ChargeGroupVM>();
+                CommonVM param = new CommonVM();
+                param.Value = value;
+                ResultVM result = _repo.GetChargeGroupList(param);
 
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<ChargeGroupVM>>(result.DataVM.ToString());
+                }
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
 
 
