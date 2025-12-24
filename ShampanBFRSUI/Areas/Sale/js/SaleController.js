@@ -1,24 +1,24 @@
-﻿var SalaryAllowanceController = function (CommonService, CommonAjaxService) {
+﻿var SaleController = function (CommonService, CommonAjaxService) {
 
-    var getChargeGroup = 0;
+    //var getChargeGroup = 0;
 
     var init = function () {
         debugger;
 
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
-        getChargeGroup = $("#ChargeGroup").val() || 0;
+        //getChargeGroup = $("#ChargeGroup").val() || 0;
         var getOperation = $("#Operation").val() || '';
         getFiscalYearId = $("#FiscalYearId").val() || 0;
         getBudgetType = $("#BudgetType").val() || '';
 
         if (parseInt(getId) == 0 && getOperation == '') {
-            GetGridDataList();
+            GetGridDataList(getBudgetType);
 
         };
 
         GetFiscalYear();
-        GetBudgetTypeComboBox();
+        //GetBudgetTypeComboBox();
         GenerateDatepicker();
 
 
@@ -37,6 +37,27 @@
 
         });
 
+        $('#details').on('click', 'input.txtProductName', function () {
+            debugger;
+            var originalRow = $(this);
+            debugger;
+
+            originalRow.closest("td").find("input").data('touched', true);
+
+            CommonService.productNameModal(
+                function success(result) {
+                },
+                function fail(error) {
+                    originalRow.closest("td").find("input").data("touched", false).focus();
+                },
+                function dblClick(row) {
+                    productNameModalDblClick(row, originalRow);
+                },
+                function closeCallback() {
+                    originalRow.closest("td").find("input").data("touched", false).focus();
+                }
+            );
+        });
         $('.btnsave').click('click', function () {
             debugger;
             var getId = $('#Id').val();
@@ -54,7 +75,7 @@
         });
 
         $('#btnPost').on('click', function () { //For Index
-            debugger;
+
             Confirmation("Are you sure? Do You Want to Post Data?",
                 function (result) {
 
@@ -65,34 +86,25 @@
         });
 
 
-        //make modal
-        $('#details').on('click', 'input.txtPersonnelCategoriesName', function () {
-            debugger;
-            var originalRow = $(this);
-            debugger;
+       
 
-            originalRow.closest("td").find("input").data('touched', true);
 
-            CommonService.personnelCategoriesNameModal(
-                function success(result) {
-                },
-                function fail(error) {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                },
-                function dblClick(row) {
-                    personnelCategoriesNameModalDblClick(row, originalRow);
-                },
-                function closeCallback() {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                }
-            );
-        });
-        $('#details').on('blur', ".td-BasicWagesSalaries", function (event) {
-            computeSubTotal($(this), '');
-        });
-        $('#details').on('blur', ".td-OtherCash", function (event) {
-            computeSubTotal($(this), '');
-        });
+        //$('#details').on('blur', ".td-BasicWagesSalaries", function (event) {
+        //    computeSubTotal($(this), '');
+        //});
+        //$('#details').on('blur', ".td-OtherCash", function (event) {
+        //    computeSubTotal($(this), '');
+        //});
+
+
+        $('#details').on('blur',
+            '.td-PriceLTR, .td-ConversionFactor, .td-ProductionMT, .td-SalesExImport_LocalMT',
+            function () {
+                computeRowCalculation($(this));
+            }
+        );
+
+
 
 
         $("#indexSearch").on('click', function () {
@@ -104,25 +116,55 @@
                 gridElement.empty();
             }
 
-            GetGridDataList();
+            GetGridDataList(getBudgetType);
 
         });
 
 
 
     };
-    function computeSubTotal(row, param) {
+    //function computeSubTotal(row, param) {
+    //    debugger;
+    //    var salary = parseFloat(row.closest("tr").find("td.td-BasicWagesSalaries").text().replace(/,/g, '')) || 0;
+    //    var otherCash = parseFloat(row.closest("tr").find("td.td-OtherCash").text().replace(/,/g, '')) || 0;
+
+    //    if (!isNaN(salary + otherCash)) {
+
+    //        var SubTotal = Number(parseFloat(salary + otherCash).toFixed(parseInt(decimalPlace)));
+    //        row.closest("tr").find("td.td-TotalSalary").text(SubTotal.toLocaleString('en', { minimumFractionDigits: parseInt(decimalPlace) }));
+
+    //    }
+    //};
+
+
+    function computeRowCalculation(cell) {
+
+        var $row = cell.closest("tr");
+
+        var conversionFactor = parseFloat($row.find(".td-ConversionFactor").text().replace(/,/g, '')) || 0;
+        var productionMT = parseFloat($row.find(".td-ProductionMT").text().replace(/,/g, '')) || 0;
+        var priceLTR = parseFloat($row.find(".td-PriceLTR").text().replace(/,/g, '')) || 0;
+        var salesImportMT = parseFloat($row.find(".td-SalesExImport_LocalMT").text().replace(/,/g, '')) || 0;
+
+ 
         debugger;
-        var salary = parseFloat(row.closest("tr").find("td.td-BasicWagesSalaries").text().replace(/,/g, '')) || 0;
-        var otherCash = parseFloat(row.closest("tr").find("td.td-OtherCash").text().replace(/,/g, '')) || 0;
+        var priceMT = priceLTR * conversionFactor;
+        var salesExERLValue = priceMT * productionMT;
+        var salesExImportLocalValue = salesImportMT * priceMT;
+        var totalMT = productionMT + salesImportMT;
+        var totalValueTK_LAC = (salesExERLValue + salesExImportLocalValue) / 100000;
 
-        if (!isNaN(salary + otherCash)) {
 
-            var SubTotal = Number(parseFloat(salary + otherCash).toFixed(parseInt(decimalPlace)));
-            row.closest("tr").find("td.td-TotalSalary").text(SubTotal.toLocaleString('en', { minimumFractionDigits: parseInt(decimalPlace) }));
+        $row.find(".td-PriceMT").text(priceMT.toFixed(decimalPlace));
+        $row.find(".td-SalesExERLValue").text(salesExERLValue.toFixed(decimalPlace));
+        $row.find(".td-SalesExImport_LocalValue").text(salesExImportLocalValue.toFixed(decimalPlace));
+        $row.find(".td-TotalMT").text(totalMT.toFixed(decimalPlace));
+        $row.find(".td-TotalValueTK_LAC").text(totalValueTK_LAC.toFixed(decimalPlace));
+    }
 
-        }
-    };
+
+
+
     function GetFiscalYear() {
         //make dropdown
         var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
@@ -178,23 +220,26 @@
             format: "yyyy-MM-dd" // Optional: Set the date format
         });
     }
-    function personnelCategoriesNameModalDblClick(row, originalRow) {
+    function productNameModalDblClick(row, originalRow) {
         debugger;
 
         var dataTable = $("#modalData").DataTable();
         var rowData = dataTable.row(row).data();
 
         var Id = rowData.Id;
-        var SL = rowData.SL;
-        var CategoryOfPersonnel = rowData.CategoryOfPersonnel;
-
+        var Code = rowData.Code;
+        var ProductName = rowData.Name;
+        var ConversionFactor = rowData.ConversionFactor != null
+            ? Number(rowData.ConversionFactor)
+            : 0;
 
 
         var $currentRow = originalRow.closest('tr');
 
-        $currentRow.find('.td-PersonnelCategoriesName').text(CategoryOfPersonnel);
-        //$currentRow.find('.td-Code').text(Code);
-        $currentRow.find('.td-PersonnelCategoriesId').text(Id);
+       // $currentRow.find('.td-ConversionFactor').text(ConversionFactor);
+        $currentRow.find('.td-ProductName').text(ProductName);
+        $currentRow.find('.td-Code').text(Code);
+        $currentRow.find('.td-ProductId').text(Id);
 
 
         $("#partialModal").modal("hide");
@@ -203,8 +248,8 @@
     };
 
 
-    var GetGridDataList = function () {
-
+    var GetGridDataList = function (getBudgetType) {
+        debugger;
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -215,11 +260,11 @@
             pageSize: 10,
             transport: {
                 read: {
-                    url: "/SalaryAllowance/SalaryAllowance/GetGridData",
+                    url: "/Sale/Sale/GetGridData",
                     type: "POST",
                     dataType: "json",
                     cache: false,
-                    data: {}
+                    data: { budgetType: getBudgetType }
 
                 },
                 parameterMap: function (options) {
@@ -386,7 +431,7 @@
 
                         transport: {
                             read: {
-                                url: "/SalaryAllowance/SalaryAllowance/GetDetailDataById",
+                                url: "/Sale/Sale/GetDetailDataById",
                                 type: "GET",
                                 dataType: "json",
                                 cache: false,
@@ -415,25 +460,27 @@
 
                     columns: [
                         { field: "Id", hidden: true, width: 50 },
-                        { field: "SalaryAllowanceHeaderId", hidden: true, title: "Salary Allowance Header Id", width: 120 },
-                        { field: "PersonnelCategoriesName", title: "Personnel Categories Name", width: 120 },
-                        { field: "PersonnelCategoriesId", hidden: true, title: "Personnel Categories Id", width: 120 },
-                        { field: "TotalPostSanctioned", title: "Total Post Sanctioned", width: 120 },
-                        { field: "ActualPresentStrength", title: "Actual Present Strength", width: 120 },
-                        { field: "ExpectedNumber", title: "Expected Number", width: 120 },
-                        { field: "BasicWagesSalaries", title: "Basic Wages Salaries", width: 120 },
-                        { field: "OtherCash", title: "Other Cash", width: 120 },
-                        { field: "TotalSalary", title: "Total Salary", width: 120 },
-                        { field: "PersonnelSentForTraining", title: "Personnel Sent For Training", width: 120 }
+                        { field: "SaleHeaderId", hidden: true, title: "Sale Header Id", width: 120 },
+                        { field: "ProductName", title: "Product Name", width: 120 },
+                        { field: "ProductId", hidden: true, title: "Product Id", width: 120 },
+                        { field: "ConversionFactor", title: "Conversion Factor", width: 120 },
+                        { field: "ProductionMT", title: "Production MT", width: 120 },
+                        { field: "PriceMT", title: "Price MT", width: 120 },
+                        { field: "PriceLTR", title: "Price LTR", width: 120 },
+                        { field: "SalesExERLValue", title: "Sales Ex ERL Value", width: 120 },
+                        { field: "SalesExImport_LocalMT", title: "Sales Ex Import Local MT", width: 120 },
+                        { field: "SalesExImport_LocalValue", title: "Sales Ex Import Local Value", width: 120 },
+                        { field: "TotalMT", title: "Total MT", width: 120 },
+                        { field: "TotalValueTK_LAC", title: "Total Value TK LAC", width: 120 }
                     ]
                 });
             },
             excel: {
-                fileName: `SalaryAllowance_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
+                fileName: `Sale_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `SalaryAllowance_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
+                fileName: `Sale_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
@@ -446,7 +493,7 @@
 
                 var companyName = "SHAMPAN Budget LTD.";
 
-                var fileName = `SalaryAllowance_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`;
+                var fileName = `Sale_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`;
 
                 e.sender.options.pdf = {
                     paperSize: "A4",
@@ -465,39 +512,51 @@
                     window.location.reload();
                 }, 1000);
             },
+
             columns: [
 
-                {
-                    selectable: true, width: 10
-                },
+                // Selection
+                { selectable: true, width: 55 },
 
+                // Action
                 {
-
                     title: "Action",
-                    width: 20,
+                    width: 90,
                     template: function (dataItem) {
-                        console.log(dataItem);
                         return `
-                    <a href="/SalaryAllowance/SalaryAllowance/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>`;
+                <a href="/Sale/Sale/Edit/${dataItem.Id}"
+                   class="btn btn-primary btn-sm">
+                   <i class="fas fa-pencil-alt"></i>
+                </a>`;
                     }
                 },
 
-                { field: "Id", width: 10, hidden: true, sortable: true },
-                { field: "Code", title: 'Code', width: 70, sortable: true },
-                { field: "FiscalYear", hidden: true, title: 'FiscalYear', width: 50, sortable: true },
-                { field: "BudgetType", title: 'Budget Type', width: 50, sortable: true },
-                {
-                    field: "TransactionDate", title: "Transaction Date", sortable: true, hidden: true, width: 120, template: '#= kendo.toString(kendo.parseDate(TransactionDate), "yyyy-MM-dd") #',
-                    filterable:
-                    {
-                        ui: "datepicker"
-                    }
-                }, 
+                // Hidden ID
+                { field: "Id", hidden: true },
 
+                // Code
+                { field: "Code", title: "Code", width: 140 },
+
+                // FiscalYear (hidden)
+                { field: "FiscalYear", hidden: true },
+
+                // Budget Type
+                { field: "BudgetType", title: "Budget Type", width: 110 },
+
+                // Date
                 {
-                    field: "Status", title: "Status", sortable: true, width: 50,
+                    field: "TransactionDate", hidden: true,
+                    title: "Transaction Date",
+                    width: 130,
+                    template: '#= kendo.toString(kendo.parseDate(TransactionDate), "yyyy-MM-dd") #',
+                    filterable: { ui: "datepicker" }
+                },
+
+                // Status
+                {
+                    field: "Status",
+                    title: "Status",
+                    width: 100,
                     filterable: {
                         ui: function (element) {
                             element.kendoDropDownList({
@@ -507,14 +566,62 @@
                                 ],
                                 dataTextField: "text",
                                 dataValueField: "value",
-                                optionLabel: "Select Option"
+                                optionLabel: "Select"
                             });
                         }
                     }
                 },
-
-
             ],
+            //columns: [
+
+            //    {
+            //        selectable: true, width: 55,
+            //    },
+
+            //    {
+
+            //        title: "Action",
+            //         width: 90,
+            //        template: function (dataItem) {
+            //            console.log(dataItem);
+            //            return `
+            //        <a href="/Sale/Sale/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
+            //            <i class="fas fa-pencil-alt"></i>
+            //        </a>`;
+            //        }
+            //    },
+
+            //    { field: "Id", hidden: true, sortable: true },
+            //    { field: "Code", title: 'Code', sortable: true, width: 140, },
+            //    { field: "FiscalYear", hidden: true, title: 'FiscalYear', sortable: true, width: 90, },
+            //    { field: "BudgetType", title: 'Budget Type', sortable: true, width: 110, },
+            //    {
+            //        field: "TransactionDate", title: "Transaction Date", sortable: true, hidden: true, width: 130, template: '#= kendo.toString(kendo.parseDate(TransactionDate), "yyyy-MM-dd") #',
+            //        filterable:
+            //        {
+            //            ui: "datepicker"
+            //        }
+            //    },
+
+            //    {
+            //        field: "Status", title: "Status", sortable: true, width: 100,
+            //        filterable: {
+            //            ui: function (element) {
+            //                element.kendoDropDownList({
+            //                    dataSource: [
+            //                        { text: "Yes", value: "1" },
+            //                        { text: "No", value: "0" }
+            //                    ],
+            //                    dataTextField: "text",
+            //                    dataValueField: "value",
+            //                    optionLabel: "Select Option"
+            //                });
+            //            }
+            //        }
+            //    },
+
+
+            //],
             editable: false,
             selectable: "multiple row",
             navigatable: true,
@@ -567,9 +674,9 @@
         //}
 
         model.IsActive = $('#IsActive').prop('checked');
-        model.SalaryAllowanceDetail = details; 
+        model.SaleDetail = details; 
 
-        var url = "/SalaryAllowance/SalaryAllowance/CreateEdit";
+        var url = "/Sale/Sale/CreateEdit";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 
@@ -637,7 +744,7 @@
         }
 
         var model = { IDs: unpostedIDs };
-        var url = "/SalaryAllowance/SalaryAllowance/MultiplePost";
+        var url = "/Sale/Sale/MultiplePost";
 
         CommonAjaxService.deleteData(url, model, postDone, saveFail);
     }
@@ -655,7 +762,7 @@
                     }
                     else {
                         model.IDs = model.Id;
-                        var url = "/SalaryAllowance/SalaryAllowance/MultiplePost";
+                        var url = "/Sale/Sale/MultiplePost";
                         CommonAjaxService.multiplePost(url, model, postDone, fail);
                     }
                 }
@@ -707,7 +814,7 @@ function ReportPreview(id) {
 
     const form = document.createElement('form');
     form.method = 'post';
-    form.action = '/SalaryAllowance/SalaryAllowance/ReportPreview';
+    form.action = '/Sale/Sale/ReportPreview';
     form.target = '_blank';
     const inputVal = document.createElement('input');
     inputVal.type = 'hidden';

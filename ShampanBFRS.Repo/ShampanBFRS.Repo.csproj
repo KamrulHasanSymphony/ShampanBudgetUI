@@ -60,6 +60,7 @@
     <Compile Include="Reports\ReportRepo.cs" />
     <Compile Include="SalaryAllowance\PersonnelCategoriesRepo.cs" />
     <Compile Include="SalaryAllowance\SalaryAllowanceRepo.cs" />
+    <Compile Include="Sale\SaleRepo.cs" />
     <Compile Include="SetUpRepo\ChargeHeaderRepo.cs" />
     <Compile Include="SetUpRepo\ProductGroupRepo.cs" />
     <Compile Include="SetUpRepo\StructureRepo.cs" />

@@ -52,6 +52,30 @@ namespace ShampanBFRS.Models.SetUpVMs
         public decimal? ATRate { get; set; }
         [Display(Name = "VAT Rate")]
         public decimal? VATRate { get; set; }
+        [Display(Name = "AIT Rate")]
+        public decimal? AITRate { get; set; }
+        [Display(Name = "Conversion Factor Fixed Value")]
+        public decimal? ConversionFactorFixedValue { get; set; }
+        [Display(Name = "VAT Rate Fixed")]
+        public decimal? VATRateFixed { get; set; }
+        [Display(Name = "River Dues")]
+        public decimal? RiverDues { get; set; }
+        [Display(Name = "Tariff Rate")]
+        public decimal? TariffRate { get; set; }
+        [Display(Name = "Fob Price BBL")]
+        public decimal? FobPriceBBL { get; set; }
+        [Display(Name = "Freight Usd")]
+        public decimal? FreightUsd { get; set; }
+        [Display(Name = "Service Charge")]
+        public decimal? ServiceCharge { get; set; }
+        [Display(Name = "Process Fee")]
+        public decimal? ProcessFee { get; set; }
+        [Display(Name = "Rco Treatment Fee")]
+        public decimal? RcoTreatmentFee { get; set; }
+        [Display(Name = "Abp Treatment Fee")]
+        public decimal? AbpTreatmentFee { get; set; }
+
+
 
         public PeramModel PeramModel { get; set; }
 

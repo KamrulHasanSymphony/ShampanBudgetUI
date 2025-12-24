@@ -1,6 +1,6 @@
-﻿@model ShampanBFRS.Models.SalaryAllowance.SalaryAllowanceHeaderVM
+﻿@model ShampanBFRS.Models.Sale.SaleHeaderVM
 @{
-    ViewBag.Title = "Salary Allowance Index";
+    ViewBag.Title = "Sale Header Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0"> Salary Allowance List </h1>
+                <h1 class="m-0"> Sale Header List(@Model.BudgetType) </h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -19,13 +19,15 @@
     </div>
 </div>
 @Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.BudgetType)
 
 <div class="container-fluid">
     <div class="card">
         <div class="card-header p-2">
-            <button type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+            <button type="button" title="Add New" data-url="/Sale/Sale/Create?BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
+
             <button type="button" title="Post data" id="btnPost" class="button sslPost">
                 Post
             </button>
@@ -38,7 +40,7 @@
     <div class="card card-secondary">
         <div class="card-header">
             <h3 class="card-title">
-                Salary Allowance Info
+                Sale Header Info
             </h3>
         </div>
         <div class="card-body">
@@ -51,13 +53,13 @@
 @section scripts{
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    <script src="~/Areas/SalaryAllowance/js/Controller/SalaryAllowanceController.js"></script>
+    <script src="~/Areas/Sale/js/SaleController.js"></script>
 
 
     <script>
         $(document).ready(function () {
 
-            SalaryAllowanceController.init();
+            SaleController.init();
 
             var message = '@(TempData["Message"])';
             if (message) {

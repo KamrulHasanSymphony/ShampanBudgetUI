@@ -421,6 +421,9 @@
     <Compile Include="Areas\SalaryAllowance\Controllers\SalaryAllowanceController.cs" />
     <Content Include="Areas\SalaryAllowance\js\Controller\SalaryAllowanceController.js" />
     <Compile Include="Areas\SalaryAllowance\SalaryAllowanceAreaRegistration.cs" />
+    <Compile Include="Areas\Sale\Controllers\SaleController.cs" />
+    <Content Include="Areas\Sale\js\SaleController.js" />
+    <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
     <Compile Include="Areas\xxSalaryAllowance\Controllers\PersonnelCategorieController.cs" />
     <Compile Include="Areas\SetUp\Controllers\COAController.cs" />
     <Compile Include="Areas\SetUp\Controllers\ProductGroupController.cs" />
@@ -2665,6 +2668,11 @@
     <Content Include="Areas\SalaryAllowance\Views\SalaryAllowance\Index.cshtml" />
     <Content Include="Areas\SalaryAllowance\Views\SalaryAllowance\Create.cshtml" />
     <Content Include="Areas\Common\Views\Common\_getPersonnelCategoriesList.cshtml" />
+    <Content Include="Areas\Sale\Views\web.config" />
+    <Content Include="Areas\Sale\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Sale\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Sale\Views\Sale\Index.cshtml" />
+    <Content Include="Areas\Sale\Views\Sale\Create.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />
@@ -3930,6 +3938,7 @@
     <Folder Include="Areas\Questions\Data\" />
     <Folder Include="Areas\Reports\Data\" />
     <Folder Include="Areas\SalaryAllowance\Data\" />
+    <Folder Include="Areas\Sale\Data\" />
     <Folder Include="Areas\SetUp\Data\" />
     <Folder Include="Areas\xxSalaryAllowance\js\Services\" />
     <Folder Include="Content\Images\Logo\" />

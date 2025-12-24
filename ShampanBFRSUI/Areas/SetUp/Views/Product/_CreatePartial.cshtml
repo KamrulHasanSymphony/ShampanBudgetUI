@@ -278,6 +278,93 @@
                             </div>
 
 
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.AITRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.AITRate, new { placeholder = "Enter AIT Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.AITRate)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ConversionFactorFixedValue)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ConversionFactorFixedValue, new { placeholder = "Enter Conversion Factor Fixed Value", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ConversionFactorFixedValue)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.VATRateFixed)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.VATRateFixed, new { placeholder = "Enter VAT Rate Fixed", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.VATRateFixed)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.RiverDues)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.RiverDues, new { placeholder = "Enter River Dues", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.RiverDues)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.TariffRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.TariffRate, new { placeholder = "Enter Tariff Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.TariffRate)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.FobPriceBBL)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.FobPriceBBL, new { placeholder = "Enter Fob Price BBL", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FobPriceBBL)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.FreightUsd)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.FreightUsd, new { placeholder = "Enter Freight Usd", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FreightUsd)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ServiceCharge)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ServiceCharge, new { placeholder = "Enter Service Charge", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ServiceCharge)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ProcessFee)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ProcessFee, new { placeholder = "Enter Process Fee", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ProcessFee)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.RcoTreatmentFee)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.RcoTreatmentFee, new { placeholder = "Enter Rco Treatment Fee", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.RcoTreatmentFee)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.AbpTreatmentFee)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.AbpTreatmentFee, new { placeholder = "Enter Abp Treatment Fee", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.AbpTreatmentFee)
+                            </div>
+
                             @*@if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
         {
             <div class="col-sm-2">

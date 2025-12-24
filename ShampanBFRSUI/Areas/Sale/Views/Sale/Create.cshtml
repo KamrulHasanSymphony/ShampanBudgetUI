@@ -1,7 +1,7 @@
-﻿@model ShampanBFRS.Models.SalaryAllowance.SalaryAllowanceHeaderVM
+﻿@model ShampanBFRS.Models.Sale.SaleHeaderVM
 
 @{
-    ViewBag.Title = " Salary Allowance Header Create";
+    ViewBag.Title = " Sale Header Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,8 +13,9 @@
     .k-dropdown-wrap .k-input {
         line-height: 1.6em !important;
     }
-    .k-picker-wrap.k-state-default{
-        width:90% !important;
+
+    .k-picker-wrap.k-state-default {
+        width: 90% !important;
     }
 
     .hidden-field {
@@ -27,11 +28,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> Salary Allowance  Update </h1>
+                    <h1 class="m-0"> Sale Header  Update(@Model.BudgetType) </h1>
                 }
                 else
                 {
-                    <h1 class="m-0"> Salary Allowance Create</h1>
+            <h1 class="m-0"> Sale Header Create(@Model.BudgetType)</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -52,7 +53,7 @@
             <button type="button" class="button btnsave sslUpdate">Update</button>
             <button type="button" title="Post data" class="button btnPost sslPost"> Post </button>
 
-            <button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+            <button style="float:right;" type="button" title="Add New" data-url="/Sale/Sale/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
 
@@ -61,12 +62,14 @@
         {
             <div style="display:none;" class="divUpdate">
                 <button type="button" class="button btnsave sslUpdate">Update</button>
-                <button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
-                            New
+                <button style="float:right;" type="button" title="Add New" data-url="/Sale/Sale/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                    New
                 </button>
+
                 <button type="button" title="Post data" class="button btnPost sslPost"> Post </button>
 
             </div>
+
             <div class="divSave">
                 <button class="button btnsave sslSave" type="button" id="">Save</button>
             </div>
@@ -80,12 +83,14 @@
     <form id="frmEntry">
         <div class="card card-secondary">
             <div class="card-header">
-                <h3 class="card-title"> Salary Allowance Info </h3>
+                <h3 class="card-title"> Sale Header Info </h3>
             </div>
             <div class="card-body">
 
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.Operation)
+                @Html.HiddenFor(model => model.BudgetType)
+
 
                 <div class="form-group row">
 
@@ -98,12 +103,12 @@
                     </div>
 
                     @*<div class="col-sm-2">
-            @Html.LabelFor(model => model.TransactionDate)
-            <div class="input-group ">
-                @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm" })
-            </div>
-            <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
-        </div>*@
+                @Html.LabelFor(model => model.TransactionDate)
+                <div class="input-group ">
+                    @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm" })
+                </div>
+                <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
+            </div>*@
 
                     <div class="col-sm-2 hidden-field">
                         @Html.LabelFor(model => model.TransactionDate)
@@ -124,7 +129,7 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.BudgetType)
                         <div class="input-group">
-                            @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
+                            @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm", @readonly = "readonly" })
                         </div>
                         @Html.ValidationMessageFor(model => model.BudgetType)
                     </div>
@@ -137,7 +142,7 @@
         <div class="card card-secondary">
 
             <div class="card-header">
-                <h3 class="card-title"> Salary Allowance Details</h3>
+                <h3 class="card-title"> Sale Header Details</h3>
             </div>
 
             <div class="card-body">
@@ -150,37 +155,41 @@
                         <thead>
                             <tr>
                                 <th data-type="text" data-computed="true" data-required="false" data-name="SLNo" style="width:3%;">SL.</th>
-                                <th hidden data-type="text" data-search="false" data-name="SalaryAllowanceHeaderId" style="width:5%;">Salary Allowance Header Id</th>
-                                <th data-type="text" data-search="true" data-name="PersonnelCategoriesName" style="width:20%;">Categories Name</th>
-                                <th hidden data-type="text" data-search="false" data-name="PersonnelCategoriesId" style="width: 20%;">Personnel Categories Id</th>
-
-                                <th data-type="number" data-name="TotalPostSanctioned" style="width: 20%;">Total Post Sanctioned</th>
-                                <th data-type="number" data-name="ActualPresentStrength" style="width: 20%;">Actual Present Strength</th>
-                                <th data-type="number" data-name="ExpectedNumber" style="width: 15%;">Expected Number</th>
-                                <th data-type="number" data-name="BasicWagesSalaries" style="width: 15%;">Basic Wages Salaries</th>
-                                <th data-type="number" data-name="OtherCash" style="width: 25%;">Other Cash</th>
-                                <th data-type="number" data-name="TotalSalary" data-computed="true" style="width: 25%;" >Total Salary</th>
-                                <th data-type="number" data-name="PersonnelSentForTraining" style="width:4%;">Personnel Sent For Training</th>
+                                <th hidden data-type="text" data-search="false" data-name="SaleHeaderId" style="width:5%;">Sale Header Id</th>
+                                <th data-type="text" data-search="true" data-name="ProductName" style="width:20%;">Product Nmae</th>
+                                <th hidden data-type="text" data-search="false" data-name="ProductId" style="width: 20%;">Product Id</th>
+                                <th data-type="number" data-name="ConversionFactor" style="width: 20%;">Conversion Factor</th>
+                                <th data-type="number" data-name="PriceLTR" style="width: 15%;">Price LTR</th>
+                                <th data-type="number" data-computed="true" data-name="PriceMT" style="width: 15%;">Price MT</th>
+                                <th data-type="number" data-name="ProductionMT" style="width: 20%;">Production MT</th>
+                                <th data-type="number" data-computed="true" data-name="SalesExERLValue" style="width: 25%;">Sales Ex ERL Value</th>
+                                <th data-type="number" data-name="SalesExImport_LocalMT" style="width: 25%;">Sales Ex Import Local MT</th>
+                                <th data-type="number" data-computed="true" data-name="SalesExImport_LocalValue" style="width:4%;">Sales Ex Import Local Value</th>
+                                <th data-type="number" data-computed="true" data-name="TotalMT" style="width:4%;">Total MT</th>
+                                <th data-type="number" data-computed="true" data-name="TotalValueTK_LAC" style="width:4%;">Total Value TK LAC</th>
                             </tr>
                         </thead>
                         <tbody id="SODBody">
                             @if (Model != null)
                             {
-                                foreach (var item in Model.SalaryAllowanceDetail)
+                                foreach (var item in Model.SaleDetail)
                                 {
                                     <tr>
 
                                         <td> @serial </td>
-                                        <td hidden> @item.SalaryAllowanceHeaderId </td>
-                                        <td> @item.PersonnelCategoriesName </td>
-                                        <td hidden> @item.PersonnelCategoriesId </td>
-                                        <td>@item.TotalPostSanctioned</td>
-                                        <td>@item.ActualPresentStrength</td>
-                                        <td>@item.ExpectedNumber</td>
-                                        <td>@item.BasicWagesSalaries</td>
-                                        <td>@item.OtherCash</td>
-                                        <td>@item.TotalSalary</td>
-                                        <td>@item.PersonnelSentForTraining</td>
+                                        <td hidden> @item.SaleHeaderId </td>
+                                        <td> @item.ProductName </td>
+                                        <td hidden> @item.ProductId </td>
+                                        <td>@item.ConversionFactor</td>
+                                        <td>@item.PriceLTR</td>
+                                        <td>@item.PriceMT</td>
+                                        <td>@item.ProductionMT</td>
+
+                                        <td>@item.SalesExERLValue</td>
+                                        <td>@item.SalesExImport_LocalMT</td>
+                                        <td>@item.SalesExImport_LocalValue</td>
+                                        <td>@item.TotalMT</td>
+                                        <td>@item.TotalValueTK_LAC</td>
 
                                         <td> <button class="btn btn-danger btn-sm remove-row-btn"><i class='fa fa-trash'></i></button> </td>
 
@@ -305,10 +314,10 @@
 
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    <script src="~/Areas/SalaryAllowance/js/Controller/SalaryAllowanceController.js"></script>
+    <script src="~/Areas/Sale/js/SaleController.js"></script>
     <script>
         $(document).ready(function () {
-            SalaryAllowanceController.init();
+            SaleController.init();
         });
 
     </script>
