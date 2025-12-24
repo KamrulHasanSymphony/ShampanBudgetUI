@@ -321,7 +321,17 @@
                         { field: "VATRate", title: "VAT Rate", width: 120 },
                         { field: "ConversionFactorFixedValue", title: "Conversion Factor", width: 120 },
                         { field: "VATRateFixed", title: "VAT Rate Fixed", width: 120 },
-                        { field: "RiverDues", title: "River Dues", width: 120 }
+                        { field: "RiverDues", title: "River Dues", width: 120 },
+
+                        { field: "TariffRate", title: "Tariff Rate", width: 120 },
+                        { field: "FobPriceBBL", title: "Fob Price BBL", width: 120 },
+                        { field: "FreightUsd", title: "Freight Usd", width: 120 },
+                        { field: "ServiceCharge", title: "Service Charge", width: 120 },
+                        { field: "ProcessFee", title: "Process Fee", width: 120 },
+                        { field: "RcoTreatmentFee", title: "Rco Treatment Fee", width: 120 },
+                        { field: "AbpTreatmentFee", title: "Abp Treatment Fee", width: 120 }
+
+
                     ]
                 });
             },

@@ -35,5 +35,16 @@ namespace ShampanBFRS.Models.SetUpVMs
         public decimal? ConversionFactorFixedValue { get; set; }
         public decimal? VATRateFixed { get; set; }
         public decimal? RiverDues { get; set; }
+
+
+        public decimal? TariffRate { get; set; }
+        public decimal? FobPriceBBL { get; set; }
+        public decimal? FreightUsd { get; set; }
+        public decimal? ServiceCharge { get; set; }
+        public decimal? ProcessFee { get; set; }
+        public decimal? RcoTreatmentFee { get; set; }
+        public decimal? AbpTreatmentFee { get; set; }
+
+
     }
 }
