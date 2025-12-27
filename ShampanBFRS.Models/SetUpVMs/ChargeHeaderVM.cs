@@ -13,6 +13,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         public int Id { get; set; }
         [DisplayName("Charge Group")]
         public string ChargeGroup { get; set; }
+        public string? ChargeGroupText { get; set; }
         //public string ?ProductName { get; set; }
         public int? ChargeGroupId { get; set; }
 

@@ -104,7 +104,7 @@
     function GetChargeGroup() {
         var COAGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
             dataTextField: "ChargeGroupText",
-            dataValueField: "ChargeGroupValue",
+            dataValueField: "Id",
             height: 400,
             columns: [
                 { field: "ChargeGroupText", title: "Charge Group Text", width: 150 },

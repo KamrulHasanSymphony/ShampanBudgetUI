@@ -4,7 +4,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
     var getFiscalYearId = 0;
     //var getProductGroupId = 0;
     var getBudgetType = 0;
-    var getChargeGroup = "";
+    var getChargeGroup = 0;
     var getTransactionType = '';
 
 
@@ -203,13 +203,13 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         function GetChargeGroup() {
             var COAGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
                 dataTextField: "ChargeGroupText",
-                dataValueField: "ChargeGroupValue",
+                dataValueField: "Id",
                 height: 400,
                 columns: [
                     { field: "ChargeGroupText", title: "Charge Group Text", width: 150 },
                 ],
                 filter: "contains",
-                filterFields: ["ChargeGroupValue", "ChargeGroupText"],
+                filterFields: [ "ChargeGroupText"],
                 dataSource: {
                     transport: {
                         read: "/Common/Common/GetChargeGroupList"
@@ -224,7 +224,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 }
             }).data("kendoMultiColumnComboBox");
         };
-
 
 
     };
@@ -413,7 +412,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "YearName", title: "Year", sortable: true, width: 200 },
                 { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
-                { field: "ChargeGroup", title: "Charge Group", sortable: true, width: 200 },
+                { field: "ChargeGroupText", title: "Charge Group", sortable: true, width: 200 },
 
             ],
             editable: false,

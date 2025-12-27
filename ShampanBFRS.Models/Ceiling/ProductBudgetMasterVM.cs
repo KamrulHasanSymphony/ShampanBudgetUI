@@ -31,6 +31,7 @@ namespace ShampanBFRS.Models.Ceiling
 
         [Display(Name = "Charge Group")]
         public string? ChargeGroup { get; set; }
+        public string? ChargeGroupText { get; set; }
 
         public PeramModel PeramModel { get; set; }
 
