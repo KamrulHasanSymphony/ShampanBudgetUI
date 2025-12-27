@@ -444,6 +444,55 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
+        [HttpPost]
+
+        public ActionResult MultiplePost(CommonVM param)
+        {
+            ResultModel<CeilingVM> result = new ResultModel<CeilingVM>();
+
+            try
+            {
+                _repo = new CeilingRepo();
+
+
+                param.ModifyBy = Session["UserId"].ToString();
+                param.ModifyFrom = Ordinary.GetLocalIpAddress();
+
+                ResultVM resultData = _repo.MultiplePost(param);
+
+                Session["result"] = resultData.Status + "~" + resultData.Message;
+
+                if (resultData.Status == "Success")
+                {
+                    result = new ResultModel<CeilingVM>()
+                    {
+                        Success = true,
+                        Status = Status.Success,
+                        Message = resultData.Message,
+                        Data = null
+                    };
+                }
+                else
+                {
+                    result = new ResultModel<CeilingVM>()
+                    {
+                        Success = false,
+                        Status = Status.Fail,
+                        Message = resultData.Message,
+                        Data = null
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return RedirectToAction("Index");
+            }
+
+            return Json(result);
+        }
+
+
 
     }
 }
