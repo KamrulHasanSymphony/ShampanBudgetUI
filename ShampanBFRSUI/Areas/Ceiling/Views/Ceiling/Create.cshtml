@@ -135,7 +135,7 @@
                     <button type="button" class="button btnsave sslUpdate">Update</button>
                     <button type="button" class="button btnPost sslPost">Post</button>
                     <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
-                    <button style="float:right;" type="button" title="Add New" data-url="/Ceiling/AffectedAnimal/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                    <button style="float:right;" type="button" title="Add New" data-url="/Ceiling/Ceiling/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                         New
                     </button>
                 </div>
@@ -263,13 +263,22 @@
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">
 
-                        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                        @if (Model.IsPost != "N")
+                        {
+                            <button type="button" class="button sslPush">Already Posted</button>
+                        }
+
+                        else if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                         {
                             <button type="button" class="button btnsave sslUpdate">Update</button>
 
                             <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/Ceiling/Ceiling/Create?TransactionType=@Model.TransactionType&MenuType=@Model.MenuType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
                                 New
                             </button>
+                            <button type="button" class="button btnPost sslPost">Post</button>
+
+                            <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
+
                         }
                         else
                         {
@@ -286,8 +295,8 @@
                         }
 
                         @*<div class="divSave">
-                                <button class="button btnDownload sslSave" type="button" id="">Download</button>
-                            </div>*@
+            <button class="button btnDownload sslSave" type="button" id="">Download</button>
+        </div>*@
 
                     </div>
                     <div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>
