@@ -298,7 +298,7 @@
 
                     columns: [
                         { field: "Id", hidden: true, width: 50 },
-                        { field: "ChargeHeaderId", title: "Charge Header Id", width: 120 },
+                        { field: "ChargeHeaderId",hidden:true, title: "Charge Header Id", width: 120 },
                         { field: "ProductName", title: "Product Name", width: 120 },
                         { field: "CIFCharge", title: "CIF Charge", width: 120 },
                         { field: "ExchangeRateUsd", title: "Exchange Rate USD", width: 120 },
