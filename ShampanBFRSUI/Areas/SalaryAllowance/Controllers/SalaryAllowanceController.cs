@@ -25,9 +25,10 @@ namespace ShampanBFRSUI.Areas.SalaryAllowance.Controllers
 
 
         // GET: SalaryAllowance/SalaryAllowance
-        public ActionResult Index()
+        public ActionResult Index(string BudgetType = "")
         {
             SalaryAllowanceHeaderVM vm = new SalaryAllowanceHeaderVM();
+            vm.BudgetType = BudgetType;
             return View(vm);
         }
 
@@ -37,10 +38,11 @@ namespace ShampanBFRSUI.Areas.SalaryAllowance.Controllers
             var vm = new SalaryAllowanceDetailVM();
             return View(vm);
         }
-        public ActionResult Create()
+        public ActionResult Create(string BudgetType = "")
         {
             SalaryAllowanceHeaderVM vm = new SalaryAllowanceHeaderVM();
             vm.Operation = "add";
+            vm.BudgetType = BudgetType;
 
             return View("Create", vm);
         }
@@ -309,7 +311,7 @@ namespace ShampanBFRSUI.Areas.SalaryAllowance.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetGridData(GridOptions options, string branchId, string isPost, string fromDate, string toDate)
+        public JsonResult GetGridData(GridOptions options, string budgetType = "" )
         {
             ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new SalaryAllowanceRepo();
@@ -322,6 +324,7 @@ namespace ShampanBFRSUI.Areas.SalaryAllowance.Controllers
                 //options.vm.FromDate = fromDate;
                 //options.vm.ToDate = toDate;
                 //options.vm.CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "";
+                options.vm.BudgetType = budgetType;
 
                 result = _repo.GetGridData(options);
 

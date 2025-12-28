@@ -21,6 +21,10 @@
         //GetBudgetTypeComboBox();
         GenerateDatepicker();
 
+        var IsPost = $('#IsPost').val();
+        if (IsPost === 'True') {
+            Visibility(true);
+        };
 
         $(document).on('click', '.edit-sale-order', function () {
             kendo.alert("You can't edit this order because it has already been delivered.");
@@ -85,6 +89,24 @@
                 });
         });
 
+        $('.btnPost').on('click', function () { //for create form
+            Confirmation("Are you sure? Do You Want to Post Data?",
+                function (result) {
+                    debugger;
+
+                    if (result) {
+                        var model = serializeInputs("frmEntry");
+                        if (model.IsPost == "True") {
+                            ShowNotification(3, "Data has already been Posted.");
+                        }
+                        else {
+                            model.IDs = model.Id;
+                            var url = "/Sale/Sale/MultiplePost";
+                            CommonAjaxService.multiplePost(url, model, postDone, fail);
+                        }
+                    }
+                });
+        });
 
        
 
@@ -672,7 +694,10 @@
         //    ShowNotification(3, errorMessage);
         //    return;
         //}
-
+        //model.IsPost = false;
+        //if ($('#IsPost').prop('checked')) {
+        //    model.IsPost = true;
+        //}
         model.IsActive = $('#IsActive').prop('checked');
         model.SaleDetail = details; 
 
@@ -750,24 +775,7 @@
     }
 
 
-    $('.btnPost').on('click', function () { //for create form
-        Confirmation("Are you sure? Do You Want to Post Data?",
-            function (result) {
-                debugger;
-
-                if (result) {
-                    var model = serializeInputs("frmEntry");
-                    if (model.IsPost == "True") {
-                        ShowNotification(3, "Data has already been Posted.");
-                    }
-                    else {
-                        model.IDs = model.Id;
-                        var url = "/Sale/Sale/MultiplePost";
-                        CommonAjaxService.multiplePost(url, model, postDone, fail);
-                    }
-                }
-            });
-    });
+    
 
 
     function postDone(result) {
@@ -780,6 +788,8 @@
             ShowNotification(1, result.Message);
             $(".btnsave").show();
             $(".btnPost").show();
+
+
 
         }
         else if (result.Status == 400) {

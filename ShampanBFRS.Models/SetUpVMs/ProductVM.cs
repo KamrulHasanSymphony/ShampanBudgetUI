@@ -54,7 +54,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         public decimal? VATRate { get; set; }
         [Display(Name = "AIT Rate")]
         public decimal? AITRate { get; set; }
-        [Display(Name = "Conversion Factor Fixed Value")]
+        [Display(Name = "Con Factor Fixed Value")]
         public decimal? ConversionFactorFixedValue { get; set; }
         [Display(Name = "VAT Rate Fixed")]
         public decimal? VATRateFixed { get; set; }

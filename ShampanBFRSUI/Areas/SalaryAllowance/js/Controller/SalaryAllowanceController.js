@@ -474,7 +474,7 @@
                 {
 
                     title: "Action",
-                    width: 20,
+                    width: 45,
                     template: function (dataItem) {
                         console.log(dataItem);
                         return `
@@ -494,7 +494,7 @@
                     {
                         ui: "datepicker"
                     }
-                }, 
+                },
 
                 {
                     field: "Status", title: "Status", sortable: true, width: 50,
@@ -521,16 +521,85 @@
             columnMenu: true
         });
 
-        $("#GridDataList").on("click", ".k-header .k-checkbox", function () {
-            var isChecked = $(this).is(":checked");
-            var grid = $("#GridDataList").data("kendoGrid");
-            if (isChecked) {
-                grid.tbody.find(".k-checkbox").prop("checked", true);
-            } else {
-                grid.tbody.find(".k-checkbox").prop("checked", false);
-            }
-        });
     };
+
+    //        columns: [
+
+    //            {
+    //                selectable: true,
+    //                width: 35
+    //            },
+
+    //            {
+    //                title: "Action",
+    //                width: 80,
+    //                sortable: false,
+    //                filterable: false,
+    //                template: function (dataItem) {
+    //                    return `
+    //            <a href="/SalaryAllowance/SalaryAllowance/Edit/${dataItem.Id}"
+    //               class="btn btn-primary btn-sm edit"
+    //               title="Edit">
+    //                <i class="fas fa-pencil-alt"></i>
+    //            </a>
+    //        `;
+    //                }
+    //            },
+
+    //            { field: "Id", hidden: true },
+
+    //            { field: "Code", title: "Code", width: 120 },
+
+    //            { field: "FiscalYear", title: "Fiscal Year", hidden: true },
+
+    //            { field: "BudgetType", title: "Budget Type", width: 120 },
+
+    //            {
+    //                field: "TransactionDate",
+    //                title: "Transaction Date",
+    //                hidden: true,
+    //                width: 140,
+    //                template: "#= TransactionDate ? kendo.toString(kendo.parseDate(TransactionDate), 'yyyy-MM-dd') : '' #"
+    //            },
+
+    //            {
+    //                field: "Status",
+    //                title: "Status",
+    //                width: 120,
+    //                filterable: {
+    //                    ui: function (element) {
+    //                        element.kendoDropDownList({
+    //                            dataSource: [
+    //                                { text: "Posted", value: "Posted" },
+    //                                { text: "Not Posted", value: "Not Posted" }
+    //                            ],
+    //                            dataTextField: "text",
+    //                            dataValueField: "value",
+    //                            optionLabel: "All"
+    //                        });
+    //                    }
+    //                }
+    //            }
+    //        ],
+    //        editable: false,
+    //        selectable: "multiple,row",
+    //        navigatable: true,
+    //        columnMenu: true
+
+
+    //        });
+
+
+    //    $("#GridDataList").on("click", ".k-header .k-checkbox", function () {
+    //        var isChecked = $(this).is(":checked");
+    //        var grid = $("#GridDataList").data("kendoGrid");
+    //        if (isChecked) {
+    //            grid.tbody.find(".k-checkbox").prop("checked", true);
+    //        } else {
+    //            grid.tbody.find(".k-checkbox").prop("checked", false);
+    //        }
+    //    });
+    //};
 
 
     function save($table) {
