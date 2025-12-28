@@ -598,6 +598,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             {
                 Session["result"] = "Fail" + "~" + ex.Message;
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                
                 throw ex;
             }
         }

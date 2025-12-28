@@ -80,6 +80,40 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             }
         });
 
+        //btn post
+
+        $('#btnPost').on('click', function () {
+            debugger;
+
+            Confirmation("Are you sure? Do You Want to Post Data?",
+                function (result) {
+                    if (result) {
+                        debugger;
+                        SelectDataPost();
+                    }
+                });
+        });
+
+        $('.btnPost').on('click', function () {
+
+            Confirmation("Are you sure? Do You Want to Post Data?",
+                function (result) {
+
+                    if (result) {
+                        var model = serializeInputs("frmEntry");
+                        if (model.IsPost == "True") {
+                            ShowNotification(3, "Data has already been Posted.");
+                        }
+                        else {
+                            model.IDs = model.Id;
+                            var url = "/Ceiling/Ceiling/MultiplePost";
+                            CommonAjaxService.multiplePost(url, model, postDone, fail);
+                        }
+                    }
+                });
+        });
+
+
         function GetFiscalYearComboBox() {
             debugger;
             var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
@@ -272,6 +306,40 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         CommonAjaxService.deleteData(url, model, deleteDone, saveFail);
     };
 
+    function SelectDataPost() {
+        debugger;
+
+        var IDs = [];
+
+        var selectedRows = $("#GridDataList").data("kendoGrid").select();
+
+        if (selectedRows.length === 0) {
+            ShowNotification(3, "You are requested to Select checkbox!");
+            return;
+        }
+
+        selectedRows.each(function () {
+            var dataItem = $("#GridDataList").data("kendoGrid").dataItem(this);
+            IDs.push(dataItem.Id);
+        });
+
+        var model = {
+            IDs: IDs
+        };
+        var filteredData = [];
+        var dataSource = $("#GridDataList").data("kendoGrid").dataSource;
+        var rowData = dataSource.view().filter(x => IDs.includes(x.Id));
+        filteredData = rowData.filter(x => x.IsPost == true && IDs.includes(x.Id));
+
+        if (filteredData.length > 0) {
+            ShowNotification(3, "Data has already been Posted.");
+            return;
+        }
+        var url = "/Ceiling/Ceiling/MultiplePost";
+
+        CommonAjaxService.multiplePost(url, model, postDone, fail);
+    };
+
     // Fetch grid data
     var GetGridDataList = function (getTransactionType, getMenuType, getBudgetType) {
         var gridDataSource = new kendo.data.DataSource({
@@ -406,6 +474,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             resizable: true,
             reorderable: true,
             groupable: true,
+            //selectable: true,
             toolbar: ["excel", "pdf", "search"],
             detailInit: function (e) {
 
@@ -497,6 +566,9 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             },
             columns: [
                 {
+                    selectable: true, width: 40
+                },
+                {
                     title: "Action",
                     width: 60,
                     template: function (dataItem) {
@@ -518,13 +590,30 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 //    sortable: true,
                 //    template: "#= kendo.toString(kendo.parseDate(TransactionDate), 'dd-MMM-yyyy') #"
                 //},
+                //{
+                //    field: "IsActive",
+                //    title: "Active",
+                //    sortable: true,
+                //    width: 100,
+                //    template: function (dataItem) {
+                //        return dataItem.IsActive ? "Yes" : "No";
+                //    }
+                //},
+
                 {
-                    field: "IsActive",
-                    title: "Active",
-                    sortable: true,
-                    width: 100,
-                    template: function (dataItem) {
-                        return dataItem.IsActive ? "Yes" : "No";
+                    field: "Status", title: "Status", sortable: true, width: 130,
+                    filterable: {
+                        ui: function (element) {
+                            element.kendoDropDownList({
+                                dataSource: [
+                                    { text: "Posted", value: "Y" },
+                                    { text: "Not-Posted", value: "N" }
+                                ],
+                                dataTextField: "text",
+                                dataValueField: "value",
+                                optionLabel: "Select Option"
+                            });
+                        }
                     }
                 },
             ],
@@ -542,6 +631,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
+        if (model.IsPost == 'True') {
+            ShowNotification(2, "Post operation is already done, Do not update this entry");
+            return;
+        }
 
         var isActiveValue = $('#IsActive').prop('checked');
         model.IsActive = isActiveValue;
@@ -685,6 +778,33 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             ShowNotification(1, result.Message);
         }
     }
+
+    function postDone(result) {
+
+        var grid = $('#GridDataList').data('kendoGrid');
+        if (grid) {
+            grid.dataSource.read();
+        }
+        if (result.Status == 200) {
+            ShowNotification(1, result.Message);
+            $(".btnsave").hide();
+            $(".btnPost").hide();
+            $(".sslPush").show();
+        }
+        else if (result.Status == 400) {
+            ShowNotification(3, result.Message);
+        }
+        else {
+            ShowNotification(2, result.Message);
+        }
+    };
+
+    function fail(err) {
+
+        console.log(err);
+        ShowNotification(3, "Something gone wrong");
+    };
+
 
     var GetCeilingDetailsData = function () {
         var yearId = $('#GLFiscalYearId').val() || 0;

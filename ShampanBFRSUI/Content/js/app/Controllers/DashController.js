@@ -8,6 +8,7 @@
 
         $("#tBranchProfiles").on("dblclick", "td",
             function () {
+                debugger;
                 var branchCode = $(this).closest("tr").find("td:eq(0)").text().trim();
                 var BranchName = $(this).closest("tr").find("td:eq(1)").text().trim();
                 var userId = $(this).closest("tr").find("td:eq(2)").text().trim();

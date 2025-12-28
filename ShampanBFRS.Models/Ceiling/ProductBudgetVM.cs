@@ -77,6 +77,7 @@ namespace ShampanBFRS.Models.Ceiling
         public string? ProductName { get; set; }
 
         public string? ChargeGroup { get; set; }
+        public string? ChargeGroupText { get; set; }
 
     }
 }

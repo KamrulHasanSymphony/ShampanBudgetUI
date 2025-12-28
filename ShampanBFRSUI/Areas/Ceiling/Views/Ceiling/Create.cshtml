@@ -98,7 +98,7 @@
                     }
                     else
                     {
-                      <h1 class="m-0">Budget Edit(@Model.BudgetType)</h1>
+                        <h1 class="m-0">Budget Edit(@Model.BudgetType)</h1>
                     }
                 </div>
                 <div class="col-sm-6">
@@ -109,6 +109,45 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-header p-2">
+
+            @if (Model.IsPost != "N")
+            {
+                <button type="button" class="button sslPush">Already Posted</button>
+            }
+            else if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <button style="float:right;" type="button" title="Add New" data-url="/Ceiling/Ceiling/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                    New
+                </button>
+
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                <button type="button" class="button btnPost sslPost">Post</button>
+
+                <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
+            }
+            else
+            {
+                <div style="display:none;" class="divUpdate">
+                    <button type="button" class="button btnsave sslUpdate">Update</button>
+                    <button type="button" class="button btnPost sslPost">Post</button>
+                    <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
+                    <button style="float:right;" type="button" title="Add New" data-url="/Ceiling/Ceiling/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                        New
+                    </button>
+                </div>
+                <div class="divSave">
+                    <button class="button btnsave sslSave" type="button" id="">Save</button>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
 
     <div class="container-fluid">
         <div class="mt-3">
@@ -144,28 +183,28 @@
                                 </div>
 
                                 @*<div class="col-sm-2">
-                            @Html.LabelFor(model => model.BudgetSetNo)
-                            <div class="input-group">
-                                @Html.TextBoxFor(model => model.BudgetSetNo, new { placeholder = "Enter Budget Set No", @class = "form-control form-control-sm" })
-                            </div>
-                            @Html.ValidationMessageFor(model => model.BudgetSetNo)
-                        </div>*@
+                                        @Html.LabelFor(model => model.BudgetSetNo)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.BudgetSetNo, new { placeholder = "Enter Budget Set No", @class = "form-control form-control-sm" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.BudgetSetNo)
+                                    </div>*@
 
                                 @*<div class="col-sm-2">
-                            @Html.LabelFor(model => model.BudgetType)
-                            <div class="input-group">
-                                @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
-                            </div>
-                            @Html.ValidationMessageFor(model => model.BudgetType)
-                        </div>*@
+                                        @Html.LabelFor(model => model.BudgetType)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.BudgetType)
+                                    </div>*@
 
                                 @*<div class="col-sm-2">
-                            @Html.LabelFor(model => model.TransactionDate)
-                            <div class="input-group ">
-                                @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm", @style = "width: 100%; height:32px;" })
-                            </div>
-                            <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
-                        </div>*@
+                                        @Html.LabelFor(model => model.TransactionDate)
+                                        <div class="input-group ">
+                                            @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm", @style = "width: 100%; height:32px;" })
+                                        </div>
+                                        <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
+                                    </div>*@
 
                             </div>
 
@@ -224,13 +263,22 @@
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">
 
-                        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                        @if (Model.IsPost != "N")
+                        {
+                            <button type="button" class="button sslPush">Already Posted</button>
+                        }
+
+                        else if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                         {
                             <button type="button" class="button btnsave sslUpdate">Update</button>
 
                             <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/Ceiling/Ceiling/Create?TransactionType=@Model.TransactionType&MenuType=@Model.MenuType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
                                 New
                             </button>
+                            <button type="button" class="button btnPost sslPost">Post</button>
+
+                            <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
+
                         }
                         else
                         {
@@ -247,8 +295,8 @@
                         }
 
                         @*<div class="divSave">
-                    <button class="button btnDownload sslSave" type="button" id="">Download</button>
-                </div>*@
+            <button class="button btnDownload sslSave" type="button" id="">Download</button>
+        </div>*@
 
                     </div>
                     <div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>
