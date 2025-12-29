@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ceiling\CeilingRepo.cs" />
+    <Compile Include="Ceiling\BudgetRepo.cs" />
     <Compile Include="Ceiling\ProductBudgetRepo.cs" />
     <Compile Include="CommonRepo\AuthRepo.cs" />
     <Compile Include="QuestionRepo\ExamineeGroupRepo.cs" />

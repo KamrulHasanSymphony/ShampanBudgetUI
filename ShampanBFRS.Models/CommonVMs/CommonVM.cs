@@ -34,6 +34,8 @@ namespace ShampanBFRS.Models.CommonVMs
         public string? ReportType { get; set; }
         public string? ChargeGroupId { get; set; }
 
+        public string? FiscalYearId { get; set; }
+
     }
 
 }
