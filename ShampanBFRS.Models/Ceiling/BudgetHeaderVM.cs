@@ -36,6 +36,7 @@ namespace ShampanBFRS.Models.Ceiling
 
         public string? iBASCode { get; set; }
         public string? iBASName { get; set; }
+        public int? SabreId { get; set; }
         public string? SabreCode { get; set; }
         public string? SabreName { get; set; }
         public string? Serial { get; set; }
@@ -43,7 +44,7 @@ namespace ShampanBFRS.Models.Ceiling
 
 
 
-        public PeramModel PeramModel { get; set; }
+        public PeramModel? PeramModel { get; set; }
 
         public List<BudgetDetailVM> DetailList { get; set; }
     }

@@ -29,13 +29,16 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
         // Save button click handler
         $('.btnsave').click('click', function () {
+            debugger;
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
+            
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
+                    
                     save();
                 }
             });
@@ -252,6 +255,82 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
+            detailInit: function (e) {
+
+                console.log("Master ID:", e.data.Id);
+
+                $("<div/>").appendTo(e.detailCell).kendoGrid({
+                    dataSource: {
+                        type: "json",
+                        serverPaging: true,
+                        serverSorting: true,
+                        serverFiltering: true,
+                        allowUnsort: true,
+                        pageSize: 10,
+
+                        transport: {
+                            read: {
+                                url: "/Ceiling/Budget/GetDetailDataById",
+                                type: "GET",
+                                dataType: "json",
+                                cache: false,
+                                data: { masterId: e.data.Id }
+                            },
+                            parameterMap: function (options) {
+                                return options;
+                            }
+                        },
+                        batch: true,
+                        schema: {
+                            data: "Items",
+                            total: "TotalCount"
+                        },
+                        requestEnd: function (e) {
+                            console.log("Response Data:", e.response); // Log server response
+                        }
+                    },
+                    scrollable: false,
+                    sortable: true,
+                    pageable: false,
+                    noRecords: true,
+                    messages: {
+                        noRecords: "No Record Found!"
+                    },
+
+                    columns: [
+                        { field: "Id", hidden: true, width: 50 },
+                        { field: "BudgetHeaderId", hidden: true, title: "Budget Header Id", width: 120 },
+                        { field: "SabreId", title: "Sabre Id", width: 120 },
+
+                        { field: "M1", title: "M1", width: 120 },
+                        { field: "M2", title: "M2", width: 120 },
+                        { field: "M3", title: "M3", width: 120 },
+                        { field: "M4", title: "M4", width: 120 },
+                        { field: "M5", title: "M5", width: 120 },
+                        { field: "M6", title: "M6", width: 120 },
+                        { field: "M7", title: "M7", width: 120 },
+                        { field: "M8", title: "M8", width: 120 },
+
+                        { field: "M9", title: "M9", width: 120 },
+                        { field: "M10", title: "M10", width: 120 },
+                        { field: "M11", title: "M11", width: 120 },
+                        { field: "M12", title: "M12", width: 120 },
+
+                        { field: "Q1", title: "Q1", width: 120 },
+                        { field: "Q2", title: "Q2", width: 120 },
+                        { field: "Q3", title: "Q3", width: 120 },
+                        { field: "Q4", title: "Q4", width: 120 },
+
+                        { field: "H1", title: "H1", width: 120 },
+                        { field: "H2", title: "H2", width: 120 },
+
+                        { field: "Yearly", title: "Yearly", width: 120 },
+                        { field: "InputTotal", title: "Input Total", width: 120 }
+
+                       
+                    ]
+                });
+            },
             excel: {
                 fileName: "Budgets.xlsx",
                 filterable: true
@@ -288,22 +367,22 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 }, 1000);
             },
             columns: [
+
                 {
                     title: "Action",
                     width: 60,
                     template: function (dataItem) {
                         return `
-        <a href="/Ceiling/Budget/Edit?yearId=${dataItem.GLFiscalYearId}&budgetType=${dataItem.BudgetType}&branchId=${dataItem.BranchId}"
+        <a href="/Ceiling/Budget/Edit?id=${dataItem.Id}"
            class="btn btn-primary btn-sm mr-2 edit">
             <i class="fas fa-pencil-alt"></i>
         </a>`;
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "iBASCode", sortable: true, width: 200 },
-                { field: "Name", title: "iBASName", sortable: true, width: 200 },
-                { field: "Code", title: "SabreCode", sortable: true, width: 200 },
-                { field: "Name", title: "SabreName", sortable: true, width: 200 }
+                { field: "Code", title: "Code", sortable: true, width: 200 },
+                { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
+                { field: "IsPost", title: "Post", sortable: true, width: 200 }
 
             ],
             editable: false,
@@ -315,22 +394,23 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
     // Save the form data
     function save() {
+        debugger;
 
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
-
+        
         //var isActiveValue = $('#IsActive').prop('checked');
         //model.IsActive = isActiveValue;
 
-        var result = validator.form();
+        //var result = validator.form();
 
-        if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
-            return;
-        }
+        //if (!result) {
+        //    if (!result) {
+        //        validator.focusInvalid();
+        //    }
+        //    return;
+        //}
         var DetailList = [];
 
         var grid = $("#BudgetDetailsData").data("kendoGrid");
@@ -341,10 +421,28 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             items.forEach(function (x, index) {
 
                 DetailList.push({
-                    FiscalYearId: model.FiscalYearId,
-                    SabreCode: x.SabreCode,
-                    SabreName: x.SabreName,
+                    SabreId: x.SabreId,
                     InputTotal: x.InputTotal,
+                    M1: 0,
+                    M2: 0,
+                    M3: 0,
+                    M4: 0,
+                    M5: 0,
+                    M6: 0,
+                    M8: 0,
+                    M9: 0,
+                    M10:0,
+                    M11:0,
+                    M12:0,
+                    Q1: 0,
+                    Q2: 0,
+                    Q3: 0,
+                    Q4: 0,
+                    H1: 0,
+                    H2: 0,
+                    Yearly: x.InputTotal,
+                    IsPost:false,
+
                 });
 
             });
@@ -573,7 +671,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 },
                 columns: [
 
-                    { field: "Serial", title: "SL", sortable: true, width: 60, editable: false },                 
+                    { field: "Serial", title: "SL", sortable: true, width: 60, editable: false },  
+                    { field: "SabreId", hidden:true, sortable: true, width: 60, editable: false },  
                     { field: "iBASCode", title: "iBAS Code", sortable: true, width: 170, editable: false },
                     { field: "iBASName", title: "iBAS Name", sortable: true, width: 170, editable: false },
                     { field: "SabreCode", title: "Sabre Code", sortable: true, width: 170, editable: false },

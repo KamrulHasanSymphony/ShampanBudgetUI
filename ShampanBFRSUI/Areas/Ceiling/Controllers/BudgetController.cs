@@ -3,7 +3,10 @@ using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
 using ShampanBFRS.Models.Helper;
 using ShampanBFRS.Models.KendoCommon;
+using ShampanBFRS.Models.SalaryAllowance;
+using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.Ceiling;
+using ShampanBFRS.Repo.SalaryAllowance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -155,33 +158,26 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
-        public ActionResult Edit(int yearId, string chargeGroup, string budgetType, int branchId)
+        [HttpGet]
+        public ActionResult Edit(string id)
         {
             try
             {
                 _repo = new BudgetRepo();
 
                 BudgetHeaderVM vm = new BudgetHeaderVM();
+                CommonVM param = new CommonVM();
+                param.Id = id;
+                ResultVM result = _repo.List(param);
 
-                var currentBranchId = 0;
-                if (Session["CurrentBranch"] != null)
-                    int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
-
-                vm.FiscalYearId = Convert.ToInt32(yearId);
-                vm.BudgetType = budgetType;
-                vm.BranchId = currentBranchId;
-
-                //ResultVM result = _repo.ProductBudgeDistincttList(vm);
-
-                //if (result.Status == MessageModel.Success && result.DataVM != null)
-                //{
-                //    var list = JsonConvert.DeserializeObject<List<ProductBudgetMasterVM>>(result.DataVM.ToString());
-
-                //    if (list != null && list.Any())
-                //    {
-                //        vm = list.First();
-                //    }
-                //}
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    vm = JsonConvert.DeserializeObject<List<BudgetHeaderVM>>(result.DataVM.ToString()).FirstOrDefault();
+                }
+                else
+                {
+                    vm = null;
+                }
 
                 vm.Operation = "update";
 
@@ -189,7 +185,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
             catch (Exception e)
             {
-                Session["result"] = MessageModel.Fail + "~" + e.Message;
+                Session["result"] = "Fail" + "~" + e.Message;
                 Elmah.ErrorSignal.FromCurrentContext().Raise(e);
                 return RedirectToAction("Index");
             }
@@ -246,108 +242,107 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
+        //[HttpPost]
+        //public JsonResult BudgetList(int yearId)
+        //{
+        //    ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+        //    _repo = new BudgetRepo();
+
+        //    try
+        //    {
+        //        var currentBranchId = 0;
+        //        if (Session["CurrentBranch"] != null)
+        //            int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
+
+        //        BudgetHeaderVM productBudgetVM = new BudgetHeaderVM();
+
+        //        productBudgetVM.FiscalYearId = yearId;
+        //        productBudgetVM.BranchId = currentBranchId;
+
+        //        //productBudgetVM.UserId = Session["UserId"].ToString();
+
+        //        result = _repo.ProductBudgetList(productBudgetVM);
+
+        //        if (result.Status == MessageModel.Success && result.DataVM != null)
+        //        {
+        //            var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
+
+        //            return Json(new
+        //            {
+        //                Items = gridData.Items,
+        //                TotalCount = gridData.TotalCount
+        //            }, JsonRequestBehavior.AllowGet);
+        //        }
+
+        //        return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+        //        return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
+        //[HttpPost]
+        //public JsonResult BudgeDistincttList(int yearId, String BudgetType)
+        //{
+        //    ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+        //    _repo = new BudgetRepo();
+
+        //    try
+        //    {
+        //        var currentBranchId = 0;
+        //        if (Session["CurrentBranch"] != null)
+        //            int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
+
+        //        BudgetHeaderVM productBudgetVM = new BudgetHeaderVM();
+
+        //        productBudgetVM.FiscalYearId = yearId;
+        //        productBudgetVM.BranchId = currentBranchId;
+
+        //        //productBudgetVM.UserId = Session["UserId"].ToString();
+
+        //        result = _repo.BudgeDistincttList(productBudgetVM);
+
+        //        if (result.Status == MessageModel.Success && result.DataVM != null)
+        //        {
+        //            var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
+
+        //            return Json(new
+        //            {
+        //                Items = gridData.Items,
+        //                TotalCount = gridData.TotalCount
+        //            }, JsonRequestBehavior.AllowGet);
+        //        }
+
+        //        return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+        //        return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
         [HttpPost]
-        public JsonResult BudgetList(int yearId)
+        public JsonResult GetGridData(GridOptions options, string budgetType = "")
         {
-            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new BudgetRepo();
 
             try
             {
-                var currentBranchId = 0;
-                if (Session["CurrentBranch"] != null)
-                    int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
 
-                BudgetHeaderVM productBudgetVM = new BudgetHeaderVM();
-
-                productBudgetVM.FiscalYearId = yearId;
-                productBudgetVM.BranchId = currentBranchId;
-
-                //productBudgetVM.UserId = Session["UserId"].ToString();
-
-                result = _repo.ProductBudgetList(productBudgetVM);
-
-                if (result.Status == MessageModel.Success && result.DataVM != null)
-                {
-                    var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
-
-                    return Json(new
-                    {
-                        Items = gridData.Items,
-                        TotalCount = gridData.TotalCount
-                    }, JsonRequestBehavior.AllowGet);
-                }
-
-                return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpPost]
-        public JsonResult BudgeDistincttList(int yearId, String BudgetType)
-        {
-            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
-            _repo = new BudgetRepo();
-
-            try
-            {
-                var currentBranchId = 0;
-                if (Session["CurrentBranch"] != null)
-                    int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
-
-                BudgetHeaderVM productBudgetVM = new BudgetHeaderVM();
-
-                productBudgetVM.FiscalYearId = yearId;
-                productBudgetVM.BranchId = currentBranchId;
-
-                //productBudgetVM.UserId = Session["UserId"].ToString();
-
-                result = _repo.BudgeDistincttList(productBudgetVM);
-
-                if (result.Status == MessageModel.Success && result.DataVM != null)
-                {
-                    var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
-
-                    return Json(new
-                    {
-                        Items = gridData.Items,
-                        TotalCount = gridData.TotalCount
-                    }, JsonRequestBehavior.AllowGet);
-                }
-
-                return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpPost]
-        public JsonResult GetGridData(GridOptions options, string TransactionType, string MenuType, string BudgetType = "")
-        {
-            ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
-            _repo = new BudgetRepo();
-
-            try
-            {
-                options.vm.UserId = Session["UserId"].ToString();
-                options.vm.TransactionType = TransactionType;
-                options.vm.BudgetType = BudgetType;
-
-                if (!string.IsNullOrWhiteSpace(MenuType) && MenuType.ToLower() == "all")
-                {
-                    options.vm.UserId = "";
-                }
+                //options.vm.BranchId = branchId == "0" ? "" : branchId;
+                //options.vm.IsPost = isPost;
+                //options.vm.FromDate = fromDate;
+                //options.vm.ToDate = toDate;
+                //options.vm.CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "";
+                options.vm.BudgetType = budgetType;
 
                 result = _repo.GetGridData(options);
 
-                if (result.Status == MessageModel.Success && result.DataVM != null)
+                if (result.Status == "Success" && result.DataVM != null)
                 {
                     var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
 
@@ -367,6 +362,37 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
+        [HttpGet]
+        public JsonResult GetDetailDataById(GridOptions options, int masterId)
+        {
+            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            _repo = new BudgetRepo();
+
+            try
+            {
+                result = _repo.GetDetailDataById(options, masterId);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetDetailVM>>(result.DataVM.ToString());
+
+                    return Json(new
+                    {
+                        Items = gridData.Items,
+                        TotalCount = gridData.TotalCount
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+       
 
 
     }

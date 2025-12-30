@@ -61,27 +61,7 @@
 
 
 
-        $('#details').on('click', 'input.txtProductName', function () {
-            debugger;
-            var originalRow = $(this);
-            debugger;
-
-            originalRow.closest("td").find("input").data('touched', true);
-
-            CommonService.productNameModal(
-                function success(result) {
-                },
-                function fail(error) {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                },
-                function dblClick(row) {
-                    productNameModalDblClick(row, originalRow);
-                },
-                function closeCallback() {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                }
-            );
-        });
+        
 
 
         $("#indexSearch").on('click', function () {
@@ -95,6 +75,340 @@
 
             GetGridDataList();
 
+        });
+        //new kendo grid
+
+
+        var detailsList = JSON.parse($("#detailsListJson").val() || "[]");
+
+        var detailsGridDataSource = new kendo.data.DataSource({
+            data: detailsList,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number", defaultValue: 0 },
+                        ChargeHeaderId: { type: "number", defaultValue: null },
+                        ProductId: { type: "number", defaultValue:0 },
+                        CIFCharge: { type: "number", defaultValue: 0 },
+                        ExchangeRateUsd: { type: "number", defaultValue:0 },
+                        InsuranceRate: { type: "number", defaultValue: 0 },
+                        BankCharge: { type: "number", defaultValue: 0 },
+
+                        OceanLoss: { type: "number", defaultValue: null },
+                        CPACharge: { type: "number", defaultValue: 0 },
+                        HandelingCharge: { type: "number", defaultValue: 0 },
+                        LightCharge: { type: "number", defaultValue: 0 },
+                        Survey: { type: "number", defaultValue: 0 },
+                        CostLiterExImport: { type: "number", defaultValue: 0 },
+
+                        ExERLRate: { type: "number", defaultValue: null },
+                        DutyPerLiter: { type: "number", defaultValue: 0 },
+                        Refined: { type: "number", defaultValue: 0 },
+                        Crude: { type: "number", defaultValue: 0 },
+                        SDRate: { type: "number", defaultValue: 0 },
+                        DutyInTariff: { type: "number", defaultValue: 0 },
+
+                        ATRate: { type: "number", defaultValue: null },
+                        AITRate: { type: "number", defaultValue: 0 },
+                        VATRate: { type: "number", defaultValue: 0 },
+                        ConversionFactorFixedValue: { type: "number", defaultValue: 0 },
+                        VATRateFixed: { type: "number", defaultValue: 0 },
+                        RiverDues: { type: "number", defaultValue: 0 },
+
+                        TariffRate: { type: "number", defaultValue: null },
+                        FobPriceBBL: { type: "number", defaultValue: 0 },
+                        FreightUsd: { type: "number", defaultValue: 0 },
+                        ServiceCharge: { type: "number", defaultValue: 0 },
+                        ProcessFee: { type: "number", defaultValue: 0 },
+                        RcoTreatmentFee: { type: "number", defaultValue: 0 },
+
+                        AbpTreatmentFee: { type: "number", defaultValue: null },
+                        ProcessFeeRate: { type: "number", defaultValue: 0 },
+                        RcoTreatmentFeeRate: { type: "number", defaultValue: 0 },
+                        AbpTreatmentFeeRate: { type: "number", defaultValue: 0 },
+                        ProductImprovementFee: { type: "number", defaultValue: 0 }
+
+                    }
+                }
+            },
+            aggregate: [
+                { field: "Quantity", aggregate: "sum" },
+                { field: "UnitPrice", aggregate: "sum" }
+
+            ]
+        });
+        var rowNumber = 0;
+        $("#kDetails").kendoGrid({
+            dataSource: detailsGridDataSource,
+            toolbar: [{ name: "create", text: "Add" }],
+            editable: {
+                mode: "incell",
+                createAt: "bottom"
+            },
+            save: function (e) {
+                const grid = this;
+                setTimeout(function () {
+                    grid.dataSource.aggregate();
+                    grid.refresh();
+                }, 0);
+            },
+            columns: [
+                {
+                    title: "Sl No",
+                    width: 60,
+                    template: function (dataItem) {
+                        var grid = $("#kDetails").data("kendoGrid");
+                        return grid.dataSource.indexOf(dataItem) + 1;
+                    }
+                },
+                {
+                    field: "ProductId",
+                    title: "Product Name",
+                    editor: productSelectorEditor,
+                    template: function (dataItem) {
+                        return dataItem.ProductName || "";
+                    },
+                    width: 120
+                },        
+                {
+                    field: "CIFCharge",
+                    title: "CIF Charge",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ExchangeRateUsd",
+                    title: "Exchange Rate Usd",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "InsuranceRate",
+                    title: "Insurance Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "BankCharge",
+                    title: "Bank Charge",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+
+                },
+                {
+                    field: "OceanLoss",
+                    title: "Ocean Loss",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "HandelingCharge",
+                    title: "Handeling Charge",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "LightCharge",
+                    title: "Light Charge",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "Survey",
+                    title: "Survey",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "CostLiterExImport",
+                    title: "Cost Liter ExImport",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ExERLRate",
+                    title: "ExERL Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "DutyPerLiter",
+                    title: "Duty Per Liter",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "Refined",
+                    title: "Refined",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "Crude",
+                    title: "Crude",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "SDRate",
+                    title: "SD Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "DutyInTariff",
+                    title: "Duty In Tariff",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ATRate",
+                    title: "AT Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "AITRate",
+                    title: "AIT Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "VATRate",
+                    title: "VAT Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ConversionFactorFixedValue",
+                    title: "Conversion Factor Fixed Value",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "VATRateFixed",
+                    title: "VAT Rate Fixed",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "RiverDues",
+                    title: "River Dues",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "TariffRate",
+                    title: "Tariff Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "FobPriceBBL",
+                    title: "Fob Price BBL",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "FreightUsd",
+                    title: "Freight Usd",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ServiceCharge",
+                    title: "Service Charge",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ProcessFee",
+                    title: "Process Fee",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "RcoTreatmentFee",
+                    title: "Rco Treatment Fee",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+
+
+                {
+                    field: "AbpTreatmentFee",
+                    title: "Abp Treatment Fee",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ProcessFeeRate",
+                    title: "Process Fee Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "RcoTreatmentFeeRate",
+                    title: "Rco Treatment Fee Rate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "AbpTreatmentFeeRate",
+                    title: "Abp Treatment FeeRate",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ProductImprovementFee",
+                    title: "Product Improvement Fee",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                           
+                {
+                    command: [{
+                        name: "destroy",
+                        iconClass: "k-icon k-i-trash",
+                        text: ""
+                    }],
+                    title: "&nbsp;",
+                    width: 35
+                }
+            ]
         });
 
 
@@ -125,35 +439,84 @@
             }
         }).data("kendoMultiColumnComboBox");
     };
-
-
-    function productNameModalDblClick(row, originalRow) {
+    function productSelectorEditor(container, options) {
         debugger;
+        var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
 
-        var dataTable = $("#modalData").DataTable();
-        var rowData = dataTable.row(row).data();
+        // Create input (you can bind value if needed)
+        $('<input type="text" class="form-control" readonly />')
+            .attr("data-bind", "value:ProductName")
+            .appendTo(wrapper);
 
-        var Id = rowData.Id;
-        var Code = rowData.Code;
-        var ProductName = rowData.Name;
-        var ConversionFactor = rowData.ConversionFactor != null
-            ? Number(rowData.ConversionFactor)
-            : 0;
+        // Create button inside an addon span eii monir..Monir
+        $('<div class="input-group-append">')
+            .append(
+                $('<button class="btn btn-outline-secondary" type="button">')
+                    .append('<i class="fa fa-search"></i>')
+                    .on("click", function () {
+                        debugger;
+                        openProductModal(options.model);
+                    })
+            )
+            .appendTo(wrapper);
 
+        kendo.bind(container, options.model);
+    }
 
-        var $currentRow = originalRow.closest('tr');
+    var selectedGridModel = null;
+    function openProductModal(gridModel) {
+        debugger;
+        selectedGridModel = gridModel;
 
-        $currentRow.find('.td-ConversionFactor').text(ConversionFactor);
-        $currentRow.find('.td-ProductName').text(ProductName);
-        $currentRow.find('.td-Code').text(Code);
-        $currentRow.find('.td-ProductId').text(Id);
+        $("#ProductWindow").kendoWindow({
+            title: "Select Product Name ",
+            modal: true,
+            width: "900px",
+            height: "550px",
+            visible: false,
+            close: function () {
+                selectedGridModel = null;
+            }
+        }).data("kendoWindow").center().open();
 
+        $("#Productgrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/ProductList",
+                        dataType: "json"
+                    }
+                },
+                pageSize: 10
+            },
+            pageable: true,
+            filterable: true,
+            selectable: "row",
+            toolbar: ["search"],
+            searchable: true,
+            columns: [
 
-        $("#partialModal").modal("hide");
-        originalRow.closest("td").find("input").data("touched", false).focus();
+                { field: "Code", title: "Code", width: 150 },
+                { field: "Name", title: "Product Name", width: 120 },
+                { field: "ConversionFactor", title: "Conversion Factor", width: 200 }
+            ],
+            dataBound: function () {
+                this.tbody.find("tr").on("dblclick", function () {
+                    var grid = $("#Productgrid").data("kendoGrid");
 
-    };
+                    var dataItem = grid.dataItem(this);
+                    if (dataItem && selectedGridModel) {
+                        selectedGridModel.set("ProductId", dataItem.Id);
+                        selectedGridModel.set("ProductName", dataItem.ProductName);
+                        selectedGridModel.set("ConversionFactor", dataItem.ConversionFactor);
 
+                        var window = $("#ProductWindow").data("kendoWindow");
+                        if (window) window.close();
+                    }
+                });
+            }
+        });
+    }
 
     var GetGridDataList = function () {
 

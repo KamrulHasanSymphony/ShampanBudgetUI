@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ShampanBFRS.Models.CommonVMs;
@@ -623,28 +624,21 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult ProductList(string value)
+        [HttpGet]
+        public ActionResult ProductList()
         {
             try
             {
                 List<ProductVM> lst = new List<ProductVM>();
                 CommonVM param = new CommonVM();
-                param.Value = value;
+
                 ResultVM result = _repo.ProductList(param);
 
                 if (result.Status == "Success" && result.DataVM != null)
                 {
                     lst = JsonConvert.DeserializeObject<List<ProductVM>>(result.DataVM.ToString());
                 }
-                return Json(new
-                {
-                    draw = Request["draw"],
-                    recordsTotal = lst.Count,
-                    recordsFiltered = lst.Count,
-                    data = lst
-                }, JsonRequestBehavior.AllowGet);
-                //return Json(lst, JsonRequestBehavior.AllowGet);
+                return Json(lst, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -652,6 +646,37 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+
+        //[HttpGet]
+        //public ActionResult ProductList(string value)
+        //{
+        //    try
+        //    {
+        //        List<ProductVM> lst = new List<ProductVM>();
+        //        CommonVM param = new CommonVM();
+        //        param.Value = value;
+        //        ResultVM result = _repo.ProductList(param);
+
+        //        if (result.Status == "Success" && result.DataVM != null)
+        //        {
+        //            lst = JsonConvert.DeserializeObject<List<ProductVM>>(result.DataVM.ToString());
+        //        }
+        //        return Json(new
+        //        {
+        //            draw = Request["draw"],
+        //            recordsTotal = lst.Count,
+        //            recordsFiltered = lst.Count,
+        //            data = lst
+        //        }, JsonRequestBehavior.AllowGet);
+        //        //return Json(lst, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+        //        return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
 
 
         [HttpPost]

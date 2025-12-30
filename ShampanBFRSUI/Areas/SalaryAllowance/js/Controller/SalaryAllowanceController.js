@@ -468,10 +468,6 @@
             columns: [
 
                 {
-                    selectable: true, width: 10
-                },
-
-                {
 
                     title: "Action",
                     width: 45,
