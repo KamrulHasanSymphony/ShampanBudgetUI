@@ -18,7 +18,7 @@
         };
 
         GetFiscalYear();
-        GetBudgetTypeComboBox();
+        //GetBudgetTypeComboBox();
         GenerateDatepicker();
 
 
@@ -204,7 +204,8 @@
 
 
     var GetGridDataList = function () {
-
+        debugger;
+        var budgetType = getBudgetType;
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -219,7 +220,7 @@
                     type: "POST",
                     dataType: "json",
                     cache: false,
-                    data: {}
+                    data: { budgetType: budgetType }
 
                 },
                 parameterMap: function (options) {
