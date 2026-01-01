@@ -95,35 +95,35 @@
                         InsuranceRate: { type: "number", defaultValue: 0 },
                         BankCharge: { type: "number", defaultValue: 0 },
 
-                        OceanLoss: { type: "number", defaultValue: null },
+                        OceanLoss: { type: "number", defaultValue: 0 },
                         CPACharge: { type: "number", defaultValue: 0 },
                         HandelingCharge: { type: "number", defaultValue: 0 },
                         LightCharge: { type: "number", defaultValue: 0 },
                         Survey: { type: "number", defaultValue: 0 },
                         CostLiterExImport: { type: "number", defaultValue: 0 },
 
-                        ExERLRate: { type: "number", defaultValue: null },
+                        ExERLRate: { type: "number", defaultValue: 0 },
                         DutyPerLiter: { type: "number", defaultValue: 0 },
                         Refined: { type: "number", defaultValue: 0 },
                         Crude: { type: "number", defaultValue: 0 },
                         SDRate: { type: "number", defaultValue: 0 },
                         DutyInTariff: { type: "number", defaultValue: 0 },
 
-                        ATRate: { type: "number", defaultValue: null },
+                        ATRate: { type: "number", defaultValue: 0 },
                         AITRate: { type: "number", defaultValue: 0 },
                         VATRate: { type: "number", defaultValue: 0 },
                         ConversionFactorFixedValue: { type: "number", defaultValue: 0 },
                         VATRateFixed: { type: "number", defaultValue: 0 },
                         RiverDues: { type: "number", defaultValue: 0 },
 
-                        TariffRate: { type: "number", defaultValue: null },
+                        TariffRate: { type: "number", defaultValue: 0 },
                         FobPriceBBL: { type: "number", defaultValue: 0 },
                         FreightUsd: { type: "number", defaultValue: 0 },
                         ServiceCharge: { type: "number", defaultValue: 0 },
                         ProcessFee: { type: "number", defaultValue: 0 },
                         RcoTreatmentFee: { type: "number", defaultValue: 0 },
 
-                        AbpTreatmentFee: { type: "number", defaultValue: null },
+                        AbpTreatmentFee: { type: "number", defaultValue: 0 },
                         ProcessFeeRate: { type: "number", defaultValue: 0 },
                         RcoTreatmentFeeRate: { type: "number", defaultValue: 0 },
                         AbpTreatmentFeeRate: { type: "number", defaultValue: 0 },
@@ -505,9 +505,11 @@
                     var grid = $("#Productgrid").data("kendoGrid");
 
                     var dataItem = grid.dataItem(this);
+                    debugger;
                     if (dataItem && selectedGridModel) {
+                        
                         selectedGridModel.set("ProductId", dataItem.Id);
-                        selectedGridModel.set("ProductName", dataItem.ProductName);
+                        selectedGridModel.set("ProductName", dataItem.Name);
                         selectedGridModel.set("ConversionFactor", dataItem.ConversionFactor);
 
                         var window = $("#ProductWindow").data("kendoWindow");
@@ -785,29 +787,81 @@
 
         var model = serializeInputs("frmEntry");
 
-        if (!hasLine($table)) {
-            ShowNotification(3, "Can not save without details.");
-            return;
-        }
+        //if (!hasLine($table)) {
+        //    ShowNotification(3, "Can not save without details.");
+        //    return;
+        //}
+        //debugger;
+        //var details = serializeTable($table);
 
-        var details = serializeTable($table);
+        var details = [];
+        var grid = $("#kDetails").data("kendoGrid");
+        if (grid) {
+            var dataItems = grid.dataSource.view();
 
-        var isValidDetails = true;
-        var errorMessage = "";
+            for (var i = 0; i < dataItems.length; i++) {
+                var item = dataItems[i];
 
-        $(details).each(function (index, row) {
-            if (!row.ProductId || parseInt(row.ProductId) <= 0) {
-                isValidDetails = false;
-                errorMessage = "Product Name is required at row " + (index + 1);
-                return false;
+                // You can adjust this to match your server-side view model
+                details.push({
+                    ProductId: item.ProductId,
+                    ProductName: item.ProductName,
+                    CIFCharge: item.CIFCharge,
+                    ExchangeRateUsd: item.ExchangeRateUsd,
+                    InsuranceRate: item.InsuranceRate,
+                    BankCharge: item.BankCharge,
+
+                    OceanLoss: item.OceanLoss,
+                    CPACharge: item.CPACharge,
+                    HandelingCharge: item.HandelingCharge,
+                    LightCharge: item.LightCharge,
+                    Survey: item.Survey,
+
+                    CostLiterExImport: item.CostLiterExImport,
+                    ExERLRate: item.ExERLRate,
+                    DutyPerLiter: item.DutyPerLiter,
+                    Refined: item.Refined,
+                    Crude: item.Crude,
+
+                    SDRate: item.SDRate,
+                    DutyInTariff: item.DutyInTariff,
+                    ATRate: item.ATRate,
+                    AITRate: item.AITRate,
+                    VATRate: item.VATRate,
+
+                    ConversionFactorFixedValue: item.ConversionFactorFixedValue,
+                    VATRateFixed: item.VATRateFixed,
+                    RiverDues: item.RiverDues,
+                    TariffRate: item.TariffRate,
+                    FobPriceBBL: item.FobPriceBBL,
+
+                    FreightUsd: item.FreightUsd,
+                    ServiceCharge: item.ServiceCharge,
+                    ProcessFee: item.ProcessFee,
+                    RcoTreatmentFee: item.RcoTreatmentFee,
+                    AbpTreatmentFee: item.AbpTreatmentFee,
+
+                    ProcessFeeRate: item.ProcessFeeRate,
+                    RcoTreatmentFeeRate: item.RcoTreatmentFeeRate,
+                    AbpTreatmentFeeRate: item.AbpTreatmentFeeRate,
+                    ProductImprovementFee: item.ProductImprovementFee
+
+
+
+                });
             }
+        }
 
-        });
 
-        if (!isValidDetails) {
-            ShowNotification(3, errorMessage);
+        if (details.length === 0) {
+            ShowNotification(3, "Save can not without details");
             return;
         }
+        if (item.ProductName === 0 || item.ProductName === undefined || item.ProductName === null || item.ProductName === "") {
+            ShowNotification(3, "Product Name is required.");
+            return;
+        }
+    
 
         model.IsActive = $('#IsActive').prop('checked');
         model.ChargeDetails = details;
