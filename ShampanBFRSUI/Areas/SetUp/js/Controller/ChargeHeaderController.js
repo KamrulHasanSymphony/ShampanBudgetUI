@@ -780,19 +780,9 @@
 
     function save($table) {
 
-        debugger;
-        //-
-        //var grid = $("#GridDataList").data("kendoGrid");
-
 
         var model = serializeInputs("frmEntry");
 
-        //if (!hasLine($table)) {
-        //    ShowNotification(3, "Can not save without details.");
-        //    return;
-        //}
-        //debugger;
-        //var details = serializeTable($table);
 
         var details = [];
         var grid = $("#kDetails").data("kendoGrid");
