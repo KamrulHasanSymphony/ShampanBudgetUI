@@ -127,6 +127,7 @@
                         Id: { type: "number", defaultValue: 0 },
                         SaleHeaderId: { type: "number", defaultValue: null },
                         ProductId: { type: "number", defaultValue: 0 },
+                        ProductName: { type: "string", defaultValue: ''},
                         ConversionFactor: { type: "number", defaultValue: 0 },
                         ExchangeRateUsd: { type: "number", defaultValue: 0 },
                         ProductionMT: { type: "number", defaultValue: 0 },
@@ -852,6 +853,7 @@
                 // You can adjust this to match your server-side view model
                 details.push({
                     SaleHeaderId: item.SaleHeaderId,
+                    ProductId: item.ProductId,
                     ProductName: item.ProductName,
                     ConversionFactor: item.ConversionFactor,
                     ProductionMT: item.ProductionMT,
