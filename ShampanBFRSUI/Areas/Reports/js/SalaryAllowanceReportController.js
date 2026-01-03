@@ -1,7 +1,7 @@
-var BudgetReportController = function (CommonService, CommonAjaxService) {
+var SalaryAllowanceReportController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
-        var getFiscalYearId = $("#GLFiscalYearId").val() || 0;
+        var getFiscalYearId = $("#FiscalYearId").val() || 0;
         var getReportType = $("#ReportType").val() || 0;
         var getOperation = $("#Operation").val() || '';
         if (getOperation !== '') {
@@ -49,7 +49,7 @@ var BudgetReportController = function (CommonService, CommonAjaxService) {
 
     };
     function GetFiscalYearComboBox() {
-        var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
+        var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Id",
             height: 400,

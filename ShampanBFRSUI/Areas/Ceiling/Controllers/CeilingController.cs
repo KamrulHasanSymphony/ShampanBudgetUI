@@ -79,6 +79,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                         model.CreatedOn = DateTime.Now.ToString();
                         model.CreatedFrom = Ordinary.GetLocalIpAddress();
                         model.IsActive = true;
+                        model.IsArchive = false;
 
                         resultVM = _repo.Insert(model, model.CreatedBy);
 
