@@ -1,13 +1,10 @@
 ﻿var SaleController = function (CommonService, CommonAjaxService) {
 
-    //var getChargeGroup = 0;
-
     var init = function () {
         debugger;
 
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
-        //getChargeGroup = $("#ChargeGroup").val() || 0;
         var getOperation = $("#Operation").val() || '';
         getFiscalYearId = $("#FiscalYearId").val() || 0;
         getBudgetType = $("#BudgetType").val() || '';
@@ -18,7 +15,6 @@
         };
 
         GetFiscalYear();
-        //GetBudgetTypeComboBox();
         GenerateDatepicker();
 
         var IsPost = $('#IsPost').val();
@@ -41,27 +37,7 @@
 
         });
 
-        $('#details').on('click', 'input.txtProductName', function () {
-            debugger;
-            var originalRow = $(this);
-            debugger;
-
-            originalRow.closest("td").find("input").data('touched', true);
-
-            CommonService.productNameModal(
-                function success(result) {
-                },
-                function fail(error) {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                },
-                function dblClick(row) {
-                    productNameModalDblClick(row, originalRow);
-                },
-                function closeCallback() {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                }
-            );
-        });
+       
         $('.btnsave').click('click', function () {
             debugger;
             var getId = $('#Id').val();
@@ -126,9 +102,6 @@
             }
         );
 
-
-
-
         $("#indexSearch").on('click', function () {
             var branchId = $("#Branchs").data("kendoMultiColumnComboBox").value();
 
@@ -142,9 +115,255 @@
 
         });
 
+        //for kendo grid
+        var SaleDetail = JSON.parse($("#detailsListJson").val() || "[]");
+
+        var detailsGridDataSource = new kendo.data.DataSource({
+            data: SaleDetail,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number", defaultValue: 0 },
+                        SaleHeaderId: { type: "number", defaultValue: null },
+                        ProductId: { type: "number", defaultValue: 0 },
+                        ProductName: { type: "string", defaultValue: ''},
+                        ConversionFactor: { type: "number", defaultValue: 0 },
+                        ExchangeRateUsd: { type: "number", defaultValue: 0 },
+                        ProductionMT: { type: "number", defaultValue: 0 },
+                        PriceMT: { type: "number", defaultValue: 0 },
+                        PriceLTR: { type: "number", defaultValue: 0 },
+                        SalesExERLValue: { type: "number", defaultValue: 0 },
+                        HandelingCharge: { type: "number", defaultValue: 0 },
+                        SalesExImport_LocalMT: { type: "number", defaultValue: 0 },
+                        SalesExImport_LocalValue: { type: "number", defaultValue: 0 },
+                        TotalMT: { type: "number", defaultValue: 0 },
+                        TotalValueTK_LAC: { type: "number", defaultValue: 0 }                
+
+                    }
+                }
+            },
+            change: function (e) {
+                if (e.action === "itemchange") {
+
+                    if (
+                        e.field === "PriceLTR" ||
+                        e.field === "ProductionMT" ||
+                        e.field === "SalesExImport_LocalMT" ||
+                        e.field === "ConversionFactor"
+                    ) {
+                        calculateRow(e.items[0]);
+                    }
+                }
+            },
+            aggregate: [
+                { field: "Quantity", aggregate: "sum" },
+                { field: "UnitPrice", aggregate: "sum" }
+
+            ]
+        });
+
+        var rowNumber = 0;
+        $("#kDetails").kendoGrid({
+            dataSource: detailsGridDataSource,
+            toolbar: [{ name: "create", text: "Add" }],
+            editable: {
+                mode: "incell",
+                createAt: "bottom"
+            },
+            save: function (e) {
+                const grid = this;
+                setTimeout(function () {
+                    grid.dataSource.aggregate();
+                    grid.refresh();
+                }, 0);
+            },
+            columns: [
+                {
+                    title: "Sl No",
+                    width: 60,
+                    template: function (dataItem) {
+                        var grid = $("#kDetails").data("kendoGrid");
+                        return grid.dataSource.indexOf(dataItem) + 1;
+                    }
+                },
+                {
+                    field: "ProductId",
+                    title: "Product Name",
+                    editor: productSelectorEditor,
+                    template: function (dataItem) {
+                        return dataItem.ProductName || "";
+                    },
+                    width: 120
+                },
+                {
+                    field: "ConversionFactor",
+                    title: "Conversion Factor",
+                    editable: true,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "PriceLTR",
+                    title: "PriceL TR",
+                    format: "{0:n2}",
+                   
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "PriceMT",
+                    title: "PriceMT",
+                    editable: true,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ProductionMT",
+                    title: "Production MT",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "SalesExImport_LocalMT",
+                    title: "Sales ExImport_LocalMT",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "SalesExImport_LocalValue",
+                    title: "Sales ExImport_LocalValue",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "TotalMT",
+                    title: "Total MT",
+                    editable: true,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                          
+                {
+                    field: "SalesExERLValue",
+                    title: "Sales ExERL Value",
+                    editable: true,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "TotalValueTK_LAC",
+                    title: "Total Value TK_LAC",
+                    editable: true,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                
+                {
+                    command: [{
+                        name: "destroy",
+                        iconClass: "k-icon k-i-trash",
+                        text: ""
+                    }],
+                    title: "&nbsp;",
+                    width: 35
+                }
+
+    
+            ]
+        });
 
 
     };
+
+    function productSelectorEditor(container, options) {
+        debugger;
+        var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
+
+        // Create input (you can bind value if needed)
+        $('<input type="text" class="form-control" readonly />')
+            .attr("data-bind", "value:ProductName")
+            .appendTo(wrapper);
+
+        // Create button inside an addon span eii monir..Monir
+        $('<div class="input-group-append">')
+            .append(
+                $('<button class="btn btn-outline-secondary" type="button">')
+                    .append('<i class="fa fa-search"></i>')
+                    .on("click", function () {
+                        debugger;
+                        openProductModal(options.model);
+                    })
+            )
+            .appendTo(wrapper);
+
+        kendo.bind(container, options.model);
+    }
+
+    var selectedGridModel = null;
+    function openProductModal(gridModel) {
+        debugger;
+        selectedGridModel = gridModel;
+
+        $("#ProductWindow").kendoWindow({
+            title: "Select Product Name ",
+            modal: true,
+            width: "900px",
+            height: "550px",
+            visible: false,
+            close: function () {
+                selectedGridModel = null;
+            }
+        }).data("kendoWindow").center().open();
+
+        $("#Productgrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/ProductList",
+                        dataType: "json"
+                    }
+                },
+                pageSize: 10
+            },
+            pageable: true,
+            filterable: true,
+            selectable: "row",
+            toolbar: ["search"],
+            searchable: true,
+            columns: [
+
+                { field: "Code", title: "Code", width: 150 },
+                { field: "Name", title: "Product Name", width: 120 },
+                { field: "ConversionFactor", title: "Conversion Factor", width: 200 }
+            ],
+            dataBound: function () {
+                this.tbody.find("tr").on("dblclick", function () {
+                    var grid = $("#Productgrid").data("kendoGrid");
+
+                    var dataItem = grid.dataItem(this);
+                    debugger;
+                    if (dataItem && selectedGridModel) {
+
+                        selectedGridModel.set("ProductId", dataItem.Id);
+                        selectedGridModel.set("ProductName", dataItem.Name);
+                        selectedGridModel.set("ConversionFactor", dataItem.ConversionFactor);
+
+                        var window = $("#ProductWindow").data("kendoWindow");
+                        if (window) window.close();
+                    }
+                });
+            }
+        });
+    }
     //function computeSubTotal(row, param) {
     //    debugger;
     //    var salary = parseFloat(row.closest("tr").find("td.td-BasicWagesSalaries").text().replace(/,/g, '')) || 0;
@@ -242,34 +461,7 @@
             format: "yyyy-MM-dd" // Optional: Set the date format
         });
     }
-    function productNameModalDblClick(row, originalRow) {
-        debugger;
-
-        var dataTable = $("#modalData").DataTable();
-        var rowData = dataTable.row(row).data();
-
-        var Id = rowData.Id;
-        var Code = rowData.Code;
-        var ProductName = rowData.Name;
-        var ConversionFactor = rowData.ConversionFactor != null
-            ? Number(rowData.ConversionFactor)
-            : 0;
-
-
-        var $currentRow = originalRow.closest('tr');
-
-       // $currentRow.find('.td-ConversionFactor').text(ConversionFactor);
-        $currentRow.find('.td-ProductName').text(ProductName);
-        $currentRow.find('.td-Code').text(Code);
-        $currentRow.find('.td-ProductId').text(Id);
-
-
-        $("#partialModal").modal("hide");
-        originalRow.closest("td").find("input").data("touched", false).focus();
-
-    };
-
-
+    
     var GetGridDataList = function (getBudgetType) {
         debugger;
         var gridDataSource = new kendo.data.DataSource({
@@ -390,15 +582,28 @@
             batch: true,
             schema: {
                 data: "Items",
-                total: "TotalCount"
-            },
-            model: {
-
-                fields: {
-                    RequisitionDate: { type: "date" }
+                total: "TotalCount",
+                model: {
+                    id: "Id",
+                    fields: {
+                        ConversionFactor: { type: "number", editable: true },
+                        PriceLTR: { type: "number", editable: true },
+                        ProductionMT: { type: "number", editable: true },                   
+                        SalesExImport_LocalMT: { type: "number", editable: true },
+                        PriceMT: { type: "number", editable: false },
+                        SalesExERLValue: { type: "number", editable: false },
+                        SalesExImport_LocalValue: { type: "number", editable: false },
+                        TotalMT: { type: "number", editable: false },
+                        TotalValueTK_LAC: { type: "number", editable: false }
+                    }
                 }
-            }
-
+            },
+            change: function (e) {
+                if (e.action === "itemchange") {
+                    calculateRow(e.items[0]);
+                }
+            },
+            editable: true
         });
 
 
@@ -483,8 +688,7 @@
                     columns: [
                         { field: "Id", hidden: true, width: 50 },
                         { field: "SaleHeaderId", hidden: true, title: "Sale Header Id", width: 120 },
-                        { field: "ProductName", title: "Product Name", width: 120 },
-                        { field: "ProductId", hidden: true, title: "Product Id", width: 120 },
+                        { field: "ProductName", title: "Product Name", width: 120 },                     
                         { field: "ConversionFactor", title: "Conversion Factor", width: 120 },
                         { field: "ProductionMT", title: "Production MT", width: 120 },
                         { field: "PriceMT", title: "Price MT", width: 120 },
@@ -594,56 +798,7 @@
                     }
                 },
             ],
-            //columns: [
-
-            //    {
-            //        selectable: true, width: 55,
-            //    },
-
-            //    {
-
-            //        title: "Action",
-            //         width: 90,
-            //        template: function (dataItem) {
-            //            console.log(dataItem);
-            //            return `
-            //        <a href="/Sale/Sale/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
-            //            <i class="fas fa-pencil-alt"></i>
-            //        </a>`;
-            //        }
-            //    },
-
-            //    { field: "Id", hidden: true, sortable: true },
-            //    { field: "Code", title: 'Code', sortable: true, width: 140, },
-            //    { field: "FiscalYear", hidden: true, title: 'FiscalYear', sortable: true, width: 90, },
-            //    { field: "BudgetType", title: 'Budget Type', sortable: true, width: 110, },
-            //    {
-            //        field: "TransactionDate", title: "Transaction Date", sortable: true, hidden: true, width: 130, template: '#= kendo.toString(kendo.parseDate(TransactionDate), "yyyy-MM-dd") #',
-            //        filterable:
-            //        {
-            //            ui: "datepicker"
-            //        }
-            //    },
-
-            //    {
-            //        field: "Status", title: "Status", sortable: true, width: 100,
-            //        filterable: {
-            //            ui: function (element) {
-            //                element.kendoDropDownList({
-            //                    dataSource: [
-            //                        { text: "Yes", value: "1" },
-            //                        { text: "No", value: "0" }
-            //                    ],
-            //                    dataTextField: "text",
-            //                    dataValueField: "value",
-            //                    optionLabel: "Select Option"
-            //                });
-            //            }
-            //        }
-            //    },
-
-
-            //],
+            
             editable: false,
             selectable: "multiple row",
             navigatable: true,
@@ -661,43 +816,71 @@
         });
     };
 
+    function calculateRow(dataItem) {
+
+        var conversionFactor = dataItem.ConversionFactor || 0;
+        var priceLTR = dataItem.PriceLTR || 0;
+        var productionMT = dataItem.ProductionMT || 0;
+        var importMT = dataItem.SalesExImport_LocalMT || 0;
+
+        var priceMT = priceLTR * conversionFactor;
+        var salesExERLValue = priceMT * productionMT;
+        var salesExImportLocalValue = importMT * priceMT;
+        var totalMT = productionMT + importMT;
+        var totalValueTK_LAC = (salesExERLValue + salesExImportLocalValue) / 100000;
+
+        dataItem.set("PriceMT", priceMT);
+        dataItem.set("SalesExERLValue", salesExERLValue);
+        dataItem.set("SalesExImport_LocalValue", salesExImportLocalValue);
+        dataItem.set("TotalMT", totalMT);
+        dataItem.set("TotalValueTK_LAC", totalValueTK_LAC);
+    }
+
 
     function save($table) {
-
-        debugger;
-        //-
-        //var grid = $("#GridDataList").data("kendoGrid");
 
 
         var model = serializeInputs("frmEntry");
 
-        if (!hasLine($table)) {
-            ShowNotification(3, "Can not save without details.");
+        var details = [];
+        var grid = $("#kDetails").data("kendoGrid");
+        if (grid) {
+            var dataItems = grid.dataSource.view();
+
+            for (var i = 0; i < dataItems.length; i++) {
+                var item = dataItems[i];
+
+                // You can adjust this to match your server-side view model
+                details.push({
+                    SaleHeaderId: item.SaleHeaderId,
+                    ProductId: item.ProductId,
+                    ProductName: item.ProductName,
+                    ConversionFactor: item.ConversionFactor,
+                    ProductionMT: item.ProductionMT,
+                    PriceMT: item.PriceMT,
+                    PriceLTR: item.PriceLTR,
+
+                    SalesExERLValue: item.SalesExERLValue,
+                    SalesExImport_LocalMT: item.SalesExImport_LocalMT,
+                    SalesExImport_LocalValue: item.SalesExImport_LocalValue,
+                    TotalMT: item.TotalMT,
+                    TotalValueTK_LAC: item.TotalValueTK_LAC
+
+                });
+            }
+        }
+
+
+        if (details.length === 0) {
+            ShowNotification(3, "Save can not without details");
+            return;
+        }
+        if (item.ProductName === 0 || item.ProductName === undefined || item.ProductName === null || item.ProductName === "") {
+            ShowNotification(3, "Product Name is required.");
             return;
         }
 
-        var details = serializeTable($table);
-
-        //var isValidDetails = true;
-        //var errorMessage = "";
-
-        //$(details).each(function (index, row) {
-        //    if (!row.ProductId || parseInt(row.ProductId) <= 0) {
-        //        isValidDetails = false;
-        //        errorMessage = "Product Name is required at row " + (index + 1);
-        //        return false;
-        //    }
-
-        //});
-
-        //if (!isValidDetails) {
-        //    ShowNotification(3, errorMessage);
-        //    return;
-        //}
-        //model.IsPost = false;
-        //if ($('#IsPost').prop('checked')) {
-        //    model.IsPost = true;
-        //}
+        
         model.IsActive = $('#IsActive').prop('checked');
         model.SaleDetail = details; 
 

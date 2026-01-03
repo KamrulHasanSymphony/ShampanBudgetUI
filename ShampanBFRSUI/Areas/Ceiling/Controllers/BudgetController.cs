@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 {
@@ -106,7 +107,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                         model.LastModifiedOn = DateTime.Now.ToString();
                         model.LastUpdateFrom = Ordinary.GetLocalIpAddress();
 
-                        //resultVM = _repo.Update(model);
+                        resultVM = _repo.Update(model);
 
                         if (resultVM.Status == ResultStatus.Success.ToString())
                         {
@@ -169,6 +170,39 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 CommonVM param = new CommonVM();
                 param.Id = id;
                 ResultVM result = _repo.List(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    vm = JsonConvert.DeserializeObject<List<BudgetHeaderVM>>(result.DataVM.ToString()).FirstOrDefault();
+                }
+                else
+                {
+                    vm = null;
+                }
+
+                vm.Operation = "update";
+
+                return View("Create", vm);
+            }
+            catch (Exception e)
+            {
+                Session["result"] = "Fail" + "~" + e.Message;
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ListEdit(string id)
+        {
+            try
+            {
+                _repo = new BudgetRepo();
+
+                BudgetHeaderVM vm = new BudgetHeaderVM();
+                CommonVM param = new CommonVM();
+                param.Id = id;
+                ResultVM result = _repo.ListEdit(param);
 
                 if (result.Status == "Success" && result.DataVM != null)
                 {
@@ -392,7 +426,55 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
-       
+        [HttpPost]
+
+        public ActionResult MultiplePost(CommonVM param)
+        {
+            ResultModel<BudgetHeaderVM> result = new ResultModel<BudgetHeaderVM>();
+
+            try
+            {
+                _repo = new BudgetRepo();
+
+
+                param.ModifyBy = Session["UserId"].ToString();
+                param.ModifyFrom = Ordinary.GetLocalIpAddress();
+
+                ResultVM resultData = _repo.MultiplePost(param);
+
+                Session["result"] = resultData.Status + "~" + resultData.Message;
+
+                if (resultData.Status == "Success")
+                {
+                    result = new ResultModel<BudgetHeaderVM>()
+                    {
+                        Success = true,
+                        Status = Status.Success,
+                        Message = resultData.Message,
+                        Data = null
+                    };
+                }
+                else
+                {
+                    result = new ResultModel<BudgetHeaderVM>()
+                    {
+                        Success = false,
+                        Status = Status.Fail,
+                        Message = resultData.Message,
+                        Data = null
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return RedirectToAction("Index");
+            }
+
+            return Json(result);
+        }
+
+
 
 
     }

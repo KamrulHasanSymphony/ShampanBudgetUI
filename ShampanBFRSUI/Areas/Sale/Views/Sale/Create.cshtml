@@ -1,4 +1,5 @@
-﻿@model ShampanBFRS.Models.Sale.SaleHeaderVM
+﻿@using Newtonsoft.Json
+@model ShampanBFRS.Models.Sale.SaleHeaderVM
 
 @{
     ViewBag.Title = " Sale Header Create";
@@ -32,7 +33,7 @@
                 }
                 else
                 {
-            <h1 class="m-0"> Sale Header Create(@Model.BudgetType)</h1>
+                    <h1 class="m-0"> Sale Header Create(@Model.BudgetType)</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -90,6 +91,7 @@
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.Operation)
                 @Html.HiddenFor(model => model.BudgetType)
+                @Html.Hidden("detailsListJson", JsonConvert.SerializeObject(Model.SaleDetail ?? new List<ShampanBFRS.Models.Sale.SaleDetailVM>()))
 
 
                 <div class="form-group row">
@@ -146,68 +148,15 @@
             </div>
 
             <div class="card-body">
-
-                <button type="button" title="Add SO Details" id="addRows" class="btn btn-lg btn-success mb-2"> <i class="fa fa-plus"></i> </button>
-                <div class="clearfix">&nbsp;</div>
-                <div style="overflow-x: auto; white-space: nowrap;">
-
-                    <table class="table table-bordered table-striped table-sm" id="details">
-                        <thead>
-                            <tr>
-                                <th data-type="text" data-computed="true" data-required="false" data-name="SLNo" style="width:3%;">SL.</th>
-                                <th hidden data-type="text" data-search="false" data-name="SaleHeaderId" style="width:5%;">Sale Header Id</th>
-                                <th data-type="text" data-search="true" data-name="ProductName" style="width:20%;">Product Nmae</th>
-                                <th hidden data-type="text" data-search="false" data-name="ProductId" style="width: 20%;">Product Id</th>
-                                <th data-type="number" data-name="ConversionFactor" style="width: 20%;">Conversion Factor</th>
-                                <th data-type="number" data-name="PriceLTR" style="width: 15%;">Price LTR</th>
-                                <th data-type="number" data-computed="true" data-name="PriceMT" style="width: 15%;">Price MT</th>
-                                <th data-type="number" data-name="ProductionMT" style="width: 20%;">Production MT</th>
-                                <th data-type="number" data-computed="true" data-name="SalesExERLValue" style="width: 25%;">Sales Ex ERL Value</th>
-                                <th data-type="number" data-name="SalesExImport_LocalMT" style="width: 25%;">Sales Ex Import Local MT</th>
-                                <th data-type="number" data-computed="true" data-name="SalesExImport_LocalValue" style="width:4%;">Sales Ex Import Local Value</th>
-                                <th data-type="number" data-computed="true" data-name="TotalMT" style="width:4%;">Total MT</th>
-                                <th data-type="number" data-computed="true" data-name="TotalValueTK_LAC" style="width:4%;">Total Value TK LAC</th>
-                            </tr>
-                        </thead>
-                        <tbody id="SODBody">
-                            @if (Model != null)
-                            {
-                                foreach (var item in Model.SaleDetail)
-                                {
-                                    <tr>
-
-                                        <td> @serial </td>
-                                        <td hidden> @item.SaleHeaderId </td>
-                                        <td> @item.ProductName </td>
-                                        <td hidden> @item.ProductId </td>
-                                        <td>@item.ConversionFactor</td>
-                                        <td>@item.PriceLTR</td>
-                                        <td>@item.PriceMT</td>
-                                        <td>@item.ProductionMT</td>
-
-                                        <td>@item.SalesExERLValue</td>
-                                        <td>@item.SalesExImport_LocalMT</td>
-                                        <td>@item.SalesExImport_LocalValue</td>
-                                        <td>@item.TotalMT</td>
-                                        <td>@item.TotalValueTK_LAC</td>
-
-                                        <td> <button class="btn btn-danger btn-sm remove-row-btn"><i class='fa fa-trash'></i></button> </td>
-
-                                    </tr>
-
-                                    { serial++; }
-                                }
-                            }
-
-                        </tbody>
-
-                    </table>
-                </div>
-
+                <div id="kDetails"></div>
             </div>
         </div>
 
     </form>
+
+    <div id="ProductWindow" style="display:none;">
+        <div id="Productgrid"></div>
+    </div>
 
 
 

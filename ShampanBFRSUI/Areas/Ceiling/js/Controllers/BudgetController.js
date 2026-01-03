@@ -1,7 +1,6 @@
-
+﻿
 var BudgetController = function (CommonService, CommonAjaxService) {
 
-    var getFiscalYearId = 0;
     var getBudgetType = 0;
     var getTransactionType = '';
 
@@ -13,19 +12,25 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         getBudgetType = $("#BudgetType").val() || 0;
         getTransactionType = $("#TransactionType").val() || '';
 
-
-        if (parseInt(getFiscalYearId) != 0 && getOperation != '') {
-            validateAndFetchBudgetData();
-        }
+        GetFiscalYearComboBox();
+        //if (parseInt(getFiscalYearId) != 0 && getOperation != '') {
+        //    validateAndFetchBudgetData();
+        //}
 
         if (parseInt(getId) == 0 && getBudgetType != '') {
 
             GetGridDataList(getTransactionType, getBudgetType);
         }
 
+        if (getOperation == 'update') {
+            GetEditGridDataList();
+        }
+
+        console.log(getFiscalYearId);
         $("[data-bootstrap-switch]").bootstrapSwitch();
         debugger;
-        GetFiscalYearComboBox();
+
+        
 
         // Save button click handler
         $('.btnsave').click('click', function () {
@@ -38,7 +43,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
-                    
+                    debugger;
                     save();
                 }
             });
@@ -73,7 +78,41 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             }
         });
 
+        $('#btnPost').on('click', function () {
+            debugger;
+
+            Confirmation("Are you sure? Do You Want to Post Data?",
+                function (result) {
+                    if (result) {
+                        debugger;
+                        SelectDataPost();
+                    }
+                });
+        });
+
+        $('.btnPost').on('click', function () {
+
+            Confirmation("Are you sure? Do You Want to Post Data?",
+                function (result) {
+
+                    if (result) {
+                        var model = serializeInputs("frmEntry");
+                        if (model.IsPost == "True") {
+                            ShowNotification(3, "Data has already been Posted.");
+                        }
+                        else {
+                            model.IDs = model.Id;
+                            var url = "/Ceiling/Budget/MultiplePost";
+                            CommonAjaxService.multiplePost(url, model, postDone, fail);
+                        }
+                    }
+                });
+        });
+
+
+
         function GetFiscalYearComboBox() {
+            debugger;
             var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -97,8 +136,9 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 }
             }).data("kendoMultiColumnComboBox");
         };
+        
 
-       
+   
 
         function validateAndFetchBudgetData() {
 
@@ -114,6 +154,41 @@ var BudgetController = function (CommonService, CommonAjaxService) {
       
 
     };
+
+    function SelectDataPost() {
+        debugger;
+
+        var IDs = [];
+
+        var selectedRows = $("#GridDataList").data("kendoGrid").select();
+
+        if (selectedRows.length === 0) {
+            ShowNotification(3, "You are requested to Select checkbox!");
+            return;
+        }
+
+        selectedRows.each(function () {
+            var dataItem = $("#GridDataList").data("kendoGrid").dataItem(this);
+            IDs.push(dataItem.Id);
+        });
+
+        var model = {
+            IDs: IDs
+        };
+        var filteredData = [];
+        var dataSource = $("#GridDataList").data("kendoGrid").dataSource;
+        var rowData = dataSource.view().filter(x => IDs.includes(x.Id));
+        filteredData = rowData.filter(x => x.IsPost == true && IDs.includes(x.Id));
+
+        if (filteredData.length > 0) {
+            ShowNotification(3, "Data has already been Posted.");
+            return;
+        }
+        var url = "/Ceiling/Budget/MultiplePost";
+
+        CommonAjaxService.multiplePost(url, model, postDone, fail);
+    };
+
 
     var GetGridDataList = function (getTransactionType, getBudgetType) {
         var gridDataSource = new kendo.data.DataSource({
@@ -367,6 +442,9 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 }, 1000);
             },
             columns: [
+                {
+                    selectable: true, width: 40
+                },
 
                 {
                     title: "Action",
@@ -382,7 +460,25 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", sortable: true, width: 200 },
                 { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
-                { field: "IsPost", title: "Post", sortable: true, width: 200 }
+                /*{ field: "IsPost", title: "Post", sortable: true, width: 200 }*/
+                {
+                    field: "Status",
+                    title: "Status",
+                    width: 100,
+                    filterable: {
+                        ui: function (element) {
+                            element.kendoDropDownList({
+                                dataSource: [
+                                    { text: "Yes", value: "1" },
+                                    { text: "No", value: "0" }
+                                ],
+                                dataTextField: "text",
+                                dataValueField: "value",
+                                optionLabel: "Select"
+                            });
+                        }
+                    }
+                },
 
             ],
             editable: false,
@@ -392,6 +488,106 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         });
     };
 
+    var GetEditGridDataList = function () {
+        // Parse the local JSON data
+        debugger;
+        var detailsList = JSON.parse($("#detailsListJson").val() || "[]");
+
+        var gridDataSource = new kendo.data.DataSource({
+            data: detailsList,
+            pageSize: 10,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        InputTotal: { type: "number" }
+                    }
+                }
+            },
+            aggregate: [
+                { field: "InputTotal", aggregate: "sum" }
+            ],
+            change: function (e) {
+                if (e.action === "itemchange" && e.field === "InputTotal") {
+                    // Recalculate aggregates
+                    this.fetch();
+                }
+            }
+        });
+
+        $("#updtBudgetDetailsData").kendoGrid({
+            dataSource: gridDataSource,
+            pageable: {
+                refresh: true,
+                pageSizes: [10, 20, 50, "all"]
+            },
+            noRecords: true,
+            messages: { noRecords: "No Record Found!" },
+            scrollable: true,
+            filterable: true,
+            sortable: true,
+            resizable: true,
+            reorderable: true,
+            groupable: true,
+            toolbar: ["excel", "pdf", "search"],
+            columns: [
+                { field: "Id", width: 50, hidden: true },
+                { field: "iBASCode", title: "iBAS Code", width: 200, editable: true },
+                { field: "iBASName", title: "iBAS Name", width: 200, editable: true },
+                { field: "SabreCode", title: "Sabre Code", width: 200, editable: true },
+                { field: "SabreName", title: "Sabre Name", width: 200, editable: true },
+                {
+                    field: "InputTotal",
+                    title: "Input Total",
+                    width: 200,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    footerTemplate: "<div style='text-align:right;font-weight:bold'>#= kendo.toString(sum, 'n2') #</div>",
+                    editor: numericEditor
+                    //editable: false
+                },
+                { field: "BudgetHeaderId", width: 50, hidden: true, editable: true },
+                { field: "SabreId", width: 50, hidden: true, editable: true },
+                { field: "M1", width: 50, hidden: true, editable: true },
+                { field: "M2", width: 50, hidden: true, editable: true },
+                { field: "M3", width: 50, hidden: true, editable: true },
+                { field: "M4", width: 50, hidden: true, editable: true },
+                { field: "M5", width: 50, hidden: true, editable: true },
+                { field: "M6", width: 50, hidden: true, editable: true },
+                { field: "M7", width: 50, hidden: true, editable: true },
+                { field: "M8", width: 50, hidden: true, editable: true },
+                { field: "M9", width: 50, hidden: true, editable: true },
+                { field: "M10", width: 50, hidden: true, editable: true },
+                { field: "M11", width: 50, hidden: true, editable: true },
+                { field: "M12", width: 50, hidden: true, editable: true },
+                { field: "Q1", width: 50, hidden: true, editable: true },
+                { field: "Q2", width: 50, hidden: true, editable: true },
+                { field: "Q3", width: 50, hidden: true, editable: true },
+                { field: "Q4", width: 50, hidden: true, editable: true },
+                { field: "H1", width: 50, hidden: true, editable: true },
+                { field: "H2", width: 50, hidden: true, editable: true },
+                { field: "Yearly", width: 50, hidden: true, editable: true }
+            ],
+            editable: "incell",
+            selectable: "multiple row",
+            navigatable: true,
+            columnMenu: true
+        });
+        function numericEditor(container, options) {
+            $('<input name="' + options.field + '" />')
+                .appendTo(container)
+                .kendoNumericTextBox({
+                    format: "n2",
+                    decimals: 2,
+                    change: function (e) {
+                        // Trigger DataSource change to recalc aggregates
+                        gridDataSource.fetch();
+                    }
+                });
+        }
+       
+    };
+
     // Save the form data
     function save() {
         debugger;
@@ -399,6 +595,10 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
+        if (model.IsPost == 'True') {
+            ShowNotification(2, "Post operation is already done, Do not update this entry");
+            return;
+        }
         
         //var isActiveValue = $('#IsActive').prop('checked');
         //model.IsActive = isActiveValue;
@@ -411,42 +611,87 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         //    }
         //    return;
         //}
+        var operation = $("#Operation").val();
         var DetailList = [];
+        if (operation == 'update') {
+            var grid = $("#updtBudgetDetailsData").data("kendoGrid");
 
-        var grid = $("#BudgetDetailsData").data("kendoGrid");
-        if (grid) {
+            debugger;
+            if (grid) {
 
-            var items = grid.dataSource.view();
+                var items = grid.dataSource.view();
 
-            items.forEach(function (x, index) {
+                items.forEach(function (x, index) {
 
-                DetailList.push({
-                    SabreId: x.SabreId,
-                    InputTotal: x.InputTotal,
-                    M1: 0,
-                    M2: 0,
-                    M3: 0,
-                    M4: 0,
-                    M5: 0,
-                    M6: 0,
-                    M8: 0,
-                    M9: 0,
-                    M10:0,
-                    M11:0,
-                    M12:0,
-                    Q1: 0,
-                    Q2: 0,
-                    Q3: 0,
-                    Q4: 0,
-                    H1: 0,
-                    H2: 0,
-                    Yearly: x.InputTotal,
-                    IsPost:false,
+                    DetailList.push({
+                        SabreId: x.SabreId,
+                        InputTotal: x.InputTotal,
+                        M1: 0,
+                        M2: 0,
+                        M3: 0,
+                        M4: 0,
+                        M5: 0,
+                        M6: 0,
+                        M7: 0,
+                        M8: 0,
+                        M9: 0,
+                        M10: 0,
+                        M11: 0,
+                        M12: 0,
+                        Q1: 0,
+                        Q2: 0,
+                        Q3: 0,
+                        Q4: 0,
+                        H1: 0,
+                        H2: 0,
+                        Yearly: x.InputTotal,
+                        IsPost: false,
+
+                    });
 
                 });
-
-            });
+            }
         }
+        else {
+            var grid = $("#BudgetDetailsData").data("kendoGrid");
+
+            debugger;
+            if (grid) {
+
+                var items = grid.dataSource.view();
+
+                items.forEach(function (x, index) {
+
+                    DetailList.push({
+                        SabreId: x.SabreId,
+                        InputTotal: x.InputTotal,
+                        M1: 0,
+                        M2: 0,
+                        M3: 0,
+                        M4: 0,
+                        M5: 0,
+                        M6: 0,
+                        M7: 0,
+                        M8: 0,
+                        M9: 0,
+                        M10: 0,
+                        M11: 0,
+                        M12: 0,
+                        Q1: 0,
+                        Q2: 0,
+                        Q3: 0,
+                        Q4: 0,
+                        H1: 0,
+                        H2: 0,
+                        Yearly: x.InputTotal,
+                        IsPost: false,
+
+                    });
+
+                });
+            }
+        }
+        
 
         if (DetailList.length === 0) {
             ShowNotification(3, "At least one item is required.");
@@ -528,6 +773,32 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             ShowNotification(1, result.Message);
         }
     }
+    function postDone(result) {
+
+        var grid = $('#GridDataList').data('kendoGrid');
+        if (grid) {
+            grid.dataSource.read();
+        }
+        if (result.Status == 200) {
+            ShowNotification(1, result.Message);
+            $(".btnsave").hide();
+            $(".btnPost").hide();
+            $(".sslPush").show();
+        }
+        else if (result.Status == 400) {
+            ShowNotification(3, result.Message);
+        }
+        else {
+            ShowNotification(2, result.Message);
+        }
+    };
+
+    function fail(err) {
+
+        console.log(err);
+        ShowNotification(3, "Something gone wrong");
+    };
+    
 
     var GetBudgetDetailsData = function () {
         var yearId = $('#FiscalYearId').val() || 0;
@@ -605,6 +876,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                             ProductCode: { editable: false },
                             ProductCode: { editable: false },
                             BLQuantityMT: { type: "number", defaultValue: 0, validation: { min: 0 } },
+                            InputTotal: { type: "number", defaultValue: 0, validation: { min: 0 } },
 
                         }
                     }
@@ -612,6 +884,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 aggregate: [
 
                     { field: "BLQuantityMT", aggregate: "sum" },
+                    { field: "InputTotal", aggregate: "sum" },
 
                 ]
 
@@ -685,7 +958,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                             var data = $("#BudgetDetailsData").data("kendoGrid").dataSource.view();
                             var sum = 0;
                             for (var i = 0; i < data.length; i++) {
-                                sum += (data[i].BLQuantityMT || 0);
+                                sum += (data[i].InputTotal || 0);
                             }
                             return kendo.toString(sum, "n2");
                         }
