@@ -1,4 +1,5 @@
-﻿@model ShampanBFRS.Models.Ceiling.BudgetHeaderVM
+﻿@using Newtonsoft.Json
+@model ShampanBFRS.Models.Ceiling.BudgetHeaderVM
 
 @{
     ViewBag.Title = "Budget";
@@ -110,6 +111,44 @@
         </div>
     </div>
 
+    <div class="card">
+        <div class="card-header p-2">
+            
+            @if (Model.IsPost == "Y")
+            {
+                <button type="button" class="button sslPush">Already Posted</button>
+            }
+            else if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <button style="float:right;" type="button" title="Add New" data-url="/Ceiling/Budget/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                    New
+                </button>
+
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                <button type="button" class="button btnPost sslPost">Post</button>
+
+                <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
+            }
+            else
+            {
+                <div style="display:none;" class="divUpdate">
+                    <button type="button" class="button btnsave sslUpdate">Update</button>
+                    <button type="button" class="button btnPost sslPost">Post</button>
+                    <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
+                    <button style="float:right;" type="button" title="Add New" data-url="/Ceiling/Budget/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                        New
+                    </button>
+                </div>
+                <div class="divSave">
+                    <button class="button btnsave sslSave" type="button" id="">Save</button>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
     <div class="container-fluid">
         <div class="mt-3">
             <div id="tabs-1">
@@ -119,11 +158,14 @@
                             <h3 class="card-title"> Budget Info</h3>
                         </div>
                         <div class="card-body">
-                            @*@Html.HiddenFor(model => model.Id)*@
+                            @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model => model.Operation)
                             @Html.HiddenFor(model => model.TransactionType)
                             @Html.HiddenFor(model => model.BudgetType)
                             @Html.HiddenFor(model => model.BudgetSetNo)
+                            @Html.Hidden("detailsListJson", JsonConvert.SerializeObject(Model.DetailList ?? new List<ShampanBFRS.Models.Ceiling.BudgetDetailVM>()))
+
+
 
                             <div class="form-group row">
 
@@ -131,13 +173,13 @@
                                 {
 
                                     @*<div class="col-sm-2">
-                                        @Html.LabelFor(model => model.Code)
-                                        <div style="display: flex; align-items: center;">
-                                            <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
-                                            @Html.TextBoxFor(model => model.Code, new { placeholder = "Code Auto Generate", @class = " csCode  form-control form-control-sm", @readonly = "readonly", @style = "width:140px;" }) &nbsp;
-                                            <span id="btnNext" class="fa fa-forward" style="color: darkseagreen;"></span>
-                                        </div>
-                                    </div>*@
+                                            @Html.LabelFor(model => model.Code)
+                                            <div style="display: flex; align-items: center;">
+                                                <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
+                                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Code Auto Generate", @class = " csCode  form-control form-control-sm", @readonly = "readonly", @style = "width:140px;" }) &nbsp;
+                                                <span id="btnNext" class="fa fa-forward" style="color: darkseagreen;"></span>
+                                            </div>
+                                        </div>*@
 
                                     <div class="col-sm-2">
                                         @Html.LabelFor(model => model.FiscalYearId)
@@ -191,30 +233,62 @@
                     </div>
 
 
-                    <div class="card card-secondary">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                Details
-                            </h3>
+                    @*<div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    Details
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="BudgetDetailsData"></div>
+                            </div>
+                        </div>*@
+                    @if (Model.Operation.Equals("add", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    Details
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="BudgetDetailsData"></div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div id="BudgetDetailsData"></div>
+                    }
+                    @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    Details
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="updtBudgetDetailsData"></div>
+                            </div>
                         </div>
-                    </div>
+                    }
 
                 </form>
 
 
+
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">
+                        @if (Model.IsPost == "Y")
+                        {
+                            <button type="button" class="button sslPush">Already Posted</button>
+                        }
 
-                        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                        else if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                         {
                             <button type="button" class="button btnsave sslUpdate">Update</button>
 
                             <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/Ceiling/Budget/Create?TransactionType=@Model.TransactionType&BudgetType=@Model.BudgetType" onclick="GoTo(this)" class="button NewButton addNewButton">
                                 New
                             </button>
+                            <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
                         }
                         else
                         {

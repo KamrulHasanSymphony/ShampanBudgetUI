@@ -91,6 +91,22 @@ namespace ShampanBFRS.Repo.Ceiling
                 throw e;
             }
         }
+        public ResultVM ListEdit(CommonVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+                var data = httpRequestHelper.PostData("api/Budget/ListEdit", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         //public ResultVM ProductBudgetList(BudgetHeaderVM vm)
         //{
@@ -175,6 +191,24 @@ namespace ShampanBFRS.Repo.Ceiling
             }
         }
 
+        public ResultVM MultiplePost(CommonVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Budget/MultiplePost", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
 }
