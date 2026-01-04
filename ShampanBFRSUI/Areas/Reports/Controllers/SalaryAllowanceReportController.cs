@@ -23,7 +23,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             return View();
         }
 
-        public ActionResult BudgetFinalReport(SalaryAllowanceHeaderVM model)
+        public ActionResult SalaryAllowanceReport(SalaryAllowanceHeaderVM model)
         {
             ResultModel<SalaryAllowanceHeaderVM> result = new ResultModel<SalaryAllowanceHeaderVM>();
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
@@ -67,19 +67,58 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                     {
                         var ws = package.Workbook.Worksheets.Add("Personnel");
 
-                        string companyName = "Bangladesh Petroleum Corporation";
+                        string ReportHead = "Ministry of finance, Finance Division";
+                        string ReportHead2 = "Monitoring Cell";
+                        string ReportHead3 = "PERSONNEL";
+                        string ReportHead4 = "For the year : 2026-27(Estimate)";
 
-                        // 1. Add company name at top, merge across all columns
-                        int totalCols = dt.Columns.Count + 1; // +1 for SL column
-                        ws.Cells[1, 1, 1, totalCols].Merge = true;
-                        ws.Cells[1, 1].Value = companyName;
-                        ws.Cells[1, 1].Style.Font.Bold = true;
-                        ws.Cells[1, 1].Style.Font.Size = 14;
-                        ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        string Numberofworking = " Number of working days in year:";
 
+                        string companyName = "Name of Organisation : Bangladesh Petroleum Corporation.";
+
+                        ////////////// 1. Add company name at top, merge across all columns
+                        ////int totalCols = dt.Columns.Count + 1; // +1 for SL column
+                        ////ws.Cells[1, 1, 1, totalCols].Merge = true;
+                        ////ws.Cells[1, 1].Value = ReportHead;
+                        ////ws.Cells[1, 1].Style.Font.Bold = true;
+                        ////ws.Cells[1, 1].Style.Font.Size = 14;
+                        ////ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ////ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+                        int headerRow = 1;
+                        int totalCols = dt.Columns.Count + 1; // SL included
+
+                        void AddCenteredHeader(string text, int row, bool bold = true, int fontSize = 14)
+                        {
+                            ws.Cells[row, 1, row, totalCols].Merge = true;
+                            ws.Cells[row, 1].Value = text;
+                            ws.Cells[row, 1].Style.Font.Bold = bold;
+                            ws.Cells[row, 1].Style.Font.Size = fontSize;
+                            ws.Cells[row, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            ws.Cells[row, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        }
+                        AddCenteredHeader(ReportHead, 1, true, 14);
+                        AddCenteredHeader(ReportHead2, 2, true, 14);
+                        AddCenteredHeader(ReportHead3, 3, true, 14);
+                        AddCenteredHeader(ReportHead4, 4, true, 14);
+
+                        int infoRow = 6;
+
+                        // Left side: Company name
+                        ws.Cells[infoRow, 1, infoRow, totalCols / 2].Merge = true;
+                        ws.Cells[infoRow, 1].Value = companyName;
+                        ws.Cells[infoRow, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                        ws.Cells[infoRow, 1].Style.Font.Bold = true;
+
+                        // Right side: Number of working days
+                        ws.Cells[infoRow, (totalCols / 2) + 1, infoRow, totalCols].Merge = true;
+                        ws.Cells[infoRow, (totalCols / 2) + 1].Value = Numberofworking;
+                        ws.Cells[infoRow, (totalCols / 2) + 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+                        ws.Cells[infoRow, (totalCols / 2) + 1].Style.Font.Bold = true;
+
+                        
                         // 2. Leave 2 blank rows, start data from row 4
-                        int startRow = 4;
+                        int startRow = 7;
                         ws.Cells[startRow, 1, startRow, totalCols].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
                         // 3. Add Serial column
@@ -90,6 +129,22 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                         // 4. Load data into worksheet
                         ws.Cells[startRow, 1].LoadFromDataTable(dtWithSerial, true);
+
+                        for (int col = 1; col <= totalCols; col++)
+                        {
+                            var cell = ws.Cells[startRow, col];
+
+                            cell.Style.Font.Bold = true;
+                            cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+                            cell.Style.WrapText = true;
+
+                            cell.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            cell.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            cell.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            cell.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        }
 
                         // Fix header names (multi-line)
                         for (int col = 1; col <= totalCols; col++)
@@ -121,7 +176,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                             headerRange.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                             headerRange.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                             headerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                            headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                            headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
                         }
 
                         // 6. Format numeric columns, ratio %, and sum in footer
@@ -144,19 +199,49 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                                
                             }
                         }
+                        ws.Cells[footerRow, 1].Value = "Total";
+                        ws.Cells[footerRow, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells[footerRow, 1].Style.Font.Bold = true;
 
-                        // 7. Footer formatting
+                        ws.Cells[footerRow, 1, footerRow, 2].Merge = true;
+                        ws.Cells[footerRow, 1].Value = "Total";
+
                         using (var footerRange = ws.Cells[footerRow, 1, footerRow, totalCols])
                         {
                             footerRange.Style.Font.Bold = true;
-                            footerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                            footerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+
+                            footerRange.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Double;
+                            footerRange.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Double;
+                            footerRange.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            footerRange.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                         }
+
+                        //// 7. Footer formatting
+                        //using (var footerRange = ws.Cells[footerRow, 1, footerRow, totalCols])
+                        //{
+                           
+                        //    footerRange.Style.Font.Bold = true;
+                        //    footerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        //    footerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
+                        //}
 
                         // 8. Set column widths
                         ws.Column(1).Width = 5; // SL column narrower
                         for (int i = 2; i <= totalCols; i++)
                             ws.Column(i).Width = 20;
+
+                        int dataStartRow = startRow + 1;
+                        int dataEndRow = startRow + totalRows;
+
+                        using (var dataRange = ws.Cells[dataStartRow, 1, dataEndRow, totalCols])
+                        {
+                            dataRange.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            dataRange.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            dataRange.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            dataRange.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        }
+
+                        ws.View.ShowGridLines = false;
 
                         // 9. Export to browser
                         using (var memoryStream = new MemoryStream())
