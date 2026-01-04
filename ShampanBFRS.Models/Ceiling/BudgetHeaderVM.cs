@@ -43,11 +43,10 @@ namespace ShampanBFRS.Models.Ceiling
         public string? SabreName { get; set; }
         public string? Serial { get; set; }
 
-
-
-
         public PeramModel? PeramModel { get; set; }
 
         public List<BudgetDetailVM> DetailList { get; set; }
+
+        public string? MenuType { get; set; }
     }
 }

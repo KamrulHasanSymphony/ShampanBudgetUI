@@ -330,9 +330,88 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
+
+            //detailInit: function (e) {
+
+            //    console.log("Master ID:", e.data.Id);
+
+            //    $("<div/>").appendTo(e.detailCell).kendoGrid({
+            //        dataSource: {
+            //            type: "json",
+            //            serverPaging: true,
+            //            serverSorting: true,
+            //            serverFiltering: true,
+            //            allowUnsort: true,
+            //            pageSize: 10,
+
+            //            transport: {
+            //                read: {
+            //                    url: "/Ceiling/Budget/GetDetailDataById",
+            //                    type: "GET",
+            //                    dataType: "json",
+            //                    cache: false,
+            //                    data: { masterId: e.data.Id }
+            //                },
+            //                parameterMap: function (options) {
+            //                    return options;
+            //                }
+            //            },
+            //            batch: true,
+            //            schema: {
+            //                data: "Items",
+            //                total: "TotalCount"
+            //            },
+            //            requestEnd: function (e) {
+            //                console.log("Response Data:", e.response); // Log server response
+            //            }
+            //        },
+            //        scrollable: false,
+            //        sortable: true,
+            //        pageable: false,
+            //        noRecords: true,
+            //        messages: {
+            //            noRecords: "No Record Found!"
+            //        },
+
+            //        columns: [
+            //            { field: "Id", hidden: true, width: 50 },
+            //            { field: "BudgetHeaderId", hidden: true, title: "Budget Header Id", width: 120 },
+            //            { field: "SabreId", title: "Sabre Id", width: 120 },
+
+            //            { field: "M1", title: "M1", width: 120 },
+            //            { field: "M2", title: "M2", width: 120 },
+            //            { field: "M3", title: "M3", width: 120 },
+            //            { field: "M4", title: "M4", width: 120 },
+            //            { field: "M5", title: "M5", width: 120 },
+            //            { field: "M6", title: "M6", width: 120 },
+            //            { field: "M7", title: "M7", width: 120 },
+            //            { field: "M8", title: "M8", width: 120 },
+
+            //            { field: "M9", title: "M9", width: 120 },
+            //            { field: "M10", title: "M10", width: 120 },
+            //            { field: "M11", title: "M11", width: 120 },
+            //            { field: "M12", title: "M12", width: 120 },
+
+            //            { field: "Q1", title: "Q1", width: 120 },
+            //            { field: "Q2", title: "Q2", width: 120 },
+            //            { field: "Q3", title: "Q3", width: 120 },
+            //            { field: "Q4", title: "Q4", width: 120 },
+
+            //            { field: "H1", title: "H1", width: 120 },
+            //            { field: "H2", title: "H2", width: 120 },
+
+            //            { field: "Yearly", title: "Yearly", width: 120 },
+            //            { field: "InputTotal", title: "Input Total", width: 120 }
+
+
+            //        ]
+            //    });
+            //},
+
             detailInit: function (e) {
 
-                console.log("Master ID:", e.data.Id);
+
+                console.log("Master ID:", e.data);
 
                 $("<div/>").appendTo(e.detailCell).kendoGrid({
                     dataSource: {
@@ -373,36 +452,12 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                     },
 
                     columns: [
-                        { field: "Id", hidden: true, width: 50 },
-                        { field: "BudgetHeaderId", hidden: true, title: "Budget Header Id", width: 120 },
-                        { field: "SabreId", title: "Sabre Id", width: 120 },
-
-                        { field: "M1", title: "M1", width: 120 },
-                        { field: "M2", title: "M2", width: 120 },
-                        { field: "M3", title: "M3", width: 120 },
-                        { field: "M4", title: "M4", width: 120 },
-                        { field: "M5", title: "M5", width: 120 },
-                        { field: "M6", title: "M6", width: 120 },
-                        { field: "M7", title: "M7", width: 120 },
-                        { field: "M8", title: "M8", width: 120 },
-
-                        { field: "M9", title: "M9", width: 120 },
-                        { field: "M10", title: "M10", width: 120 },
-                        { field: "M11", title: "M11", width: 120 },
-                        { field: "M12", title: "M12", width: 120 },
-
-                        { field: "Q1", title: "Q1", width: 120 },
-                        { field: "Q2", title: "Q2", width: 120 },
-                        { field: "Q3", title: "Q3", width: 120 },
-                        { field: "Q4", title: "Q4", width: 120 },
-
-                        { field: "H1", title: "H1", width: 120 },
-                        { field: "H2", title: "H2", width: 120 },
-
-                        { field: "Yearly", title: "Yearly", width: 120 },
-                        { field: "InputTotal", title: "Input Total", width: 120 }
-
-                       
+                        { field: "Id", hidden: true, sortable: true, width: 50 },
+                        { field: "iBASCode", title: "iBAS Code", sortable: true, width: 150 },
+                        { field: "iBASName", title: "iBAS Name", sortable: true, width: 150 },
+                        { field: "SabreCode", title: "Sabre Code", sortable: true, width: 150 },
+                        { field: "SabreName", title: "Sabre Name", sortable: true, width: 200 },
+                        { field: "InputTotal", title: "Input Total", sortable: true, width: 120, format: "{0:n2}" }
                     ]
                 });
             },
