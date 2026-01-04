@@ -81,6 +81,9 @@ var SalaryAllowanceReportController = function (CommonService, CommonAjaxService
     };
 
     function Download() {
+        var YearName = $("#FiscalYearId").text();
+        $("#YearName").val(YearName);
+
         var model = serializeInputs("frmEntry");
 
         var form = $('<form method="post" action="/Reports/SalaryAllowanceReport/SalaryAllowanceReport"></form>');
