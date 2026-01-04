@@ -647,6 +647,28 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult PersonnelCategoriesList()
+        {
+            try
+            {
+                List<PersonnelCategoriesVM> lst = new List<PersonnelCategoriesVM>();
+                CommonVM param = new CommonVM();
+
+                ResultVM result = _repo.PersonnelCategoriesList(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<PersonnelCategoriesVM>>(result.DataVM.ToString());
+                }
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         //[HttpGet]
         //public ActionResult ProductList(string value)
@@ -679,35 +701,35 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
         //}
 
 
-        [HttpPost]
-        public ActionResult PersonnelCategoriesList(string value)
-        {
-            try
-            {
-                List<PersonnelCategoriesVM> lst = new List<PersonnelCategoriesVM>();
-                CommonVM param = new CommonVM();
-                param.Value = value;
-                ResultVM result = _repo.PersonnelCategoriesList(param);
+        //[HttpPost]
+        //public ActionResult PersonnelCategoriesList(string value)
+        //{
+        //    try
+        //    {
+        //        List<PersonnelCategoriesVM> lst = new List<PersonnelCategoriesVM>();
+        //        CommonVM param = new CommonVM();
+        //        param.Value = value;
+        //        ResultVM result = _repo.PersonnelCategoriesList(param);
 
-                if (result.Status == "Success" && result.DataVM != null)
-                {
-                    lst = JsonConvert.DeserializeObject<List<PersonnelCategoriesVM>>(result.DataVM.ToString());
-                }
-                return Json(new
-                {
-                    draw = Request["draw"],
-                    recordsTotal = lst.Count,
-                    recordsFiltered = lst.Count,
-                    data = lst
-                }, JsonRequestBehavior.AllowGet);
-                //return Json(lst, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
-            }
-        }
+        //        if (result.Status == "Success" && result.DataVM != null)
+        //        {
+        //            lst = JsonConvert.DeserializeObject<List<PersonnelCategoriesVM>>(result.DataVM.ToString());
+        //        }
+        //        return Json(new
+        //        {
+        //            draw = Request["draw"],
+        //            recordsTotal = lst.Count,
+        //            recordsFiltered = lst.Count,
+        //            data = lst
+        //        }, JsonRequestBehavior.AllowGet);
+        //        //return Json(lst, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+        //        return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
 
         [HttpGet]
         public ActionResult GetChargeGroupList(string value)

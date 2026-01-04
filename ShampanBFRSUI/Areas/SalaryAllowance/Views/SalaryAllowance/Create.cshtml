@@ -1,4 +1,5 @@
-﻿@model ShampanBFRS.Models.SalaryAllowance.SalaryAllowanceHeaderVM
+﻿@using Newtonsoft.Json
+@model ShampanBFRS.Models.SalaryAllowance.SalaryAllowanceHeaderVM
 
 @{
     ViewBag.Title = " Salary Allowance Header Create";
@@ -13,8 +14,9 @@
     .k-dropdown-wrap .k-input {
         line-height: 1.6em !important;
     }
-    .k-picker-wrap.k-state-default{
-        width:90% !important;
+
+    .k-picker-wrap.k-state-default {
+        width: 90% !important;
     }
 
     .hidden-field {
@@ -62,7 +64,7 @@
             <div style="display:none;" class="divUpdate">
                 <button type="button" class="button btnsave sslUpdate">Update</button>
                 <button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
-                            New
+                    New
                 </button>
                 <button type="button" title="Post data" class="button btnPost sslPost"> Post </button>
 
@@ -86,7 +88,9 @@
 
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.Operation)
+
                 @*@Html.HiddenFor(model => model.BudgetType)*@
+                @Html.Hidden("detailsListJson", JsonConvert.SerializeObject(Model.SalaryAllowanceDetail ?? new List<ShampanBFRS.Models.SalaryAllowance.SalaryAllowanceDetailVM>()))
 
                 <div class="form-group row">
 
@@ -99,12 +103,12 @@
                     </div>
 
                     @*<div class="col-sm-2">
-                @Html.LabelFor(model => model.TransactionDate)
-                <div class="input-group ">
-                    @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm" })
-                </div>
-                <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
-            </div>*@
+                            @Html.LabelFor(model => model.TransactionDate)
+                            <div class="input-group ">
+                                @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm" })
+                            </div>
+                            <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
+                        </div>*@
 
                     <div class="col-sm-2 hidden-field">
                         @Html.LabelFor(model => model.TransactionDate)
@@ -123,18 +127,20 @@
                     </div>
 
                     <div class="col-sm-2  hidden-field">
-                @Html.LabelFor(model => model.BudgetType)
-                <div class="input-group">
-                    @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
-                </div>
-                @Html.ValidationMessageFor(model => model.BudgetType)
-            </div>
+                        @Html.LabelFor(model => model.BudgetType)
+                        <div class="input-group">
+                            @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.BudgetType)
+                    </div>
 
 
                 </div>
 
             </div>
         </div>
+
+
         <div class="card card-secondary">
 
             <div class="card-header">
@@ -142,65 +148,16 @@
             </div>
 
             <div class="card-body">
-
-                <button type="button" title="Add SO Details" id="addRows" class="btn btn-lg btn-success mb-2"> <i class="fa fa-plus"></i> </button>
-                <div class="clearfix">&nbsp;</div>
-                <div style="overflow-x: auto; white-space: nowrap;">
-
-                    <table class="table table-bordered table-striped table-sm" id="details">
-                        <thead>
-                            <tr>
-                                <th data-type="text" data-computed="true" data-required="false" data-name="SLNo" style="width:3%;">SL.</th>
-                                <th hidden data-type="text" data-search="false" data-name="SalaryAllowanceHeaderId" style="width:5%;">Salary Allowance Header Id</th>
-                                <th data-type="text" data-search="true" data-name="PersonnelCategoriesName" style="width:20%;">Categories Name</th>
-                                <th hidden data-type="text" data-search="false" data-name="PersonnelCategoriesId" style="width: 20%;">Personnel Categories Id</th>
-
-                                <th data-type="number" data-name="TotalPostSanctioned" style="width: 20%;">Total Post Sanctioned</th>
-                                <th data-type="number" data-name="ActualPresentStrength" style="width: 20%;">Actual Present Strength</th>
-                                <th data-type="number" data-name="ExpectedNumber" style="width: 15%;">Expected Number</th>
-                                <th data-type="number" data-name="BasicWagesSalaries" style="width: 15%;">Basic Wages Salaries</th>
-                                <th data-type="number" data-name="OtherCash" style="width: 25%;">Other Cash</th>
-                                <th data-type="number" data-name="TotalSalary" data-computed="true" style="width: 25%;" >Total Salary</th>
-                                <th data-type="number" data-name="PersonnelSentForTraining" style="width:4%;">Personnel Sent For Training</th>
-                            </tr>
-                        </thead>
-                        <tbody id="SODBody">
-                            @if (Model != null)
-                            {
-                                foreach (var item in Model.SalaryAllowanceDetail)
-                                {
-                                    <tr>
-
-                                        <td> @serial </td>
-                                        <td hidden> @item.SalaryAllowanceHeaderId </td>
-                                        <td> @item.PersonnelCategoriesName </td>
-                                        <td hidden> @item.PersonnelCategoriesId </td>
-                                        <td>@item.TotalPostSanctioned</td>
-                                        <td>@item.ActualPresentStrength</td>
-                                        <td>@item.ExpectedNumber</td>
-                                        <td>@item.BasicWagesSalaries</td>
-                                        <td>@item.OtherCash</td>
-                                        <td>@item.TotalSalary</td>
-                                        <td>@item.PersonnelSentForTraining</td>
-
-                                        <td> <button class="btn btn-danger btn-sm remove-row-btn"><i class='fa fa-trash'></i></button> </td>
-
-                                    </tr>
-
-                                    { serial++; }
-                                }
-                            }
-
-                        </tbody>
-
-                    </table>
-                </div>
-
+                <div id="kDetails"></div>
             </div>
+
         </div>
 
     </form>
 
+    <div id="PersonnelCategoriesWindow" style="display:none;">
+        <div id="PersonnelCategoriesgrid"></div>
+    </div>
 
 
     <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">

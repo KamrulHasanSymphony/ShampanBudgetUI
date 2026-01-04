@@ -192,38 +192,38 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult ListEdit(string id)
-        {
-            try
-            {
-                _repo = new BudgetRepo();
+        //[HttpGet]
+        //public ActionResult ListEdit(string id)
+        //{
+        //    try
+        //    {
+        //        _repo = new BudgetRepo();
 
-                BudgetHeaderVM vm = new BudgetHeaderVM();
-                CommonVM param = new CommonVM();
-                param.Id = id;
-                ResultVM result = _repo.ListEdit(param);
+        //        BudgetHeaderVM vm = new BudgetHeaderVM();
+        //        CommonVM param = new CommonVM();
+        //        param.Id = id;
+        //        ResultVM result = _repo.ListEdit(param);
 
-                if (result.Status == "Success" && result.DataVM != null)
-                {
-                    vm = JsonConvert.DeserializeObject<List<BudgetHeaderVM>>(result.DataVM.ToString()).FirstOrDefault();
-                }
-                else
-                {
-                    vm = null;
-                }
+        //        if (result.Status == "Success" && result.DataVM != null)
+        //        {
+        //            vm = JsonConvert.DeserializeObject<List<BudgetHeaderVM>>(result.DataVM.ToString()).FirstOrDefault();
+        //        }
+        //        else
+        //        {
+        //            vm = null;
+        //        }
 
-                vm.Operation = "update";
+        //        vm.Operation = "update";
 
-                return View("Create", vm);
-            }
-            catch (Exception e)
-            {
-                Session["result"] = "Fail" + "~" + e.Message;
-                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-                return RedirectToAction("Index");
-            }
-        }
+        //        return View("Create", vm);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Session["result"] = "Fail" + "~" + e.Message;
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+        //        return RedirectToAction("Index");
+        //    }
+        //}
 
         [HttpPost]
         public JsonResult GetBudgetDataForDetailsNew(GridOptions options, string yearId, string BudgetType)

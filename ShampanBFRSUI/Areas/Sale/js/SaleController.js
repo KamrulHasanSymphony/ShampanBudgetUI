@@ -880,6 +880,44 @@
             return;
         }
 
+        var details = [];
+        var grid = $("#kDetails").data("kendoGrid");
+        if (grid) {
+            var dataItems = grid.dataSource.view();
+
+            for (var i = 0; i < dataItems.length; i++) {
+                var item = dataItems[i];
+
+                // You can adjust this to match your server-side view model
+                details.push({
+                    SaleHeaderId: item.SaleHeaderId,
+                    ProductId: item.ProductId,
+                    ProductName: item.ProductName,
+                    ConversionFactor: item.ConversionFactor,
+                    ProductionMT: item.ProductionMT,
+                    PriceMT: item.PriceMT,
+                    PriceLTR: item.PriceLTR,
+
+                    SalesExERLValue: item.SalesExERLValue,
+                    SalesExImport_LocalMT: item.SalesExImport_LocalMT,
+                    SalesExImport_LocalValue: item.SalesExImport_LocalValue,
+                    TotalMT: item.TotalMT,
+                    TotalValueTK_LAC: item.TotalValueTK_LAC
+
+                });
+            }
+        }
+
+
+        if (details.length === 0) {
+            ShowNotification(3, "Save can not without details");
+            return;
+        }
+        if (item.ProductName === 0 || item.ProductName === undefined || item.ProductName === null || item.ProductName === "") {
+            ShowNotification(3, "Product Name is required.");
+            return;
+        }
+
         
         model.IsActive = $('#IsActive').prop('checked');
         model.SaleDetail = details; 

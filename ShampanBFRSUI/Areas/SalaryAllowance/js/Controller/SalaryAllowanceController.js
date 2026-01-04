@@ -1,13 +1,14 @@
 ﻿var SalaryAllowanceController = function (CommonService, CommonAjaxService) {
 
-    var getChargeGroup = 0;
+    var decimalPlace = 2;
+    var getFiscalYearId = 0;
+    var getBudgetType = '';
 
     var init = function () {
         debugger;
 
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
-        getChargeGroup = $("#ChargeGroup").val() || 0;
         var getOperation = $("#Operation").val() || '';
         getFiscalYearId = $("#FiscalYearId").val() || 0;
         getBudgetType = $("#BudgetType").val() || '';
@@ -22,9 +23,9 @@
         GenerateDatepicker();
 
 
-        $(document).on('click', '.edit-sale-order', function () {
-            kendo.alert("You can't edit this order because it has already been delivered.");
-        });
+        //$(document).on('click', '.edit-sale-order', function () {
+        //    kendo.alert("You can't edit this order because it has already been delivered.");
+        //});
 
         var $table = $('#details');
 
@@ -53,7 +54,7 @@
                 });
         });
 
-        $('#btnPost').on('click', function () { //For Index
+        $('#btnPost').on('click', function () { 
             debugger;
             Confirmation("Are you sure? Do You Want to Post Data?",
                 function (result) {
@@ -65,34 +66,14 @@
         });
 
 
-        //make modal
-        $('#details').on('click', 'input.txtPersonnelCategoriesName', function () {
-            debugger;
-            var originalRow = $(this);
-            debugger;
+       
 
-            originalRow.closest("td").find("input").data('touched', true);
-
-            CommonService.personnelCategoriesNameModal(
-                function success(result) {
-                },
-                function fail(error) {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                },
-                function dblClick(row) {
-                    personnelCategoriesNameModalDblClick(row, originalRow);
-                },
-                function closeCallback() {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                }
-            );
-        });
-        $('#details').on('blur', ".td-BasicWagesSalaries", function (event) {
-            computeSubTotal($(this), '');
-        });
-        $('#details').on('blur', ".td-OtherCash", function (event) {
-            computeSubTotal($(this), '');
-        });
+        $('#details').on('blur',
+            '.td-BasicWagesSalaries, .td-OtherCash',
+            function () {
+                computeRowCalculation($(this));
+            }
+        );
 
 
         $("#indexSearch").on('click', function () {
@@ -109,20 +90,274 @@
         });
 
 
+        //for kendo grid
+
+        var SalaryAllowanceDetail = JSON.parse($("#detailsListJson").val() || "[]");
+
+        var detailsGridDataSource = new kendo.data.DataSource({
+            data: SalaryAllowanceDetail,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number", defaultValue: 0 },
+                        SalaryAllowanceHeaderId: { type: "number", defaultValue: null },
+                        PersonnelCategoriesId: { type: "number", defaultValue: 0 },
+                        CategoryOfPersonnel: { type: "string", defaultValue: "" },          
+                        TotalPostSanctioned: { type: "number", defaultValue: 0 },
+                        ActualPresentStrength: { type: "number", defaultValue: 0 },
+                        ExpectedNumber: { type: "number", defaultValue: 0 },
+                        BasicWagesSalaries: { type: "number", defaultValue: 0 },
+                        OtherCash: { type: "number", defaultValue: 0 },
+                        TotalSalary: { type: "number", defaultValue: 0 },
+                        SalesExERLValue: { type: "number", defaultValue: 0 },
+                        PersonnelSentForTraining: { type: "number", defaultValue: 0 }
+                      
+                    }
+                }
+            },
+            change: function (e) {
+                if (e.action === "CategoryOfPersonnel") {
+
+                    if (
+                        e.field === "BasicWagesSalaries" ||
+                        e.field === "OtherCash" ||
+                        e.field === "TotalSalary" 
+                    ) {
+                        calculateRow(e.items[0]);
+                    }
+                }
+            },
+            aggregate: [
+                { field: "BasicWagesSalaries", aggregate: "sum" },
+                { field: "OtherCash", aggregate: "sum" },
+                { field: "TotalSalary", aggregate: "sum" }
+
+            ]
+        });
+
+        var rowNumber = 0;
+        $("#kDetails").kendoGrid({
+            dataSource: detailsGridDataSource,
+            toolbar: [{ name: "create", text: "Add" }],
+            editable: {
+                mode: "incell",
+                createAt: "bottom"
+            },
+            save: function (e) {
+                const grid = this;
+                setTimeout(function () {
+                    grid.dataSource.aggregate();
+                    grid.refresh();
+                }, 0);
+            },
+            columns: [
+                {
+                    title: "Sl No",
+                    width: 60,
+                    template: function (dataItem) {
+                        var grid = $("#kDetails").data("kendoGrid");
+                        return grid.dataSource.indexOf(dataItem) + 1;
+                    }
+                },
+                {
+                    field: "PersonnelCategoriesId",
+                    title: "Personnel Categories",
+                    editor: PersonnelCategoriesSelectorEditor,
+                    template: function (dataItem) {
+                        return dataItem.CategoryOfPersonnel || "";
+                    },
+                    width: 120
+                },
+                
+                {
+                    field: "ActualPresentStrength",
+                    title: "Actual Present Strength",
+                    format: "{0:n2}",
+
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "TotalPostSanctioned",
+                    title: "Total Post Sanctioned",
+                    format: "{0:n2}",
+
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "ExpectedNumber",
+                    title: "Expected Number",
+                    editable: false,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    field: "BasicWagesSalaries",
+                    title: "Basic Wages Salaries",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    footerTemplate: "<div style='text-align:right;font-weight:bold'>#= kendo.toString(sum, 'n2') #</div>",
+                    width: 120
+                },
+                {
+                    field: "OtherCash",
+                    title: "Other Cash",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    footerTemplate: "<div style='text-align:right;font-weight:bold'>#= kendo.toString(sum, 'n2') #</div>",
+                    width: 120
+                },
+                {
+                    field: "TotalSalary",
+                    title: "Total Salary",
+                    editable: true,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    template: function (dataItem) {
+                        var total = (dataItem.BasicWagesSalaries || 0) + (dataItem.OtherCash || 0);
+                        return kendo.toString(total, "n2");
+                    },
+                    footerTemplate: function () {
+                        var grid = $("#kDetails").data("kendoGrid");
+                        var data = grid.dataSource.view(); // visible data (page) or use .data() for all
+                        var sum = 0;
+                        for (var i = 0; i < data.length; i++) {
+                            sum += (data[i].BasicWagesSalaries || 0) + (data[i].OtherCash || 0);
+                        }
+                        return "<div style='text-align:right;font-weight:bold'>" + kendo.toString(sum, "n2") + "</div>";
+                    },
+                    width: 120
+                },
+
+
+                {
+                    field: "PersonnelSentForTraining",
+                    title: "Personnel Sent For Training",
+                    editable: false,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+           
+                {
+                    command: [{
+                        name: "destroy",
+                        iconClass: "k-icon k-i-trash",
+                        text: ""
+                    }],
+                    title: "&nbsp;",
+                    width: 35
+                }
+
+
+            ],
+        });
+
 
     };
-    function computeSubTotal(row, param) {
+
+
+    function PersonnelCategoriesSelectorEditor(container, options) {
         debugger;
-        var salary = parseFloat(row.closest("tr").find("td.td-BasicWagesSalaries").text().replace(/,/g, '')) || 0;
-        var otherCash = parseFloat(row.closest("tr").find("td.td-OtherCash").text().replace(/,/g, '')) || 0;
+        var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
 
-        if (!isNaN(salary + otherCash)) {
+        // Create input (you can bind value if needed)
+        $('<input type="text" class="form-control" readonly />')
+            .attr("data-bind", "value:CategoryOfPersonnel")
+            .appendTo(wrapper);
 
-            var SubTotal = Number(parseFloat(salary + otherCash).toFixed(parseInt(decimalPlace)));
-            row.closest("tr").find("td.td-TotalSalary").text(SubTotal.toLocaleString('en', { minimumFractionDigits: parseInt(decimalPlace) }));
+        // Create button inside an addon span eii monir..Monir
+        $('<div class="input-group-append">')
+            .append(
+                $('<button class="btn btn-outline-secondary" type="button">')
+                    .append('<i class="fa fa-search"></i>')
+                    .on("click", function () {
+                        debugger;
+                        openPersonnelCategoriesModal(options.model);
+                    })
+            )
+            .appendTo(wrapper);
 
-        }
-    };
+        kendo.bind(container, options.model);
+    }
+
+    var selectedGridModel = null;
+
+    function openPersonnelCategoriesModal(gridModel) {
+        debugger;
+        selectedGridModel = gridModel;
+
+        $("#PersonnelCategoriesWindow").kendoWindow({
+            title: "Select Personnel Categories Name ",
+            modal: true,
+            width: "900px",
+            height: "550px",
+            visible: false,
+            close: function () {
+                selectedGridModel = null;
+            }
+        }).data("kendoWindow").center().open();
+
+        $("#PersonnelCategoriesgrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/PersonnelCategoriesList",
+                        dataType: "json"
+                    }
+                },
+                pageSize: 10
+            },
+            pageable: true,
+            filterable: true,
+            selectable: "row",
+            toolbar: ["search"],
+            searchable: true,
+            columns: [
+                { field: "Id", title: "Id", hidden: true, width: 60 },
+                { field: "SL", title: "SL", width: 60 },
+                { field: "CategoryOfPersonnel", title: "Category Of Personnel", width: 180 }
+            
+            ],
+            dataBound: function () {
+                this.tbody.find("tr").on("dblclick", function () {
+                    var grid = $("#PersonnelCategoriesgrid").data("kendoGrid");
+ 
+
+                    var dataItem = grid.dataItem(this);
+                    debugger;
+                    if (dataItem && selectedGridModel) {
+
+                        selectedGridModel.set("PersonnelCategoriesId", dataItem.Id);
+                        selectedGridModel.set("SL", dataItem.SL);
+                        selectedGridModel.set("CategoryOfPersonnel", dataItem.CategoryOfPersonnel);
+                        var window = $("#PersonnelCategoriesWindow").data("kendoWindow");
+                        if (window) window.close();
+                    }
+                });
+            }
+        });
+    }
+
+    function computeRowCalculation(cell) {
+
+        var $row = cell.closest("tr");
+
+        var BasicWagesSalaries = parseFloat($row.find(".td-BasicWagesSalaries").text().replace(/,/g, '')) || 0;
+        var otherCash = parseFloat($row.find(".td-otherCash").text().replace(/,/g, '')) || 0;
+
+   
+        var TotalSalary = BasicWagesSalaries + otherCash;
+
+        $row.find(".td-PriceMT").text(BasicWagesSalaries.toFixed(decimalPlace));
+        $row.find(".td-SalesExERLValue").text(otherCash.toFixed(decimalPlace));
+
+    }
+ 
+   
     function GetFiscalYear() {
         //make dropdown
         var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
@@ -148,6 +383,7 @@
             }
         }).data("kendoMultiColumnComboBox");
     }
+
     function GetBudgetTypeComboBox() {
         var BudgetTypeComboBox = $("#BudgetType").kendoMultiColumnComboBox({
             dataTextField: "Name",
@@ -174,34 +410,12 @@
     };
     function GenerateDatepicker() {
         $("#TransactionDate").kendoDatePicker({
-            value: new Date(), // Optional: Set initial date
-            format: "yyyy-MM-dd" // Optional: Set the date format
+            value: new Date(), 
+            format: "yyyy-MM-dd" 
         });
     }
-    function personnelCategoriesNameModalDblClick(row, originalRow) {
-        debugger;
 
-        var dataTable = $("#modalData").DataTable();
-        var rowData = dataTable.row(row).data();
-
-        var Id = rowData.Id;
-        var SL = rowData.SL;
-        var CategoryOfPersonnel = rowData.CategoryOfPersonnel;
-
-
-
-        var $currentRow = originalRow.closest('tr');
-
-        $currentRow.find('.td-PersonnelCategoriesName').text(CategoryOfPersonnel);
-        //$currentRow.find('.td-Code').text(Code);
-        $currentRow.find('.td-PersonnelCategoriesId').text(Id);
-
-
-        $("#partialModal").modal("hide");
-        originalRow.closest("td").find("input").data("touched", false).focus();
-
-    };
-
+ 
 
     var GetGridDataList = function () {
         debugger;
@@ -321,20 +535,32 @@
                     return options;
                 }
             },
-            batch: true,
+
+
             schema: {
                 data: "Items",
-                total: "TotalCount"
-            },
-            model: {
+                total: "TotalCount",
+                model: {
+                    id: "Id",
+                    fields: {
+                        TotalPostSanctioned: { type: "number", editable: true },
+                        ActualPresentStrength: { type: "number", editable: true },
+                        ExpectedNumber: { type: "number", editable: true },
+                        BasicWagesSalaries: { type: "number", editable: false },
+                        OtherCash: { type: "number", editable: false },
+                        TotalSalary: { type: "number", editable: false },
+                        PersonnelSentForTraining: { type: "number", editable: false }
 
-                fields: {
-                    RequisitionDate: { type: "date" }
+                    }
                 }
-            }
-
+            },
+            change: function (e) {
+                if (e.action === "itemchange") {
+                    calculateRow(e.items[0]);
+                }
+            },
+            editable: true
         });
-
 
         $("#GridDataList").kendoGrid({
             dataSource: gridDataSource,
@@ -417,7 +643,7 @@
                     columns: [
                         { field: "Id", hidden: true, width: 50 },
                         { field: "SalaryAllowanceHeaderId", hidden: true, title: "Salary Allowance Header Id", width: 120 },
-                        { field: "PersonnelCategoriesName", title: "Personnel Categories Name", width: 120 },
+                        { field: "CategoryOfPersonnel", title: "Personnel Categories Name", width: 120 },
                         { field: "PersonnelCategoriesId", hidden: true, title: "Personnel Categories Id", width: 120 },
                         { field: "TotalPostSanctioned", title: "Total Post Sanctioned", width: 120 },
                         { field: "ActualPresentStrength", title: "Actual Present Strength", width: 120 },
@@ -518,120 +744,104 @@
             columnMenu: true
         });
 
+        $("#GridDataList").on("click", ".k-header .k-checkbox", function () {
+            var isChecked = $(this).is(":checked");
+            var grid = $("#GridDataList").data("kendoGrid");
+            if (isChecked) {
+                grid.tbody.find(".k-checkbox").prop("checked", true);
+            } else {
+                grid.tbody.find(".k-checkbox").prop("checked", false);
+            }
+        }); 
+
     };
+    function calculateRow(dataItem) {
 
-    //        columns: [
-
-    //            {
-    //                selectable: true,
-    //                width: 35
-    //            },
-
-    //            {
-    //                title: "Action",
-    //                width: 80,
-    //                sortable: false,
-    //                filterable: false,
-    //                template: function (dataItem) {
-    //                    return `
-    //            <a href="/SalaryAllowance/SalaryAllowance/Edit/${dataItem.Id}"
-    //               class="btn btn-primary btn-sm edit"
-    //               title="Edit">
-    //                <i class="fas fa-pencil-alt"></i>
-    //            </a>
-    //        `;
-    //                }
-    //            },
-
-    //            { field: "Id", hidden: true },
-
-    //            { field: "Code", title: "Code", width: 120 },
-
-    //            { field: "FiscalYear", title: "Fiscal Year", hidden: true },
-
-    //            { field: "BudgetType", title: "Budget Type", width: 120 },
-
-    //            {
-    //                field: "TransactionDate",
-    //                title: "Transaction Date",
-    //                hidden: true,
-    //                width: 140,
-    //                template: "#= TransactionDate ? kendo.toString(kendo.parseDate(TransactionDate), 'yyyy-MM-dd') : '' #"
-    //            },
-
-    //            {
-    //                field: "Status",
-    //                title: "Status",
-    //                width: 120,
-    //                filterable: {
-    //                    ui: function (element) {
-    //                        element.kendoDropDownList({
-    //                            dataSource: [
-    //                                { text: "Posted", value: "Posted" },
-    //                                { text: "Not Posted", value: "Not Posted" }
-    //                            ],
-    //                            dataTextField: "text",
-    //                            dataValueField: "value",
-    //                            optionLabel: "All"
-    //                        });
-    //                    }
-    //                }
-    //            }
-    //        ],
-    //        editable: false,
-    //        selectable: "multiple,row",
-    //        navigatable: true,
-    //        columnMenu: true
-
-
-    //        });
-
-
-    //    $("#GridDataList").on("click", ".k-header .k-checkbox", function () {
-    //        var isChecked = $(this).is(":checked");
-    //        var grid = $("#GridDataList").data("kendoGrid");
-    //        if (isChecked) {
-    //            grid.tbody.find(".k-checkbox").prop("checked", true);
-    //        } else {
-    //            grid.tbody.find(".k-checkbox").prop("checked", false);
-    //        }
-    //    });
-    //};
+        var basicWagesSalaries = dataItem.BasicWagesSalaries || 0;
+        var otherCash = dataItem.OtherCash || 0;
+        var totalSalary = otherCash + basicWagesSalaries;
+        
+        dataItem.set("TotalSalary", totalSalary);
+        
+        
+    }
 
 
     function save($table) {
 
         debugger;
-        //-
-        //var grid = $("#GridDataList").data("kendoGrid");
-
 
         var model = serializeInputs("frmEntry");
 
-        if (!hasLine($table)) {
-            ShowNotification(3, "Can not save without details.");
+
+        var details = [];
+        var grid = $("#kDetails").data("kendoGrid");
+        if (grid) {
+            var dataItems = grid.dataSource.view();
+
+            for (var i = 0; i < dataItems.length; i++) {
+                var item = dataItems[i];
+                calculateRow(item);
+                // You can adjust this to match your server-side view model
+                details.push({
+                    SalaryAllowanceHeaderId: item.get("SalaryAllowanceHeaderId"),
+                    PersonnelCategoriesId: item.get("PersonnelCategoriesId"),
+                    PersonnelCategoriesName: item.get("CategoryOfPersonnel"),
+                    TotalPostSanctioned: item.get("TotalPostSanctioned"),
+                    ActualPresentStrength: item.get("ActualPresentStrength"),
+                    ExpectedNumber: item.get("ExpectedNumber"),
+                    BasicWagesSalaries: item.get("BasicWagesSalaries"),
+                    OtherCash: item.get("OtherCash"),
+                    TotalSalary: item.get("TotalSalary"),
+                    PersonnelSentForTraining: item.get("PersonnelSentForTraining")
+                });
+            }
+        }
+
+        console.log(details);
+
+        if (details.length === 0) {
+            ShowNotification(3, "Save can not without details");
+            return;
+        }
+        if (item.CategoryOfPersonnel === 0 || item.CategoryOfPersonnel === undefined || item.CategoryOfPersonnel === null || item.CategoryOfPersonnel === "") {
+            ShowNotification(3, "PersonnelCategories Name is required.");
+            return;
+        }
+        var details = [];
+        console.log(details);
+        var grid = $("#kDetails").data("kendoGrid");
+        if (grid) {
+            var dataItems = grid.dataSource.view();
+
+            for (var i = 0; i < dataItems.length; i++) {
+                var item = dataItems[i];
+                calculateRow(item);
+                // You can adjust this to match your server-side view model
+                details.push({
+                    SalaryAllowanceHeaderId: item.get("SalaryAllowanceHeaderId"),
+                    PersonnelCategoriesId: item.get("PersonnelCategoriesId"),
+                    PersonnelCategoriesName: item.get("CategoryOfPersonnel"),
+                    TotalPostSanctioned: item.get("TotalPostSanctioned"),
+                    ActualPresentStrength: item.get("ActualPresentStrength"),
+                    ExpectedNumber: item.get("ExpectedNumber"),
+                    BasicWagesSalaries: item.get("BasicWagesSalaries"),
+                    OtherCash: item.get("OtherCash"),
+                    TotalSalary: item.get("TotalSalary"),
+                    PersonnelSentForTraining: item.get("PersonnelSentForTraining")
+                });
+            }
+        }
+        if (details.length === 0) {
+            ShowNotification(3, "Save can not without details");
+            return;
+        }
+        if (item.ProductName === 0 || item.CategoryOfPersonnel === undefined || item.CategoryOfPersonnel === null || item.CategoryOfPersonnel === "") {
+            ShowNotification(3, "Personnel Categories Name  is required.");
             return;
         }
 
-        var details = serializeTable($table);
-
-        //var isValidDetails = true;
-        //var errorMessage = "";
-
-        //$(details).each(function (index, row) {
-        //    if (!row.ProductId || parseInt(row.ProductId) <= 0) {
-        //        isValidDetails = false;
-        //        errorMessage = "Product Name is required at row " + (index + 1);
-        //        return false;
-        //    }
-
-        //});
-
-        //if (!isValidDetails) {
-        //    ShowNotification(3, errorMessage);
-        //    return;
-        //}
-
+        console.log(details);
         model.IsActive = $('#IsActive').prop('checked');
         model.SalaryAllowanceDetail = details; 
 

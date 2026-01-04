@@ -53,6 +53,8 @@ namespace ShampanBFRSUI.Areas.SalaryAllowance.Controllers
             ResultModel<SalaryAllowanceHeaderVM> result = new ResultModel<SalaryAllowanceHeaderVM>();
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new SalaryAllowanceRepo();
+            var currentBranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0";
+            model.BranchId = Convert.ToInt32(currentBranchId);
 
 
             try
