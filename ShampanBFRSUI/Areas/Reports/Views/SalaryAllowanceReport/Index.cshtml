@@ -115,6 +115,7 @@
                         <div class="card-body">
 
                             <div class="form-group row">
+                                @Html.HiddenFor(model => model.YearName)
 
                                 <div class="col-sm-2">
                                     @Html.LabelFor(model => model.FiscalYearId)
@@ -133,14 +134,14 @@
                                 </div>
 
                                 @*<div class="col-sm-1">
-                                    <div class="input-group">
-                                        <button type="button" title="Load" class="btn btn-primary btn-sm sslLoad btnLoad"
-                                                style="margin-top: 26%;" id="btnFDt">
-                                            Load
-                                        </button>
+            <div class="input-group">
+                <button type="button" title="Load" class="btn btn-primary btn-sm sslLoad btnLoad"
+                        style="margin-top: 26%;" id="btnFDt">
+                    Load
+                </button>
 
-                                    </div>
-                                </div>*@
+            </div>
+        </div>*@
 
 
                             </div>
