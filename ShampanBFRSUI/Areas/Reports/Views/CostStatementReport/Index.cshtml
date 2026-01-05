@@ -1,7 +1,7 @@
 ﻿@model ShampanBFRS.Models.Ceiling.ProductBudgetMasterVM
 
 @{
-    ViewBag.Title = "SalaryAllowance";
+    ViewBag.Title = "Cost Statement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -52,7 +52,7 @@
                                 <div class="col-sm-2">
                                     @Html.LabelFor(model => model.ChargeGroup)
                                     <div class="input-group">
-                                        @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm" })
                                     </div>
                                     @Html.ValidationMessageFor(model => model.ChargeGroup)
                                 </div>
@@ -85,11 +85,11 @@
 @section scripts{
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    <script src="~/Areas/Reports/js/SalaryAllowanceReportController.js"></script>
+    <script src="~/Areas/Reports/js/CostStatementReportController.js"></script>
 
     <script>
         $(document).ready(function () {
-            SalaryAllowanceReportController.init();
+            CostStatementReportController.init();
         });
 
     </script>

@@ -55,6 +55,27 @@ namespace ShampanBFRS.Repo.Reports
             }
         }
 
+        public ResultVM CostStatementReport(CommonVM options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/ProductBudget/ReportPreview", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
     }
 }

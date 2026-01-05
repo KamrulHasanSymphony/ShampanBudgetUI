@@ -33,7 +33,7 @@ namespace ShampanBFRS.Models.CommonVMs
         public string? TransactionType { get; set; }
         public string? ReportType { get; set; }
         public string? ChargeGroupId { get; set; }
-
+        public string? ChargeGroup { get; set; }
         public string? FiscalYearId { get; set; }
 
     }

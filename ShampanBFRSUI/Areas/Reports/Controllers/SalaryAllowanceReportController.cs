@@ -64,7 +64,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                     CommonVM param = new CommonVM();
                     param.Id = model.FiscalYearId.ToString();
                     ResultVM FiscalYearresult = _FiscalYearsrepo.List(param);
-                    if (FiscalYearresult.Status == "Success" && FiscalYearresult.DataVM != null)
+                    if (FiscalYearresult.Status == MessageModel.Success && FiscalYearresult.DataVM != null)
                     {
                         FYVM = JsonConvert.DeserializeObject<List<FiscalYearVM>>(FiscalYearresult.DataVM.ToString()).FirstOrDefault();
 
@@ -122,13 +122,13 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                         int infoRow = 6;
 
-                        // Left side: Company name
+                        ////// Left side: Company name
                         ws.Cells[infoRow, 1, infoRow, totalCols / 2].Merge = true;
                         ws.Cells[infoRow, 1].Value = companyName;
                         ws.Cells[infoRow, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
                         ws.Cells[infoRow, 1].Style.Font.Bold = true;
 
-                        // Right side: Number of working days
+                        ////// Right side: Number of working days
                         ws.Cells[infoRow, (totalCols / 2) + 1, infoRow, totalCols].Merge = true;
                         ws.Cells[infoRow, (totalCols / 2) + 1].Value = Numberofworking;
                         ws.Cells[infoRow, (totalCols / 2) + 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
@@ -248,7 +248,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                             dataRange.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                         }
 
-                        ws.View.ShowGridLines = false;
+                        ws.View.ShowGridLines = true;
 
                         // 9. Export to browser
                         using (var memoryStream = new MemoryStream())

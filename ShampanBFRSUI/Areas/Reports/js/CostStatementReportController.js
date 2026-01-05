@@ -1,4 +1,4 @@
-var SalaryAllowanceReportController = function (CommonService, CommonAjaxService) {
+var CostStatementReportController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
         var getFiscalYearId = $("#GLFiscalYearId").val() || 0;
@@ -85,7 +85,7 @@ var SalaryAllowanceReportController = function (CommonService, CommonAjaxService
     function GetChargeGroup() {
         var ChargeGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
             dataTextField: "ChargeGroupText",
-            dataValueField: "Id",
+            dataValueField: "ChargeGroupValue",
             height: 400,
             columns: [
                 { field: "ChargeGroupText", title: "Charge Group Text", width: 150 },
@@ -112,7 +112,7 @@ var SalaryAllowanceReportController = function (CommonService, CommonAjaxService
 
         var model = serializeInputs("frmEntry");
 
-        var form = $('<form method="post" action="/Reports/SalaryAllowanceReport/SalaryAllowanceReport"></form>');
+        var form = $('<form method="post" action="/Reports/CostStatementReport/CostStatementReport"></form>');
 
         for (var key in model) {
             if (model.hasOwnProperty(key)) {
