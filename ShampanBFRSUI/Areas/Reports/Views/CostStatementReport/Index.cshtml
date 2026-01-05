@@ -1,7 +1,7 @@
-﻿@model ShampanBFRS.Models.Ceiling.CeilingVM
+﻿@model ShampanBFRS.Models.Ceiling.ProductBudgetMasterVM
 
 @{
-    ViewBag.Title = "Budget";
+    ViewBag.Title = "SalaryAllowance";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Budget Report</h1>
+                    <h1 class="m-0">Cost Statement Report</h1>
 
                 </div>
                 <div class="col-sm-6">
@@ -28,7 +28,7 @@
                 <form id="frmEntry">
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">Budget Info</h3>
+                            <h3 class="card-title">Cost Statement Info</h3>
                         </div>
                         <div class="card-body">
 
@@ -43,23 +43,19 @@
                                 </div>
 
                                 <div class="col-sm-2">
-                                    @Html.LabelFor(model => model.ReportType)
+                                    @Html.LabelFor(model => model.BudgetType)
                                     <div class="input-group">
-                                        @Html.TextBoxFor(model => model.ReportType, new { placeholder = "Enter Report Type", @class = "form-control form-control-sm" })
+                                        @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Report Type", @class = "form-control form-control-sm" })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.ReportType)
+                                    @Html.ValidationMessageFor(model => model.BudgetType)
                                 </div>
-
-                                <div class="col-sm-1">
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.ChargeGroup)
                                     <div class="input-group">
-                                        <button type="button" title="Load" class="btn btn-primary btn-sm sslLoad btnLoad"
-                                                style="margin-top: 26%;" id="btnFDt">
-                                            Load
-                                        </button>
-
+                                        @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm", @readonly = "readonly" })
                                     </div>
+                                    @Html.ValidationMessageFor(model => model.ChargeGroup)
                                 </div>
-
 
                             </div>
 
@@ -67,17 +63,6 @@
 
 
                     </div>
-
-                    @*<div class="card card-secondary">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                Details
-                            </h3>
-                        </div>
-                        <div class="card-body">
-                            <div id="ReportTypeDetailsData"></div>
-                        </div>
-                    </div>*@
 
                 </form>
 
@@ -100,18 +85,13 @@
 @section scripts{
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    <script src="~/Areas/Reports/js/BudgetReportController.js"></script>
+    <script src="~/Areas/Reports/js/SalaryAllowanceReportController.js"></script>
 
     <script>
         $(document).ready(function () {
-            BudgetReportController.init();
+            SalaryAllowanceReportController.init();
         });
 
     </script>
-    <script>
-        // bootstrapSwitch initialize
-        $("[data-bootstrap-switch]").each(function () {
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        });
-    </script>
+
 }

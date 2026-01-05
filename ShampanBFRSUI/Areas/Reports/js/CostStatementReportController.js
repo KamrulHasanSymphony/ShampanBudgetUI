@@ -1,13 +1,15 @@
 var SalaryAllowanceReportController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
-        var getFiscalYearId = $("#FiscalYearId").val() || 0;
+        var getFiscalYearId = $("#GLFiscalYearId").val() || 0;
         var getBudgetType = $("#BudgetType").val() || 0;
+        var getChargeGroup = $("#ChargeGroup").val() || 0;
        
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
         GetBudgetTypeComboBox();
+        GetChargeGroup();
        
         //$('.btnLoad').click('click', function () {
         //    validateAndFetchReportTypeData();
@@ -31,7 +33,7 @@ var SalaryAllowanceReportController = function (CommonService, CommonAjaxService
 
     };
     function GetFiscalYearComboBox() {
-        var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
+        var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Id",
             height: 400,
@@ -79,6 +81,32 @@ var SalaryAllowanceReportController = function (CommonService, CommonAjaxService
             }
         }).data("kendoMultiColumnComboBox");
     };
+
+    function GetChargeGroup() {
+        var ChargeGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
+            dataTextField: "ChargeGroupText",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "ChargeGroupText", title: "Charge Group Text", width: 150 },
+            ],
+            filter: "contains",
+            filterFields: ["ChargeGroupText"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetChargeGroupList"
+                }
+            },
+            placeholder: "Select Charge Group",
+            value: "",
+            dataBound: function (e) {
+                if (getChargeGroup) {
+                    this.value(parseInt(getChargeGroup));
+                }
+            }
+        }).data("kendoMultiColumnComboBox");
+    };
+
 
     function Download() {
 
