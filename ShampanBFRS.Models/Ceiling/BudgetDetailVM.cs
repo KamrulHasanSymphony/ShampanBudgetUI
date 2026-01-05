@@ -51,6 +51,11 @@ namespace ShampanBFRS.Models.Ceiling
         public string? iBASName { get; set; }
         public string? iBASCode { get; set; }
 
+        public string? AccountCode { get; set; }
+        public string? AccountName { get; set; }
+
+
+
         public string? Operation { get; set; }
     }
 }

@@ -5,14 +5,25 @@
 }
 
 @Html.HiddenFor(model => model.TransactionType)
-@*@Html.HiddenFor(model => model.MenuType)*@
+@Html.HiddenFor(model => model.MenuType)
 @Html.HiddenFor(model => model.BudgetType)
 
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">List Of Data</h1>
+                @if (@Model.BudgetType == "1st_6months_actual")
+                {
+                    <h1 class="m-0">List Of Data(Actual(1st 6months ))</h1>
+                }
+                else if (@Model.BudgetType == "2nd_6months_actual")
+                {
+                    <h1 class="m-0">List Of Data(Actual(2nd 6months ))</h1>
+                }
+                else
+                {
+                    <h1 class="m-0">List Of Data(@Model.BudgetType)</h1>
+                }
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -30,7 +41,7 @@
                     onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
-          
+
         </div>
     </div>
 </div>
