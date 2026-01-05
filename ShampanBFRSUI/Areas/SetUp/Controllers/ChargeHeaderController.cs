@@ -315,7 +315,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
 
         [HttpPost]
         public JsonResult GetGridData(GridOptions options, string branchId, string isPost, string fromDate, string toDate)
-        {
+       {
             ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ChargeHeaderRepo();
 

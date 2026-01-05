@@ -122,8 +122,8 @@
                         ServiceCharge: { type: "number", defaultValue: 0 },
                         ProcessFee: { type: "number", defaultValue: 0 },
                         RcoTreatmentFee: { type: "number", defaultValue: 0 },
-
                         AbpTreatmentFee: { type: "number", defaultValue: 0 },
+
                         ProcessFeeRate: { type: "number", defaultValue: 0 },
                         RcoTreatmentFeeRate: { type: "number", defaultValue: 0 },
                         AbpTreatmentFeeRate: { type: "number", defaultValue: 0 },
@@ -694,7 +694,12 @@
                         { field: "ServiceCharge", title: "Service Charge", width: 120 },
                         { field: "ProcessFee", title: "Process Fee", width: 120 },
                         { field: "RcoTreatmentFee", title: "Rco Treatment Fee", width: 120 },
-                        { field: "AbpTreatmentFee", title: "Abp Treatment Fee", width: 120 }
+                        { field: "AbpTreatmentFee", title: "Abp Treatment Fee", width: 120 },
+
+                        { field: "ProcessFeeRate", title: "Process Fee Rate", width: 120 },
+                        { field: "RcoTreatmentFeeRate", title: "Rco Treatment Fee Rate", width: 120 },
+                        { field: "AbpTreatmentFeeRate", title: "Abp Treatment Fee Rate", width: 120 },
+                        { field: "ProductImprovementFee", title: "Product Improvement Fee", width: 120 }
 
 
                     ]
