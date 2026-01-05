@@ -1,8 +1,13 @@
-﻿using OfficeOpenXml;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Newtonsoft.Json;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
 using ShampanBFRS.Models.SalaryAllowance;
+using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.Reports;
+using ShampanBFRS.Repo.SetUpRepo;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,6 +41,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                     var currentBranchId = 0;
                     if (Session["CurrentBranch"] != null)
                         int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
+                    string YearName = "";
 
                     CommonVM commonVM = new CommonVM();
 
@@ -49,6 +55,27 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                     var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
 
                     DataTable dt = ConvertListToDataTable(list);
+
+                    #region Fiscal Years
+
+                    FiscalYearsRepo _FiscalYearsrepo = new FiscalYearsRepo();
+
+                    FiscalYearVM FYVM = new FiscalYearVM();
+                    CommonVM param = new CommonVM();
+                    param.Id = model.FiscalYearId.ToString();
+                    ResultVM FiscalYearresult = _FiscalYearsrepo.List(param);
+                    if (FiscalYearresult.Status == "Success" && FiscalYearresult.DataVM != null)
+                    {
+                        FYVM = JsonConvert.DeserializeObject<List<FiscalYearVM>>(FiscalYearresult.DataVM.ToString()).FirstOrDefault();
+
+                        YearName = FYVM.YearName;
+                    }
+                    else
+                    {
+                        FYVM = null;
+                    }
+
+                    #endregion
 
                     if (dt.Rows.Count == 0)
                     {
@@ -70,20 +97,11 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         string ReportHead = "Ministry of finance, Finance Division";
                         string ReportHead2 = "Monitoring Cell";
                         string ReportHead3 = "PERSONNEL";
-                        string ReportHead4 = "For the year : 2026-27(Estimate)";
+                        string ReportHead4 = "For the year : " + YearName + "(" + model.BudgetType.ToString() + ")";
 
                         string Numberofworking = " Number of working days in year:";
 
                         string companyName = "Name of Organisation : Bangladesh Petroleum Corporation.";
-
-                        ////////////// 1. Add company name at top, merge across all columns
-                        ////int totalCols = dt.Columns.Count + 1; // +1 for SL column
-                        ////ws.Cells[1, 1, 1, totalCols].Merge = true;
-                        ////ws.Cells[1, 1].Value = ReportHead;
-                        ////ws.Cells[1, 1].Style.Font.Bold = true;
-                        ////ws.Cells[1, 1].Style.Font.Size = 14;
-                        ////ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        ////ws.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
                         int headerRow = 1;
                         int totalCols = dt.Columns.Count + 1; // SL included
@@ -116,7 +134,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         ws.Cells[infoRow, (totalCols / 2) + 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
                         ws.Cells[infoRow, (totalCols / 2) + 1].Style.Font.Bold = true;
 
-                        
+
                         // 2. Leave 2 blank rows, start data from row 4
                         int startRow = 7;
                         ws.Cells[startRow, 1, startRow, totalCols].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
@@ -169,14 +187,12 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         int totalRows = dtWithSerial.Rows.Count;
                         int footerRow = startRow + totalRows + 1; // leave one row empty before footer
 
-                        // 5. Format header bold and center
+                        ////// 5. Format header bold and center
                         using (var headerRange = ws.Cells[startRow, 1, startRow, totalCols])
                         {
                             headerRange.Style.Font.Bold = true;
-                            headerRange.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                            headerRange.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                            headerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                            headerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
+                            headerRange.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            headerRange.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                         }
 
                         // 6. Format numeric columns, ratio %, and sum in footer
@@ -196,7 +212,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                                 {
                                     ws.Cells[footerRow, col].Formula = $"SUM({ws.Cells[startRow + 1, col].Address}:{ws.Cells[startRow + totalRows, col].Address})";
                                 }
-                               
+
                             }
                         }
                         ws.Cells[footerRow, 1].Value = "Total";
@@ -215,15 +231,6 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                             footerRange.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                             footerRange.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                         }
-
-                        //// 7. Footer formatting
-                        //using (var footerRange = ws.Cells[footerRow, 1, footerRow, totalCols])
-                        //{
-                           
-                        //    footerRange.Style.Font.Bold = true;
-                        //    footerRange.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                        //    footerRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);
-                        //}
 
                         // 8. Set column widths
                         ws.Column(1).Width = 5; // SL column narrower

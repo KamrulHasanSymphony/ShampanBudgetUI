@@ -416,11 +416,13 @@
     <Compile Include="Areas\Questions\Controllers\QuestionSetController.cs" />
     <Compile Include="Areas\Questions\Controllers\QuestionSubjectController.cs" />
     <Compile Include="Areas\Reports\Controllers\BudgetController.cs" />
+    <Compile Include="Areas\Reports\Controllers\CostStatementReportController.cs" />
     <Compile Include="Areas\Reports\Controllers\SalaryAllowanceReportController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\SalaryAllowance\Controllers\PersonnelCategoriesController.cs" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetController.js" />
     <Content Include="Areas\Reports\js\SalaryAllowanceReportController.js" />
+    <Content Include="Areas\Reports\js\CostStatementReportController.js" />
     <Content Include="Areas\SalaryAllowance\js\Controller\PersonnelCategoriesController.js" />
     <Compile Include="Areas\SalaryAllowance\Controllers\SalaryAllowanceController.cs" />
     <Content Include="Areas\SalaryAllowance\js\Controller\SalaryAllowanceController.js" />
@@ -2680,6 +2682,7 @@
     <Content Include="Areas\Ceiling\Views\Budget\Index.cshtml" />
     <Content Include="Areas\Ceiling\Views\Budget\Create.cshtml" />
     <Content Include="Areas\Reports\Views\SalaryAllowanceReport\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\CostStatementReport\Index.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />
@@ -3235,6 +3238,7 @@
     <Content Include="Content\css\cdnjs.cloudflare.com_ajax_libs_fullcalendar_3.4.0_fullcalendar.min.css" />
     <Content Include="Content\css\cdnjs.cloudflare.com_ajax_libs_fullcalendar_3.4.0_fullcalendar.print.css" />
     <Content Include="Content\css\code.ionicframework.com_ionicons_2.0.1_css_ionicons.min.css" />
+    <Content Include="Content\css\Customs.css" />
     <Content Include="Content\css\fonts.googleapis.css" />
     <Content Include="Content\css\icon.css" />
     <Content Include="Content\css\MaterialIcons.css" />
