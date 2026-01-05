@@ -580,7 +580,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", sortable: true, width: 200 },
-                { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
+                { field: "BudgetType",hidden:true, title: "Budget Type", sortable: true, width: 200 },
                 { field: "YearName", title: "Year", sortable: true, width: 200 },
                 //{ field: "BudgetSetNo", title: "Budget Set No", sortable: true, width: 200 },
                 //{

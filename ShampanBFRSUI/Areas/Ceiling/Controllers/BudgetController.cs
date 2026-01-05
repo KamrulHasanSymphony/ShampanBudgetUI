@@ -195,9 +195,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 return RedirectToAction("Index");
             }
         }
-
         
-
         [HttpPost]
         public JsonResult GetBudgetDataForDetailsNew(GridOptions options, string yearId, string BudgetType)
         {
@@ -248,88 +246,6 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
-        //[HttpPost]
-        //public JsonResult BudgetList(int yearId)
-        //{
-        //    ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
-        //    _repo = new BudgetRepo();
-
-        //    try
-        //    {
-        //        var currentBranchId = 0;
-        //        if (Session["CurrentBranch"] != null)
-        //            int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
-
-        //        BudgetHeaderVM productBudgetVM = new BudgetHeaderVM();
-
-        //        productBudgetVM.FiscalYearId = yearId;
-        //        productBudgetVM.BranchId = currentBranchId;
-
-        //        //productBudgetVM.UserId = Session["UserId"].ToString();
-
-        //        result = _repo.ProductBudgetList(productBudgetVM);
-
-        //        if (result.Status == MessageModel.Success && result.DataVM != null)
-        //        {
-        //            var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
-
-        //            return Json(new
-        //            {
-        //                Items = gridData.Items,
-        //                TotalCount = gridData.TotalCount
-        //            }, JsonRequestBehavior.AllowGet);
-        //        }
-
-        //        return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-        //        return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
-
-        //[HttpPost]
-        //public JsonResult BudgeDistincttList(int yearId, String BudgetType)
-        //{
-        //    ResultVM result = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
-        //    _repo = new BudgetRepo();
-
-        //    try
-        //    {
-        //        var currentBranchId = 0;
-        //        if (Session["CurrentBranch"] != null)
-        //            int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
-
-        //        BudgetHeaderVM productBudgetVM = new BudgetHeaderVM();
-
-        //        productBudgetVM.FiscalYearId = yearId;
-        //        productBudgetVM.BranchId = currentBranchId;
-
-        //        //productBudgetVM.UserId = Session["UserId"].ToString();
-
-        //        result = _repo.BudgeDistincttList(productBudgetVM);
-
-        //        if (result.Status == MessageModel.Success && result.DataVM != null)
-        //        {
-        //            var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
-
-        //            return Json(new
-        //            {
-        //                Items = gridData.Items,
-        //                TotalCount = gridData.TotalCount
-        //            }, JsonRequestBehavior.AllowGet);
-        //        }
-
-        //        return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-        //        return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
 
         [HttpPost]
         public JsonResult GetGridData(GridOptions options,string TransactionType, string MenuType, string budgetType = "")
@@ -402,7 +318,6 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
         }
 
         [HttpPost]
-
         public ActionResult MultiplePost(CommonVM param)
         {
             ResultModel<BudgetHeaderVM> result = new ResultModel<BudgetHeaderVM>();
@@ -448,8 +363,6 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
             return Json(result);
         }
-
-
 
 
     }
