@@ -45,6 +45,12 @@ namespace ShampanBFRS.Models.SetUpVMs
         public decimal? RcoTreatmentFee { get; set; }
         public decimal? AbpTreatmentFee { get; set; }
 
+        public decimal? ProcessFeeRate { get; set; }
+        public decimal? RcoTreatmentFeeRate { get; set; }
+        public decimal? AbpTreatmentFeeRate { get; set; }
+        public decimal? ProductImprovementFee { get; set; }
+
+
 
     }
 }

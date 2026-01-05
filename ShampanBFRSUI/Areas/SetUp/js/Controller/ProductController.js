@@ -301,7 +301,9 @@
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", width: 150, sortable: true },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
+                { field: "ProductGroupName", title: "Product Group Name", sortable: true, width: 200 },
                 { field: "ConversionFactor", title: "Conversion Factor", sortable: true, width: 200 },
+                
               /*  { field: "CIFCharge", title: "CIF Charge", sortable: true, width: 200 },*/
                 //{
                 //    field: "Status", title: "Status", sortable: true, width: 100,
