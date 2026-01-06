@@ -741,9 +741,6 @@
 
             columns: [
 
-                // Selection
-                { selectable: true, width: 55 },
-
                 // Action
                 {
                     title: "Action",

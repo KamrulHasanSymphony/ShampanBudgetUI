@@ -45,9 +45,10 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             vm.Operation = "add";
             if (result.Status == "Success" && result.DataVM != null)
             {
-                vm = JsonConvert.DeserializeObject<FiscalYearVM>(result.DataVM.ToString());
+                //vm = JsonConvert.DeserializeObject<FiscalYearVM>(result.DataVM.ToString());
+               
+                vm = JsonConvert.DeserializeObject<List<FiscalYearVM>>(result.DataVM.ToString()).FirstOrDefault();
                 vm.Operation = "add";
-                // vm = JsonConvert.DeserializeObject<List<FiscalYearVM>>(result.DataVM.ToString()).FirstOrDefault();
             }
             else
             {

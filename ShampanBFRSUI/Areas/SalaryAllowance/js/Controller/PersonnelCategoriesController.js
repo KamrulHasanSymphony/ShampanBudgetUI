@@ -225,7 +225,7 @@
             columns: [
                 {
                     title: "Action",
-                    width: 30,
+                    width: 15,
                     template: function (dataItem) {
                         return `
                             <a href="/SalaryAllowance/PersonnelCategorie/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
@@ -234,9 +234,9 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "SL", title: "SL", sortable: true, width: 30 },
-                { field: "CategoryOfPersonnel", title: "Category Of Personnel", sortable: true, width: 100 },
-                { field: "Status", title: "Status", sortable: true, width: 100 }
+                { field: "SL", title: "SL", sortable: true, width: 20},
+                { field: "CategoryOfPersonnel", title: "Category Of Personnel", sortable: true, width: 150 },
+                { field: "Status", title: "Status", sortable: true, width: 150 }
             ],
             editable: false,
             selectable: "multiple row",

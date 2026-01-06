@@ -279,9 +279,9 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Sabre Code", sortable: true, width: 200 },
+                { field: "Code", title: "Sabre Code", sortable: true, width: 60 },
                 { field: "Name", title: "Sabre Name", sortable: true, width: 200 },
-                { field: "iBASCode", title: "iBAS Code", sortable: true, width: 200 },
+                { field: "iBASCode", title: "iBAS Code", sortable: true, width: 60 },
                 { field: "iBASName", title: "iBAS Name", sortable: true, width: 200 },
             ],
             editable: false,

@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Fiscal Year Entry </h1>
+                <h1 class="m-0">Fiscal Year Update </h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -55,13 +55,23 @@
 
                 <div class="form-group row">
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         @Html.LabelFor(model => model.Year)
                         <div class="input-group">
-                            @Html.DropDownListFor(model => model.Year, new List<SelectListItem>(), "Select Year", new { @class = "form-control form-control-sm" })
+                            @Html.DropDownListFor(model => model.Year, new List<SelectListItem>(), "Select Year", new { @class = "form-control form-control-sm", @readonly = "readonly" })
                         </div>
                     </div>
-                    <div class="col-sm-3">
+
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.YearName)
+                        <div class="input-group ">
+                            @Html.TextBoxFor(model => model.YearName, new { placeholder = "Enter Year Name", @class = "  form-control form-control-sm ", @readonly = "readonly" })
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.YearName)
+                    </div>
+
+                    <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearStart)
                         <div class="input-group date">
                             @Html.TextBoxFor(model => model.YearStart, new { @class = "form-control form-control-sm dateRange", @readonly = "readonly" })
@@ -71,7 +81,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearEnd)
                         <div class="input-group date">
                             @Html.TextBoxFor(model => model.YearEnd, new { @class = "form-control form-control-sm dateRange", @readonly = "readonly" })

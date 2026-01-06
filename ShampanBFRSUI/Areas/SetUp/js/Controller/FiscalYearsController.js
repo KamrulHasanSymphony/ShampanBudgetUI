@@ -283,9 +283,7 @@
             },
             
             columns: [
-                {
-                    selectable: true, width: 30
-                },
+              
                 {
                     title: "Action",
                     width: 60,
@@ -301,6 +299,9 @@
                 },
                 {
                     field: "Year", title: "Year", width: 150, sortable: true
+                },
+                {
+                    field: "YearName", title: "Year Name", width: 150, sortable: true
                 },
                 {
                     field: "YearStart", title: "Year Start", sortable: true, width: 150, template: '#= kendo.toString(kendo.parseDate(YearStart), "yyyy-MM-dd") #',
