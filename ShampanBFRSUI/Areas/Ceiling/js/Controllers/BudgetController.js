@@ -420,9 +420,9 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 }, 1000);
             },
             columns: [
-                {
-                    selectable: true, width: 40
-                },
+                //{
+                //    selectable: true, width: 40
+                //},
 
                 {
                     title: "Action",
