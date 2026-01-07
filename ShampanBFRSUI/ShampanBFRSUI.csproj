@@ -418,9 +418,11 @@
     <Compile Include="Areas\Reports\Controllers\BudgetController.cs" />
     <Compile Include="Areas\Reports\Controllers\CostStatementReportController.cs" />
     <Compile Include="Areas\Reports\Controllers\SalaryAllowanceReportController.cs" />
+    <Compile Include="Areas\Reports\Controllers\SalesStatementReportController.cs" />
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\SalaryAllowance\Controllers\PersonnelCategoriesController.cs" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetController.js" />
+    <Content Include="Areas\Reports\js\SalesStatementReportController.js" />
     <Content Include="Areas\Reports\js\SalaryAllowanceReportController.js" />
     <Content Include="Areas\Reports\js\CostStatementReportController.js" />
     <Content Include="Areas\SalaryAllowance\js\Controller\PersonnelCategoriesController.js" />
@@ -2683,6 +2685,7 @@
     <Content Include="Areas\Ceiling\Views\Budget\Create.cshtml" />
     <Content Include="Areas\Reports\Views\SalaryAllowanceReport\Index.cshtml" />
     <Content Include="Areas\Reports\Views\CostStatementReport\Index.cshtml" />
+    <Content Include="Areas\Reports\Views\SalesStatementReport\Index.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />
