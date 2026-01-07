@@ -187,7 +187,7 @@
                     template: function (dataItem) {
                         return dataItem.ProductName || "";
                     },
-                   // width: 120
+                    width: 180
                 },
                 {
                     field: "ConversionFactor",
@@ -195,7 +195,7 @@
                     editable: false,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                   // width: 120
+                    width: 180
                 },
                 {
                     field: "PriceMT",
@@ -203,7 +203,7 @@
                     editable: true,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                   // width: 120
+                   width: 120
                 },
                 {
                     field: "PriceLTR",
@@ -211,7 +211,7 @@
                     format: "{0:n2}",
                    
                     attributes: { style: "text-align:right;" },
-                   // width: 120
+                    width: 120
                 },
                 {
                     field: "SalesExERLValue",
@@ -219,15 +219,15 @@
                     editable: true,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                    //width: 120
+                    width: 180
                 },
 
                 {
                     field: "SalesExImport_LocalValue",
-                    title: "ExImport_LocalValue",
+                    title: "Sales ExImport_Local Value",
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                    //width: 120
+                    width: 180
                 },
                 
                 {
@@ -235,14 +235,14 @@
                     title: "Production MT",
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                   // width: 120
+                    width: 120
                 },
                 {
                     field: "SalesExImport_LocalMT",
-                    title: "ExImport_LocalMT",
+                    title: "Sales ExImport_Local MT",
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                    //width: 120
+                    width: 180
                 },
                 
                 {
@@ -251,7 +251,7 @@
                     editable: true,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                   // width: 120
+                    width: 120
                 },
                           
                 
@@ -261,7 +261,7 @@
                     editable: true,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                   // width: 120
+                    width: 180
                 },
                 
                 {
