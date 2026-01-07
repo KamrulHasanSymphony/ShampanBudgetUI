@@ -426,7 +426,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
                 {
                     title: "Action",
-                    width: 60,
+                    width: 30,
                     template: function (dataItem) {
                         return `
         <a href="/Ceiling/Budget/Edit?id=${dataItem.Id}"
@@ -436,9 +436,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", sortable: true, width: 200 },
-                { field: "BudgetType", title: "Budget Type", sortable: true, width: 200 },
-                /*{ field: "IsPost", title: "Post", sortable: true, width: 200 }*/
+                { field: "Code", title: "Code", sortable: true, width: 60 },
+                { field: "BudgetType", title: "Budget Type", sortable: true, width: 100 },
                 {
                     field: "Status",
                     title: "Status",

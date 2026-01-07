@@ -749,7 +749,7 @@
                 {
 
                     title: "Action",
-                    width: 45,
+                    width: 30,
                     template: function (dataItem) {
                         console.log(dataItem);
                         return `
@@ -760,7 +760,7 @@
                 },
 
                 { field: "Id", width: 10, hidden: true, sortable: true },
-                { field: "Code", title: 'Code', width: 70, sortable: true },
+                { field: "Code", title: 'Code', width: 45, sortable: true },
                 { field: "FiscalYear", hidden: true, title: 'FiscalYear', width: 50, sortable: true },
                 { field: "BudgetType", title: 'Budget Type', width: 50, sortable: true },
                 {

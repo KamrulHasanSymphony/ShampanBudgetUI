@@ -32,7 +32,7 @@
     <div class="card">
         <div class="card-header p-2">
 
-            @if (Model.IsPost == "Y")
+            @if (Model.IsPost == "1")
             {
                 <button type="button" class="button sslPush">Already Posted</button>
             }
@@ -101,34 +101,6 @@
                                     @Html.ValidationMessageFor(model => model.GLFiscalYearId)
                                 </div>
 
-                                @*<div class="col-sm-2">
-                                        @Html.LabelFor(model => model.BudgetSetNo)
-                                        <div class="input-group">
-                                            @Html.TextBoxFor(model => model.BudgetSetNo, new { placeholder = "Enter Budget Set No", @class = "form-control form-control-sm" })
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.BudgetSetNo)
-                                    </div>*@
-
-                                @*<div class="col-sm-2">
-                                        @Html.LabelFor(model => model.BudgetType)
-                                        <div class="input-group">
-                                            @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
-                                        </div>
-                                        @Html.ValidationMessageFor(model => model.BudgetType)
-                                    </div>*@
-
-                                @*<div class="col-sm-2">
-                                        @Html.LabelFor(model => model.TransactionDate)
-                                        <div class="input-group ">
-                                            @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm", @style = "width: 100%; height:32px;" })
-                                        </div>
-                                        <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
-                                    </div>*@
-
-                            </div>
-
-                            <div class="form-group row">
-
                                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                                 {
                                     <div class="col-sm-3">
@@ -150,7 +122,11 @@
                                     </div>
                                 }
 
+
+
                             </div>
+
+                           
 
 
 
@@ -182,7 +158,7 @@
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">
 
-                        @if (Model.IsPost == "Y")
+                        @if (Model.IsPost == "1")
                         {
                             <button type="button" class="button sslPush">Already Posted</button>
                         }
