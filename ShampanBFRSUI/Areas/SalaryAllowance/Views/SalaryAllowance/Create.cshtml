@@ -48,8 +48,12 @@
 
 <div class="card">
     <div class="card-header p-2">
+        @if (Model.IsPost == "1")
+        {
+            <button type="button" class="button sslPush">Already Posted</button>
+        }
 
-        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+        else if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
         {
             <button type="button" class="button btnsave sslUpdate">Update</button>
             <button type="button" title="Post data" class="button btnPost sslPost"> Post </button>
@@ -57,18 +61,20 @@
             <button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
+            <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
 
         }
         else
         {
-            <div style="display:none;" class="divUpdate">
-                <button type="button" class="button btnsave sslUpdate">Update</button>
-                <button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
-                    New
-                </button>
-                <button type="button" title="Post data" class="button btnPost sslPost"> Post </button>
+    <div style="display:none;" class="divUpdate">
+        <button type="button" class="button btnsave sslUpdate">Update</button>
+        <button type="button" class="button btnPost sslPost">Post</button>
+        <button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+            New
+        </button>
+        <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
 
-            </div>
+    </div>
             <div class="divSave">
                 <button class="button btnsave sslSave" type="button" id="">Save</button>
             </div>
@@ -102,13 +108,7 @@
                         @Html.ValidationMessageFor(model => model.Code)
                     </div>
 
-                    @*<div class="col-sm-2">
-                            @Html.LabelFor(model => model.TransactionDate)
-                            <div class="input-group ">
-                                @Html.TextBoxFor(model => model.TransactionDate, new { @class = "required form-control form-control-sm" })
-                            </div>
-                            <span class="field-validation-error text-danger" data-valmsg-for="NoteDate" data-valmsg-replace="true"></span>
-                        </div>*@
+                   
 
                     <div class="col-sm-2 hidden-field">
                         @Html.LabelFor(model => model.TransactionDate)
@@ -164,24 +164,34 @@
         <div class="card-header p-2">
 
 
-            @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-            { /*On Edit*/
-                <button style="float:left;" type="button" class="button btnsave sslUpdate">Update</button>
-                @*<button style="float: right; margin-left: 4px;" type="button" title="Add New" data-url="/MM/MaintenanceRequisition/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
-                        New
-                    </button>*@
+            @if (Model.IsPost == "1")
+            {
+                <button type="button" class="button sslPush">Already Posted</button>
+            }
+
+            else if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+                <button type="button" title="Post data" class="button btnPost sslPost"> Post </button>
+
+                @*<button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                    New
+                </button>*@
+                <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
+
             }
             else
             {
                 <div style="display:none;" class="divUpdate">
-                    @*after save*@
                     <button type="button" class="button btnsave sslUpdate">Update</button>
-                    @*<button style="float: right; margin-left: 2px;" type="button" title="Add New" data-url="/MM/MaintenanceRequisition/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
-                            New
-                        </button>*@
+                    <button type="button" class="button btnPost sslPost">Post</button>
+                    @*<button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/SalaryAllowance/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                        New
+                    </button>*@
+                    <button type="button" style="display:none;" class="button sslPush">Already Posted</button>
+
                 </div>
                 <div class="divSave">
-                    @*NEW Entry*@
                     <button class="button btnsave sslSave" type="button" id="">Save</button>
                 </div>
             }

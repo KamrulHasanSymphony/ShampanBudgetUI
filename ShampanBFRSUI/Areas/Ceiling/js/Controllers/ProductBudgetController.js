@@ -219,7 +219,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                 value: "",
                 dataBound: function (e) {
                     if (getChargeGroup) {
-                        this.value(parseInt(getChargeGroup));
+                        this.value(getChargeGroup);
                     }
                 }
             }).data("kendoMultiColumnComboBox");

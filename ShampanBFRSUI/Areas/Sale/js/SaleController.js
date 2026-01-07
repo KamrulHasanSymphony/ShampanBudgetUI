@@ -60,7 +60,7 @@
                 function (result) {
 
                     if (result) {
-                        SelectData();
+                        SelectDataPost();
                     }
                 });
         });
@@ -86,13 +86,6 @@
 
        
 
-
-        //$('#details').on('blur', ".td-BasicWagesSalaries", function (event) {
-        //    computeSubTotal($(this), '');
-        //});
-        //$('#details').on('blur', ".td-OtherCash", function (event) {
-        //    computeSubTotal($(this), '');
-        //});
 
 
         $('#details').on('blur',
@@ -457,6 +450,42 @@
             format: "yyyy-MM-dd" // Optional: Set the date format
         });
     }
+
+    function SelectDataPost() {
+
+
+        var IDs = [];
+
+        var selectedRows = $("#GridDataList").data("kendoGrid").select();
+
+        if (selectedRows.length === 0) {
+            ShowNotification(3, "You are requested to Select checkbox!");
+            return;
+        }
+
+        selectedRows.each(function () {
+            var dataItem = $("#GridDataList").data("kendoGrid").dataItem(this);
+            IDs.push(dataItem.Id);
+        });
+
+        var model = {
+            IDs: IDs
+        };
+        var filteredData = [];
+        var dataSource = $("#GridDataList").data("kendoGrid").dataSource;
+        var rowData = dataSource.view().filter(x => IDs.includes(x.Id));
+        filteredData = rowData.filter(x => x.IsPost == true && IDs.includes(x.Id));
+
+        if (filteredData.length > 0) {
+            ShowNotification(3, "Data has already been Posted.");
+            return;
+        }
+        var url = "/Sale/Sale/MultiplePost";
+
+        CommonAjaxService.multiplePost(url, model, postDone, fail);
+    };
+
+
     
     var GetGridDataList = function (getBudgetType) {
         debugger;

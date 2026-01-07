@@ -1,6 +1,7 @@
 ﻿var ChargeHeaderController = function (CommonService, CommonAjaxService) {
 
-    var getChargeGroup = 0;
+    //var getChargeGroup = 0;
+    var getChargeGroup = "";
 
     var init = function () {
         debugger;
@@ -416,8 +417,9 @@
     };
 
     function GetChargeGroup() {
+        debugger;
         var COAGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
-            dataTextField: "ChargeGroupText",
+            dataTextField: "ChargeGroupValue",
             dataValueField: "ChargeGroupValue",
             height: 400,
             columns: [
@@ -433,8 +435,8 @@
             placeholder: "Select Charge Group",
             value: "",
             dataBound: function (e) {
-                if (getChargeGroup) {
-                    this.value(parseInt(getChargeGroup));
+                if (getChargeGroup) {               
+                    this.value(getChargeGroup);
                 }
             }
         }).data("kendoMultiColumnComboBox");
@@ -744,9 +746,9 @@
             },
             columns: [
 
-                {
-                    selectable: true, width: 40
-                },
+                //{
+                //    selectable: true, width: 40
+                //},
 
                 {
 

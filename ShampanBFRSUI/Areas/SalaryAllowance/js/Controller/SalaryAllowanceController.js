@@ -60,12 +60,29 @@
                 function (result) {
 
                     if (result) {
-                        SelectData();
+                        SelectDataPost();
                     }
                 });
         });
 
+        $('.btnPost').on('click', function () { //for create form
+            Confirmation("Are you sure? Do You Want to Post Data?",
+                function (result) {
+                    debugger;
 
+                    if (result) {
+                        var model = serializeInputs("frmEntry");
+                        if (model.IsPost == "True") {
+                            ShowNotification(3, "Data has already been Posted.");
+                        }
+                        else {
+                            model.IDs = model.Id;
+                            var url = "/Sale/Sale/MultiplePost";
+                            CommonAjaxService.multiplePost(url, model, postDone, fail);
+                        }
+                    }
+                });
+        });
        
 
         $('#details').on('blur',
@@ -415,6 +432,41 @@
         });
     }
 
+    function SelectDataPost() {
+
+
+        var IDs = [];
+
+        var selectedRows = $("#GridDataList").data("kendoGrid").select();
+
+        if (selectedRows.length === 0) {
+            ShowNotification(3, "You are requested to Select checkbox!");
+            return;
+        }
+
+        selectedRows.each(function () {
+            var dataItem = $("#GridDataList").data("kendoGrid").dataItem(this);
+            IDs.push(dataItem.Id);
+        });
+
+        var model = {
+            IDs: IDs
+        };
+        var filteredData = [];
+        var dataSource = $("#GridDataList").data("kendoGrid").dataSource;
+        var rowData = dataSource.view().filter(x => IDs.includes(x.Id));
+        filteredData = rowData.filter(x => x.IsPost == true && IDs.includes(x.Id));
+
+        if (filteredData.length > 0) {
+            ShowNotification(3, "Data has already been Posted.");
+            return;
+        }
+        var url = "/SalaryAllowance/SalaryAllowance/MultiplePost";
+
+        CommonAjaxService.multiplePost(url, model, postDone, fail);
+    };
+
+
  
 
     var GetGridDataList = function () {
@@ -643,7 +695,7 @@
                     columns: [
                         { field: "Id", hidden: true, width: 50 },
                         { field: "SalaryAllowanceHeaderId", hidden: true, title: "Salary Allowance Header Id", width: 120 },
-                        { field: "CategoryOfPersonnel", title: "Personnel Categories Name", width: 120 },
+                        { field: "PersonnelCategoriesName", title: "Personnel Categories Name", width: 120 },
                         { field: "PersonnelCategoriesId", hidden: true, title: "Personnel Categories Id", width: 120 },
                         { field: "TotalPostSanctioned", title: "Total Post Sanctioned", width: 120 },
                         { field: "ActualPresentStrength", title: "Actual Present Strength", width: 120 },
@@ -697,7 +749,7 @@
                 {
 
                     title: "Action",
-                    width: 45,
+                    width: 30,
                     template: function (dataItem) {
                         console.log(dataItem);
                         return `
@@ -708,7 +760,7 @@
                 },
 
                 { field: "Id", width: 10, hidden: true, sortable: true },
-                { field: "Code", title: 'Code', width: 70, sortable: true },
+                { field: "Code", title: 'Code', width: 45, sortable: true },
                 { field: "FiscalYear", hidden: true, title: 'FiscalYear', width: 50, sortable: true },
                 { field: "BudgetType", title: 'Budget Type', width: 50, sortable: true },
                 {
