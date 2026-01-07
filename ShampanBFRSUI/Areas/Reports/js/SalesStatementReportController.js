@@ -1,15 +1,15 @@
-var CostStatementReportController = function (CommonService, CommonAjaxService) {
+var SalesStatementReportController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
-        var getFiscalYearId = $("#GLFiscalYearId").val() || 0;
+        var getFiscalYearId = $("#FiscalYearId").val() || 0;
         var getBudgetType = $("#BudgetType").val() || 0;
-        var getChargeGroup = $("#ChargeGroup").val() || 0;
+        //var getChargeGroup = $("#ChargeGroup").val() || 0;
        
         $("[data-bootstrap-switch]").bootstrapSwitch();
 
         GetFiscalYearComboBox();
         GetBudgetTypeComboBox();
-        GetChargeGroup();
+        //GetChargeGroup();
        
         //$('.btnLoad').click('click', function () {
         //    validateAndFetchReportTypeData();
@@ -33,7 +33,7 @@ var CostStatementReportController = function (CommonService, CommonAjaxService) 
 
     };
     function GetFiscalYearComboBox() {
-        var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
+        var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Id",
             height: 400,
@@ -112,7 +112,7 @@ var CostStatementReportController = function (CommonService, CommonAjaxService) 
 
         var model = serializeInputs("frmEntry");
 
-        var form = $('<form method="post" action="/Reports/CostStatementReport/CostStatementReport"></form>');
+        var form = $('<form method="post" action="/Reports/SalesStatementReport/SalesStatementReport"></form>');
 
         for (var key in model) {
             if (model.hasOwnProperty(key)) {

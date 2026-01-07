@@ -374,7 +374,6 @@
     //    }
     //};
 
-
     function computeRowCalculation(cell) {
 
         var $row = cell.closest("tr");
@@ -399,9 +398,6 @@
         $row.find(".td-TotalMT").text(totalMT.toFixed(decimalPlace));
         $row.find(".td-TotalValueTK_LAC").text(totalValueTK_LAC.toFixed(decimalPlace));
     }
-
-
-
 
     function GetFiscalYear() {
         //make dropdown
