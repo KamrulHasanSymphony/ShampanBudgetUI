@@ -187,77 +187,81 @@
                     template: function (dataItem) {
                         return dataItem.ProductName || "";
                     },
-                    width: 120
+                   // width: 120
                 },
                 {
                     field: "ConversionFactor",
                     title: "Conversion Factor",
-                    editable: true,
+                    editable: false,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                    width: 120
-                },
-                {
-                    field: "PriceLTR",
-                    title: "PriceL TR",
-                    format: "{0:n2}",
-                   
-                    attributes: { style: "text-align:right;" },
-                    width: 120
+                   // width: 120
                 },
                 {
                     field: "PriceMT",
-                    title: "PriceMT",
+                    title: "Price MT",
                     editable: true,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                    width: 120
+                   // width: 120
                 },
                 {
-                    field: "ProductionMT",
-                    title: "Production MT",
+                    field: "PriceLTR",
+                    title: "Price LTR",
                     format: "{0:n2}",
+                   
                     attributes: { style: "text-align:right;" },
-                    width: 120
+                   // width: 120
                 },
-                {
-                    field: "SalesExImport_LocalMT",
-                    title: "Sales ExImport_LocalMT",
-                    format: "{0:n2}",
-                    attributes: { style: "text-align:right;" },
-                    width: 120
-                },
-                {
-                    field: "SalesExImport_LocalValue",
-                    title: "Sales ExImport_LocalValue",
-                    format: "{0:n2}",
-                    attributes: { style: "text-align:right;" },
-                    width: 120
-                },
-                {
-                    field: "TotalMT",
-                    title: "Total MT",
-                    editable: true,
-                    format: "{0:n2}",
-                    attributes: { style: "text-align:right;" },
-                    width: 120
-                },
-                          
                 {
                     field: "SalesExERLValue",
                     title: "Sales ExERL Value",
                     editable: true,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                    width: 120
+                    //width: 120
                 },
+
+                {
+                    field: "SalesExImport_LocalValue",
+                    title: "ExImport_LocalValue",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    //width: 120
+                },
+                
+                {
+                    field: "ProductionMT",
+                    title: "Production MT",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                   // width: 120
+                },
+                {
+                    field: "SalesExImport_LocalMT",
+                    title: "ExImport_LocalMT",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    //width: 120
+                },
+                
+                {
+                    field: "TotalMT",
+                    title: "Total MT",
+                    editable: true,
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                   // width: 120
+                },
+                          
+                
                 {
                     field: "TotalValueTK_LAC",
                     title: "Total Value TK_LAC",
                     editable: true,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                    width: 120
+                   // width: 120
                 },
                 
                 {
@@ -348,7 +352,7 @@
 
                         selectedGridModel.set("ProductId", dataItem.Id);
                         selectedGridModel.set("ProductName", dataItem.Name);
-                        selectedGridModel.set("ConversionFactor", dataItem.ConversionFactor);
+                        //selectedGridModel.set("ConversionFactor", dataItem.ConversionFactor);
 
                         var window = $("#ProductWindow").data("kendoWindow");
                         if (window) window.close();
