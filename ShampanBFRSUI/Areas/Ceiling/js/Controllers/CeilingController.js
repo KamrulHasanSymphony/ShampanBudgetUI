@@ -367,67 +367,54 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                             if (param.field === "Code") {
                                 param.field = "c.Code";
                             }
-                            if (param.field === "BudgetType") {
-                                param.field = "c.BudgetType";
-                            }
                             if (param.field === "YearName") {
                                 param.field = "fy.YearName";
                             }
-                            //if (param.field === "BudgetSetNo") {
-                            //    param.field = "c.BudgetSetNo";
-                            //}
-                            //if (param.field === "TransactionDate") {
-                            //    param.field = "c.TransactionDate";
-                            //}
-                            if (param.field === "IsActive") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-                                param.field = "c.IsActive";
-                                param.operator = "eq";
+                            if (param.field === "Status") {
+                                param.field = "c.IsPost";
                             }
+
+                            //if (param.field === "IsActive") {
+                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+                            //    if (statusValue.startsWith("a")) {
+                            //        param.value = 1;
+                            //    } else if (statusValue.startsWith("i")) {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
+                            //    param.field = "c.IsActive";
+                            //    param.operator = "eq";
+                            //}
                         });
                     }
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-                            if (param.field === "Id") {
-                                param.field = "c.Id";
-                            }
                             if (param.field === "Code") {
                                 param.field = "c.Code";
-                            }
-                            if (param.field === "BudgetType") {
-                                param.field = "c.BudgetType";
                             }
                             if (param.field === "YearName") {
                                 param.field = "fy.YearName";
                             }
-                            //if (param.field === "BudgetSetNo") {
-                            //    param.field = "c.BudgetSetNo";
-                            //}
-                            //if (param.field === "TransactionDate") {
-                            //    param.field = "c.TransactionDate";
-                            //}
-                            if (param.field === "IsActive") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-
-                                param.field = "c.IsActive";
-                                param.operator = "eq";
+                            if (param.field === "Status") {
+                                param.field = "c.IsPost";
                             }
+
+                            //if (param.field === "IsActive") {
+                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+
+                            //    if (statusValue.startsWith("a")) {
+                            //        param.value = 1;
+                            //    } else if (statusValue.startsWith("i")) {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
+
+                            //    param.field = "c.IsActive";
+                            //    param.operator = "eq";
+                            //}
                         });
                     }
 
@@ -530,11 +517,11 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 });
             },
             excel: {
-                fileName: "Ceilings.xlsx",
+                fileName: `Ceiling_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `Ceilings_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`,
+                fileName: `Ceiling_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
