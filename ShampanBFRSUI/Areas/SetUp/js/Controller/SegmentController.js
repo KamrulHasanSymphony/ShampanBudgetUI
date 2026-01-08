@@ -96,7 +96,11 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
+                            debugger;
 
+                            if (param.field === "Code") {
+                                param.field = "H.Code";
+                            }
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
@@ -106,23 +110,27 @@
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
                             }
-                            if (param.field === "Active") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-                                param.field = "H.IsActive";
-                                param.operator = "eq";
-                            }
+                            //if (param.field === "Active") {
+                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+                            //    if (statusValue.startsWith("a")) {
+                            //        param.value = 1;
+                            //    } else if (statusValue.startsWith("i")) {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
+                            //    param.field = "H.IsActive";
+                            //    param.operator = "eq";
+                            //}
                         });
                     }
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
+
+                            if (param.field === "Code") {
+                                param.field = "H.Code";
+                            }
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
@@ -132,20 +140,20 @@
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
                             }
-                            if (param.field === "Active") {
-                                let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
+                            //if (param.field === "Active") {
+                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
-                                if (statusValue.startsWith("a")) {
-                                    param.value = 1;
-                                } else if (statusValue.startsWith("i")) {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
+                            //    if (statusValue.startsWith("a")) {
+                            //        param.value = 1;
+                            //    } else if (statusValue.startsWith("i")) {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
 
-                                param.field = "H.IsActive";
-                                param.operator = "eq";
-                            }
+                            //    param.field = "H.IsActive";
+                            //    param.operator = "eq";
+                            //}
                         });
                     }
 

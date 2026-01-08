@@ -776,19 +776,11 @@
                     }
                 },
 
-                // Hidden ID
+
                 { field: "Id", hidden: true },
-
-                // Code
                 { field: "Code", title: "Code", width: 140 },
-
-                // FiscalYear (hidden)
                 { field: "FiscalYear", hidden: true },
-
-                // Budget Type
                 { field: "BudgetType", title: "Budget Type", width: 110 },
-
-                // Date
                 {
                     field: "TransactionDate", hidden: true,
                     title: "Transaction Date",
@@ -796,8 +788,6 @@
                     template: '#= kendo.toString(kendo.parseDate(TransactionDate), "yyyy-MM-dd") #',
                     filterable: { ui: "datepicker" }
                 },
-
-                // Status
                 {
                     field: "Status",
                     title: "Status",

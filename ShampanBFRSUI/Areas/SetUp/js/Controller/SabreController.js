@@ -133,8 +133,12 @@
                                 param.field = "H.Name";
                             }
                            
-                            if (param.field === "Remarks") {
-                                param.field = "H.Remarks";
+                            if (param.field === "iBASCode") {
+                                param.field = "C.Code";
+                            }
+
+                            if (param.field === "iBASName") {
+                                param.field = "C.Name";
 
                             }
                             if (param.field === "Status") {
@@ -162,8 +166,13 @@
                                 param.field = "H.Name";
                             }
 
-                            if (param.field === "Remarks") {
-                                param.field = "H.Remarks";
+
+                            if (param.field === "iBASCode") {
+                                param.field = "C.Code";
+                            }
+
+                            if (param.field === "iBASName") {
+                                param.field = "C.Name";
 
                             }
  
