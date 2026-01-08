@@ -189,6 +189,15 @@
                     },
                     width: 180
                 },
+
+                {
+                    field: "ProductionMT",
+                    title: "Production MT",
+                    format: "{0:n2}",
+                    editable: false,
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
                 {
                     field: "ConversionFactor",
                     title: "Conversion Factor",
@@ -209,7 +218,7 @@
                     field: "PriceLTR",
                     title: "Price LTR",
                     format: "{0:n2}",
-                   
+                    editable: false,
                     attributes: { style: "text-align:right;" },
                     width: 120
                 },
@@ -226,21 +235,17 @@
                     field: "SalesExImport_LocalValue",
                     title: "Sales ExImport_Local Value",
                     format: "{0:n2}",
+                    editable: true,
                     attributes: { style: "text-align:right;" },
                     width: 180
                 },
                 
-                {
-                    field: "ProductionMT",
-                    title: "Production MT",
-                    format: "{0:n2}",
-                    attributes: { style: "text-align:right;" },
-                    width: 120
-                },
+                
                 {
                     field: "SalesExImport_LocalMT",
                     title: "Sales ExImport_Local MT",
                     format: "{0:n2}",
+                    editable: false,
                     attributes: { style: "text-align:right;" },
                     width: 180
                 },
@@ -361,18 +366,7 @@
             }
         });
     }
-    //function computeSubTotal(row, param) {
-    //    debugger;
-    //    var salary = parseFloat(row.closest("tr").find("td.td-BasicWagesSalaries").text().replace(/,/g, '')) || 0;
-    //    var otherCash = parseFloat(row.closest("tr").find("td.td-OtherCash").text().replace(/,/g, '')) || 0;
 
-    //    if (!isNaN(salary + otherCash)) {
-
-    //        var SubTotal = Number(parseFloat(salary + otherCash).toFixed(parseInt(decimalPlace)));
-    //        row.closest("tr").find("td.td-TotalSalary").text(SubTotal.toLocaleString('en', { minimumFractionDigits: parseInt(decimalPlace) }));
-
-    //    }
-    //};
 
     function computeRowCalculation(cell) {
 
@@ -383,7 +377,6 @@
         var priceLTR = parseFloat($row.find(".td-PriceLTR").text().replace(/,/g, '')) || 0;
         var salesImportMT = parseFloat($row.find(".td-SalesExImport_LocalMT").text().replace(/,/g, '')) || 0;
 
- 
         debugger;
         var priceMT = priceLTR * conversionFactor;
         var salesExERLValue = priceMT * productionMT;
