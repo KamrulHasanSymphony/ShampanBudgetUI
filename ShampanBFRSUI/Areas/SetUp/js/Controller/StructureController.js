@@ -213,7 +213,7 @@
             dataSource: {
                 transport: {
                     read: {
-                        url: "/Common/Common/GetSegmentData",
+                        url: "/Common/Common/SegmentList",
                         dataType: "json"
                     }
                 },
@@ -513,6 +513,7 @@
                 details.push({
                     SegmentId: item.SegmentId,
                     SegmentName: item.SegmentName,
+                    length:item.length,
                     Remarks: item.Remarks
                     
 
@@ -543,10 +544,10 @@
         //    }
 
         //});
-        if (!isValidDetails) {
-            ShowNotification(3, errorMessage);
-            return;
-        }
+        //if (!isValidDetails) {
+        //    ShowNotification(3, errorMessage);
+        //    return;
+        //}
         model.IsActive = ("IsActive", $('#IsActive').prop('checked'));
 
         model.StructureDetails = details;
