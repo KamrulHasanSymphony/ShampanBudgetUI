@@ -56,32 +56,28 @@
                     }
                 });
         });
+        //$('#details').on('click', 'input.txtSegmentName', function () {
+        //    debugger;
+        //    var originalRow = $(this);
+        //    debugger;
 
+        //    originalRow.closest("td").find("input").data('touched', true);
 
-
-        $('#details').on('click', 'input.txtSegmentName', function () {
-            debugger;
-            var originalRow = $(this);
-            debugger;
-
-            originalRow.closest("td").find("input").data('touched', true);
-
-            CommonService.segmentNameModal(
-                function success(result) {
-                },
-                function fail(error) {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                },
-                function dblClick(row) {
-                    segmentNameModalDblClick(row, originalRow);
-                },
-                function closeCallback() {
-                    originalRow.closest("td").find("input").data("touched", false).focus();
-                }
-            );
-        });
-
-       
+        //    CommonService.segmentNameModal(
+        //        function success(result) {
+        //        },
+        //        function fail(error) {
+        //            originalRow.closest("td").find("input").data("touched", false).focus();
+        //        },
+        //        function dblClick(row) {
+        //            segmentNameModalDblClick(row, originalRow);
+        //        },
+        //        function closeCallback() {
+        //            originalRow.closest("td").find("input").data("touched", false).focus();
+        //        }
+        //    );
+        //});
+    
         $("#indexSearch").on('click', function () {
             var branchId = $("#Branchs").data("kendoMultiColumnComboBox").value();
 
@@ -95,33 +91,189 @@
 
         });
 
+        //new kendo grid
 
+        var detailsList = JSON.parse($("#detailsListJson").val() || "[]");
+
+        var detailsGridDataSource = new kendo.data.DataSource({
+            data: detailsList,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number", defaultValue: 0 },
+                        StructureId: { type: "number", defaultValue: null },
+                        SegmentId: { type: "number", defaultValue: 0 },
+                        Remarks: { type: "string", defaultValue: '' }
+                    
+                    }
+                }
+            },
+            aggregate: [
+                { field: "Quantity", aggregate: "sum" },
+                { field: "UnitPrice", aggregate: "sum" }
+
+            ]
+        });
+        var rowNumber = 0;
+        $("#kDetails").kendoGrid({
+            dataSource: detailsGridDataSource,
+            toolbar: [{ name: "create", text: "Add" }],
+            editable: {
+                mode: "incell",
+                createAt: "bottom"
+            },
+            save: function (e) {
+                const grid = this;
+                setTimeout(function () {
+                    grid.dataSource.aggregate();
+                    grid.refresh();
+                }, 0);
+            },
+            columns: [
+                {
+                    title: "Sl No",
+                    width: 60,
+                    template: function (dataItem) {
+                        var grid = $("#kDetails").data("kendoGrid");
+                        return grid.dataSource.indexOf(dataItem) + 1;
+                    }
+                },
+                {
+                    field: "SegmentId",
+                    title: "Segment Name",
+                    editor: segmentSelectorEditor,
+                    template: function (dataItem) {
+                        return dataItem.SegmentName || "";
+                    },
+                    width: 120
+                },
+                
+                {
+                    field: "Remarks",
+                    title: "Remarks",                
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    command: [{
+                        name: "destroy",
+                        iconClass: "k-icon k-i-trash",
+                        text: ""
+                    }],
+                    title: "&nbsp;",
+                    width: 35
+                }
+            ]
+        });
 
     };
-
-
-    function segmentNameModalDblClick(row, originalRow) {
+    function segmentSelectorEditor(container, options) {
         debugger;
+        var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
 
-        var dataTable = $("#modalData").DataTable();
-        var rowData = dataTable.row(row).data();
+        // Create input (you can bind value if needed)
+        $('<input type="text" class="form-control" readonly />')
+            .attr("data-bind", "value:SegmentName")
+            .appendTo(wrapper);
 
-        var Id = rowData.Id;
-        var SegmentName = rowData.Name;
-        var SegmentRemark = rowData.Remarks;
+        // Create button inside an addon span eii monir..Monir
+        $('<div class="input-group-append">')
+            .append(
+                $('<button class="btn btn-outline-secondary" type="button">')
+                    .append('<i class="fa fa-search"></i>')
+                    .on("click", function () {
+                        debugger;
+                        openSegmentModal(options.model);
+                    })
+            )
+            .appendTo(wrapper);
+
+        kendo.bind(container, options.model);
+    }
 
 
-        var $currentRow = originalRow.closest('tr');
+    var selectedGridModel = null;
+    function openSegmentModal(gridModel) {
+        debugger;
+        selectedGridModel = gridModel;
 
-        $currentRow.find('.td-Remarks').text(SegmentRemark);
-        $currentRow.find('.td-SegmentName').text(SegmentName);
-        $currentRow.find('.td-SegmentId').text(Id);
+        $("#SegmentWindow").kendoWindow({
+            title: "Select Segment Name ",
+            modal: true,
+            width: "900px",
+            height: "550px",
+            visible: false,
+            close: function () {
+                selectedGridModel = null;
+            }
+        }).data("kendoWindow").center().open();
+
+        $("#Segmentgrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetSegmentData",
+                        dataType: "json"
+                    }
+                },
+                pageSize: 10
+            },
+            pageable: true,
+            filterable: true,
+            selectable: "row",
+            toolbar: ["search"],
+            searchable: true,
+            columns: [
+
+                { field: "Code", title: "Code", width: 150 },
+                { field: "Name", title: "Segment Name", width: 120 },
+                { field: "Remarks", title: "Remarks", width: 200 }
+            ],
+            dataBound: function () {
+                this.tbody.find("tr").on("dblclick", function () {
+                    var grid = $("#Segmentgrid").data("kendoGrid");
+
+                    var dataItem = grid.dataItem(this);
+                    debugger;
+                    if (dataItem && selectedGridModel) {
+
+                        selectedGridModel.set("SegmentId", dataItem.Id);
+                        selectedGridModel.set("SegmentName", dataItem.Name);
+                        selectedGridModel.set("Remarks", dataItem.Remarks);
+
+                        var window = $("#SegmentWindow").data("kendoWindow");
+                        if (window) window.close();
+                    }
+                });
+            }
+        });
+    }
 
 
-        $("#partialModal").modal("hide");
-        originalRow.closest("td").find("input").data("touched", false).focus();
 
-    };
+    //function segmentNameModalDblClick(row, originalRow) {
+    //    debugger;
+
+    //    var dataTable = $("#modalData").DataTable();
+    //    var rowData = dataTable.row(row).data();
+
+    //    var Id = rowData.Id;
+    //    var SegmentName = rowData.Name;
+    //    var SegmentRemark = rowData.Remarks;
+
+
+    //    var $currentRow = originalRow.closest('tr');
+
+    //    $currentRow.find('.td-Remarks').text(SegmentRemark);
+    //    $currentRow.find('.td-SegmentName').text(SegmentName);
+    //    $currentRow.find('.td-SegmentId').text(Id);
+
+
+    //    $("#partialModal").modal("hide");
+    //    originalRow.closest("td").find("input").data("touched", false).focus();
+
+    //};
 
 
     var GetGridDataList = function () {
@@ -283,7 +435,7 @@
                 $(".k-grouping-header").hide();
                 $(".k-floatwrap").hide();
 
-                var companyName = "SHAMPAN VEHICLE LTD.";
+                var companyName = "SHAMPAN Budget LTD.";
 
                 var fileName = `Structure_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`;
 
@@ -348,29 +500,49 @@
 
         debugger;
 
-
         var model = serializeInputs("frmEntry");
+        var details = [];
+        var grid = $("#kDetails").data("kendoGrid");
+        if (grid) {
+            var dataItems = grid.dataSource.view();
 
-        var model = serializeInputs("frmEntry");
-        if (!hasLine($table)) {
-            ShowNotification(3, "Can not save without details.");
+            for (var i = 0; i < dataItems.length; i++) {
+                var item = dataItems[i];
+
+                // You can adjust this to match your server-side view model
+                details.push({
+                    SegmentId: item.SegmentId,
+                    SegmentName: item.SegmentName,
+                    Remarks: item.Remarks
+                    
+
+                });
+            }
+        }
+
+        if (details.length === 0) {
+            ShowNotification(3, "Save can not without details");
             return;
         }
-        var details = serializeTable($table);
-        var isValidDetails = true;
-        var errorMessage = "";
-        $(details).each(function (index, row) {
-            debugger;
-            var $row = $table.find('tbody tr').eq(index);  // Get the corresponding table row
+        if (item.SegmentName === 0 || item.SegmentName === undefined || item.SegmentName === null || item.SegmentName === "") {
+            ShowNotification(3, "Segment Name is required.");
+            return;
+        }
+        //var details = serializeTable($table);
+        //var isValidDetails = true;
+        //var errorMessage = "";
+        //$(details).each(function (index, row) {
+        //    debugger;
+        //    var $row = $table.find('tbody tr').eq(index);  // Get the corresponding table row
 
-            // Validate TaskName
-            if (!row.SegmentId || row.SegmentId.trim() === "") {
-                isValidDetails = false;
-                errorMessage = "Segment Name is required";
-                return false;  // Stop the loop and show error
-            }
+        //    // Validate TaskName
+        //    if (!row.SegmentId || row.SegmentId.trim() === "") {
+        //        isValidDetails = false;
+        //        errorMessage = "Segment Name is required";
+        //        return false;  // Stop the loop and show error
+        //    }
 
-        });
+        //});
         if (!isValidDetails) {
             ShowNotification(3, errorMessage);
             return;
