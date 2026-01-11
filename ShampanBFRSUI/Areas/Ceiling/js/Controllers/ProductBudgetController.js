@@ -251,33 +251,18 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                             if (param.field === "Id") {
                                 param.field = "PB.Id";
                             }
-                            if (param.field === "ChargeGroup") {
-                                param.field = "PB.ChargeGroup";
+                            if (param.field === "YearName") {
+                                param.field = "t.YearName";
                             }
                             if (param.field === "BudgetType") {
-                                param.field = "PB.BudgetType";
+                                param.field = "t.BudgetType";
                             }
-                            if (param.field === "YearName") {
-                                param.field = "fy.YearName";
+                            if (param.field === "ChargeGroup") {
+                                param.field = "t.ChargeGroup";
                             }
-                            //if (param.field === "BudgetSetNo") {
-                            //    param.field = "c.BudgetSetNo";
-                            //}
-                            //if (param.field === "TransactionDate") {
-                            //    param.field = "c.TransactionDate";
-                            //}
-                            //if (param.field === "IsActive") {
-                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-                            //    if (statusValue.startsWith("a")) {
-                            //        param.value = 1;
-                            //    } else if (statusValue.startsWith("i")) {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-                            //    param.field = "c.IsActive";
-                            //    param.operator = "eq";
-                            //}
+                           
+                            
+                            
                         });
                     }
 
@@ -286,35 +271,17 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                             if (param.field === "Id") {
                                 param.field = "PB.Id";
                             }
-                            if (param.field === "ChargeGroup") {
-                                param.field = "PB.ChargeGroup";
+                            if (param.field === "YearName") {
+                                param.field = "t.YearName";
                             }
                             if (param.field === "BudgetType") {
-                                param.field = "PB.BudgetType";
+                                param.field = "t.BudgetType";
                             }
-                            if (param.field === "YearName") {
-                                param.field = "fy.YearName";
+                            if (param.field === "ChargeGroup") {
+                                param.field = "t.ChargeGroup";
                             }
-                            //if (param.field === "BudgetSetNo") {
-                            //    param.field = "c.BudgetSetNo";
-                            //}
-                            //if (param.field === "TransactionDate") {
-                            //    param.field = "c.TransactionDate";
-                            //}
-                            //if (param.field === "IsActive") {
-                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
-                            //    if (statusValue.startsWith("a")) {
-                            //        param.value = 1;
-                            //    } else if (statusValue.startsWith("i")) {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-
-                            //    param.field = "c.IsActive";
-                            //    param.operator = "eq";
-                            //}
+                            
                         });
                     }
 
@@ -363,11 +330,11 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             excel: {
-                fileName: "ProductBudgets.xlsx",
+                fileName: `ProductBudgets_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `ProductBudgets_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`,
+                fileName: `ProductBudgets_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true

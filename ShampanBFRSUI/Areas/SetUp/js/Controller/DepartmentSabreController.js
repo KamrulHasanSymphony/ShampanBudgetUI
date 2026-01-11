@@ -305,22 +305,22 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            if (param.field === "DepartmentId") {
-                                param.field = "H.DepartmentId";
+                            if (param.field === "DepName") {
+                                param.field = "DP.Name";
                             }
-                            if (param.field === "SabreId") {
-                                param.field = "H.SabreId";
+                            if (param.field === "Remark") {
+                                param.field = "DP.Remarks";
                             }
                         });
                     }
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-                            if (param.field === "DepartmentId") {
-                                param.field = "H.DepartmentId";
+                            if (param.field === "DepName") {
+                                param.field = "DP.Name";
                             }
-                            if (param.field === "SabreId") {
-                                param.field = "H.SabreId";
+                            if (param.field === "Remark") {
+                                param.field = "DP.Remarks";
                             }
                         });
                     }

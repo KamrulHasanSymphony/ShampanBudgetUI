@@ -140,7 +140,10 @@
                             }
                             if (param.field === "Name") {
                                 param.field = "M.Name";
-                            }                      
+                            }   
+                            if (param.field === "ProductGroupName") {
+                                param.field = "pg.Name";
+                            } 
                             if (param.field === "ConversionFactor") {
                                 param.field = "M.ConversionFactor";
                             }
@@ -175,6 +178,10 @@
                             }
                             if (param.field === "Name") {
                                 param.field = "M.Name";
+
+                            }
+                            if (param.field === "ProductGroupName") {
+                                param.field = "pg.Name";
                             }
                             if (param.field === "ConversionFactor") {
                                 param.field = "M.ConversionFactor";

@@ -210,21 +210,17 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            if (param.field === "SabreId") {
-                                param.field = "Sabres.Id";
+                          
+                            if (param.field === "Code") {
+                                param.field = "M.Code";
                             }
-                            if (param.field === "iBASCode") {
-                                param.field = "COAs.Code";
+                            if (param.field === "BudgetType") {
+                                param.field = "M.BudgetType";
                             }
-                            if (param.field === "iBASName") {
-                                param.field = "COAs.Name";
+                            if (param.field === "Status") {
+                                param.field = "M.IsPost";
                             }
-                            if (param.field === "SabreCode") {
-                                param.field = "Sabres.Code";
-                            }
-                            if (param.field === "SabreName") {
-                                param.field = "Sabres.[Name]";
-                            }
+                            
                             //if (param.field === "BudgetSetNo") {
                             //    param.field = "c.BudgetSetNo";
                             //}
@@ -248,24 +244,15 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-                            if (param.field === "SabreId") {
-                                param.field = "Sabres.Id";
+                            if (param.field === "Code") {
+                                param.field = "M.Code";
                             }
-                            if (param.field === "iBASCode") {
-                                param.field = "COAs.Code";
+                            if (param.field === "BudgetType") {
+                                param.field = "M.BudgetType";
                             }
-                            if (param.field === "iBASName") {
-                                param.field = "COAs.Name";
+                            if (param.field === "Status") {
+                                param.field = "M.IsPost";
                             }
-                            if (param.field === "SabreCode") {
-                                param.field = "Sabres.Code";
-                            }
-                            if (param.field === "SabreName") {
-                                param.field = "Sabres.[Name]";
-                            }
-                            //if (param.field === "BudgetSetNo") {
-                            //    param.field = "c.BudgetSetNo";
-                            //}
                             //if (param.field === "TransactionDate") {
                             //    param.field = "c.TransactionDate";
                             //}

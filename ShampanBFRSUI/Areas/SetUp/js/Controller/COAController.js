@@ -309,6 +309,13 @@
                             if (param.field === "Nature") {
                                 param.field = "C.Nature";
                             }
+                            if (param.field === "COAType") {
+                                param.field = "C.COAType";
+                            }
+                            if (param.field === "GroupName") {
+                                param.field = "CG.Name";
+                            }
+
                             if (param.field === "ReportType") {
                                 param.field = "C.ReportType";
                             }
@@ -339,6 +346,12 @@
 
                             if (param.field === "Nature") {
                                 param.field = "C.Nature";
+                            }
+                            if (param.field === "COAType") {
+                                param.field = "C.COAType";
+                            }
+                            if (param.field === "GroupName") {
+                                param.field = "CG.Name";
                             }
                             if (param.field === "ReportType") {
                                 param.field = "C.ReportType";
