@@ -278,7 +278,13 @@
                 fields: ["Year", "YearStart", "YearEnd"]
             },
             excel: {
-                fileName: "FiscalYear.xlsx",
+                fileName: `FiscalYear_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
+                filterable: true
+            },
+            pdf: {
+                fileName: `FiscalYear_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
+                allPages: true,
+                avoidLink: true,
                 filterable: true
             },
             

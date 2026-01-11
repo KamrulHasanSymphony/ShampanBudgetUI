@@ -202,8 +202,8 @@
                 $(".k-grouping-header").hide();
                 $(".k-floatwrap").hide();
 
-                var companyName = "Shampan Tailoring System.";
-                var fileName = `ProductGroup_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
+                var companyName = "Shampan Budget Ltd.";
+                var fileName = `PersonnelCategorie_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
 
                 e.sender.options.pdf = {
                     paperSize: "A4",

@@ -766,7 +766,7 @@
                 // Action
                 {
                     title: "Action",
-                    width: 90,
+                    width: 60,
                     template: function (dataItem) {
                         return `
                 <a href="/Sale/Sale/Edit/${dataItem.Id}"
@@ -778,20 +778,20 @@
 
 
                 { field: "Id", hidden: true },
-                { field: "Code", title: "Code", width: 140 },
+                { field: "Code", title: "Code", width: 100 },
                 { field: "FiscalYear", hidden: true },
-                { field: "BudgetType", title: "Budget Type", width: 110 },
+                { field: "BudgetType", title: "Budget Type", width: 200 },
                 {
                     field: "TransactionDate", hidden: true,
                     title: "Transaction Date",
-                    width: 130,
+                    width: 200,
                     template: '#= kendo.toString(kendo.parseDate(TransactionDate), "yyyy-MM-dd") #',
                     filterable: { ui: "datepicker" }
                 },
                 {
                     field: "Status",
                     title: "Status",
-                    width: 100,
+                    width: 200,
                     filterable: {
                         ui: function (element) {
                             element.kendoDropDownList({

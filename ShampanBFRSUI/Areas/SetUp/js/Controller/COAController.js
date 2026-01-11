@@ -413,11 +413,11 @@
                 fields: ["Name"]
             },
             excel: {
-                fileName: `COA_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
+                fileName: `iBAS_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `COA_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
+                fileName: `iBAS_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
@@ -427,7 +427,7 @@
                 $(".k-grouping-header").hide();
                 $(".k-floatwrap").hide();
 
-                var companyName = "Shampan Tailoring System.";
+                var companyName = "Shampan Budget Ltd.";
                 var fileName = `COAGroup_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
 
                 e.sender.options.pdf = {

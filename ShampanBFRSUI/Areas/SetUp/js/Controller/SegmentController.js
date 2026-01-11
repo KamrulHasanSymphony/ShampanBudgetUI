@@ -251,10 +251,10 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },             
-                { field: "Code", title: "Code", sortable: true, width: 200 },
+                { field: "Code", title: "Code", sortable: true, width: 80 },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
                 { field: "Length", title: "Length", sortable: true, width: 200 },
-                { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
+                { field: "Remarks", title: "Remarks", sortable: true, width: 200 },
             ],
             editable: false,
             selectable: "multiple row",

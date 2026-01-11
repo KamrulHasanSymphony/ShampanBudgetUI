@@ -760,9 +760,9 @@
                 },
 
                 { field: "Id", width: 10, hidden: true, sortable: true },
-                { field: "Code", title: 'Code', width: 45, sortable: true },
-                { field: "FiscalYear", hidden: true, title: 'FiscalYear', width: 50, sortable: true },
-                { field: "BudgetType", title: 'Budget Type', width: 50, sortable: true },
+                { field: "Code", title: 'Code', width: 100, sortable: true },
+                { field: "FiscalYear", hidden: true, title: 'FiscalYear', width: 150, sortable: true },
+                { field: "BudgetType", title: 'Budget Type', width: 150, sortable: true },
                 {
                     field: "TransactionDate", title: "Transaction Date", sortable: true, hidden: true, width: 120, template: '#= kendo.toString(kendo.parseDate(TransactionDate), "yyyy-MM-dd") #',
                     filterable:
@@ -772,7 +772,7 @@
                 },
 
                 {
-                    field: "Status", title: "Status", sortable: true, width: 50,
+                    field: "Status", title: "Status", sortable: true, width:150,
                     filterable: {
                         ui: function (element) {
                             element.kendoDropDownList({

@@ -55,28 +55,7 @@
                         SelectData();
                     }
                 });
-        });
-        //$('#details').on('click', 'input.txtSegmentName', function () {
-        //    debugger;
-        //    var originalRow = $(this);
-        //    debugger;
-
-        //    originalRow.closest("td").find("input").data('touched', true);
-
-        //    CommonService.segmentNameModal(
-        //        function success(result) {
-        //        },
-        //        function fail(error) {
-        //            originalRow.closest("td").find("input").data("touched", false).focus();
-        //        },
-        //        function dblClick(row) {
-        //            segmentNameModalDblClick(row, originalRow);
-        //        },
-        //        function closeCallback() {
-        //            originalRow.closest("td").find("input").data("touched", false).focus();
-        //        }
-        //    );
-        //});
+        });     
     
         $("#indexSearch").on('click', function () {
             var branchId = $("#Branchs").data("kendoMultiColumnComboBox").value();
@@ -249,31 +228,6 @@
             }
         });
     }
-
-
-
-    //function segmentNameModalDblClick(row, originalRow) {
-    //    debugger;
-
-    //    var dataTable = $("#modalData").DataTable();
-    //    var rowData = dataTable.row(row).data();
-
-    //    var Id = rowData.Id;
-    //    var SegmentName = rowData.Name;
-    //    var SegmentRemark = rowData.Remarks;
-
-
-    //    var $currentRow = originalRow.closest('tr');
-
-    //    $currentRow.find('.td-Remarks').text(SegmentRemark);
-    //    $currentRow.find('.td-SegmentName').text(SegmentName);
-    //    $currentRow.find('.td-SegmentId').text(Id);
-
-
-    //    $("#partialModal").modal("hide");
-    //    originalRow.closest("td").find("input").data("touched", false).focus();
-
-    //};
 
 
     var GetGridDataList = function () {
@@ -472,7 +426,7 @@
                 },
 
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", sortable: true, width: 200 },
+                { field: "Code", title: "Code", sortable: true, width: 80 },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
                 { field: "Remarks", title: "Remarks", sortable: true, width: 250 },
                 { field: "Status", title: "Status", sortable: true, width: 250 }   
@@ -529,25 +483,7 @@
             ShowNotification(3, "Segment Name is required.");
             return;
         }
-        //var details = serializeTable($table);
-        //var isValidDetails = true;
-        //var errorMessage = "";
-        //$(details).each(function (index, row) {
-        //    debugger;
-        //    var $row = $table.find('tbody tr').eq(index);  // Get the corresponding table row
-
-        //    // Validate TaskName
-        //    if (!row.SegmentId || row.SegmentId.trim() === "") {
-        //        isValidDetails = false;
-        //        errorMessage = "Segment Name is required";
-        //        return false;  // Stop the loop and show error
-        //    }
-
-        //});
-        //if (!isValidDetails) {
-        //    ShowNotification(3, errorMessage);
-        //    return;
-        //}
+        
         model.IsActive = ("IsActive", $('#IsActive').prop('checked'));
 
         model.StructureDetails = details;

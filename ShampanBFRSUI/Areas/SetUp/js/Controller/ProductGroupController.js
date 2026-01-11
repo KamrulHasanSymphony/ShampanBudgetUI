@@ -204,7 +204,7 @@
                 $(".k-grouping-header").hide();
                 $(".k-floatwrap").hide();
 
-                var companyName = "Shampan Tailoring System.";
+                var companyName = "Shampan Budget System.";
                 var fileName = `ProductGroup_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
 
                 e.sender.options.pdf = {
@@ -227,7 +227,7 @@
             columns: [
                 {
                     title: "Action",
-                    width: 40,
+                    width: 20,
                     template: function (dataItem) {
                         return `
                             <a href="/SetUp/ProductGroup/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
@@ -237,7 +237,7 @@
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
-                { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
+                { field: "Remarks", title: "Remarks", sortable: true, width: 200 },
             ],
             editable: false,
             selectable: "multiple row",

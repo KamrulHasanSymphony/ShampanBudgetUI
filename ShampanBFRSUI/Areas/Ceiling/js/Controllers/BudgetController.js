@@ -372,11 +372,11 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 });
             },
             excel: {
-                fileName: "Budgets.xlsx",
+                fileName: `Budgets_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `Budgets_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`,
+                fileName: `Budgets_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
@@ -413,7 +413,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
                 {
                     title: "Action",
-                    width: 30,
+                    width: 45,
                     template: function (dataItem) {
                         return `
         <a href="/Ceiling/Budget/Edit?id=${dataItem.Id}"
@@ -423,12 +423,12 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", sortable: true, width: 60 },
-                { field: "BudgetType", title: "Budget Type", sortable: true, width: 100 },
+                { field: "Code", title: "Code", sortable: true, width: 60},
+                { field: "BudgetType", title: "Budget Type", sortable: true, width: 80 },
                 {
                     field: "Status",
                     title: "Status",
-                    width: 100,
+                    width: 200,
                     filterable: {
                         ui: function (element) {
                             element.kendoDropDownList({

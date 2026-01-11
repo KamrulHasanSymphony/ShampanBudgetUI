@@ -254,11 +254,11 @@
                 fields: ["Code", "Name"]
             },
             excel: {
-                fileName: "Products.xlsx",
+                fileName: `Product_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true
             },
             pdf: {
-                fileName: `Products_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
+                fileName: `Products_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`,
                 allPages: true,
                 avoidLink: true,
                 filterable: true
@@ -271,7 +271,7 @@
 
                 
 
-                var companyName = "OSAKA ELECTRIC & INDUSTRIAL CO.";
+                var companyName = "Shampan Budget Ltd.";
 
                 var fileName = `Products_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.pdf`;
 
@@ -311,23 +311,7 @@
                 { field: "ProductGroupName", title: "Product Group Name", sortable: true, width: 200 },
                 { field: "ConversionFactor", title: "Conversion Factor", sortable: true, width: 200 },
                 
-              /*  { field: "CIFCharge", title: "CIF Charge", sortable: true, width: 200 },*/
-                //{
-                //    field: "Status", title: "Status", sortable: true, width: 100,
-                //    filterable: {
-                //        ui: function (element) {
-                //            element.kendoDropDownList({
-                //                dataSource: [
-                //                    { text: "Active", value: "1" },
-                //                    { text: "Inactive", value: "0" }
-                //                ],
-                //                dataTextField: "text",
-                //                dataValueField: "value",
-                //                optionLabel: "Select Option"
-                //            });
-                //        }
-                //    }
-                //},
+              
                
             ],
             editable: false,
