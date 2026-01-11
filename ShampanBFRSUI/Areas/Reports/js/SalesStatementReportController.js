@@ -69,7 +69,7 @@ var SalesStatementReportController = function (CommonService, CommonAjaxService)
             filterFields: ["Name"],
             dataSource: {
                 transport: {
-                    read: "/Common/Common/GetEnumTypeList?EnumType=BudgetType"
+                    read: "/Common/Common/GetEnumTypeList?EnumType=SalesBudgetType"
                 }
             },
             placeholder: "Select Budget Type",
