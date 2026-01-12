@@ -508,6 +508,7 @@
         model.IsRetainedEarning = $('#IsRetainedEarning').prop('checked');
         model.IsNetProfit = $('#IsNetProfit').prop('checked');
         model.IsDepreciation = $('#IsDepreciation').prop('checked');
+        model.IsNonOperatingIncome = $('#IsNonOperatingIncome').prop('checked');
 
         debugger;
         var url = "/SetUp/COA/CreateEdit";

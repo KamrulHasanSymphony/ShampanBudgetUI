@@ -33,6 +33,26 @@ namespace ShampanBFRS.Repo.Reports
                 throw ex;
             }
         }
+        public ResultVM BudgetLoadFinalReport(CommonVM options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Ceiling/BudgetLoadFinalReport", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public ResultVM SalaryAllowanceReport(CommonVM options)
         {

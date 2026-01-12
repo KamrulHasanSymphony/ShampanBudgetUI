@@ -1,8 +1,9 @@
-var BudgetReportController = function (CommonService, CommonAjaxService) {
-
+﻿var BudgetReportController = function (CommonService, CommonAjaxService) {
+    var getFiscalYearId = 0;
+    var getReportType = 0;
     var init = function () {
-        var getFiscalYearId = $("#GLFiscalYearId").val() || 0;
-        var getReportType = $("#ReportType").val() || 0;
+        getFiscalYearId = $("#GLFiscalYearId").val() || 0;
+        getReportType = $("#ReportType").val() || 0;
         var getOperation = $("#Operation").val() || '';
         if (getOperation !== '') {
             GetReportType();
@@ -27,9 +28,9 @@ var BudgetReportController = function (CommonService, CommonAjaxService) {
             });
         });
 
-        $('.btnLoad').click('click', function () {
-            validateAndFetchReportTypeData();
-        });
+        //$('.btnLoad').click('click', function () {
+        //    validateAndFetchReportTypeData();
+        //});
 
         // Download button click handler
         $('.btnDownload').click('click', function () {
@@ -40,6 +41,11 @@ var BudgetReportController = function (CommonService, CommonAjaxService) {
                     Download();
                 }
             });
+        });
+
+        $(document).on('click', '.btnLoad', function () {
+            debugger;
+            Load();
         });
  
 
@@ -157,7 +163,60 @@ var BudgetReportController = function (CommonService, CommonAjaxService) {
         form.submit();
         form.remove();
     }
+    
+    function Load() {
+        var model = serializeInputs("frmEntry");
+        debugger;
+        $.ajax({
+            url: "/Reports/Budget/BudgetLoadFinalReport",
+            type: "POST",
+            data: model,
+            success: function (response) {
+                console.log(response);
+                bindKendoGrid(response);
+            },
+            error: function () {
+                alert("Failed to load report data");
+            }
+        });
+    }
 
+    function bindKendoGrid(data) {
+
+        var grid = $("#ReportTypeDetailsData").data("kendoGrid");
+        if (grid) {
+            grid.destroy();
+            $("#ReportTypeDetailsData").empty();
+        }
+
+        $("#ReportTypeDetailsData").kendoGrid({
+            dataSource: {
+                data: data, 
+                pageSize: 10
+            },
+            pageable: true,
+            sortable: true,
+            filterable: true,
+            scrollable: true,
+            columns: [
+                { field: "SL", title: "SL", width: 50 },
+                { field: "IBASCode", title: "iBAS Code" },
+                { field: "IBASName", title: "iBAS Name" },
+                { field: "SabreCode", title: "Sabre Code" },
+                { field: "SabreName", title: "Sabre Name" },
+                { field: "Estimated6", title: "Estimated", format: "{0:n2}" },
+                { field: "Revised", title: "Revised", format: "{0:n2}" },
+                { field: "Approved", title: "Approved", format: "{0:n2}" },
+                { field: "Actual_Audited", title: "Actual Audited", format: "{0:n2}" },
+                { field: "SixthMonths", title: " 6 Months Actual", format: "{0:n2}" },
+                { field: "EstimatedPercent", title: "Estimated %" },
+                { field: "RevisedPercent", title: "Revised %" },
+                { field: "ActualAuditedPercent", title: "Actual Audited %" },
+                { field: "SixthMonthsPercent", title: "6 Months Actual %" }
+            ],
+            columnMenu: true
+        });
+    }
 
     // Handle success
     function saveDone(result) {

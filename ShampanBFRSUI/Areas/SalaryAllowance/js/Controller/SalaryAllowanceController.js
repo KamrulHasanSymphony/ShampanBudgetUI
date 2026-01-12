@@ -588,7 +588,6 @@
                 }
             },
 
-
             schema: {
                 data: "Items",
                 total: "TotalCount",

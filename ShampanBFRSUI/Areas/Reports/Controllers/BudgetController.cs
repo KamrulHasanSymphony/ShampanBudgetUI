@@ -1,10 +1,12 @@
-﻿using OfficeOpenXml;
+﻿using Newtonsoft.Json;
+using OfficeOpenXml;
 using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
 using ShampanBFRS.Repo.Ceiling;
 using ShampanBFRS.Repo.Reports;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -21,6 +23,117 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+
+        //    [HttpPost]
+        //    public ActionResult BudgetLoadFinalReport(CeilingVM model)
+        //    {
+        //        var data = new List<object>
+        //{
+        //    new {
+        //        SL = 1,
+        //        IBASCode = "3111101",
+        //        IBASName = "Basic Pay (Officers) (Grade 1-10)",
+        //        SabreCode = "4001",
+        //        SabreName = "Basic Pay (Officers) (Grade 1-10)",
+        //        Estimated_2025_2026 = 15000.00,
+        //        Revised_2024_2025 = 15000.00,
+        //        Approved_2024_2025 = 15000.00,
+        //        Actual_Audited_2023_2024 = 0.00,
+        //        First6Months_2024_2025 = 0.00,
+        //        EstimatedPercent = 100.00,
+        //        RevisedPercent = 100.00,
+        //        ActualAuditedPercent = 0.00,
+        //        First6MonthsPercent = 0.00
+        //    }
+        //};
+
+        //        return Json(data, JsonRequestBehavior.AllowGet);
+        //    }
+
+        [HttpPost]
+        public ActionResult BudgetLoadFinalReport(CeilingVM model)
+        {
+            ResultModel<CeilingVM> result = new ResultModel<CeilingVM>();
+            ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
+            _repo = new ReportRepo();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var currentBranchId = 0;
+                    if (Session["CurrentBranch"] != null)
+                        int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
+
+                    CommonVM commonVM = new CommonVM();
+
+                    commonVM.YearId = model.GLFiscalYearId.ToString();
+                    commonVM.BranchId = currentBranchId.ToString();
+                    commonVM.UserId = Session["UserId"].ToString();
+                    commonVM.ReportType = model.ReportType.ToString();
+
+
+
+                    resultVM = _repo.BudgetFinalReport(commonVM);
+
+                    var json = JsonConvert.SerializeObject(resultVM.DataVM);
+                    var list = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
+
+                    var data = new List<object>();
+                    int sl = 1;
+
+                    object GetValue(Dictionary<string, object> item, string keyName)
+                    {
+                        var matchKey = item.Keys
+                            .FirstOrDefault(k => CleanKey(k).Equals(keyName, StringComparison.OrdinalIgnoreCase));
+
+                        return matchKey != null ? item[matchKey] : null;
+                    }
+                    foreach (var item in list)
+                    {
+                        data.Add(new
+                        {
+                            SL = sl++,
+                            IBASCode = GetValue(item, "iBAS Code"),
+                            IBASName = GetValue(item, "iBAS Name"),
+                            SabreCode = GetValue(item, "Sabre Code"),
+                            SabreName = GetValue(item, "Sabre Name"),
+                            Estimated = GetValue(item, "Estimated"),
+                            Revised = GetValue(item, "Revised"),
+                            Approved = GetValue(item, "Approved"),
+                            Actual_Audited = GetValue(item, "Actual Audited"),
+                            SixthMonths = GetValue(item, "1st 6 Months Actual"),
+                            EstimatedPercent = GetValue(item, "Estimated %"),
+                            RevisedPercent = GetValue(item, "Revised %"),
+                            ActualAuditedPercent = GetValue(item, "Actual Audited %"),
+                            SixthMonthsPercent = GetValue(item, "1st 6 Months Actual %")
+                        });
+                    }
+
+                    return Json(data, JsonRequestBehavior.AllowGet);
+
+
+                }
+                catch (Exception e)
+                {
+                    Session["result"] = MessageModel.Fail + "~" + e.Message;
+                    Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                    return View("Create", model);
+                }
+        }
+            else
+            {
+                result = new ResultModel<CeilingVM>()
+                {
+                    Success = false,
+                    Status = Status.Fail,
+                    Message = "Model State Error!",
+                    Data = model
+                };
+                return Json(result);
+            }
         }
 
         public ActionResult BudgetFinalReport(CeilingVM model)
@@ -269,6 +382,13 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             return dt;
         }
 
+        private string CleanKey(string key)
+        {
+            // () এবং ভেতরের সব লেখা remove করবে
+            return Regex.Replace(key, @"\s*\(.*?\)", "").Trim();
+        }
 
     }
+
+
 }
