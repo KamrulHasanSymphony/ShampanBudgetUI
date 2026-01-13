@@ -779,7 +779,7 @@
 
                 { field: "Id", hidden: true },
                 { field: "Code", title: "Code", width: 100 },
-                { field: "FiscalYear", hidden: true },
+                { field: "YearName", title: "Year Name", width: 100 },
                 { field: "BudgetType", title: "Budget Type", width: 200 },
                 {
                     field: "TransactionDate", hidden: true,

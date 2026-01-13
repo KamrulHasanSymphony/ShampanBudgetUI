@@ -22,6 +22,7 @@ namespace ShampanBFRS.Models.Sale
 
         [Display(Name = "Year")]
         public int? FiscalYearId { get; set; }
+        public string? YearName { get; set; }
         [DisplayName("Budget Type")]
 
         public string BudgetType { get; set; }

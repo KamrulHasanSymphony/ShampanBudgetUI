@@ -2,7 +2,7 @@
 @model ShampanBFRS.Models.Sale.SaleHeaderVM
 
 @{
-    ViewBag.Title = " Sale Header Create";
+    ViewBag.Title = " Sale Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -29,11 +29,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> Sale Header  Update(@Model.BudgetType) </h1>
+                    <h1 class="m-0"> Sale  Edit(@Model.BudgetType) </h1>
                 }
                 else
                 {
-                    <h1 class="m-0"> Sale Header Create(@Model.BudgetType)</h1>
+                    <h1 class="m-0"> Sale  Create(@Model.BudgetType)</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -91,7 +91,7 @@
     <form id="frmEntry">
         <div class="card card-secondary">
             <div class="card-header">
-                <h3 class="card-title"> Sale Header Info </h3>
+                <h3 class="card-title"> Sale Info </h3>
             </div>
             <div class="card-body">
 
@@ -145,7 +145,7 @@
         <div class="card card-secondary">
 
             <div class="card-header">
-                <h3 class="card-title"> Sale Header Details</h3>
+                <h3 class="card-title"> Sale  Details</h3>
             </div>
 
             <div class="card-body">
