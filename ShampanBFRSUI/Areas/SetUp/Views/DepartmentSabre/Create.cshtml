@@ -91,9 +91,14 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Department Sabre Create</h1>
-                </div>
+                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                {
+                    <h1 class="m-0"> Department Sabre Edit </h1>
+                }
+                else
+                {
+                   <h1 class="m-0"> Department Sabre Add</h1>
+                }
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>

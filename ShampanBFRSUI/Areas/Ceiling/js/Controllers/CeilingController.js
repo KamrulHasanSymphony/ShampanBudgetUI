@@ -391,6 +391,11 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
+
+                            if (param.field === "Id") {
+                                param.field = "c.Id";
+                            }
+
                             if (param.field === "Code") {
                                 param.field = "c.Code";
                             }
@@ -399,22 +404,19 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                             }
                             if (param.field === "Status") {
                                 param.field = "c.IsPost";
+
+                                if (param.value) {
+                                    const val = param.value.toString().toLowerCase();
+
+                                    if (val.startsWith("p")) {
+                                        param.value = 'Y';
+                                    } else if (val.startsWith("n")) {
+                                        param.value = 'N';
+                                    }
+                                }
                             }
 
-                            //if (param.field === "IsActive") {
-                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-
-                            //    if (statusValue.startsWith("a")) {
-                            //        param.value = 1;
-                            //    } else if (statusValue.startsWith("i")) {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-
-                            //    param.field = "c.IsActive";
-                            //    param.operator = "eq";
-                            //}
+                            
                         });
                     }
 
@@ -463,6 +465,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
             groupable: true,
             //selectable: true,
             toolbar: ["excel", "pdf", "search"],
+
             detailInit: function (e) {
 
 
@@ -565,10 +568,10 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                             </a>`;
                     }
                 },
-                { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", sortable: true, width: 200 },
-                { field: "BudgetType",hidden:true, title: "Budget Type", sortable: true, width: 200 },
                 { field: "YearName", title: "Year", sortable: true, width: 200 },
+                { field: "BudgetType",hidden:true, title: "Budget Type", sortable: true, width: 200 },
+                
                 //{ field: "BudgetSetNo", title: "Budget Set No", sortable: true, width: 200 },
                 //{
                 //    field: "TransactionDate",
@@ -594,7 +597,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                             element.kendoDropDownList({
                                 dataSource: [
                                     { text: "Posted", value: "Y" },
-                                    { text: "Not-Posted", value: "N" }
+                                    { text: "Not Posted", value: "N" }
                                 ],
                                 dataTextField: "text",
                                 dataValueField: "value",

@@ -272,10 +272,10 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                                 param.field = "PB.Id";
                             }
                             if (param.field === "YearName") {
-                                param.field = "t.YearName";
+                                param.field = "fy.YearName";
                             }
                             if (param.field === "BudgetType") {
-                                param.field = "t.BudgetType";
+                                param.field = "PB.BudgetType";
                             }
                             if (param.field === "ChargeGroup") {
                                 param.field = "t.ChargeGroup";

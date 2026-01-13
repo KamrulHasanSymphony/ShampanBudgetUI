@@ -221,24 +221,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                                 param.field = "M.IsPost";
                             }
                             
-                            //if (param.field === "BudgetSetNo") {
-                            //    param.field = "c.BudgetSetNo";
-                            //}
-                            //if (param.field === "TransactionDate") {
-                            //    param.field = "c.TransactionDate";
-                            //}
-                            //if (param.field === "IsActive") {
-                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-                            //    if (statusValue.startsWith("a")) {
-                            //        param.value = 1;
-                            //    } else if (statusValue.startsWith("i")) {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-                            //    param.field = "c.IsActive";
-                            //    param.operator = "eq";
-                            //}
+                            
                         });
                     }
 
@@ -252,24 +235,19 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                             }
                             if (param.field === "Status") {
                                 param.field = "M.IsPost";
+
+                                if (param.value) {
+                                    const val = param.value.toString().toLowerCase();
+
+                                    if (val.startsWith("p")) {
+                                        param.value = 'Y';
+                                    } else if (val.startsWith("n")) {
+                                        param.value = 'N';
+                                    }
+                                }
                             }
-                            //if (param.field === "TransactionDate") {
-                            //    param.field = "c.TransactionDate";
-                            //}
-                            //if (param.field === "IsActive") {
-                            //    let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
-
-                            //    if (statusValue.startsWith("a")) {
-                            //        param.value = 1;
-                            //    } else if (statusValue.startsWith("i")) {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-
-                            //    param.field = "c.IsActive";
-                            //    param.operator = "eq";
-                            //}
+                            
+                           
                         });
                     }
 
@@ -428,13 +406,14 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 {
                     field: "Status",
                     title: "Status",
+                    sortable: true,
                     width: 200,
                     filterable: {
                         ui: function (element) {
                             element.kendoDropDownList({
                                 dataSource: [
-                                    { text: "Yes", value: "1" },
-                                    { text: "No", value: "0" }
+                                    { text: "Posted", value: "Y" },
+                                    { text: "Non Posted", value: "N" }
                                 ],
                                 dataTextField: "text",
                                 dataValueField: "value",
@@ -564,17 +543,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             return;
         }
         
-        //var isActiveValue = $('#IsActive').prop('checked');
-        //model.IsActive = isActiveValue;
-
-        //var result = validator.form();
-
-        //if (!result) {
-        //    if (!result) {
-        //        validator.focusInvalid();
-        //    }
-        //    return;
-        //}
+       
         var operation = $("#Operation").val();
         var DetailList = [];
         if (operation == 'update') {

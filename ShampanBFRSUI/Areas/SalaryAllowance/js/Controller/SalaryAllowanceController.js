@@ -493,15 +493,17 @@
                     if (options.sort) {
                         options.sort.forEach(function (param) {
 
-                            if (param.field === "Id") {
-                                param.field = "M.Id";
+                            if (param.field === "Code") {
+                                param.field = "M.Code";
                             }
                             if (param.field === "FiscalYearId") {
                                 param.field = "M.FiscalYearId";
                             }
+
                             if (param.field === "BudgetType") {
                                 param.field = "M.BudgetType";
                             }
+
                             if (param.field === "TransactionDate") {
                                 param.field = "M.TransactionDate";
 
@@ -518,21 +520,35 @@
                                 }
                             }
 
-
                             if (param.field === "Status") {
-                                let statusValue = (param.value || "").toString().trim().toLowerCase();
-
-                                if (statusValue === "1" || statusValue === "posted") {
-                                    param.value = 1;
-                                } else if (statusValue === "0" || statusValue === "not posted") {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-
                                 param.field = "M.IsPost";
-                                param.operator = "eq";
+
+                                if (param.value) {
+                                    const val = param.value.toString().toLowerCase();
+
+                                    if (val.startsWith("p")) {
+                                        param.value = 'Y';
+                                    } else if (val.startsWith("n")) {
+                                        param.value = 'N';
+                                    }
+                                }
                             }
+
+
+                            //if (param.field === "Status") {
+                            //    let statusValue = (param.value || "").toString().trim().toLowerCase();
+
+                            //    if (statusValue === "1" || statusValue === "posted") {
+                            //        param.value = 1;
+                            //    } else if (statusValue === "0" || statusValue === "not posted") {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
+
+                            //    param.field = "M.IsPost";
+                            //    param.operator = "eq";
+                            //}
 
 
 
@@ -542,8 +558,8 @@
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
 
-                            if (param.field === "Id") {
-                                param.field = "M.Id";
+                            if (param.field === "Code") {
+                                param.field = "M.Code";
                             }
                             if (param.field === "FiscalYearId") {
                                 param.field = "M.FiscalYearId";
@@ -566,21 +582,34 @@
                                     }
                                 }
                             }
-
                             if (param.field === "Status") {
-                                let statusValue = (param.value || "").toString().trim().toLowerCase();
-
-                                if (statusValue === "1" || statusValue === "posted") {
-                                    param.value = 1;
-                                } else if (statusValue === "0" || statusValue === "not posted") {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-
                                 param.field = "M.IsPost";
-                                param.operator = "eq";
+
+                                if (param.value) {
+                                    const val = param.value.toString().toLowerCase();
+
+                                    if (val.startsWith("p")) {
+                                        param.value = 'Y';
+                                    } else if (val.startsWith("n")) {
+                                        param.value = 'N';
+                                    }
+                                }
                             }
+
+                            //if (param.field === "Status") {
+                            //    let statusValue = (param.value || "").toString().trim().toLowerCase();
+
+                            //    if (statusValue === "1" || statusValue === "posted") {
+                            //        param.value = 1;
+                            //    } else if (statusValue === "0" || statusValue === "not posted") {
+                            //        param.value = 0;
+                            //    } else {
+                            //        param.value = null;
+                            //    }
+
+                            //    param.field = "M.IsPost";
+                            //    param.operator = "eq";
+                            //}
 
                         });
                     }
@@ -760,7 +789,7 @@
 
                 { field: "Id", width: 10, hidden: true, sortable: true },
                 { field: "Code", title: 'Code', width: 100, sortable: true },
-                { field: "FiscalYear", hidden: true, title: 'FiscalYear', width: 150, sortable: true },
+                //{ field: "FiscalYear", hidden: true, title: 'FiscalYear', width: 150, sortable: true },
                 { field: "BudgetType", title: 'Budget Type', width: 150, sortable: true },
                 {
                     field: "TransactionDate", title: "Transaction Date", sortable: true, hidden: true, width: 120, template: '#= kendo.toString(kendo.parseDate(TransactionDate), "yyyy-MM-dd") #',
@@ -771,13 +800,13 @@
                 },
 
                 {
-                    field: "Status", title: "Status", sortable: true, width:150,
+                    field: "Status", title: "Status", sortable: true, width: 130,
                     filterable: {
                         ui: function (element) {
                             element.kendoDropDownList({
                                 dataSource: [
-                                    { text: "Yes", value: "1" },
-                                    { text: "No", value: "0" }
+                                    { text: "Posted", value: "Y" },
+                                    { text: "Not Posted", value: "N" }
                                 ],
                                 dataTextField: "text",
                                 dataValueField: "value",

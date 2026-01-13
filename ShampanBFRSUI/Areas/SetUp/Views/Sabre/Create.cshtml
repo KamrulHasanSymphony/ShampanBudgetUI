@@ -14,11 +14,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> Sabre Update </h1>
+                    <h1 class="m-0"> Sabre Edit </h1>
                 }
                 else
                 {
-            <h1 class="m-0"> Sabre Create</h1>
+            <h1 class="m-0"> Sabre Add</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -156,50 +156,7 @@
 
 
                     </div>
-                    @*<div class="form-group row">
                     
-                        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-                        {
-                            <div class="col-sm-2">
-                                @Html.LabelFor(model => model.IsActive)
-                                <div class="Onoffbtn">
-                                    <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                        <input id="IsActive"
-                                               value="@Model.IsActive"
-                                               type="checkbox"
-                                               name="my-checkbox"
-                                               @(Model.IsActive ? "checked" : "")
-                                               data-bootstrap-switch
-                                               data-off-color="danger"
-                                               data-on-color="success"
-                                               data-on-text="Yes"
-                                               data-off-text="No">
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-sm-2 cStatus" style="display:none;">
-                                @Html.LabelFor(model => model.IsActive)
-                                <div class="Onoffbtn">
-                                    <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                                        <input id="IsActive"
-                                               value="@Model.IsActive"
-                                               type="checkbox"
-                                               name="my-checkbox"
-                                               @(Model.IsActive ? "checked" : "")
-                                               data-bootstrap-switch
-                                               data-off-color="danger"
-                                               data-on-color="success"
-                                               data-on-text="Yes"
-                                               data-off-text="No">
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>*@
-
                 </div>
             </div>
         </form>
