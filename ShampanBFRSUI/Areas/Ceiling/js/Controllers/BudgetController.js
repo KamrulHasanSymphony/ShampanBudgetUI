@@ -219,6 +219,16 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                             }
                             if (param.field === "Status") {
                                 param.field = "M.IsPost";
+
+                                if (param.value) {
+                                    const val = param.value.toString().toLowerCase();
+
+                                    if (val.startsWith("p")) {
+                                        param.value = 'Y';
+                                    } else if (val.startsWith("n")) {
+                                        param.value = 'N';
+                                    }
+                                }
                             }
                             
                             

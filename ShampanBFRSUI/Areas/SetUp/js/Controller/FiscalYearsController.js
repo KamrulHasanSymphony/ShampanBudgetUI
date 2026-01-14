@@ -195,10 +195,19 @@
                     dataType: "json",
                     cache: false
                 },
+
                 parameterMap: function (options) {
+                    debugger;
                     if (options.sort) {
 
                         options.sort.forEach(function (param) {
+
+                            if (param.field === "Year") {
+                                param.field = "H.Year";
+                            }
+                            if (param.field === "YearName") {
+                                param.field = "H.YearName";
+                            }
                             if (param.field === "YearStart" && param.value) {
                                 param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
                                 param.field = "H.YearStart";
@@ -211,20 +220,27 @@
                     }
                     // Format the date values before sending them to the server
                     if (options.filter && options.filter.filters) {
-                        options.filter.filters.forEach(function (filter) {
+                        options.filter.filters.forEach(function (param) {
                           
-                            if (filter.field === "YearStart" && filter.value) {
-                                filter.value = kendo.toString(new Date(filter.value), "yyyy-MM-dd");
-                                filter.field = "CONVERT(VARCHAR(10), H.YearStart, 120)";
+                            if (param.field === "Year") {
+                                param.field = "H.Year";
                             }
-                            if (filter.field === "YearEnd" && filter.value) {
-                                filter.value = kendo.toString(new Date(filter.value), "yyyy-MM-dd");
-                                filter.field = "CONVERT(VARCHAR(10), H.YearEnd, 120)";
+                            if (param.field === "YearName") {
+                                param.field = "H.YearName";
+                            }
+                            if (param.field === "YearStart" && param.value) {
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
+                                param.field = "H.YearStart";
+                            }
+                            if (param.field === "YearEnd" && param.value) {
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
+                                param.field = "H.YearEnd";
                             }
                         });
                     }
                     return options;
                 }
+
             },
             batch: true,
             schema: {
@@ -275,7 +291,7 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Year", "YearStart", "YearEnd"]
+                fields: ["Year","YearName", "YearStart", "YearEnd"]
             },
             excel: {
                 fileName: `FiscalYear_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
@@ -327,7 +343,7 @@
             ],
 
             editable: false,
-            selectable: "multiple row",
+            selectable: "row",
             navigatable: true,
             columnMenu: true
         });

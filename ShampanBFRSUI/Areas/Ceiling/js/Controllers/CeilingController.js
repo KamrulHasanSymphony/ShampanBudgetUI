@@ -590,7 +590,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 //    }
                 //},
 
-                ccc
             ],
             editable: false,
             selectable: "multiple row",
