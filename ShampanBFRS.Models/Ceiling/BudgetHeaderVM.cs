@@ -19,6 +19,7 @@ namespace ShampanBFRS.Models.Ceiling
         public int? BudgetSetNo { get; set; }
 
         public string? BudgetType { get; set; }
+        public string? YearName { get; set; }
         public string? Code { get; set; }
 
         public string? TransactionDate { get; set; }

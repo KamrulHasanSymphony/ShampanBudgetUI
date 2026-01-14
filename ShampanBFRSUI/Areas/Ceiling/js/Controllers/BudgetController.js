@@ -214,9 +214,13 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                             if (param.field === "Code") {
                                 param.field = "M.Code";
                             }
+                            if (param.field === "YearName") {
+                                param.field = "fy.YearName";
+                            }
                             if (param.field === "BudgetType") {
                                 param.field = "M.BudgetType";
                             }
+                            
                             if (param.field === "Status") {
                                 param.field = "M.IsPost";
 
@@ -240,9 +244,13 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                             if (param.field === "Code") {
                                 param.field = "M.Code";
                             }
+                            if (param.field === "YearName") {
+                                param.field = "fy.YearName";
+                            }
                             if (param.field === "BudgetType") {
                                 param.field = "M.BudgetType";
                             }
+
                             if (param.field === "Status") {
                                 param.field = "M.IsPost";
 
@@ -411,7 +419,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", sortable: true, width: 60},
+                { field: "Code", title: "Code", sortable: true, width: 60 },
+                { field: "YearName", title: "Year Name", width: 100 },
                 { field: "BudgetType", title: "Budget Type", sortable: true, width: 80 },
                 {
                     field: "Status",
