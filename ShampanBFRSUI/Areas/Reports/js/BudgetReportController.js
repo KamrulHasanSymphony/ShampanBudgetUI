@@ -2,7 +2,7 @@
     var getFiscalYearId = 0;
     var getReportType = 0;
     var init = function () {
-        getFiscalYearId = $("#GLFiscalYearId").val() || 0;
+        getFiscalYearId = $("#FiscalYearId").val() || 0;
         getReportType = $("#ReportType").val() || 0;
         var getOperation = $("#Operation").val() || '';
         if (getOperation !== '') {
@@ -55,7 +55,7 @@
 
     };
     function GetFiscalYearComboBox() {
-        var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
+        var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Id",
             height: 400,
@@ -124,7 +124,7 @@
         function validateAndFetchReportTypeData() {
 
             var isValid = true;
-            var yearId = $('#GLFiscalYearId').val() || 0;
+            var yearId = $('#FiscalYearId').val() || 0;
             var reportType = $('#ReportType').val() || '';
 
             if (yearId === 'xx' || parseInt(yearId) <= 0) {
@@ -268,7 +268,7 @@
         }
     }
     var GetReportTypeDetailsData = function () {
-        var yearId = $('#GLFiscalYearId').val() || 0;
+        var yearId = $('#FiscalYearId').val() || 0;
         var report = $('#ReportType').val() || 0;
 
         if (parseInt(yearId) > 0 && parseInt(ReportType) > 0) {

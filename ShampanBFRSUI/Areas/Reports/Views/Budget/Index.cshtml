@@ -1,4 +1,4 @@
-﻿@model ShampanBFRS.Models.Ceiling.CeilingVM
+﻿@model ShampanBFRS.Models.Ceiling.BudgetHeaderVM
 
 @{
     ViewBag.Title = "Budget";
@@ -35,11 +35,11 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-2">
-                                    @Html.LabelFor(model => model.GLFiscalYearId)
+                                    @Html.LabelFor(model => model.FiscalYearId)
                                     <div class="input-group">
-                                        @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                        @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.GLFiscalYearId)
+                                    @Html.ValidationMessageFor(model => model.FiscalYearId)
                                 </div>
 
                                 <div class="col-sm-2">

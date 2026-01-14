@@ -21,7 +21,7 @@ namespace ShampanBFRS.Repo.Reports
                 AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
 
                 #region Invoke API
-                var data = httpRequestHelper.PostData("api/Ceiling/BudgetFinalReport", authModel, JsonConvert.SerializeObject(options));
+                var data = httpRequestHelper.PostData("api/Budget/BudgetFinalReport", authModel, JsonConvert.SerializeObject(options));
 
                 ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
                 #endregion

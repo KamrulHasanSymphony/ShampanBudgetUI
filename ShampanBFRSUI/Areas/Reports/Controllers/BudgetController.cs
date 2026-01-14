@@ -25,33 +25,6 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             return View();
         }
 
-
-        //    [HttpPost]
-        //    public ActionResult BudgetLoadFinalReport(CeilingVM model)
-        //    {
-        //        var data = new List<object>
-        //{
-        //    new {
-        //        SL = 1,
-        //        IBASCode = "3111101",
-        //        IBASName = "Basic Pay (Officers) (Grade 1-10)",
-        //        SabreCode = "4001",
-        //        SabreName = "Basic Pay (Officers) (Grade 1-10)",
-        //        Estimated_2025_2026 = 15000.00,
-        //        Revised_2024_2025 = 15000.00,
-        //        Approved_2024_2025 = 15000.00,
-        //        Actual_Audited_2023_2024 = 0.00,
-        //        First6Months_2024_2025 = 0.00,
-        //        EstimatedPercent = 100.00,
-        //        RevisedPercent = 100.00,
-        //        ActualAuditedPercent = 0.00,
-        //        First6MonthsPercent = 0.00
-        //    }
-        //};
-
-        //        return Json(data, JsonRequestBehavior.AllowGet);
-        //    }
-
         [HttpPost]
         public ActionResult BudgetLoadFinalReport(CeilingVM model)
         {
@@ -136,9 +109,9 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             }
         }
 
-        public ActionResult BudgetFinalReport(CeilingVM model)
+        public ActionResult BudgetFinalReport(BudgetHeaderVM model)
         {
-            ResultModel<CeilingVM> result = new ResultModel<CeilingVM>();
+            ResultModel<BudgetHeaderVM> result = new ResultModel<BudgetHeaderVM>();
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ReportRepo();
 
@@ -152,13 +125,11 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     CommonVM commonVM = new CommonVM();
 
-                    commonVM.YearId = model.GLFiscalYearId.ToString();
+                    commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
                     commonVM.UserId = Session["UserId"].ToString();
                     commonVM.ReportType = model.ReportType.ToString();
                   
-
-
                     resultVM = _repo.BudgetFinalReport(commonVM);
 
                     var json = Newtonsoft.Json.JsonConvert.SerializeObject(resultVM.DataVM);
@@ -166,11 +137,9 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     DataTable dt = ConvertListToDataTable(list);
 
-
-
                     if (dt.Rows.Count == 0)
                     {
-                        result = new ResultModel<CeilingVM>()
+                        result = new ResultModel<BudgetHeaderVM>()
                         {
                             Status = Status.Fail,
                             Message = "No data found.",
@@ -183,7 +152,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     using (var package = new ExcelPackage())
                     {
-                        var ws = package.Workbook.Worksheets.Add("BudgetFinalReport");
+                        var ws = package.Workbook.Worksheets.Add("OperatingCost");
 
                         string companyName = "Bangladesh Petroleum Corporation";
 
@@ -287,7 +256,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                             Response.Clear();
                             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                            string fileName = $"BudgetFinalReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                            string fileName = $"OperatingCost_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
                             Response.AddHeader("content-disposition", $"attachment; filename={fileName}");
                             memoryStream.WriteTo(Response.OutputStream);
                             Response.Flush();
@@ -295,10 +264,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         }
                     }
 
-
-
-
-                    result = new ResultModel<CeilingVM>()
+                    result = new ResultModel<BudgetHeaderVM>()
                     {
                         Status = Status.Fail,
                         Message = resultVM.Message,
@@ -316,7 +282,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             }
             else
             {
-                result = new ResultModel<CeilingVM>()
+                result = new ResultModel<BudgetHeaderVM>()
                 {
                     Success = false,
                     Status = Status.Fail,

@@ -49,5 +49,9 @@ namespace ShampanBFRS.Models.Ceiling
         public List<BudgetDetailVM> DetailList { get; set; }
 
         public string? MenuType { get; set; }
+
+        [Display(Name = "Report Type")]
+        public string? ReportType { get; set; }
+
     }
 }
