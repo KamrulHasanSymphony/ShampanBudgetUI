@@ -209,11 +209,11 @@
                                 param.field = "H.YearName";
                             }
                             if (param.field === "YearStart" && param.value) {
-                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd HH:mm:ss.fff");
                                 param.field = "H.YearStart";
                             }
                             if (param.field === "YearEnd" && param.value) {
-                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd HH:mm:ss.fff");
                                 param.field = "H.YearEnd";
                             }
                         });
@@ -229,11 +229,11 @@
                                 param.field = "H.YearName";
                             }
                             if (param.field === "YearStart" && param.value) {
-                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd HH:mm:ss.fff");
                                 param.field = "H.YearStart";
                             }
                             if (param.field === "YearEnd" && param.value) {
-                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd HH:mm:ss.fff");
                                 param.field = "H.YearEnd";
                             }
                         });
@@ -326,13 +326,13 @@
                     field: "YearName", title: "Year Name", width: 150, sortable: true
                 },
                 {
-                    field: "YearStart", title: "Year Start", sortable: true, width: 150, template: '#= kendo.toString(kendo.parseDate(YearStart), "yyyy-MM-dd") #',
+                    field: "YearStart", title: "Year Start", sortable: true, width: 150, template: '#= kendo.toString(kendo.parseDate(YearStart), "yyyy-MM-dd HH:mm:ss.fff") #',
                     filterable: {
                         ui: "datepicker"
                     }
                 },
                 {
-                    field: "YearEnd", title: "Year End", sortable: true, width: 150, template: '#= kendo.toString(kendo.parseDate(YearEnd), "yyyy-MM-dd") #',
+                    field: "YearEnd", title: "Year End", sortable: true, width: 150, template: '#= kendo.toString(kendo.parseDate(YearEnd), "yyyy-MM-dd HH:mm:ss.fff") #',
                     filterable: {
                         ui: "datepicker"
                     }
