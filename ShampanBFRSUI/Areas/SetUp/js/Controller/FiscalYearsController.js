@@ -343,7 +343,7 @@
             ],
 
             editable: false,
-            selectable: "row",
+            selectable: "Multiple row",
             navigatable: true,
             columnMenu: true
         });
