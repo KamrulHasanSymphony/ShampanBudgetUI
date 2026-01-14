@@ -53,5 +53,7 @@ namespace ShampanBFRS.Models.Ceiling
         [Display(Name = "Report Type")]
         public string? ReportType { get; set; }
 
+        public int? ToFiscalYearId { get; set; }
+        public string? ToBudgetType { get; set; }
     }
 }

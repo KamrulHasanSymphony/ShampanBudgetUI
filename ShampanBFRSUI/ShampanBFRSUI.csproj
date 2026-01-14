@@ -423,6 +423,7 @@
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\SalaryAllowance\Controllers\PersonnelCategoriesController.cs" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetController.js" />
+    <Content Include="Areas\Ceiling\js\Controllers\BudgetTransferController.js" />
     <Content Include="Areas\Reports\js\NonOperatingIncomeReportController.js" />
     <Content Include="Areas\Reports\js\SalesStatementReportController.js" />
     <Content Include="Areas\Reports\js\SalaryAllowanceReportController.js" />
@@ -466,7 +467,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
-    <Content Include="Areas\Ceiling\js\Controllers\BudgetTransferController.js" />
+    <Content Include="Areas\Ceiling\js\Controllers\BudgetTransferNewController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\CeilingController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\ProductBudgetController.js" />
     <Content Include="Areas\Common\js\Services\CommonAjaxService.js" />
@@ -2689,6 +2690,7 @@
     <Content Include="Areas\Reports\Views\CostStatementReport\Index.cshtml" />
     <Content Include="Areas\Reports\Views\SalesStatementReport\Index.cshtml" />
     <Content Include="Areas\Reports\Views\NonOperatingIncomeReport\Index.cshtml" />
+    <Content Include="Areas\Ceiling\Views\Budget\BudgetTransfer.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />
