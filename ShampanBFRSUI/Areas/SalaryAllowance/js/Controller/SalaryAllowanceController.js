@@ -789,6 +789,7 @@
 
                 { field: "Id", width: 10, hidden: true, sortable: true },
                 { field: "Code", title: 'Code', width: 100, sortable: true },
+                { field: "YearName", title: "Year Name", width: 100 },
                 //{ field: "FiscalYear", hidden: true, title: 'FiscalYear', width: 150, sortable: true },
                 { field: "BudgetType", title: 'Budget Type', width: 150, sortable: true },
                 {
