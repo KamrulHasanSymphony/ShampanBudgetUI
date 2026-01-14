@@ -185,7 +185,7 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Name"]
+                fields: ["SL","CategoryOfPersonnel","Status"]
             },
             excel: {
                 fileName: `PersonnelCategorie_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,

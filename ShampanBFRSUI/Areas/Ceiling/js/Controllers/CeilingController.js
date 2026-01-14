@@ -590,22 +590,7 @@ var CeilingController = function (CommonService, CommonAjaxService) {
                 //    }
                 //},
 
-                {
-                    field: "Status", title: "Status", sortable: true, width: 130,
-                    filterable: {
-                        ui: function (element) {
-                            element.kendoDropDownList({
-                                dataSource: [
-                                    { text: "Posted", value: "Y" },
-                                    { text: "Not Posted", value: "N" }
-                                ],
-                                dataTextField: "text",
-                                dataValueField: "value",
-                                optionLabel: "Select Option"
-                            });
-                        }
-                    }
-                },
+                ccc
             ],
             editable: false,
             selectable: "multiple row",

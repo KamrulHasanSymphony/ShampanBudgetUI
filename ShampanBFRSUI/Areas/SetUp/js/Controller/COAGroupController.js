@@ -149,15 +149,16 @@
                     if (options.sort) {
                         options.sort.forEach(function (param) {
 
+                            if (param.field === "Code") {
+                                param.field = "H.Code";
+                            }
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
-                            if (param.field === "Description") {
-                                param.field = "H.Description";
+                            if (param.field === "Category") {
+                                param.field = "H.Category";
                             }
-                            if (param.field === "Reference") {
-                                param.field = "H.Reference";
-                            }
+                            
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
                             }
@@ -178,15 +179,17 @@
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
+
+                            if (param.field === "Code") {
+                                param.field = "H.Code";
+                            }
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
-                            if (param.field === "Description") {
-                                param.field = "H.Description";
+                            if (param.field === "Category") {
+                                param.field = "H.Category";
                             }
-                            if (param.field === "Reference") {
-                                param.field = "H.Reference";
-                            }
+                            
                             if (param.field === "Remarks") {
                                 param.field = "H.Remarks";
                             }
@@ -252,7 +255,7 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Name"]
+                fields: ["Code","Category","Name"]
             },
             excel: {
                 fileName: `iBASGroup_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,

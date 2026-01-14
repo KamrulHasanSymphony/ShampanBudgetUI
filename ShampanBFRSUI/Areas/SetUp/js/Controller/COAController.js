@@ -293,19 +293,16 @@
                     if (options.sort) {
                         options.sort.forEach(function (param) {
 
-                            if (param.field === "Id") {
-                                param.field = "C.Id";
-                            }
-                            if (param.field === "Name") {
-                                param.field = "C.Name";
-                            }
-                            if (param.field === "Category") {
-                                param.field = "C.Category";
-                            }
+
+
                             if (param.field === "Code") {
                                 param.field = "C.Code";
                             }
 
+                            if (param.field === "Name") {
+                                param.field = "C.Name";
+                            }    
+                                                  
                             if (param.field === "Nature") {
                                 param.field = "C.Nature";
                             }
@@ -331,19 +328,15 @@
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-                            if (param.field === "Id") {
-                                param.field = "C.Id";
-                            }
-                            if (param.field === "Name") {
-                                param.field = "C.Name";
-                            }
-                            if (param.field === "Category") {
-                                param.field = "C.Category";
-                            }
+
                             if (param.field === "Code") {
                                 param.field = "C.Code";
                             }
 
+                            if (param.field === "Name") {
+                                param.field = "C.Name";
+                            }
+                          
                             if (param.field === "Nature") {
                                 param.field = "C.Nature";
                             }
@@ -410,7 +403,7 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Name"]
+                fields: ["Code", "Name", "Nature", "GroupName","COAType"]
             },
             excel: {
                 fileName: `iBAS_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
@@ -428,7 +421,7 @@
                 $(".k-floatwrap").hide();
 
                 var companyName = "Shampan Budget Ltd.";
-                var fileName = `COAGroup_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
+                var fileName = `COA_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.pdf`;
 
                 e.sender.options.pdf = {
                     paperSize: "A4",
@@ -458,7 +451,7 @@
                             </a>`;
                     }
                 },
-                { field: "id", title: "ID", width: 50, hidden: true },
+                /*{ field: "id", title: "ID", width: 50, hidden: true },*/
                 { field: "Code", title: "iBAS Code", width: 80, sortable: true },
                 { field: "Name", title: "iBAS Name", width: 250, sortable: true },
                 { field: "Nature", title: "Account Nature", width: 110 },

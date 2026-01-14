@@ -507,45 +507,28 @@
                     if (options.sort) {
                         options.sort.forEach(function (param) {
 
-                            if (param.field === "Id") {
-                                param.field = "M.Id";
+                            if (param.field === "Code") {
+                                param.field = "M.Code";
                             }
-                            if (param.field === "FiscalYearId") {
-                                param.field = "M.FiscalYearId";
+                            if (param.field === "YearName") {
+                                param.field = "fy.YearName";
                             }
                             if (param.field === "BudgetType") {
                                 param.field = "M.BudgetType";
-                            }
-                            if (param.field === "TransactionDate") {
-                                param.field = "M.TransactionDate";
-
-                                if (param.value) {
-                                    let date = new Date(param.value); // parse it manually
-
-                                    if (!isNaN(date.getTime())) {
-                                        // Format to 'yyyy-MM-dd'
-                                        let year = date.getFullYear();
-                                        let month = (date.getMonth() + 1).toString().padStart(2, '0');
-                                        let day = date.getDate().toString().padStart(2, '0');
-                                        param.value = `${year}-${month}-${day}`;
-                                    }
-                                }
-                            }
-
+                            }                           
 
                             if (param.field === "Status") {
-                                let statusValue = (param.value || "").toString().trim().toLowerCase();
-
-                                if (statusValue === "1" || statusValue === "posted") {
-                                    param.value = 1;
-                                } else if (statusValue === "0" || statusValue === "not posted") {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-
                                 param.field = "M.IsPost";
-                                param.operator = "eq";
+
+                                if (param.value) {
+                                    const val = param.value.toString().toLowerCase();
+
+                                    if (val.startsWith("p")) {
+                                        param.value = 'Y';
+                                    } else if (val.startsWith("n")) {
+                                        param.value = 'N';
+                                    }
+                                }
                             }
 
 
@@ -556,44 +539,43 @@
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
 
-                            if (param.field === "Id") {
-                                param.field = "M.Id";
+                            if (param.field === "Code") {
+                                param.field = "M.Code";
                             }
-                            if (param.field === "FiscalYearId") {
-                                param.field = "M.FiscalYearId";
+                            if (param.field === "YearName") {
+                                param.field = "fy.YearName";
                             }
                             if (param.field === "BudgetType") {
                                 param.field = "M.BudgetType";
                             }
-                            if (param.field === "TransactionDate") {
-                                param.field = "M.TransactionDate";
+                            //if (param.field === "TransactionDate") {
+                            //    param.field = "M.TransactionDate";
 
-                                if (param.value) {
-                                    let date = new Date(param.value); // parse it manually
+                            //    if (param.value) {
+                            //        let date = new Date(param.value); // parse it manually
 
-                                    if (!isNaN(date.getTime())) {
-                                        // Format to 'yyyy-MM-dd'
-                                        let year = date.getFullYear();
-                                        let month = (date.getMonth() + 1).toString().padStart(2, '0');
-                                        let day = date.getDate().toString().padStart(2, '0');
-                                        param.value = `${year}-${month}-${day}`;
-                                    }
-                                }
-                            }
+                            //        if (!isNaN(date.getTime())) {
+                            //            // Format to 'yyyy-MM-dd'
+                            //            let year = date.getFullYear();
+                            //            let month = (date.getMonth() + 1).toString().padStart(2, '0');
+                            //            let day = date.getDate().toString().padStart(2, '0');
+                            //            param.value = `${year}-${month}-${day}`;
+                            //        }
+                            //    }
+                            //}
 
                             if (param.field === "Status") {
-                                let statusValue = (param.value || "").toString().trim().toLowerCase();
-
-                                if (statusValue === "1" || statusValue === "posted") {
-                                    param.value = 1;
-                                } else if (statusValue === "0" || statusValue === "not posted") {
-                                    param.value = 0;
-                                } else {
-                                    param.value = null;
-                                }
-
                                 param.field = "M.IsPost";
-                                param.operator = "eq";
+
+                                if (param.value) {
+                                    const val = param.value.toString().toLowerCase();
+
+                                    if (val.startsWith("p")) {
+                                        param.value = 'Y';
+                                    } else if (val.startsWith("n")) {
+                                        param.value = 'N';
+                                    }
+                                }
                             }
 
                         });
@@ -663,7 +645,7 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: [""],
+            search: ["Code", "YearName", "BudgetType","Status"],
 
             detailInit: function (e) {
 
@@ -777,7 +759,7 @@
                 },
 
 
-                { field: "Id", hidden: true },
+                //{ field: "Id", hidden: true },
                 { field: "Code", title: "Code", width: 100 },
                 { field: "YearName", title: "Year Name", width: 100 },
                 { field: "BudgetType", title: "Budget Type", width: 200 },
@@ -789,19 +771,17 @@
                     filterable: { ui: "datepicker" }
                 },
                 {
-                    field: "Status",
-                    title: "Status",
-                    width: 200,
+                    field: "Status", title: "Status", sortable: true, width: 130,
                     filterable: {
                         ui: function (element) {
                             element.kendoDropDownList({
                                 dataSource: [
-                                    { text: "Yes", value: "1" },
-                                    { text: "No", value: "0" }
+                                    { text: "Posted", value: "Y" },
+                                    { text: "Not Posted", value: "N" }
                                 ],
                                 dataTextField: "text",
                                 dataValueField: "value",
-                                optionLabel: "Select"
+                                optionLabel: "Select Option"
                             });
                         }
                     }

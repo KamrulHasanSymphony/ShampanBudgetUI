@@ -125,6 +125,7 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
+
                             if (param.field === "Code") {
                                 param.field = "H.Code";
                             }
@@ -158,6 +159,7 @@
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
+
                             if (param.field === "Code") {
                                 param.field = "H.Code";
                             }
@@ -238,7 +240,7 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Code","Name"]
+                fields: ["Code", "Name", "iBASCode","iBASName"]
             },
             excel: {
                 fileName: `Sabre_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
@@ -291,7 +293,7 @@
                             </a>`;
                     }
                 },
-                { field: "Id", width: 50, hidden: true, sortable: true },
+              /*  { field: "Id", width: 50, hidden: true, sortable: true },*/
                 { field: "Code", title: "Sabre Code", sortable: true, width: 60 },
                 { field: "Name", title: "Sabre Name", sortable: true, width: 200 },
                 { field: "iBASCode", title: "iBAS Code", sortable: true, width: 60 },

@@ -253,9 +253,7 @@
                     if (options.sort) {
                         options.sort.forEach(function (param) {
 
-                            if (param.field === "Id") {
-                                param.field = "M.Id";
-                            }
+
                             if (param.field === "Code") {
                                 param.field = "M.Code";
                             }                
@@ -286,10 +284,7 @@
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-
-                            if (param.field === "Id") {
-                                param.field = "M.Id";
-                            }
+                     
                             if (param.field === "Code") {
                                 param.field = "M.Code";
                             }

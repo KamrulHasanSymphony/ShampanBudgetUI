@@ -202,7 +202,7 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Name"]
+                fields: ["Code", "Name", "Length","Remarks"]
             },
             excel: {
                 fileName: `Segment_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
@@ -250,7 +250,7 @@
                             </a>`;
                     }
                 },
-                { field: "Id", width: 50, hidden: true, sortable: true },             
+/*                { field: "Id", width: 50, hidden: true, sortable: true },     */        
                 { field: "Code", title: "Code", sortable: true, width: 80 },
                 { field: "Name", title: "Name", sortable: true, width: 200 },
                 { field: "Length", title: "Length", sortable: true, width: 200 },
