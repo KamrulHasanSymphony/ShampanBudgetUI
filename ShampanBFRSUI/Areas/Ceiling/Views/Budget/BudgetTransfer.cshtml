@@ -1,0 +1,117 @@
+﻿@model ShampanBFRS.Models.Ceiling.BudgetHeaderVM
+
+@{
+    ViewBag.Title = "Budget";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="tabs">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    @if (Model.Operation == "add")
+                    {
+                        <h1 class="m-0">Budget Transfer</h1>
+                    }
+                    else
+                    {
+                        <h1 class="m-0">Budget Edit</h1>
+                    }
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="mt-3">
+            <div id="tabs-1">
+                <form id="frmEntry">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Budget Transfer</h3>
+                        </div>
+                        <div class="card-body">
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.Operation)
+                            @Html.HiddenFor(model => model.TransactionType)
+                            @*@Html.HiddenFor(model => model.BudgetType)*@
+                            @Html.HiddenFor(model => model.BudgetSetNo)
+                            @Html.HiddenFor(model => model.TransactionDate)
+
+                            <div class="form-group row">
+
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.FiscalYearId)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FiscalYearId)
+                                </div>
+
+                                @*<div class="col-sm-2">
+                                        @Html.LabelFor(model => model.ToGLFiscalYearId)
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(model => model.ToGLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ToGLFiscalYearId)
+                                    </div>*@
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.BudgetType)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.BudgetType)
+                                </div>
+
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.ToBudgetType)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.ToBudgetType, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ToBudgetType)
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                </form>
+
+                <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
+                    <div class="card-header p-2">
+                        <button type="button" class="button btnsave sslUpdate">Transfer</button>
+
+                    </div>
+                    <div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Areas/Common/js/Services/CommonService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Ceiling/js/Controllers/BudgetTransferNewController.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            BudgetTransferNewController.init();
+        });
+
+    </script>
+
+}
