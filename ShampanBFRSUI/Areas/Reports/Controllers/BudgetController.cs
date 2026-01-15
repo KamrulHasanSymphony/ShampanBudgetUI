@@ -26,9 +26,9 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
         }
 
         [HttpPost]
-        public ActionResult BudgetLoadFinalReport(CeilingVM model)
+        public ActionResult BudgetLoadFinalReport(BudgetHeaderVM model)
         {
-            ResultModel<CeilingVM> result = new ResultModel<CeilingVM>();
+            ResultModel<BudgetHeaderVM> result = new ResultModel<BudgetHeaderVM>();
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ReportRepo();
 
@@ -41,15 +41,12 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
 
                     CommonVM commonVM = new CommonVM();
-
-                    commonVM.YearId = model.GLFiscalYearId.ToString();
+                    commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
                     commonVM.UserId = Session["UserId"].ToString();
                     commonVM.ReportType = model.ReportType.ToString();
 
-
-
-                    resultVM = _repo.BudgetFinalReport(commonVM);
+                    resultVM = _repo.BudgetLoadFinalReport(commonVM);
 
                     var json = JsonConvert.SerializeObject(resultVM.DataVM);
                     var list = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
@@ -98,7 +95,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
         }
             else
             {
-                result = new ResultModel<CeilingVM>()
+                result = new ResultModel<BudgetHeaderVM>()
                 {
                     Success = false,
                     Status = Status.Fail,
