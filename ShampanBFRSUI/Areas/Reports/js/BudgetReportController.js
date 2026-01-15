@@ -194,10 +194,34 @@
                 data: data, 
                 pageSize: 10
             },
-            pageable: true,
+            pageable: {
+                refresh: true,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true,
+                pageSizes: [10, 20, 50, "all"]
+            },
             sortable: true,
-            filterable: true,
             scrollable: true,
+            filterable: {
+                extra: true,
+                operators: {
+                    string: {
+                        startswith: "Starts with",
+                        endswith: "Ends with",
+                        contains: "Contains",
+                        doesnotcontain: "Does not contain",
+                        eq: "Is equal to",
+                        neq: "Is not equal to",
+                        gt: "Is greater than",
+                        lt: "Is less than"
+                    }
+                }
+            },
+            resizable: true,
+            reorderable: true,
+            groupable: true,
+            toolbar: ["excel", "search"],
             columns: [
                 { field: "SL", title: "SL", width: 50 },
                 { field: "IBASCode", title: "iBAS Code" },
