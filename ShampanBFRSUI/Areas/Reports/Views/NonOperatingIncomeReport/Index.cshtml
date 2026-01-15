@@ -1,4 +1,4 @@
-﻿@model ShampanBFRS.Models.Ceiling.ProductBudgetMasterVM
+﻿@model ShampanBFRS.Models.Ceiling.BudgetHeaderVM
 
 @{
     ViewBag.Title = "Non Operating Income";
@@ -35,21 +35,21 @@
                             <div class="form-group row">
 
                                 <div class="col-sm-2">
-                                    @Html.LabelFor(model => model.GLFiscalYearId)
+                                    @Html.LabelFor(model => model.FiscalYearId)
                                     <div class="input-group">
-                                        @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                        @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.GLFiscalYearId)
+                                    @Html.ValidationMessageFor(model => model.FiscalYearId)
                                 </div>
 
                                 <div class="col-sm-2">
-                                    @Html.LabelFor(model => model.BudgetType)
+                                    @Html.LabelFor(model => model.ReportType)
                                     <div class="input-group">
-                                        @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Report Type", @class = "form-control form-control-sm" })
+                                        @Html.TextBoxFor(model => model.ReportType, new { placeholder = "Enter Report Type", @class = "form-control form-control-sm" })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.BudgetType)
+                                    @Html.ValidationMessageFor(model => model.ReportType)
                                 </div>
-                                
+
 
                             </div>
 
