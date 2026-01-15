@@ -208,7 +208,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 if (Session["CurrentBranch"] != null)
                     int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
 
-                BudgetHeaderVM budgetVM = new BudgetHeaderVM();
+                BudgetDetailVM budgetVM = new BudgetDetailVM();
 
                 options.vm.FiscalYearId = yearId;
                 options.vm.BranchId = currentBranchId.ToString();
@@ -220,7 +220,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 
                 if (result.Status == MessageModel.Success && result.DataVM != null)
                 {
-                    var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
+                    var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetDetailVM>>(result.DataVM.ToString());
 
                     return Json(new
                     {
