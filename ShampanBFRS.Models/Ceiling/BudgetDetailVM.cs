@@ -54,7 +54,7 @@ namespace ShampanBFRS.Models.Ceiling
         public string? AccountCode { get; set; }
         public string? AccountName { get; set; }
 
-
+        public string? Serial { get; set; }
 
         public string? Operation { get; set; }
     }
