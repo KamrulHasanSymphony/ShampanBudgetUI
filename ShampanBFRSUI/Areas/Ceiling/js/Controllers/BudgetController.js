@@ -13,9 +13,6 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         getTransactionType = $("#TransactionType").val() || '';
 
         GetFiscalYearComboBox();
-        //if (parseInt(getFiscalYearId) != 0 && getOperation != '') {
-        //    validateAndFetchBudgetData();
-        //}
 
         if (parseInt(getId) == 0 && getBudgetType != '') {
 
