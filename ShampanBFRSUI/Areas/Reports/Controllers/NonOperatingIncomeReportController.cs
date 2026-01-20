@@ -111,7 +111,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     using (var package = new ExcelPackage())
                     {
-                        var ws = package.Workbook.Worksheets.Add("Non-operating Income");
+                        var ws = package.Workbook.Worksheets.Add("Non-operatingIncome");
 
                         string ReportHead = CompanyName;
                         string ReportHead2 = "BUDGET FOR NON-OPERATING INCOME FOR THE YEAR " + YearName;

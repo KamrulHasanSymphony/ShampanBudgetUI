@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
 using OfficeOpenXml;
-using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
-using ShampanBFRS.Models.Sale;
 using ShampanBFRS.Models.SetUpVMs;
-using ShampanBFRS.Repo.CommonRepo;
 using ShampanBFRS.Repo.Reports;
 using ShampanBFRS.Repo.SetUpRepo;
 using System;
@@ -12,24 +9,24 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using ShampanBFRS.Models.Ceiling;
 
 namespace ShampanBFRSUI.Areas.Reports.Controllers
 {
-    public class SalesStatementReportController : Controller
+    public class CashFlowStatementReportController : Controller
     {
         ReportRepo _repo = new ReportRepo();
 
-        // GET: Reports/SalesStatementReport
+        // GET: Reports/CostStatementReport
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult SalesStatementReport(SaleHeaderVM model)
+        public ActionResult CashFlowStatementReport(BudgetHeaderVM model)
         {
-            ResultModel<SaleHeaderVM> result = new ResultModel<SaleHeaderVM>();
+            ResultModel<BudgetHeaderVM> result = new ResultModel<BudgetHeaderVM>();
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ReportRepo();
 
@@ -42,16 +39,16 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
                     string YearName = "";
                     string CompanyName = "";
-                    string ChargeGroup = "";
+                   /* string ChargeGroup = ""*/;
 
                     CommonVM commonVM = new CommonVM();
 
                     commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    commonVM.BudgetType = model.BudgetType.ToString();
+                    commonVM.ReportType = model.ReportType.ToString();
                     //commonVM.ChargeGroup = model.ChargeGroup.ToString();
 
-                    resultVM = _repo.SalesStatementReport(commonVM);
+                    resultVM = _repo.CashFlowStatementReport(commonVM);
 
                     var json = Newtonsoft.Json.JsonConvert.SerializeObject(resultVM.DataVM);
                     var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
@@ -101,7 +98,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     if (dt.Rows.Count == 0)
                     {
-                        result = new ResultModel<SaleHeaderVM>()
+                        result = new ResultModel<BudgetHeaderVM>()
                         {
                             Status = Status.Fail,
                             Message = "No data found.",
@@ -114,14 +111,14 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     using (var package = new ExcelPackage())
                     {
-                        var ws = package.Workbook.Worksheets.Add("SalesStatement");
+                        var ws = package.Workbook.Worksheets.Add("CashFlowStatement");
 
                         string ReportHead = CompanyName;
-                        string ReportHead2 = model.BudgetType.ToUpper() + " BUDGET";
-                        string ReportHead3 = "SALES STATEMENT FOR THE YEAR " + YearName;
-                        string ReportHead4 = "";
+                        string ReportHead2 = "BUDGET FOR CASH FLOW STATEMENT FOR THE YEAR " + YearName;
+                        //string ReportHead3 = ChargeGroup.ToUpper();
+                        //string ReportHead4 = "COST STATEMENT OF " + ChargeGroup.ToUpper() + " PRODUCTS FOR " + YearName;
 
-                        string Numberofworking = "Lac Taka";
+                        string Numberofworking = " ";
                         string companyName = "";
 
                         // CHANGED: Use actual column count from dt, no +1 for SL
@@ -139,8 +136,8 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         }
                         AddCenteredHeader(ReportHead, 1, true, 14);
                         AddCenteredHeader(ReportHead2, 2, true, 12);
-                        AddCenteredHeader(ReportHead3, 3, true, 12);
-                        AddCenteredHeader(ReportHead4, 4, true, 12);
+                        //AddCenteredHeader(ReportHead3, 3, true, 12);
+                        //AddCenteredHeader(ReportHead4, 4, true, 12);
 
                         int infoRow = 6;
 
@@ -240,11 +237,6 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         ws.Cells[footerRow, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                         ws.Cells[footerRow, 1].Style.Font.Bold = true;
 
-                        // Only merge if we have at least 2 columns, otherwise just use the first cell
-                        //if (totalCols >= 2)
-                        //{
-                        //    ws.Cells[footerRow, 1, footerRow, 1].Merge = false;
-                        //}
                         ws.Cells[footerRow, 1].Value = "Total";
 
                         using (var footerRange = ws.Cells[footerRow, 1, footerRow, totalCols])
@@ -282,7 +274,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                             Response.Clear();
                             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                            string fileName = $"SalesStatementReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                            string fileName = $"CashFlowStatementReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
                             Response.AddHeader("content-disposition", $"attachment; filename={fileName}");
                             memoryStream.WriteTo(Response.OutputStream);
                             Response.Flush();
@@ -290,7 +282,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         }
                     }
 
-                    result = new ResultModel<SaleHeaderVM>()
+                    result = new ResultModel<BudgetHeaderVM>()
                     {
                         Status = Status.Fail,
                         Message = resultVM.Message,
@@ -308,7 +300,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             }
             else
             {
-                result = new ResultModel<SaleHeaderVM>()
+                result = new ResultModel<BudgetHeaderVM>()
                 {
                     Success = false,
                     Status = Status.Fail,
@@ -373,6 +365,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
             return dt;
         }
+
 
 
     }

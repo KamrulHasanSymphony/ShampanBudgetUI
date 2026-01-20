@@ -125,7 +125,7 @@ namespace ShampanBFRS.Repo.Reports
                 AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
 
                 #region Invoke API
-                var data = httpRequestHelper.PostData("api/Budget/NonOperatingIncomeReport", authModel, JsonConvert.SerializeObject(options));
+                var data = httpRequestHelper.PostData("api/Report/NonOperatingIncomeReport", authModel, JsonConvert.SerializeObject(options));
 
                 ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
                 #endregion
@@ -137,6 +137,134 @@ namespace ShampanBFRS.Repo.Reports
                 throw ex;
             }
         }
+
+
+        public ResultVM IncomeStatementReport(CommonVM options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Report/IncomeStatementReport", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ResultVM IncomeStatementAllReport(CommonVM options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Report/IncomeStatementAllReport", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ResultVM ProductIncomeStatementReport(CommonVM options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Report/ProductIncomeStatementReport", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ResultVM CashFlowStatementReport(CommonVM options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Report/CashFlowStatementReport", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ResultVM PaymentToGovernmentStatementReport(CommonVM options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Report/PaymentToGovernmentStatementReport", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ResultVM OperatingDetailStatementReport(CommonVM options)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
+
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/Report/OperatingDetailStatementReport", authModel, JsonConvert.SerializeObject(options));
+
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
     }
 }
