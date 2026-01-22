@@ -76,7 +76,12 @@
                 <div class="card-body">
 
                     @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.PID)
+                    @Html.HiddenFor(model => model.COASL)
                     @Html.HiddenFor(model => model.Operation)
+                    @Html.HiddenFor(model => model.IsRetainedEarning)
+                    @Html.HiddenFor(model => model.IsNetProfit)
+                    @Html.HiddenFor(model => model.IsDepreciation)
 
                     <div class="form-group row">
 
@@ -134,93 +139,12 @@
                         </div>
                     </div>
 
-
-
-                    <div class="form-group row d-flex align-items-end">
-
-                        <!-- ReportType -->
+                    <div class="form-group row">
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.ReportType)
                             <div class="input-group">
                                 @Html.TextBoxFor(model => model.ReportType,
                                     new { placeholder = "Enter Report Type", @class = "form-control form-control-sm" })
-                            </div>
-                        </div>
-
-                        <div class="col-sm-">
-                            @Html.LabelFor(model => model.COASL)
-                            <div class="input-group">
-                                @Html.TextBoxFor(model => model.COASL, new { placeholder = "Enter COASL", @class = "form-control form-control-sm" })
-
-                            </div>
-                            @Html.ValidationMessageFor(model => model.COASL)
-
-                        </div>
-
-                        <!-- Checkboxes (Flex inside column) -->
-                        <div class="col-sm-8 d-flex align-items-end gap-4">
-
-                            <div style="width:140px;">
-                                @Html.LabelFor(model => model.IsActive)
-                                <div class="input-group" style="width:65px;">
-                                    <input id="IsActive" type="checkbox"
-                                           @(Model.IsActive ? "checked" : "")
-                                           data-bootstrap-switch data-off-color="danger" data-on-color="success"
-                                           data-on-text="ON" data-off-text="OFF" />
-                                </div>
-                            </div>
-
-                            <div style="width:180px;">
-                                @Html.LabelFor(model => model.IsRetainedEarning)
-                                <div class="input-group" style="width:65px;">
-                                    <input id="IsRetainedEarning" type="checkbox"
-                                           @(Model.IsRetainedEarning ? "checked" : "")
-                                           data-bootstrap-switch data-off-color="danger" data-on-color="success"
-                                           data-on-text="ON" data-off-text="OFF" />
-                                </div>
-                            </div>
-
-                            <div style="width:140px;">
-                                @Html.LabelFor(model => model.IsNetProfit)
-                                <div class="input-group" style="width:65px;">
-                                    <input id="IsNetProfit" type="checkbox"
-                                           @(Model.IsNetProfit ? "checked" : "")
-                                           data-bootstrap-switch data-off-color="danger" data-on-color="success"
-                                           data-on-text="ON" data-off-text="OFF" />
-                                </div>
-                            </div>
-
-                            <div style="width:160px;">
-                                @Html.LabelFor(model => model.IsDepreciation)
-                                <div class="input-group" style="width:65px;">
-                                    <input id="IsDepreciation" type="checkbox"
-                                           @(Model.IsDepreciation ? "checked" : "")
-                                           data-bootstrap-switch data-off-color="danger" data-on-color="success"
-                                           data-on-text="ON" data-off-text="OFF" />
-                                </div>
-                            </div>
-
-                            <div style="width:160px;">
-                                @Html.LabelFor(model => model.IsNonOperatingIncome)
-                                <div class="input-group" style="width:65px;">
-                                    <input id="IsNonOperatingIncome" type="checkbox"
-                                           @(Model.IsNonOperatingIncome ? "checked" : "")
-                                           data-bootstrap-switch data-off-color="danger" data-on-color="success"
-                                           data-on-text="ON" data-off-text="OFF" />
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            @Html.LabelFor(model => model.PID)
-                            <div class="input-group">
-                                @Html.TextBoxFor(model => model.PID,
-                                    new { placeholder = "Enter PID", @class = "form-control form-control-sm" })
                             </div>
                         </div>
 
@@ -233,16 +157,39 @@
                             @Html.ValidationMessageFor(model => model.Remarks)
 
                         </div>
+                    </div>
+
+                    <div class="col-sm-8 d-flex align-items-end">
+
+                        <div style="width:140px; margin-right:10px;">
+                            @Html.LabelFor(model => model.IsActive)
+                            <div class="input-group" style="width:65px;">
+                                <input id="IsActive" type="checkbox"
+                                       @(Model.IsActive ? "checked" : "")
+                                       data-bootstrap-switch data-off-color="danger" data-on-color="success"
+                                       data-on-text="ON" data-off-text="OFF" />
+                            </div>
+                        </div>
+
+                        <div style="width:160px;">
+                            @Html.LabelFor(model => model.IsNonOperatingIncome)
+                            <div class="input-group" style="width:65px;">
+                                <input id="IsNonOperatingIncome" type="checkbox"
+                                       @(Model.IsNonOperatingIncome ? "checked" : "")
+                                       data-bootstrap-switch data-off-color="danger" data-on-color="success"
+                                       data-on-text="ON" data-off-text="OFF" />
+                            </div>
+                        </div>
+
+                    </div>
+
 
 
 
 
                     </div>
 
-
                 </div>
-                 
-            </div>
         </form>
 
 
