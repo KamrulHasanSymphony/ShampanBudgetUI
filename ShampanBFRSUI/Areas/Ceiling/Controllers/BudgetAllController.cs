@@ -164,15 +164,14 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
         //}
 
         [HttpGet]
-        public ActionResult Edit(string id ,string fiscalYearId,string budgetType)
+        public ActionResult Edit(string fiscalYearId,string budgetType)
         {
             try
             {
                 _repo = new BudgetRepo();
 
                 BudgetHeaderVM vm = new BudgetHeaderVM();
-                CommonVM param = new CommonVM();
-                param.Id = id;
+                CommonVM param = new CommonVM();             
                 param.FiscalYearId = fiscalYearId;
                 param.BudgetType = budgetType;
 
