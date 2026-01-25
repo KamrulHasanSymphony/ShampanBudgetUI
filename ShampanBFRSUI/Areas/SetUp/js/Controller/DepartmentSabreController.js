@@ -211,9 +211,9 @@
                 pageSize: 10
             },
             sortable: true,
-            filterable: true,
-            pageable: true,
-            selectable: "row",
+            resizable: true,
+            reorderable: true,
+            groupable: true,          
             columns: [
                 { field: "Id", hidden: true },
                 { field: "Code", title: "Code", width: 100 },
