@@ -533,7 +533,7 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetSabreList(string value)
+        public ActionResult GetSabreList(string value="")
         {
             try
             {

@@ -6,6 +6,8 @@
 
     var init = function () {
         var getId = $("#Id").val() || 0;
+
+        getCOAGroup = $("#COAGroupId").val() || 0;
         getDepartmentId = $("#DepartmentId").val() || 0;
         getSabreId = $("#SabreId").val() || 0;
         var getOperation = $("#Operation").val() || '';
@@ -14,6 +16,7 @@
             GetDepartmentComboBox();
             LoadItemsGrid();
             GetSabreComboBox();
+            GetCOAGroupComboBox();
         }
 
         if (parseInt(getId) == 0 && getOperation == '') {
@@ -57,6 +60,7 @@
                 window.location.href = "/SetUp/DepartmentSabre/NextPrevious?id=" + getId + "&status=Next";
             }
         });
+
 
         $("#sabres").on("click", ".custom-delete", function (e) {
             e.preventDefault();
@@ -132,7 +136,43 @@
             ]
         });
 
-    }; // end init
+    };
+    
+
+    function GetCOAGroupComboBox(coagroupid) {
+        var COAGroupComboBox = $("#COAGroupId").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "Code", title: "Code", width: 80 },
+                { field: "Name", title: "Name", width: 250},
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetCOAGroupList"
+                }
+            },
+            placeholder: "Select COA Group",
+            value: "",
+            dataBound: function (e) {
+                if (getCOAGroup) {
+                    this.value(parseInt(getCOAGroup));
+                }
+            }
+
+            ,
+          change: function (e) {
+              debugger;
+              var selectedValue = this.value();
+              if (selectedValue) {
+                  LoadItemsGrid(selectedValue);
+              }
+          }
+        }).data("kendoMultiColumnComboBox");
+    };  
 
     function GetDepartmentComboBox() {
         var DepartmentComboBox = $("#DepartmentId").kendoMultiColumnComboBox({
@@ -193,7 +233,7 @@
         }).data("kendoMultiColumnComboBox");
     }
 
-    function LoadItemsGrid() {
+    function LoadItemsGrid(coagroupid) {
         $("#departments").empty();
 
         $("#departments").kendoGrid({
@@ -201,7 +241,11 @@
                 transport: {
                     read: {
                         url: "/Common/Common/GetSabreList",
-                        dataType: "json"
+                        dataType: "json",
+                        //-
+                        data: function () {
+                            return { value: coagroupid }; // pass as query string
+                        }
                     }
                 },
                 schema: {

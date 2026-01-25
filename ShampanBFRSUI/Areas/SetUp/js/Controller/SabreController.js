@@ -61,7 +61,7 @@
             height: 400,
             columns: [
                 { field: "Code", title: "Code", width: 100 },
-                { field: "Name", title: "Name", width: 150 },
+                { field: "Name", title: "Name", width: 220 },
             ],
             filter: "contains",
             filterFields: ["Code", "Name"],

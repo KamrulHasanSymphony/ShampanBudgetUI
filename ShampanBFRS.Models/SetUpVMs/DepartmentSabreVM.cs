@@ -15,6 +15,10 @@ namespace ShampanBFRS.Models.SetUpVMs
         public int? DepartmentId { get; set; }
         [Display(Name = "Sabre")]
         public int? SabreId { get; set; }
+        //
+        [Display(Name = "iBASGroup")]
+        public int? COAGroupId { get; set; }
+        //
         public string? Code { get; set; }
         public string? Name { get; set; }
         public string? Remark { get; set; }
@@ -23,6 +27,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         public string? SabreName { get; set; }
 
         public PeramModel PeramModel { get; set; }
+
 
         public List<DepartmentSabreVM> SabreList { get; set; }
 

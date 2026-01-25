@@ -144,7 +144,7 @@
                                 }
 
                             </div>
-
+      
                         </div>
 
                     </div>
@@ -154,6 +154,13 @@
                         <div class="card card-secondary">
                             <div class="card-header">
                                 <h3 class="card-title">Sabres</h3>
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.COAGroupId)
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.COAGroupId, new { placeholder = "Enter COA Group", @class = "form-control form-control-sm" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.COAGroupId)
                             </div>
                             <div class="card-body">
                                 <div id="departments"></div>
