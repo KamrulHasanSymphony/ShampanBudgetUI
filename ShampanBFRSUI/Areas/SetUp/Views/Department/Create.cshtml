@@ -97,7 +97,7 @@
                 }
                 else
                 {
-                   <h1 class="m-0"> Department Add</h1>
+                    <h1 class="m-0"> Department Add</h1>
                 }
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-right">
@@ -105,6 +105,36 @@
                     </ol>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header p-2">
+
+            @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                <button style="float:right;" type="button" title="Add New" data-url="/SetUp/Department/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                    New
+                </button>
+
+            }
+            else
+            {
+                <div style="display:none;" class="divUpdate">
+                    <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                    <button style="float:right;" type="button" title="Add New" data-url="/SetUp/Department/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                        New
+                    </button>
+                </div>
+
+                <div class="divSave">
+                    <button class="button btnsave sslSave" type="button" id="">Save</button>
+                </div>
+            }
+
         </div>
     </div>
 

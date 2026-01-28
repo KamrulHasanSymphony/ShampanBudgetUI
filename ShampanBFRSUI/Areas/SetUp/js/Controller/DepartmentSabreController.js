@@ -293,59 +293,7 @@
             }
         });
 
-        //$("#departments").kendoGrid({
-        //    dataSource: {
-        //        transport: {
-        //            read: {
-        //                url: "/Common/Common/GetSabreList",
-        //                dataType: "json",
-
-        //                //-
-        //                data: function () {
-        //                    return { value: coagroupid }; // pass as query string
-        //                }
-        //            }
-        //        },
-        //        schema: {
-        //            data: function (res) { return res; },
-        //            total: function (res) { return res.length; }
-        //        },
-        //        pageSize: 10
-        //    },
-        //    sortable: true,
-        //    resizable: true,
-        //    reorderable: true,
-        //    groupable: true,          
-        //    columns: [
-        //        { field: "Id", hidden: true },
-        //        { field: "Code", title: "Code", width: 100 },
-        //        { field: "Name", title: "Name", width: 150 },
-        //        {
-        //            title: "Action",
-        //            width: 90,
-        //            template:
-        //                `<button class='k-button k-primary addToDetails'
-        //     data-id='#: Id #'
-        //     data-code='#: Code #'
-        //     data-name='#: Name #'
-        //> Add </button>`
-        //        }
-        //    ],
-        //    dataBound: function () {
-        //        $(".addToDetails").off("click").on("click", function () {
-        //            var qty = $(this).closest("tr").find(".qtyInput").val();
-        //            qty = qty ? parseFloat(qty) : 1;
-
-        //            var item = {
-        //                Id: $(this).data("id"),
-        //                Code: $(this).data("code"),
-        //                Name: $(this).data("name")
-        //            };
-
-        //            Addtosabre(item);
-        //        });
-        //    }
-        //});
+      
     }
 
     function Addtosabre(item) {
