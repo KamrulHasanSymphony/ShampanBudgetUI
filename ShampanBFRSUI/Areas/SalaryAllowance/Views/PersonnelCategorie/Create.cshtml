@@ -35,16 +35,16 @@
     <div class="card-header p-2">
 
         @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-        {
+         {
             <button type="button" class="button btnsave sslUpdate">Update</button>
 
             <button style="float:right;" type="button" title="Add New" data-url="/SalaryAllowance/PersonnelCategorie/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                 New
             </button>
 
-        }
-        else
-        {
+         }
+         else
+         {
             <div style="display:none;" class="divUpdate">
                 <button type="button" class="button btnsave sslUpdate">Update</button>
 
@@ -91,7 +91,7 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.CategoryOfPersonnel)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.CategoryOfPersonnel, new { placeholder = "Enter CategoryOfPersonnel ", @class = " required form-control form-control-sm", required = "required" })
+                                @Html.TextBoxFor(model => model.CategoryOfPersonnel, new { placeholder = "Enter Category Of Personnel ", @class = " required form-control form-control-sm", required = "required" })
                             </div>
                             <span id="PolicyNameError" class="text-danger" style="display:none;"></span>
 
@@ -152,19 +152,21 @@
 
 
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-                { /*On Edit*/
+                {
                     <button style="float:left;" type="button" class="button btnsave sslUpdate">Update</button>
+                    <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/SalaryAllowance/PersonnelCategorie/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                        New
+                    </button>
 
                 }
                 else
                 {
                     <div style="display:none;" class="divUpdate">
-                        @*after save*@
                         <button type="button" class="button btnsave sslUpdate">Update</button>
 
                     </div>
                     <div class="divSave">
-                        @*NEW Entry*@
+
                         <button class="button btnsave sslSave" type="button" id="">Save</button>
                     </div>
                 }

@@ -493,6 +493,9 @@
                     if (options.sort) {
                         options.sort.forEach(function (param) {
 
+                            if (param.field === "Id") {
+                                param.field = "M.Id";
+                            }
                             if (param.field === "Code") {
                                 param.field = "M.Code";
                             }
@@ -533,23 +536,6 @@
                                     }
                                 }
                             }
-
-
-                            //if (param.field === "Status") {
-                            //    let statusValue = (param.value || "").toString().trim().toLowerCase();
-
-                            //    if (statusValue === "1" || statusValue === "posted") {
-                            //        param.value = 1;
-                            //    } else if (statusValue === "0" || statusValue === "not posted") {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-
-                            //    param.field = "M.IsPost";
-                            //    param.operator = "eq";
-                            //}
-
 
 
                         });
@@ -558,6 +544,10 @@
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
 
+                            if (param.field === "Id") {
+                                param.field = "M.Id";
+                            }
+
                             if (param.field === "Code") {
                                 param.field = "M.Code";
                             }
@@ -595,22 +585,7 @@
                                     }
                                 }
                             }
-
-                            //if (param.field === "Status") {
-                            //    let statusValue = (param.value || "").toString().trim().toLowerCase();
-
-                            //    if (statusValue === "1" || statusValue === "posted") {
-                            //        param.value = 1;
-                            //    } else if (statusValue === "0" || statusValue === "not posted") {
-                            //        param.value = 0;
-                            //    } else {
-                            //        param.value = null;
-                            //    }
-
-                            //    param.field = "M.IsPost";
-                            //    param.operator = "eq";
-                            //}
-
+                       
                         });
                     }
                     return options;
@@ -676,7 +651,6 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: [""],
 
             detailInit: function (e) {
 

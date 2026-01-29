@@ -186,8 +186,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         CommonAjaxService.multiplePost(url, model, postDone, fail);
     };
 
-
     var GetGridDataList = function (getTransactionType, getBudgetType) {
+     
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -207,7 +207,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                          
+                            debugger;
+                            
                             if (param.field === "Code") {
                                 param.field = "M.Code";
                             }
@@ -238,6 +239,15 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
+
+
+                            debugger;
+
+                           
+                            if (param.field === "Id") {
+                                param.field = "M.Id";
+                            }
+
                             if (param.field === "Code") {
                                 param.field = "M.Code";
                             }
@@ -310,6 +320,9 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
+            //search: {            
+            //    fields: ["Code","BudgetType"]
+            //},
 
             detailInit: function (e) {
 
@@ -400,9 +413,6 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 }, 1000);
             },
             columns: [
-                //{
-                //    selectable: true, width: 40
-                //},
 
                 {
                     title: "Action",
@@ -417,7 +427,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
                 { field: "Code", title: "Code", sortable: true, width: 60 },
-                { field: "YearName", title: "Year Name", width: 100 },
+                { field: "YearName", title: "Year Name", sortable: true, width: 100 },
                 { field: "BudgetType", title: "Budget Type", sortable: true, width: 80 },
                 {
                     field: "Status",
@@ -488,7 +498,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             resizable: true,
             reorderable: true,
             groupable: true,
-            toolbar: ["excel", "pdf", "search"],
+            //toolbar: ["excel", "pdf", "search"],
             columns: [
                 { field: "Id", width: 50, hidden: true },
                 { field: "iBASCode", title: "iBAS Code", width: 200, editable: true },

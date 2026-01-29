@@ -139,46 +139,6 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetGridData(GridOptions options,string TransactionType, string MenuType, string budgetType = "")
-        {
-            ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };
-            _repo = new BudgetRepo();
-
-            try
-            {
-
-                options.vm.UserId = Session["UserId"].ToString();
-                options.vm.TransactionType = TransactionType;
-                options.vm.BudgetType = budgetType;
-
-                if (!string.IsNullOrWhiteSpace(MenuType) && MenuType.ToLower() == "all")
-                {
-                    options.vm.UserId = "";
-                }
-
-                result = _repo.GetGridData(options);
-
-                if (result.Status == MessageModel.Success && result.DataVM != null)
-                {
-                    var gridData = JsonConvert.DeserializeObject<GridEntity<BudgetHeaderVM>>(result.DataVM.ToString());
-
-                    return Json(new
-                    {
-                        Items = gridData.Items,
-                        TotalCount = gridData.TotalCount
-                    }, JsonRequestBehavior.AllowGet);
-                }
-
-                return Json(new { Error = true, Message = "No data found." }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
-                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpPost]
         public JsonResult GetGridDataBudgetAll(GridOptions options, string TransactionType, string MenuType, string budgetType = "")
         {
             ResultVM result = new ResultVM { Status = "Fail", Message = "Error", ExMessage = null, Id = "0", DataVM = null };

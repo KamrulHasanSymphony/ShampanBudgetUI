@@ -234,60 +234,9 @@ var BudgetAllController = function (CommonService, CommonAjaxService) {
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-
-            //detailInit: function (e) {
-
-
-            //    console.log("Master ID:", e.data);
-
-            //    $("<div/>").appendTo(e.detailCell).kendoGrid({
-            //        dataSource: {
-            //            type: "json",
-            //            serverPaging: true,
-            //            serverSorting: true,
-            //            serverFiltering: true,
-            //            allowUnsort: true,
-            //            pageSize: 10,
-
-            //            transport: {
-            //                read: {
-            //                    url: "/Ceiling/BudgetAll/GetDetailDataById",
-            //                    type: "GET",
-            //                    dataType: "json",
-            //                    cache: false,
-            //                    data: { masterId: e.data.Id }
-            //                },
-            //                parameterMap: function (options) {
-            //                    return options;
-            //                }
-            //            },
-            //            batch: true,
-            //            schema: {
-            //                data: "Items",
-            //                total: "TotalCount"
-            //            },
-            //            requestEnd: function (e) {
-            //                console.log("Response Data:", e.response); // Log server response
-            //            }
-            //        },
-            //        scrollable: false,
-            //        sortable: true,
-            //        pageable: false,
-            //        noRecords: true,
-            //        messages: {
-            //            noRecords: "No Record Found!"
-            //        },
-
-            //        columns: [
-            //            { field: "Id", hidden: true, sortable: true, width: 50 },
-            //            { field: "iBASCode", title: "iBAS Code", sortable: true, width: 150 },
-            //            { field: "iBASName", title: "iBAS Name", sortable: true, width: 150 },
-            //            { field: "SabreCode", title: "Sabre Code", sortable: true, width: 150 },
-            //            { field: "SabreName", title: "Sabre Name", sortable: true, width: 200 },
-            //            { field: "InputTotal", title: "Input Total", sortable: true, width: 120, format: "{0:n2}" }
-            //        ]
-            //    });
-            //},
+            search: {
+                fields: ["YearName", "BudgetType"]
+            },
             excel: {
                 fileName: `Budgets_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true

@@ -170,6 +170,9 @@
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 { /*On Edit*/
                     <button style="float:left;" type="button" class="button btnsave sslUpdate">Update</button>
+                    <button style="float: right; margin-left: 4px;" type="button" title="Add New" data-url="/SetUp/Segment/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                        New
+                    </button>
 
                 }
                 else
