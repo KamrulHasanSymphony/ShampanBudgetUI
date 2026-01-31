@@ -355,9 +355,22 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
+
+                            if (param.field === "Id") {
+                                param.field = "H.Id";
+                            }
+
+                            if (param.field === "SB.Code") {
+                                param.field = "Code";
+                            }
+                            if (param.field === "SabreName") {
+                                param.field = "SB.Name";
+                            }
+
                             if (param.field === "DepName") {
                                 param.field = "DP.Name";
                             }
+
                             if (param.field === "Remark") {
                                 param.field = "DP.Remarks";
                             }
@@ -366,6 +379,16 @@
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
+
+                            if (param.field === "Id") {
+                                param.field = "H.Id";
+                            }
+                            if (param.field === "SB.Code") {
+                                param.field = "Code";
+                            }
+                            if (param.field === "SabreName") {
+                                param.field = "SB.Name";
+                            }
                             if (param.field === "DepName") {
                                 param.field = "DP.Name";
                             }

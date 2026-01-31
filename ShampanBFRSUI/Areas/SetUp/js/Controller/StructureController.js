@@ -365,7 +365,7 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: ["Code", "Name", "Remarks"],
+            /*search: ["Code", "Name", "Remarks"],*/
 
             
             excel: {

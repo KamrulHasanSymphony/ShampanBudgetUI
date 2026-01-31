@@ -254,9 +254,9 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: {
-                fields: ["Code","Category","Name"]
-            },
+            //search: {
+            //    fields: ["Code","Category","Name"]
+            //},
             excel: {
                 fileName: `iBASGroup_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true

@@ -241,9 +241,9 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: {
-                fields: ["Code", "Name", "AreaName", "Email", "Comments", "Status", "VATRegistrationNo", "BIN","TINNO"]
-            },
+            //search: {
+            //    fields: ["Code", "Name", "AreaName", "Email", "Comments", "Status", "VATRegistrationNo", "BIN","TINNO"]
+            //},
             excel: {
                 fileName: "BranchProfile.xlsx",
                 filterable: true

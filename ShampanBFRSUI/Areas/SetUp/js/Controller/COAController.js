@@ -402,9 +402,9 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: {
-                fields: ["Code", "Name", "Nature", "GroupName","COAType"]
-            },
+            //search: {
+            //    fields: ["Code", "Name", "Nature", "GroupName","COAType"]
+            //},
             excel: {
                 fileName: `iBAS_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,
                 filterable: true

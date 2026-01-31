@@ -619,7 +619,7 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: ["ChargeGroup"],
+           /* search: ["ChargeGroup"],*/
 
             detailInit: function (e) {
 
