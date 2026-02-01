@@ -220,7 +220,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             {
                 _repo = new CompanyProfileRepo();
                 CommonVM param = new CommonVM();
-                param.IDs = vm.IDs;
+               // param.IDs = vm.IDs;
                 param.ModifyBy = Session["UserId"].ToString();
                 param.ModifyFrom = Ordinary.GetLocalIpAddress();
 

@@ -27,19 +27,10 @@
             </div>
             <div class="card-body">
 
-                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.CompanyID)
                 @Html.HiddenFor(model => model.Operation)
 
                 <div class="form-group row">
-
-                    <div class="col-sm-2 codeWidth">
-                        @Html.LabelFor(model => model.Code)
-                        <div style="display: flex; align-items: center;">
-                            <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
-                            @Html.TextBoxFor(model => model.Code, new { placeholder = "Code Auto Generate", @class = " csCode  form-control form-control-sm", @readonly = "readonly", @style = "width:140px;" }) &nbsp;
-                            <span id="btnNext" class="fa fa-forward" style="color: darkseagreen;"></span>
-                        </div>
-                    </div>
 
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.CompanyName)
@@ -48,21 +39,16 @@
                     </div>
 
                     <div class="col-sm-2">
-                        @Html.LabelFor(model => model.CompanyBanglaName)
-                        @Html.TextBoxFor(model => model.CompanyBanglaName, new { placeholder = " Enter Bangla Name", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.CompanyBanglaName)
-                    </div>
-
-                    <div class="col-sm-2">
                         @Html.LabelFor(model => model.CompanyLegalName)
-                        @Html.TextBoxFor(model => model.CompanyLegalName, new { placeholder = " Enter Company Legal Name", @class = "form-control form-control-sm" })
+                        @Html.TextBoxFor(model => model.CompanyLegalName, new { placeholder = "Enter Company Legal Name", @class = "form-control form-control-sm" })
                         @Html.ValidationMessageFor(model => model.CompanyLegalName)
                     </div>
+
 
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.FYearStart)
                         <div class="input-group date">
-                            @Html.TextBoxFor(model => model.FYearStart, new { placeholder = "Select FYear Start", @class = "  form-control form-control-sm dateRange" })
+                            @Html.TextBoxFor(model => model.FYearStart, new { placeholder = "Select FYear Start", @class = "form-control form-control-sm dateRange" })
                             <div class="input-group-append">
                                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                             </div>
@@ -72,61 +58,31 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.FYearEnd)
                         <div class="input-group date">
-                            @Html.TextBoxFor(model => model.FYearEnd, new { placeholder = "Select FYear End", @class = "  form-control form-control-sm dateRange" })
+                            @Html.TextBoxFor(model => model.FYearEnd, new { placeholder = "Select FYear End", @class = "form-control form-control-sm dateRange" })
                             <div class="input-group-append">
                                 <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
                             </div>
                         </div>
                     </div>
 
-                </div>
-
-                <div class="form-group row">
-
                     <div class="col-sm-2">
-                        @Html.LabelFor(model => model.CompanyTypeId)
-                        @Html.TextAreaFor(model => model.CompanyTypeId, new { placeholder = "Select Company Type", @class = "form-control form-control-sm" })
-                        <span id="titleError" class="text-danger" style="display:none;"></span>
+                        @Html.LabelFor(model => model.VatRegistrationNo)
+                        @Html.TextBoxFor(model => model.VatRegistrationNo, new { placeholder = "Enter Vat Registration No", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.VatRegistrationNo)
                     </div>
-
                     <div class="col-sm-2">
-                        @Html.LabelFor(model => model.BusinessNature)
-                        @Html.TextAreaFor(model => model.BusinessNature, new { placeholder = " Enter Business Nature", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.BusinessNature)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.AccountingNature)
-                        @Html.TextAreaFor(model => model.AccountingNature, new { placeholder = "Enter Accounting Nature", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.AccountingNature)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.Section)
-                        @Html.TextAreaFor(model => model.Section, new { placeholder = " Enter Section", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.Section)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.Address1)
-                        @Html.TextAreaFor(model => model.Address1, new { placeholder = "Enter Address Line One", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.Address1)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.Address2)
-                        @Html.TextAreaFor(model => model.Address2, new { placeholder = "Enter Address Line Two", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.Address2)
+                        @Html.LabelFor(model => model.BIN)
+                        @Html.TextBoxFor(model => model.BIN, new { placeholder = "Enter BIN", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.BIN)
                     </div>
 
                 </div>
 
                 <div class="form-group row">
-
                     <div class="col-sm-2">
-                        @Html.LabelFor(model => model.Address3)
-                        @Html.TextAreaFor(model => model.Address3, new { placeholder = "Enter Address Line Three", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.Address3)
+                        @Html.LabelFor(model => model.TINNo)
+                        @Html.TextBoxFor(model => model.TINNo, new { placeholder = "Enter TIN", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.TINNo)
                     </div>
 
                     <div class="col-sm-2">
@@ -143,87 +99,81 @@
 
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.TelephoneNo)
-                        @Html.TextBoxFor(model => model.TelephoneNo, new { placeholder = " Enter Telephone Number", @class = "form-control form-control-sm", type = "number", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                        @Html.TextBoxFor(model => model.TelephoneNo, new { placeholder = "Enter Telephone No", @class = "form-control form-control-sm", type = "number", @oninput = "this.value=this.value.replace(/[^0-9]/g,'')" })
                         @Html.ValidationMessageFor(model => model.TelephoneNo)
                     </div>
 
                     <div class="col-sm-2">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.TextBoxFor(model => model.Email, new { placeholder = "Enter Email", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.ContactPerson)
+                        @Html.TextBoxFor(model => model.ContactPerson, new { placeholder = "Enter Contact Person", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.ContactPerson)
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+
+
+
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.ContactPersonDesignation)
+                        @Html.TextBoxFor(model => model.ContactPersonDesignation, new { placeholder = "Enter Contact Person Designation", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.ContactPersonDesignation)
+                    </div>
+
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.ContactPersonTelephone)
+                        @Html.TextBoxFor(model => model.ContactPersonTelephone, new { placeholder = "Enter Telephone", @class = "form-control form-control-sm", type = "number", @oninput = "this.value=this.value.replace(/[^0-9]/g,'')" })
+                        @Html.ValidationMessageFor(model => model.ContactPersonTelephone)
+                    </div>
+
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.ContactPersonEmail)
+                        @Html.TextBoxFor(model => model.ContactPersonEmail, new { placeholder = "Enter Email", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.ContactPersonEmail)
+                    </div>
+
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.Address)
+                        @Html.TextBoxFor(model => model.Address, new { placeholder = "Enter Address", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+
+
+                    <div class="col-sm-2">
                         @Html.LabelFor(model => model.FaxNo)
-                        @Html.TextBoxFor(model => model.FaxNo, new { placeholder = " Enter Fax Number", @class = "form-control form-control-sm", type = "number", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                        @Html.TextBoxFor(model => model.FaxNo, new { placeholder = "Enter Fax No", @class = "form-control form-control-sm", type = "number", @oninput = "this.value=this.value.replace(/[^0-9]/g,'')" })
                         @Html.ValidationMessageFor(model => model.FaxNo)
                     </div>
 
                     <div class="col-sm-2">
-                        @Html.LabelFor(model => model.Email)
-                        @Html.TextBoxFor(model => model.Email, new { placeholder = " Enter Email", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.Email)
+                        @Html.LabelFor(model => model.Comments)
+                        @Html.TextBoxFor(model => model.Comments, new { placeholder = "Enter Comments", @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.Comments)
                     </div>
+
 
 
                 </div>
 
                 <div class="form-group row">
 
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.ContactPerson)
-                        @Html.TextBoxFor(model => model.ContactPerson, new { placeholder = " Enter Contact Person", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.ContactPerson)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.ContactPersonDesignation)
-                        @Html.TextBoxFor(model => model.ContactPersonDesignation, new { placeholder = " Enter Contact Person Designation", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.ContactPersonDesignation)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.ContactPersonTelephone)
-                        @Html.TextBoxFor(model => model.ContactPersonTelephone, new { placeholder = " Enter Contact Person Telephone Number", @class = "form-control form-control-sm", type = "number", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
-                        @Html.ValidationMessageFor(model => model.ContactPersonTelephone)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.ContactPersonEmail)
-                        @Html.TextBoxFor(model => model.ContactPersonEmail, new { placeholder = "Enter Contact Person Email", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.ContactPersonEmail)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.TINNo)
-                        @Html.TextBoxFor(model => model.TINNo, new { placeholder = "Enter TIN Number", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.TINNo)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.BIN)
-                        @Html.TextAreaFor(model => model.BIN, new { placeholder = "Enter BIN", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.BIN)
-                    </div>
-
-                </div>
-
-                <div class="form-group row">                 
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.VatRegistrationNo)
-                        @Html.TextBoxFor(model => model.VatRegistrationNo, new { placeholder = " Enter Vat Registration Number", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.VatRegistrationNo)
-                    </div>
-
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.Comments)
-                        @Html.TextAreaFor(model => model.Comments, new { placeholder = " Enter Comments", @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.Comments)
-                    </div>
+                   
 
                     <div class="Onoffbtn" style="flex-direction: column">
-                        @Html.LabelFor(model => model.IsActive)
+                        @Html.LabelFor(model => model.ActiveStatus)
                         <div class="input-group" style="margin-bottom: -26px; width: 78%;">
-                            <input id="IsActive"
-                                   value="@Model.IsActive"
+                            <input id="ActiveStatus"
+                                   value="@Model.ActiveStatus"
                                    type="checkbox"
                                    name="my-checkbox"
-                                   @(Model.IsActive ? "checked" : "")
+                                   @(Model.ActiveStatus ? "checked" : "")
                                    data-bootstrap-switch
                                    data-off-color="danger"
                                    data-on-color="success"
@@ -234,7 +184,6 @@
                 </div>
 
             </div>
-
         </div>
     </form>
 
@@ -244,9 +193,9 @@
             {
                 <button type="button" class="button btnsave sslUpdate">Update</button>
 
-                <button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/SetUp/CompanyProfile/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
+                @*<button style="float: right; margin-left: 5px;" type="button" title="Add New" data-url="/SetUp/CompanyProfile/Create" onclick="GoTo(this)" class="button NewButton addNewButton">
                     New
-                </button>
+                </button>*@
             }
             else
             {

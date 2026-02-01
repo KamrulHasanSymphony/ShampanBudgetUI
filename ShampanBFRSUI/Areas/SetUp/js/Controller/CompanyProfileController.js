@@ -1,20 +1,12 @@
 ﻿var CompanyProfileController = function (CommonAjaxService) {
 
-    var getCompanyTypeId = 0;
-   
     var init = function () {
 
-        getCompanyTypeId = $("#CompanyTypeId").val() || 0;
-
-        var getId = $("#Id").val() || 0;
+        var getCompanyID = $("#CompanyID").val() || 0;
         var getOperation = $("#Operation").val() || '';
-        if (parseInt(getId) == 0 && getOperation == '') {
+        if (parseInt(getCompanyID) == 0 && getOperation == '') {
             GetGridDataList();
-        };  
-
-        if (getOperation !== '') {
-            GetCompanyTypeComboBox();
-        };  
+        };   
 
         $('.btnsave').click('click', function () {
             
@@ -58,34 +50,6 @@
 
     };
 
-
-    function GetCompanyTypeComboBox() {
-        var CompanyTypeComboBox = $("#CompanyTypeId").kendoMultiColumnComboBox({
-            dataTextField: "Name",
-            dataValueField: "Id",
-            height: 400,
-            columns: [
-                { field: "Name", title: "Name", width: 150 }
-            ],
-            filter: "contains",
-            filterFields: ["Name"],
-            dataSource: {
-                transport: {
-                    read: "/Common/Common/GetCompanyTypeList?value=CompanyType"
-                }
-            },
-            placeholder: "Select Company Type ",
-            value: "",
-            dataBound: function (e) {
-                if (getCompanyTypeId) {
-                    this.value(parseInt(getCompanyTypeId));
-                }
-            },
-            change: function (e) {
-                
-            }
-        }).data("kendoMultiColumnComboBox");
-    };
 
     function SelectData() {
         
@@ -134,34 +98,56 @@
 
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            if (param.field === "Code") {
-                                param.field = "H.Code";
+
+                            if (param.field === "CompanyID") {
+                                param.field = "H.CompanyID";
                             }
-                            if (param.field === "Name") {
-                                param.field = "H.Name";
+                            if (param.field === "CompanyName") {
+                                param.field = "H.CompanyName";
                             }
+                            if (param.field === "CompanyLegalName") {
+                                param.field = "H.CompanyLegalName";
+                            }
+                            if (param.field === "Address") {
+                                param.field = "H.Address";
+                            }
+                            if (param.field === "City") {
+                                param.field = "H.City";
+                            }
+                            if (param.field === "ZipCode") {
+                                param.field = "H.ZipCode";
+                            }  
                             if (param.field === "TelephoneNo") {
                                 param.field = "H.TelephoneNo";
                             }
-                            if (param.field === "AreaId") {
-                                param.field = "H.AreaId";
-                            }
-                            if (param.field === "TelephoneNo") {
-                                param.field = "H.TelephoneNo";
+                            if (param.field === "FaxNo") {
+                                param.field = "H.FaxNo";
                             }
                             if (param.field === "Email") {
                                 param.field = "H.Email";
                             }
-                            if (param.field === "VATRegistrationNo") {
-                                param.field = "H.VATRegistrationNo";
+                            if (param.field === "ContactPerson") {
+                                param.field = "H.ContactPerson";
+                            }
+                            if (param.field === "ContactPersonDesignation") {
+                                param.field = "H.ContactPersonDesignation";
+                            }
+                            if (param.field === "ContactPersonTelephone") {
+                                param.field = "H.ContactPersonTelephone";
+                            }
+                            if (param.field === "ContactPersonEmail") {
+                                param.field = "H.ContactPersonEmail";
                             }
                             if (param.field === "BIN") {
                                 param.field = "H.BIN";
                             }
-
                             if (param.field === "TINNO") {
                                 param.field = "H.TINNO";
                             }
+                            if (param.field === "VATRegistrationNo") {
+                                param.field = "H.VATRegistrationNo";
+                            }                 
+                         
                             if (param.field === "Comments") {
                                 param.field = "H.Comments";
                             }  
@@ -176,7 +162,7 @@
                                     param.value = null;
                                 }
 
-                                param.field = "H.IsActive";
+                                param.field = "H.ActiveStatus";
                                 param.operator = "eq";
                             }
                             
@@ -188,19 +174,28 @@
                                 param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
                                 param.field = "H.FYearEnd";
                             }
-                            //if (filter.field === "FYearEnd") {
-                            //    param.field = "H.FYearEnd";
-                            //}
                         });
                     }
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-                            if (param.field === "Code") {
-                                param.field = "H.Code";
+                            if (param.field === "CompanyID") {
+                                param.field = "H.CompanyID";
                             }
                             if (param.field === "CompanyName") {
                                 param.field = "H.CompanyName";
+                            }
+                            if (param.field === "CompanyLegalName") {
+                                param.field = "H.CompanyLegalName";
+                            }
+                            if (param.field === "Address") {
+                                param.field = "H.Address";
+                            }
+                            if (param.field === "City") {
+                                param.field = "H.City";
+                            }
+                            if (param.field === "ZipCode") {
+                                param.field = "H.ZipCode";
                             }
                             if (param.field === "TelephoneNo") {
                                 param.field = "H.TelephoneNo";
@@ -208,25 +203,34 @@
                             if (param.field === "FaxNo") {
                                 param.field = "H.FaxNo";
                             }
-                            if (param.field === "TelephoneNo") {
-                                param.field = "H.TelephoneNo";
-                            }
                             if (param.field === "Email") {
                                 param.field = "H.Email";
                             }
-                            if (param.field === "VATRegistrationNo") {
-                                param.field = "H.VATRegistrationNo";
+                            if (param.field === "ContactPerson") {
+                                param.field = "H.ContactPerson";
+                            }
+                            if (param.field === "ContactPersonDesignation") {
+                                param.field = "H.ContactPersonDesignation";
+                            }
+                            if (param.field === "ContactPersonTelephone") {
+                                param.field = "H.ContactPersonTelephone";
+                            }
+                            if (param.field === "ContactPersonEmail") {
+                                param.field = "H.ContactPersonEmail";
                             }
                             if (param.field === "BIN") {
                                 param.field = "H.BIN";
                             }
-                            if (param.field === "TINNo") {
-                                param.field = "H.TINNo";
+                            if (param.field === "TINNO") {
+                                param.field = "H.TINNO";
                             }
+                            if (param.field === "VATRegistrationNo") {
+                                param.field = "H.VATRegistrationNo";
+                            }
+
                             if (param.field === "Comments") {
                                 param.field = "H.Comments";
                             }
-
                             if (param.field === "Status") {
                                 let statusValue = param.value ? param.value.toString().trim().toLowerCase() : "";
 
@@ -234,24 +238,13 @@
                                     param.value = 1;
                                 } else if (statusValue.startsWith("i")) {
                                     param.value = 0;
-                                }
-                                else if (statusValue == "1") {
-                                    param.value = 1;
-                                }
-                                else if (statusValue == "0") {
-                                    param.value = 0;
-                                }
-                                else {
+                                } else {
                                     param.value = null;
                                 }
 
-                                param.field = "H.IsActive";
+                                param.field = "H.ActiveStatus";
                                 param.operator = "eq";
                             }
-
-                            //if (filter.field === "FYearStart" || filter.field === "FYearEnd") {
-                            //    filter.value = kendo.toString(filter.value, "yyyy-MM-dd");
-                            //}
                             if (param.field === "FYearStart" && param.value) {
                                 param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
                                 param.field = "CONVERT(VARCHAR(10), H.FYearStart, 120)";
@@ -384,27 +377,41 @@
                 }, 1000);
             },
             columns: [
-                {
-                    selectable: true, width: 40
-                },
+                //{
+                //    selectable: true, width: 40
+                //},
                 {
                     title: "Action",
                     width: 100,
                     template: function (dataItem) {
 
                         return `
-                                <a href="/SetUp/CompanyProfile/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
+                                <a href="/SetUp/CompanyProfile/Edit/${dataItem.CompanyID}" class="btn btn-primary btn-sm mr-2 edit">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                 <a style='background-color: darkgreen;' href='#' onclick='ReportPreview(${dataItem.Id})' class='btn btn-success btn-sm mr-2 edit' title='Report Preview'>
+                                 <a style='background-color: darkgreen;' href='#' onclick='ReportPreview(${dataItem.CompanyID})' class='btn btn-success btn-sm mr-2 edit' title='Report Preview'>
                                     <i class='fas fa-eye'></i>
                                 </a>
                                 `;
                     }
                 },
-                { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", width: 120, sortable: true },
-                { field: "CompanyName", title: " Name", sortable: true, width: 230 },
+                { field: "CompanyID", width: 50, hidden: true, sortable: true },
+                { field: "CompanyName", title: " Name", sortable: true, width: 100 },
+                { field: "CompanyLegalName", title: " Company Legal Name", sortable: true, width: 200 },
+                { field: "Address", title: "Address", sortable: true, width: 100 },
+                { field: "City", title: "City", sortable: true, width: 100 },
+                { field: "ZipCode", title: "Zip Code", sortable: true, width: 100 },
+                { field: "TelephoneNo", title: "Telephon No.", sortable: true, width: 100 },
+                { field: "FaxNo", title: "Fax No.", width: 100, sortable: true },
+                { field: "Email", title: "Email", width: 200, sortable: true },
+
+                { field: "ContactPerson", title: "Contact Person", width: 200, sortable: true },
+                { field: "ContactPersonDesignation", title: "Contact Person Designation", width: 200, sortable: true },
+                { field: "ContactPersonTelephone", title: "Contact Person Telephone", width: 200, sortable: true },
+                { field: "ContactPersonEmail", title: "Contact Person Email", width: 200, sortable: true },
+                { field: "BIN", title: "BIN", sortable: true, width: 100 },
+                { field: "TINNo", title: "TIN No.", width: 100, sortable: true },
+                { field: "VatRegistrationNo", title: "VAT Registration No.", sortable: true, width: 200 },
                 {
                     field: "FYearStart", title: "Fiscal Year Start", sortable: true, width: 150, template: '#= kendo.toString(kendo.parseDate(FYearStart), "yyyy-MM-dd") #',
                     filterable:
@@ -419,13 +426,8 @@
                         ui: "datepicker"
                     }
                 },
-                { field: "TelephoneNo", title: "Telephon No.", sortable: true, width: 140 },
-                { field: "FaxNo", title: "Fax No.", width: 140, sortable: true },
-                { field: "Email", title: "Email", width: 200, sortable: true },
-                { field: "VatRegistrationNo", title: "VAT Registration No.", sortable: true, width: 200 },
-                { field: "BIN", title: "BIN", sortable: true, width: 140 },
-                { field: "TINNo", title: "TIN No.", width: 140, sortable: true },
-                { field: "Comments", title: "Comments", sortable: true, width: 200 },
+   
+                { field: "Comments", title: "Comments", sortable: true,hidden:true, width: 100 },
                
                 {
                     field: "Status", title: "Status", sortable: true, width: 100,
@@ -455,15 +457,15 @@
     function save() {
         var isValid = true;
         
-        var group = $("#CompanyTypeId").val().trim();
-        if (group === "" || group === 0) {
-            isValid = false;
-            $("#CompanyTypeId").addClass("is-invalid");
-            $("#titleError").text("Company Type is required").show();
-        } else {
-            $("#CompanyTypeId").removeClass("is-invalid");
-            $("#titleError").text("").hide();
-        }
+        //var group = $("#CompanyTypeId").val().trim();
+        //if (group === "" || group === 0) {
+        //    isValid = false;
+        //    $("#CompanyTypeId").addClass("is-invalid");
+        //    $("#titleError").text("Company Type is required").show();
+        //} else {
+        //    $("#CompanyTypeId").removeClass("is-invalid");
+        //    $("#titleError").text("").hide();
+        //}
 
         if (!isValid) {
             ShowNotification(2, "Please complete the form. Not proceeding to Save");
@@ -479,8 +481,8 @@
             return;
         }
 
-        if ($('#IsActive').prop('checked')) {
-            model.IsActive = true;
+        if ($('#ActiveStatus').prop('checked')) {
+            model.ActiveStatus = true;
         }
 
         var url = "/SetUp/CompanyProfile/CreateEdit";
@@ -496,7 +498,7 @@
                 $(".divSave").hide();
                 $(".divUpdate").show();
                 $("#Code").val(result.Data.Code);
-                $("#Id").val(result.Data.Id);
+                $("#CompanyID").val(result.Data.CompanyID);
                 $("#Operation").val("update");
                 $("#CreatedBy").val(result.Data.CreatedBy);
                 $("#CreatedOn").val(result.Data.CreatedOn);

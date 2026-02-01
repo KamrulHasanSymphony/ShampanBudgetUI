@@ -87,7 +87,7 @@ namespace ShampanBFRSUI.Controllers
                     foreach (var item in data)
                     {
                         companyInfo = new CompanyProfileVM();
-                        companyInfo.CompanyId = item.Id;
+                        companyInfo.CompanyID = item.CompanyID;
                         companyInfo.CompanyName = item.CompanyName;
                         companyInfos.Add(companyInfo);
                     }
@@ -111,7 +111,7 @@ namespace ShampanBFRSUI.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 CompanyProfileVM selectOption = new CompanyProfileVM
                 {
-                    CompanyId = 0,
+                    CompanyID = 0,
                     CompanyName = "--Select Company--"
                 };
                 companyInfos.Add(selectOption);
@@ -141,7 +141,7 @@ namespace ShampanBFRSUI.Controllers
                     foreach (var item in data)
                     {
                         companyInfo = new CompanyProfileVM();
-                        companyInfo.CompanyId = item.Id;
+                        companyInfo.CompanyID = item.CompanyID;
                         companyInfo.CompanyName = item.CompanyName;
                         companyInfos.Add(companyInfo);
                     }
@@ -164,7 +164,7 @@ namespace ShampanBFRSUI.Controllers
 
                 if (result.Status == "Success")
                 {
-                    var companyName = model.CompanyInfos.Where(x => x.CompanyId == model.CompanyId).FirstOrDefault()?.CompanyName;
+                    var companyName = model.CompanyInfos.Where(x => x.CompanyID == model.CompanyId).FirstOrDefault()?.CompanyName;
                     // Create a new ClaimsIdentity
                     var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                     identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
