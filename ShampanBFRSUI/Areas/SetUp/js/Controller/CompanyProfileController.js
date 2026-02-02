@@ -306,7 +306,7 @@
             reorderable: true,
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
-            search: ["Code", "Name", "CompanyName", "TelephoneNo", "FYearStart", "FYearEnd","Status"],
+            search: ["Name", "CompanyName", "TelephoneNo", "FYearStart", "FYearEnd","Status"],
             excel: {
                 fileName: "CompanyProfiles.xlsx",
                 filterable: true
@@ -382,15 +382,12 @@
                 //},
                 {
                     title: "Action",
-                    width: 100,
+                    width: 60,
                     template: function (dataItem) {
 
                         return `
                                 <a href="/SetUp/CompanyProfile/Edit/${dataItem.CompanyID}" class="btn btn-primary btn-sm mr-2 edit">
                                     <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                 <a style='background-color: darkgreen;' href='#' onclick='ReportPreview(${dataItem.CompanyID})' class='btn btn-success btn-sm mr-2 edit' title='Report Preview'>
-                                    <i class='fas fa-eye'></i>
                                 </a>
                                 `;
                     }

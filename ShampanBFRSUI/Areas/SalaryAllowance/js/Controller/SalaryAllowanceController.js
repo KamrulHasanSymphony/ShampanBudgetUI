@@ -184,7 +184,7 @@
                     template: function (dataItem) {
                         return dataItem.CategoryOfPersonnel || "";
                     },
-                    width: 120
+                    width: 130
                 },
                 
                 {
@@ -193,7 +193,7 @@
                     format: "{0:n2}",
 
                     attributes: { style: "text-align:right;" },
-                    width: 120
+                    width: 150
                 },
                 {
                     field: "TotalPostSanctioned",
@@ -225,7 +225,7 @@
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
                     footerTemplate: "<div style='text-align:right;font-weight:bold'>#= kendo.toString(sum, 'n2') #</div>",
-                    width: 120
+                    width: 100
                 },
                 {
                     field: "TotalSalary",
@@ -246,9 +246,8 @@
                         }
                         return "<div style='text-align:right;font-weight:bold'>" + kendo.toString(sum, "n2") + "</div>";
                     },
-                    width: 120
+                    width: 100
                 },
-
 
                 {
                     field: "PersonnelSentForTraining",
@@ -256,9 +255,8 @@
                     editable: false,
                     format: "{0:n2}",
                     attributes: { style: "text-align:right;" },
-                    width: 120
-                },
-           
+                    width: 150
+                },           
                 {
                     command: [{
                         name: "destroy",
