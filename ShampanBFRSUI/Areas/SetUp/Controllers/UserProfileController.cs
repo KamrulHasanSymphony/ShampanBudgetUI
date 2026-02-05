@@ -217,12 +217,12 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
 
                 if (result.Status == "Success" && result.DataVM != null)
                 {
-                    var gridData = JsonConvert.DeserializeObject<GridEntity<UserProfileVM>>(result.DataVM.ToString());
-                    gridData.Items = gridData.Items.Where(user => user.UserName != "erp").ToArray();
-                    if (userId.ToLower() != "erp")
-                    {
+                  var gridData = JsonConvert.DeserializeObject<GridEntity<UserProfileVM>>(result.DataVM.ToString());
+                 // gridData.Items = gridData.Items.Where(user => user.UserName != "erp").ToArray();
+                   if (userId.ToLower() != "erp")
+                   {
                         gridData.Items = gridData.Items.Where(user => user.UserName == userId).ToArray();
-                    }
+                   }
 
                     gridData.TotalCount = gridData.Items.Count();
 
