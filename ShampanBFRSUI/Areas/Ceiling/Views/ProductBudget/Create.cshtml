@@ -10,17 +10,17 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    @if (@Model.BudgetType == "1st_6months_actual")
+                   @if (@Model.BudgetType == "1st_6months_actual")
                     {
-                        <h1 class="m-0">List Of Data(Actual(1st 6months ))</h1>
+                        <h1 class="m-0">Product Budget(Actual(1st 6months ))</h1>
                     }
                     else if (@Model.BudgetType == "2nd_6months_actual")
                     {
-                        <h1 class="m-0">List Of Data(Actual(2nd 6months ))</h1>
+                     <h1 class="m-0">Product Budget(Actual(2nd 6months ))</h1>
                     }
                     else
                     {
-                        <h1 class="m-0">List Of Data(@Model.BudgetType)</h1>
+                        <h1 class="m-0">Product Budget (@Model.BudgetType)</h1>
                     }
                 </div>
                 <div class="col-sm-6">

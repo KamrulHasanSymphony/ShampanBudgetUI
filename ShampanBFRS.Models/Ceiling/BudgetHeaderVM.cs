@@ -39,7 +39,7 @@ namespace ShampanBFRS.Models.Ceiling
 
         public PeramModel? PeramModel { get; set; }
 
-        public List<BudgetDetailVM> DetailList { get; set; }
+        public List<BudgetDetailVM>? DetailList { get; set; }
 
         public string? MenuType { get; set; }
 
@@ -48,5 +48,7 @@ namespace ShampanBFRS.Models.Ceiling
 
         public int? ToFiscalYearId { get; set; }
         public string? ToBudgetType { get; set; }
+
+       
     }
 }
