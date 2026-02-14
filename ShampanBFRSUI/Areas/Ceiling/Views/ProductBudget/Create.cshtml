@@ -191,15 +191,11 @@
                         }
 
                     </div>
-                    <div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>
+                    @*<div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>*@
                 </div>
 
 
                 <div class="card card-secondary auditcard">
-
-                    <div class="card-header">
-                        <h3 class="card-title">Audit Details</h3>
-                    </div>
 
                     <div class="card-body">
                         <div class="row">
@@ -230,6 +226,20 @@
                                 </div>
                             </div>
                             <div class="col-sm-10">
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.TextBoxFor(model => model.CreatedBy, new { @class = "CreatedBy  form-control form-control-sm ", @readonly = "readonly" })
+                                        <div class="clearfix">&nbsp;</div>
+                                        @Html.TextBoxFor(model => model.CreatedOn, new { @class = "CreatedOn  form-control form-control-sm ", @readonly = "readonly" })
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        @Html.TextBoxFor(model => model.LastModifiedBy, new { @class = "LastUpdateBy  form-control form-control-sm lub", @readonly = "readonly" })
+                                        <div class="clearfix">&nbsp;</div>
+                                        @Html.TextBoxFor(model => model.LastModifiedOn, new { @class = "LastUpdateOn  form-control form-control-sm luo", @readonly = "readonly" })
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
