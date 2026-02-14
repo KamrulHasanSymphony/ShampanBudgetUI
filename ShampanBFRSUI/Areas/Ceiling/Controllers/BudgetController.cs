@@ -3,16 +3,11 @@ using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
 using ShampanBFRS.Models.Helper;
 using ShampanBFRS.Models.KendoCommon;
-using ShampanBFRS.Models.SalaryAllowance;
-using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.Ceiling;
-using ShampanBFRS.Repo.SalaryAllowance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 
 namespace ShampanBFRSUI.Areas.Ceiling.Controllers
 {
