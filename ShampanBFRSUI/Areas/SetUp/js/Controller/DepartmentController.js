@@ -95,6 +95,10 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
+
+                            if (param.field === "Code") {
+                                param.field = "H.Code";
+                            }
                           
                             if (param.field === "Name") {
                                 param.field = "H.Name";
@@ -125,6 +129,10 @@
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
+
+                            if (param.field === "Code") {
+                                param.field = "H.Code";
+                            }
                             if (param.field === "Name") {
                                 param.field = "H.Name";
                             }
@@ -248,7 +256,8 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Name", title: "Name", sortable: true, width: 200 },
+                { field: "Code", title: "Code", sortable: true, width: 100 },
+                { field: "Name", title: "Name", sortable: true, width: 150 },
                 { field: "Description", title: "Description", sortable: true, width: 200 },
                 { field: "Reference", title: "Reference", sortable: true, width: 200 },
                 { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
@@ -278,7 +287,7 @@
         for (var key in model) {
             formData.append(key, model[key]);
         }
-
+        //model.IsActive = $('#IsActive').prop('checked');
         formData.append("IsActive", $('#IsActive').prop('checked'));
         formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
 

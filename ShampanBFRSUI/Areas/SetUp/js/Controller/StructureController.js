@@ -112,7 +112,7 @@
             columns: [
                 {
                     title: "Sl No",
-                    width: 60,
+                    width: 20,
                     template: function (dataItem) {
                         var grid = $("#kDetails").data("kendoGrid");
                         return grid.dataSource.indexOf(dataItem) + 1;
@@ -125,6 +125,12 @@
                     template: function (dataItem) {
                         return dataItem.SegmentName || "";
                     },
+                    width: 120
+                },
+                {
+                    field: "Length",
+                    title: "Length",
+                    attributes: { style: "text-align:right;" },
                     width: 120
                 },
                 
@@ -207,6 +213,7 @@
 
                 { field: "Code", title: "Code", width: 150 },
                 { field: "Name", title: "Segment Name", width: 120 },
+                { field: "Length", title: "Length", width: 120 },
                 { field: "Remarks", title: "Remarks", width: 200 }
             ],
             dataBound: function () {
@@ -219,6 +226,7 @@
 
                         selectedGridModel.set("SegmentId", dataItem.Id);
                         selectedGridModel.set("SegmentName", dataItem.Name);
+                        selectedGridModel.set("Length", dataItem.Length);
                         selectedGridModel.set("Remarks", dataItem.Remarks);
 
                         var window = $("#SegmentWindow").data("kendoWindow");

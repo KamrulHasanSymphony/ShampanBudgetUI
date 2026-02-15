@@ -152,6 +152,15 @@
 
                             <div class="form-group row">
 
+                                <div class="col-sm-2 codeWidth">
+                                    @Html.LabelFor(model => model.Code)
+                                    <div style="display: flex; align-items: center;">
+                                        <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
+                                        @Html.TextBoxFor(model => model.Code, new { placeholder = "Code Auto Generate", @class = " csCode  form-control form-control-sm", @readonly = "readonly", @style = "width:140px;" }) &nbsp;
+                                        <span id="btnNext" class="fa fa-forward" style="color: darkseagreen;"></span>
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-2">
                                     @Html.LabelFor(model => model.Name)
                                     <div class="input-group">

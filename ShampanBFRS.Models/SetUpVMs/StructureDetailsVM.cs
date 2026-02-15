@@ -18,6 +18,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         public int SegmentId { get; set; }
         [Display(Name = "Segment Name")]
         public string SegmentName { get; set; }
+        public int? Length { get; set; }
 
         [Display(Name = "Remarks")]
         public string? Remarks { get; set; }

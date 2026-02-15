@@ -87,8 +87,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="col-sm-3">
                             @Html.LabelFor(model => model.Name)
                             <div class="input-group ">
@@ -100,7 +98,7 @@
                         <div class="col-sm-3">
                             @Html.LabelFor(model => model.Length)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Length, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;",  })
+                                @Html.TextBoxFor(model => model.Length, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
@@ -133,7 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                        }
+                         }
                         else
                         {
                             <div class="col-sm-2 cStatus" style="display:none;">
