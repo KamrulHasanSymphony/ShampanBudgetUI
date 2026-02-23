@@ -45,6 +45,7 @@
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
+            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
 
             Confirmation("Are you sure? Do You Want to " + status + " Data?",
                 function (result) {
@@ -854,11 +855,11 @@
         console.log(details);
 
         if (details.length === 0) {
-            ShowNotification(3, "Save can not without details");
+            ShowNotification(3, "Please add details before saving.");
             return;
         }
         if (item.CategoryOfPersonnel === 0 || item.CategoryOfPersonnel === undefined || item.CategoryOfPersonnel === null || item.CategoryOfPersonnel === "") {
-            ShowNotification(3, "PersonnelCategories Name is required.");
+            ShowNotification(3, "Personnel Categories is required.");
             return;
         }
         var details = [];

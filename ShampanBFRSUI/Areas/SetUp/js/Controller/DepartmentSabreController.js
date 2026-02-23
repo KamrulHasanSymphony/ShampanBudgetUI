@@ -16,7 +16,7 @@
             GetDepartmentComboBox();
             LoadItemsGrid();
             GetSabreComboBox();
-            GetCOAGroupComboBox();
+            GetCOAGroupComboBox(); //this
         }
 
         if (parseInt(getId) == 0 && getOperation == '') {
@@ -61,7 +61,7 @@
             }
         });
 
-
+        //this
         $("#sabres").on("click", ".custom-delete", function (e) {
             e.preventDefault();
 
@@ -78,7 +78,7 @@
                 }
             });
         });
-
+        //this
         // Load existing detail rows (edit mode)
         var transferIssueDetailList = JSON.parse($("#TransferIssueDetailsJson").val() || "[]");
 
@@ -138,7 +138,7 @@
 
     };
     
-
+    //this
     function GetCOAGroupComboBox(coagroupid) {
         var COAGroupComboBox = $("#COAGroupId").kendoMultiColumnComboBox({
             dataTextField: "Name",
@@ -233,6 +233,7 @@
         }).data("kendoMultiColumnComboBox");
     }
 
+    //this
     function LoadItemsGrid(coagroupid) {
         $("#departments").empty();
         $("#departments").kendoGrid({
@@ -295,7 +296,7 @@
 
       
     }
-
+    //this
     function Addtosabre(item) {
         var ds = sabreList;
 

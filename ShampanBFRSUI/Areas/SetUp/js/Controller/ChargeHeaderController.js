@@ -40,7 +40,7 @@
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
-
+            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
             Confirmation("Are you sure? Do You Want to " + status + " Data?",
                 function (result) {
                     if (result) {
@@ -686,7 +686,7 @@
                         { field: "ATRate", title: "AT Rate", width: 120 },
                         { field: "AITRate", title: "AIT Rate", width: 120 },
                         { field: "VATRate", title: "VAT Rate", width: 120 },
-                        { field: "ConversionFactorFixedValue", title: "Conversion Factor", width: 120 },
+                        { field: "ConversionFactorFixedValue", title: "Conversion Factor", width: 200 },
                         { field: "VATRateFixed", title: "VAT Rate Fixed", width: 120 },
                         { field: "RiverDues", title: "River Dues", width: 120 },
 
@@ -701,7 +701,7 @@
                         { field: "ProcessFeeRate", title: "Process Fee Rate", width: 120 },
                         { field: "RcoTreatmentFeeRate", title: "Rco Treatment Fee Rate", width: 120 },
                         { field: "AbpTreatmentFeeRate", title: "Abp Treatment Fee Rate", width: 120 },
-                        { field: "ProductImprovementFee", title: "Product Improvement Fee", width: 120 }
+                        { field: "ProductImprovementFee", title: "Product Improvement Fee", width: 200 }
 
 
                     ]
@@ -851,11 +851,20 @@
 
 
         if (details.length === 0) {
-            ShowNotification(3, "Save can not without details");
+            ShowNotification(3, "Please add details before saving.");
             return;
         }
         if (item.ProductName === 0 || item.ProductName === undefined || item.ProductName === null || item.ProductName === "") {
             ShowNotification(3, "Product Name is required.");
+            return;
+        }
+        if (item.CIFCharge === 0 || item.CIFCharge === undefined || item.CIFCharge === null || item.CIFCharge === "") {
+            ShowNotification(3, "Conversion Factor is required.");
+            return;
+        }
+
+        if (item.ConversionFactor === 0 || item.ConversionFactor === undefined || item.ConversionFactor === null || item.ConversionFactor === "") {
+            ShowNotification(3, "Conversion Factor is required.");
             return;
         }
     

@@ -499,9 +499,11 @@
 
                 var model = serializeInputs("productFrmEntry");
 
-                if (confirm("Are you sure? Do you want to Update?")) {
-                    pasave();
-                }
+                Confirmation("Are you sure you want to " + status + " this entry?", function (result) {
+                    if (result) {
+                        pasave();
+                    }
+                });
 
             });
             function pasave() {

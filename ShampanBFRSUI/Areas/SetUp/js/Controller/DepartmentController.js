@@ -1,11 +1,16 @@
 ﻿var DepartmentController = function (CommonService, CommonAjaxService) {
-
+    var getCOAGroup = 0;
     var init = function () {
         var getId = $("#Id").val() || 0;
+         getCOAGroup = $("#COAGroupId").val() || 0;
         var getOperation = $("#Operation").val() || '';
 
         if (parseInt(getId) == 0 && getOperation == '') {
-            GetGridDataList();
+            GetGridDataList();            
+        }
+        if (getOperation != "") {            
+            LoadItemsGrid();
+            GetCOAGroupComboBox(); //this
         }
         // Save button click handler
         $('.btnsave').click('click', function () {
@@ -46,9 +51,232 @@
             }
         });
 
+        $("#sabres").on("click", ".custom-delete", function (e) {
+            e.preventDefault();
 
+            var grid = $("#sabres").data("kendoGrid");
+            var tr = $(this).closest("tr");
+            var dataItem = grid.dataItem(tr);
+
+            var msg = "Are you sure? Do you want to Delete this Data?";
+
+            Confirmation(msg, function (result) {
+                if (result) {
+                    grid.dataSource.remove(dataItem);
+                    grid.dataSource.sync();
+                }
+            });
+        });
+
+        var sabreListList = JSON.parse($("#SabreListJson").val() || "[]");
+
+        sabreList = new kendo.data.DataSource({
+            data: sabreListList,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        SLNo: { editable: false },
+                        Id: { type: "number", defaultValue: 0 },
+                        DepartmentId: { type: "string", defaultValue: "", editable: false },
+                        SabreId: { type: "string", defaultValue: "", editable: false },
+                        Name: { type: "string", defaultValue: "", editable: false },
+                        Code: { type: "string", defaultValue: "", editable: false }
+
+                    }
+                }
+            }
+        });
+
+        $("#sabres").kendoGrid({
+            dataSource: sabreList,
+            //toolbar: [{ name: "create", text: "Add" }],
+            editable: {
+                mode: "incell",
+                createAt: "bottom"
+            },
+            save: function () {
+                var grid = this;
+                setTimeout(function () {
+                    grid.refresh();
+                }, 0);
+            },
+            columns: [
+                {
+                    field: "SLNo",
+                    title: "SL",
+                    width: 20,
+                    template: function (dataItem) {
+                        var grid = $("#sabres").data("kendoGrid");
+                        return grid.dataSource.indexOf(dataItem) + 1;
+                    },
+                    editable: false
+                },
+                { field: "iBASCode", title: "iBAS Code", width: 40, editable: false },
+                { field: "iBASName", title: "iBAS Name", width: 80, editable: false },
+
+                { field: "Code", title: "Sabre Code", width: 40, editable: false },
+                { field: "DepartmentId", hidden: true },
+                { field: "Name", title: "Sabre Name", width: 80, editable: false },
+                {
+                    title: "&nbsp;",
+                    width: 20,
+                    template: '<a class="k-button k-button-icon custom-delete" href="\\#"><span class="k-icon k-i-trash"></span></a>'
+                }
+            ]
+           
+        });
 
     };
+
+    function GetCOAGroupComboBox(coagroupid) {
+        var COAGroupComboBox = $("#COAGroupId").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Id",
+            height: 400,
+            columns: [
+                { field: "Code", title: "Code", width: 80 },
+                { field: "Name", title: "Name", width: 250 },
+            ],
+            filter: "contains",
+            filterFields: ["Code", "Name"],
+            dataSource: {
+                transport: {
+                    read: "/Common/Common/GetCOAGroupList"
+                }
+            },
+            placeholder: "Select iBAS Group",
+            value: "",
+            dataBound: function (e) {
+                if (getCOAGroup) {
+                    this.value(parseInt(getCOAGroup));
+                }
+            }
+
+            ,
+            change: function (e) {
+                debugger;
+                var selectedValue = this.value();
+                if (selectedValue) {
+                    LoadItemsGrid(selectedValue);
+                }
+            }
+        }).data("kendoMultiColumnComboBox");
+    };  
+
+    function LoadItemsGrid(coagroupid) {
+        $("#departments").empty();
+        $("#departments").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetSabreList",
+                        dataType: "json",
+                        data: function () {
+                            return { value: coagroupid };
+                        }
+                    }
+                },
+                schema: {
+                    data: function (res) { return res; },
+                    total: function (res) { return res.length; }
+                },
+                pageSize: 10,
+                serverPaging: false
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            noRecords: true,
+            messages: {
+                noRecords: "No Record Found!"
+            },
+            scrollable: true,
+            filterable: {
+                extra: true,
+                operators: {
+                    string: {
+                        startswith: "Starts with",
+                        endswith: "Ends with",
+                        contains: "Contains",
+                        doesnotcontain: "Does not contain",
+                        eq: "Is equal to",
+                        neq: "Is not equal to",
+                        gt: "Is greater than",
+                        lt: "Is less than"
+                    }
+                }
+            },
+            sortable: true,
+            resizable: true,
+            reorderable: true,
+            groupable: true,
+            toolbar: ["excel", "pdf", "search"],
+            columns: [
+                { field: "Id", hidden: true },
+                { field: "iBASCode", title: "iBAS Code", width: 60},
+                { field: "iBASName", title: "iBas Name", width: 100 },
+                { field: "Code", title: "Sabre Code", width: 62},
+                { field: "Name", title: " Sabre Name", width: 100 },
+                {
+                    title: "Action",
+                    width: 50,
+                    template:
+                        `<button class='k-button k-primary addToDetails'
+                         data-id='#: Id #'
+                         data-ibascode='#: iBASCode #'
+                         data-ibasname='#: iBASName #'
+                         data-code='#: Code #'
+                         data-name='#: Name #'
+                         > Add </button>`
+                }
+            ],
+            editable: false,
+            selectable: "multiple row",
+            navigatable: true,
+            columnMenu: true,
+            dataBound: function () {
+                $(".addToDetails").off("click").on("click", function () {
+                    var qty = $(this).closest("tr").find(".qtyInput").val();
+                    qty = qty ? parseFloat(qty) : 1;
+
+                    var item = {
+                        Id: $(this).data("id"),
+                        iBASCode: $(this).data("ibascode"),
+                        iBASName: $(this).data("ibasname"),
+                        Code: $(this).data("code"),
+                        Name: $(this).data("name")
+                    };
+
+                    Addtosabre(item);
+                });
+            }
+        });
+
+
+    }
+    function Addtosabre(item) {
+        var ds = sabreList;
+
+        //duplicate check (optional) - uncomment and adapt if needed
+        var exists = ds.data().some(function (x) { return x.SabreId == item.Id; });
+        if (exists) { kendo.alert("This item already added!"); return; }
+
+        ds.add({
+            Id: 0,
+            TransferIssueId: null,
+            BranchId: $("#BranchId").val() || null,
+            SabreId: item.Id,
+            iBASCode: item.iBASCode,
+            iBASName:item.iBASName,
+            Code: item.Code,
+            Name: item.Name
+        });
+    }
+
+
 
     // Select data for delete
     function SelectData() {
@@ -256,11 +484,12 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
+
                 { field: "Code", title: "Code", sortable: true, width: 100 },
                 { field: "Name", title: "Name", sortable: true, width: 150 },
                 { field: "Description", title: "Description", sortable: true, width: 200 },
                 { field: "Reference", title: "Reference", sortable: true, width: 200 },
-                { field: "Remarks", title: "Remarks", sortable: true, width: 100 },
+                { field: "Remarks", hidden: true, title: "Remarks", sortable: true, width: 100 },
             ],
             editable: false,
             selectable: "multiple row",
@@ -284,15 +513,45 @@
             return;
         }
 
+        var department = model.DepartmentId;
+
+        var grid = $("#sabres").data("kendoGrid");
+        var details = [];
+        debugger;
+
+
+        if (grid) {
+            var dataItems = grid.dataSource.view();
+
+            for (var i = 0; i < dataItems.length; i++) {
+                var item = dataItems[i];
+
+                details.push({
+                    Id: item.Id,
+                    SabreId: item.SabreId,
+                    DepartmentId: department
+                });
+            }
+        }
+
+        if (details.length === 0) {
+            ShowNotification(3, "At least one detail entry is required.");
+            return;
+        }
+        debugger;
+        model.SabreList = details;
+
+
         for (var key in model) {
             formData.append(key, model[key]);
         }
-        //model.IsActive = $('#IsActive').prop('checked');
-        formData.append("IsActive", $('#IsActive').prop('checked'));
-        formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
+
+        model.IsActive = $('#IsActive').prop('checked');
+        //formData.append("IsActive", $('#IsActive').prop('checked'));
+        //formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
 
         var url = "/SetUp/Department/CreateEdit";
-        CommonAjaxService.finalImageSave(url, formData, saveDone, saveFail);
+        CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 
     // Handle success

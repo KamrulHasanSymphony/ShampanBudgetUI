@@ -12,10 +12,10 @@ namespace ShampanBFRS.Models.SetUpVMs
     {
 
         public int Id { get; set; }
-
+        public int? COAId { get; set; }
         public int? PID { get; set; }
-
         public int? COASL { get; set; }
+
         [Display(Name = "Structure Code")]
         public int? StructureId { get; set; }
 
@@ -72,6 +72,12 @@ namespace ShampanBFRS.Models.SetUpVMs
 
         [Display(Name = "Account Group Code")]
         public string? ACCTGRPCOD { get; set; }
+
+        public List<SabresVM> SabreDetails { get; set; }
+        public COAVM()
+        {
+            SabreDetails = new List<SabresVM>();
+        }
     }
 }
 

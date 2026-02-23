@@ -38,7 +38,8 @@ namespace ShampanBFRS.Repo.CommonRepo
             {
                 CommonDataService kendoList = new CommonDataService();
 
-                return kendoList.Select_Data_List<UserMenu>("sp_GetAssignedMenuList", "get_List", "ERP");
+                //return kendoList.Select_Data_List<UserMenu>("sp_GetAssignedMenuList", "get_List", "ERP");
+                return kendoList.Select_Data_List<UserMenu>("sp_GetAssignedMenuList", "get_List", userName);
             }
             catch (Exception ex)
             {

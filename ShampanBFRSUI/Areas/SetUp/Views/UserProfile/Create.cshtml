@@ -94,9 +94,9 @@
                         <div class="col-sm-3">
                             @Html.LabelFor(model => model.FullName)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.FullName, new { @class = "required  form-control form-control-sm ", autocomplete = "off" })
+                                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control form-control-sm ", autocomplete = "off" })
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.FullName)
                         </div>
 
 
@@ -115,9 +115,9 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Email)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.Email, new { @class = "required form-control form-control-sm", autocomplete = "off" })
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-sm", autocomplete = "off" })
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.Email)
                         </div>
 
                         @*<div class="col-sm-2">
@@ -141,9 +141,9 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.PhoneNumber)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "required form-control form-control-sm", autocomplete = "off" })
+                                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control form-control-sm", autocomplete = "off" })
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.PhoneNumber)
                         </div>
 
                         <div class="col-sm-2">
@@ -213,7 +213,6 @@
 @section scripts{
 
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    <script src="~/Areas/Common/js/Services/CommonValidationHelper.js"></script>
     <script src="~/Areas/SetUp/js/Controller/UserProfileController.js"></script>
     <script>
         $(document).ready(function () {

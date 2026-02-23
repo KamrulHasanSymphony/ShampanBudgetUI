@@ -96,6 +96,63 @@ p {
 
 /*change end*/
 
+/*active menu css 2026*/
+.os-content {
+    padding: 0 !important
+}
+
+.nav-sidebar > .nav-item > a {
+    background: #fff;
+    color: #000 !important;
+}
+
+.nav-sidebar > .nav-item {
+    margin-bottom: 0;
+    margin: 2px 0;
+}
+
+    .nav-sidebar > .nav-item > a.treeview-expanded {
+        background: #448aff !important;
+        color: #fff !important;
+    }
+
+[class*=sidebar-dark-] .nav-sidebar > .nav-item > .nav-treeview > li a {
+    background-color: rgb(74 114 199 / 63%);
+    margin-left: 10px;
+    width: calc(100% - 10px);
+    color: #fff !important
+}
+
+ul.nav-sidebar .nav-treeview .nav-treeview {
+    margin-left: 20px !important;
+    background: #2c439f;
+}
+
+.has-treeview-a.treeview-expanded {
+    background: #17A2ED !important;
+    color: #fff !important;
+}
+
+[class*=sidebar-dark-] .nav-treeview > .nav-item > .nav-link {
+    color: #fff;
+}
+
+ul.nav-sidebar .nav-treeview .nav-treeview a {
+    margin-left: 0 !important;
+    background-color: transparent !important;
+    width: 100% !important;
+}
+
+    ul.nav-sidebar .nav-treeview .nav-treeview a:hover {
+        background-color: #448aff !important;
+        color: white !important;
+    }
+
+a {
+    cursor: pointer !important
+}
+/*End active menu*/
+
 
 
 
@@ -14567,7 +14624,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link {
-  width: calc(250px - 1rem);
+  width: 100%;
   transition: width ease-in-out 0.3s;
 }
 

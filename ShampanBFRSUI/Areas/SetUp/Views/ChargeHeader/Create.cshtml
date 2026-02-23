@@ -2,7 +2,7 @@
 @model ShampanBFRS.Models.SetUpVMs.ChargeHeaderVM
 
 @{
-    ViewBag.Title = " Charge Header Create";
+    ViewBag.Title = " Charge Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,11 +21,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> Charge  Edit </h1>
+                    <h1 class="m-0"> Charge/Rate Edit </h1>
                 }
                 else
                 {
-                    <h1 class="m-0"> Charge Add </h1>
+                    <h1 class="m-0"> Charge/Rate Add </h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -71,7 +71,7 @@
     <form id="frmEntry">
         <div class="card card-secondary">
             <div class="card-header">
-                <h3 class="card-title"> Charge Info </h3>
+                <h3 class="card-title"> Charge/Rate Info </h3>
             </div>
             <div class="card-body">
 
@@ -211,6 +211,7 @@
 
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonValidationHelper.js"></script>
     <script src="~/Areas/SetUp/js/Controller/ChargeHeaderController.js"></script>
     <script>
         $(document).ready(function () {

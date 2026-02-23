@@ -7,6 +7,11 @@ namespace ShampanBFRS.Models.SetUpVMs
     {
         public int Id { get; set; }
         public string Code { get; set; }
+
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Name is required")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Only letters are allowed")]
+        [StringLength(50, ErrorMessage = "Name must be between 3 and 50 characters")]
         public string Name { get; set; }
 
         public string? ProductGroupName { get; set; }
@@ -14,6 +19,8 @@ namespace ShampanBFRS.Models.SetUpVMs
         [Display(Name = "Product Group")]
         public int? ProductGroupId { get; set; }
         [Display(Name = "Conversion Factor")]
+        [Required(ErrorMessage = "Conversion Factor is required")]
+        [Range(typeof(decimal), "-999999999999999.99999", "999999999999999.99999", ErrorMessage = "Conversion Factor must have up to 15 digits before the decimal and 5 digits after the decimal")]
         public decimal? ConversionFactor { get; set; }
         [Display(Name= "CIF Price")]
         public decimal? CIFCharge { get; set; }

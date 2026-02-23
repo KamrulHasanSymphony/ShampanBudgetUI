@@ -98,6 +98,8 @@
 
                     </div>
                 </form>
+
+                @*html*@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card card-secondary">
@@ -106,7 +108,7 @@
                             </div>
                             <div class="col-sm-6">
                                 @Html.LabelFor(model => model.COAGroupId)
-                                <div class="input-group date">
+                                <div class="input-group">
                                     @Html.TextBoxFor(model => model.COAGroupId, new { placeholder = "Enter COA Group", @class = "form-control form-control-sm" })
                                 </div>
                                 @Html.ValidationMessageFor(model => model.COAGroupId)
@@ -128,13 +130,15 @@
                         </div>
                     </div>
                 </div>
-                @*<div id="departmentsWindow" style="display:none;">
-                        <div id="departmentsGrid"></div>
-                    </div>
+                @*html*@
 
-                    <div id="sabresWindow" style="display:none;">
-                        <div id="sabresGrid"></div>
-                    </div>*@
+                @*<div id="departmentsWindow" style="display:none;">
+            <div id="departmentsGrid"></div>
+        </div>
+
+        <div id="sabresWindow" style="display:none;">
+            <div id="sabresGrid"></div>
+        </div>*@
 
                 <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
                     <div class="card-header p-2">

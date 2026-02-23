@@ -37,7 +37,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
-            
+            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
+
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
                     debugger;
@@ -556,10 +557,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         }
        
     };
-
-    // Save the form data
+    
     function save() {
-        debugger;
 
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
@@ -575,7 +574,6 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         if (operation == 'update') {
             var grid = $("#updtBudgetDetailsData").data("kendoGrid");
 
-            debugger;
             if (grid) {
 
                 var items = grid.dataSource.view();
@@ -615,7 +613,6 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         {
             var grid = $("#BudgetDetailsData").data("kendoGrid");
 
-            debugger;
             if (grid) {
 
                 var items = grid.dataSource.view();
@@ -654,7 +651,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         
 
         if (DetailList.length === 0) {
-            ShowNotification(3, "At least one item is required.");
+            ShowNotification(3, "Fiscal Year details are not loaded. Please click the 'Load' button and try again.");
             return;
         }
 

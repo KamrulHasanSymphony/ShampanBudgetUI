@@ -21,6 +21,8 @@ namespace ShampanBFRS.Models.SetUpVMs
         public string? Name { get; set; }
         public string? Remark { get; set; }
         public string? DepName { get; set; }
+        public string? iBASCode { get; set; }
+        public string? iBASName { get; set; }
         public string? SabreCode { get; set; }
         public string? SabreName { get; set; }
 

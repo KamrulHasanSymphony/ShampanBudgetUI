@@ -40,6 +40,8 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
+
+            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
                     save();
@@ -428,7 +430,7 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         }
 
         if (DetailList.length === 0) {
-            ShowNotification(3, "At least one item is required.");
+            ShowNotification(3, "Fiscal Year details are not loaded. Please click the 'Load' button and try again.");
             return;
         }
 

@@ -95,9 +95,9 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.Name)
                         <div class="input-group ">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "required form-control form-control-sm", @style = "width: 95%;height: 26px;", placeholder = "Enter  Name" })
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-sm", @style = "width: 95%;height: 26px;", placeholder = "Enter  Name" })
                         </div>
-                        <span id="titleError2" class="text-danger" style="display:none;"></span>
+                        @Html.ValidationMessageFor(model => model.Name)
                     </div>
 
                     <div class="col-sm-2">
@@ -267,6 +267,7 @@
 
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonValidationHelper.js"></script>
     <script src="~/Areas/SetUp/js/Controller/StructureController.js"></script>
     <script>
         $(document).ready(function () {

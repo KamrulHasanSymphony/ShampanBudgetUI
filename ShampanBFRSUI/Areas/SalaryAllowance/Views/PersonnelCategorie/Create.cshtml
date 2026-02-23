@@ -83,17 +83,17 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.SL)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.SL, new { placeholder = "Enter SL ", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                                @Html.TextBoxFor(model => model.SL, new { placeholder = "Enter SL ", @class = " form-control form-control-sm", @style = "width: 95%;height: 26px;" })
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.SL)
                         </div>
 
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.CategoryOfPersonnel)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.CategoryOfPersonnel, new { placeholder = "Enter Category Of Personnel ", @class = " required form-control form-control-sm", required = "required" })
+                                @Html.TextBoxFor(model => model.CategoryOfPersonnel, new { placeholder = "Enter Category Of Personnel ", @class = " form-control form-control-sm", })
                             </div>
-                            <span id="PolicyNameError" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.CategoryOfPersonnel)
 
                         </div>
 

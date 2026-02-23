@@ -90,23 +90,23 @@
                         <div class="col-sm-3">
                             @Html.LabelFor(model => model.Name)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name ", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", required = "required" })
+                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name ", @class = "form-control form-control-sm", @style = "width: 95%;height: 26px;" })
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.Name)
                         </div>
 
                         <div class="col-sm-3">
                             @Html.LabelFor(model => model.Length)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Length, new { @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;", })
+                                @Html.TextBoxFor(model => model.Length, new { placeholder = "Enter Length ", @class = "form-control form-control-sm", @style = "width: 95%;height: 26px;" })
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.Length)
                         </div>
 
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Remarks)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks ", @class = " required form-control form-control-sm", required = "required" })
+                                @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks ", @class = "form-control form-control-sm" })
                             </div>
                             <span id="PolicyNameError" class="text-danger" style="display:none;"></span>
 

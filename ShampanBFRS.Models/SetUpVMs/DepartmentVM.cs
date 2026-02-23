@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +12,12 @@ namespace ShampanBFRS.Models.SetUpVMs
     public class DepartmentVM : Audit
     {
         public int Id { get; set; }
+        [DisplayName("iBAS Group")]
+        public int? COAGroupId { get; set; }
         public string? Code {get;set;}
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "Name is required")]
+        [StringLength(50, ErrorMessage = "Name must be between 3 and 50 characters")]
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? Reference { get; set; }
@@ -26,9 +33,13 @@ namespace ShampanBFRS.Models.SetUpVMs
 
         public PeramModel PeramModel { get; set; }
 
+        public List<DepartmentSabreVM> SabreList { get; set; }
+
+
         public DepartmentVM()
         {
             PeramModel = new PeramModel();
+            SabreList = new List<DepartmentSabreVM>();
         }
     }
 }

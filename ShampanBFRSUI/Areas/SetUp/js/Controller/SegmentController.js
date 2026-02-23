@@ -202,7 +202,7 @@
             groupable: true,
             toolbar: ["excel", "pdf", "search"],
             search: {
-                fields: ["Code", "Name", "Length","Remarks"]
+                fields: ["Code", "Name", "Length"]
             },
             excel: {
                 fileName: `Segment_List_${new Date().toISOString().split('T')[0]}_${new Date().toTimeString().split(' ')[0]}.${new Date().getMilliseconds()}.xlsx`,

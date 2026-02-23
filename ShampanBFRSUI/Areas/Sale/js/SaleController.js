@@ -45,6 +45,7 @@
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
+            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
 
             Confirmation("Are you sure? Do You Want to " + status + " Data?",
                 function (result) {
@@ -861,7 +862,7 @@
 
 
         if (details.length === 0) {
-            ShowNotification(3, "Save can not without details");
+            ShowNotification(3, "Please add details before saving.");
             return;
         }
         if (item.ProductName === 0 || item.ProductName === undefined || item.ProductName === null || item.ProductName === "") {

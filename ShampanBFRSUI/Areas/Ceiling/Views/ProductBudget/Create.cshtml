@@ -84,17 +84,17 @@
                                     <div class="col-sm-2">
                                         @Html.LabelFor(model => model.GLFiscalYearId)
                                         <div class="input-group">
-                                            @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                            @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "required form-control form-control-sm", @readonly = "readonly" })
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.GLFiscalYearId)
+                                        <span id="titleError2" class="text-danger" style="display:none;"></span>
                                     </div>
 
                                     <div class="col-sm-2">
                                         @Html.LabelFor(model => model.ChargeGroup)
                                         <div class="input-group">
-                                            @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                            @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "required form-control form-control-sm", @readonly = "readonly" })
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.ChargeGroup)
+                                        <span id="titleError2" class="text-danger" style="display:none;"></span>
                                     </div>
 
                                 }
@@ -103,17 +103,17 @@
                                     <div class="col-sm-2">
                                         @Html.LabelFor(model => model.GLFiscalYearId)
                                         <div class="input-group">
-                                            @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                                            @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "required form-control form-control-sm" })
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.GLFiscalYearId)
+                                        <span id="titleError2" class="text-danger" style="display:none;"></span>
                                     </div>
 
                                     <div class="col-sm-2">
                                         @Html.LabelFor(model => model.ChargeGroup)
                                         <div class="input-group">
-                                            @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm" })
+                                            @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "required form-control form-control-sm" })
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.ChargeGroup)
+                                        <span id="titleError2" class="text-danger" style="display:none;"></span>
                                     </div>
                                 }
 
@@ -255,6 +255,7 @@
 @section scripts{
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonValidationHelper.js"></script>
     <script src="~/Areas/Ceiling/js/Controllers/ProductBudgetController.js"></script>
 
     <script>

@@ -2,7 +2,7 @@
 @model ShampanBFRS.Models.Sale.SaleHeaderVM
 
 @{
-    ViewBag.Title = " Sale Create";
+    ViewBag.Title = " Sale Budget Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -29,11 +29,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                    <h1 class="m-0"> Sale  Edit (@Model.BudgetType) </h1>
+                    <h1 class="m-0"> Sale Budget Edit (@Model.BudgetType) </h1>
                 }
                 else
                 {
-                    <h1 class="m-0"> Sale  Add (@Model.BudgetType)</h1>
+                    <h1 class="m-0"> Sale Budget Add (@Model.BudgetType)</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -90,7 +90,7 @@
     <form id="frmEntry">
         <div class="card card-secondary">
             <div class="card-header">
-                <h3 class="card-title"> Sale Info </h3>
+                <h3 class="card-title"> Sale Budget Info </h3>
             </div>
             <div class="card-body">
 
@@ -123,9 +123,9 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.FiscalYearId)
                         <div class="input-group">
-                            @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                            @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "required form-control form-control-sm" })
                         </div>
-                        @Html.ValidationMessageFor(model => model.FiscalYearId)
+                        <span id="titleError2" class="text-danger" style="display:none;"></span>
                     </div>
 
                     <div class="col-sm-2">
@@ -269,6 +269,7 @@
 
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonValidationHelper.js"></script>
     <script src="~/Areas/Sale/js/SaleController.js"></script>
     <script>
         $(document).ready(function () {

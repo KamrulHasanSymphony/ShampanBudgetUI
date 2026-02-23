@@ -121,9 +121,10 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.FiscalYearId)
                         <div class="input-group">
-                            @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "form-control form-control-sm" })
+                            @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "required form-control form-control-sm" })
                         </div>
-                        @Html.ValidationMessageFor(model => model.FiscalYearId)
+                        <span id="titleError2" class="text-danger" style="display:none;"></span>
+
                     </div>
 
                     <div class="col-sm-2  hidden-field">
@@ -267,6 +268,7 @@
 
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonValidationHelper.js"></script>
     <script src="~/Areas/SalaryAllowance/js/Controller/SalaryAllowanceController.js"></script>
     <script>
         $(document).ready(function () {

@@ -17,6 +17,7 @@
             GetCOATypeComboBox();
             GetCOAGroupComboBox();
             GetStructureComboBox();
+            GenerateDetailsGrid();
 
         }
         $("[data-bootstrap-switch]").bootstrapSwitch();
@@ -24,6 +25,7 @@
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
         }
+
         // Save button click handler
         $('.btnsave').click('click', function () {
             var getId = $('#Id').val();
@@ -31,12 +33,45 @@
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
+
+            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
+
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
                     save();
                 }
             });
-        });
+            });
+
+            ////$('.btnsave').on('click', function (e) {
+
+            ////    e.preventDefault();   // Prevent normal submit
+
+            ////    var form = $("#frmEntry");
+
+            ////    // Trigger MVC validation
+            ////    var mvcValid = form.valid();
+
+            ////    // Trigger your custom validation
+            ////    var customValid = CommonValidationHelper.CheckValidation("#frmEntry");
+
+            ////    if (!mvcValid || !customValid) {
+            ////        return false;
+            ////    }
+
+            ////    var getId = $('#Id').val();
+            ////    var status = "Save";
+            ////    if (parseInt(getId) > 0) {
+            ////        status = "Update";
+            ////    }
+
+            ////    Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
+            ////        if (result) {
+            ////            save();
+            ////        }
+            ////    });
+            ////});
+
 
         // Delete button click handler
         $('.btnDelete').on('click', function () {
@@ -45,6 +80,25 @@
                     SelectData();
                 }
             });
+        });
+
+        $("#kDetails").on("click", ".k-grid-deleteRow", function (e) {
+
+            e.preventDefault();
+
+            var grid = $("#kDetails").data("kendoGrid");
+            var tr = $(this).closest("tr");
+            var dataItem = grid.dataItem(tr);
+
+            Confirmation("Are you sure you want to delete this detail?", function (result) {
+
+                if (result) {
+                    grid.dataSource.remove(dataItem);
+                    grid.refresh();
+                }
+
+            });
+
         });
 
         // Previous button click handler
@@ -62,10 +116,87 @@
                 window.location.href = "/SetUp/COA/NextPrevious?id=" + getId + "&status=Next";
             }
         });
-
-
-
     };
+
+    function GenerateDetailsGrid() {
+        debugger;
+        var detailsList = JSON.parse($("#detailsListJson").val() || "[]");
+
+        var detailsGridDataSource = new kendo.data.DataSource({
+            data: detailsList,
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number", defaultValue: 0 },
+                        COAId: { type: "number", defaultValue: null },
+                        Code: { type: "string", defaultValue: '' },
+                        Name: { type: "string", defaultValue: '' },
+                        Remarks: { type: "string", defaultValue: '' }
+
+                    }
+                }
+            },
+            aggregate: [
+                { field: "Quantity", aggregate: "sum" },
+                { field: "UnitPrice", aggregate: "sum" }
+
+            ]
+        });
+
+        $("#kDetails").kendoGrid({
+            dataSource: detailsGridDataSource,
+            toolbar: [{ name: "create", text: "Add" }],
+            editable: {
+                mode: "incell",
+                createAt: "bottom"
+            },
+            save: function (e) {
+                const grid = this;
+                setTimeout(function () {
+                    grid.dataSource.aggregate();
+                    grid.refresh();
+                }, 0);
+            },
+            columns: [
+                {
+                    title: "Sl",
+                    width: 20,
+                    template: function (dataItem) {
+                        var grid = $("#kDetails").data("kendoGrid");
+                        return grid.dataSource.indexOf(dataItem) + 1;
+                    }
+                },
+                {
+                    field: "Code",
+                    title: "Code",
+                    width: 40
+
+                },
+                {
+                    field: "Name",
+                    title: "Name",
+                    //editor: segmentSelectorEditor,
+                    //template: function (dataItem) {
+                    //    return dataItem.Name || "";
+                    //},
+                    width: 80
+                },
+                
+                {
+                    field: "Remarks",
+                    title: "Remarks",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
+                    title: "&nbsp;",
+                    width: 10,
+                    template: "<a class='k-button k-button-icontext k-grid-deleteRow'><span class='k-icon k-i-trash'></span></a>"
+                }
+            ]
+        });
+    }
     function GetNatureComboBox() {
 
         var NatureTypeComboBox = $("#Nature").kendoMultiColumnComboBox({
@@ -181,7 +312,7 @@
                     }
                 }
             },
-            placeholder: "Select COA Type",
+            placeholder: "Select iBAS Type",
             value: "",
             dataBound: function (e) {
 
@@ -483,32 +614,66 @@
         });
     };
 
-    // Save the form data
     function save() {
-        debugger;
+
         var validator = $("#frmEntry").validate();
-        var model = serializeInputs("frmEntry");
+        var isValid = validator.form();
 
-        var result = validator.form();
-
-        if (!result) {
+        if (!isValid) {
             validator.focusInvalid();
             return;
         }
 
-        // Append checkbox values directly into model
+        var model = serializeInputs("frmEntry");
+
+        var grid = $("#kDetails").data("kendoGrid");
+
+        // 🔴 Check grid empty
+        if (!grid || grid.dataSource.total() === 0) {
+            ShowNotification(3, "Please add details before saving.");
+            return;
+        }
+        var details = [];
+        var dataItems = grid.dataSource.view();
+
+        for (var i = 0; i < dataItems.length; i++) {
+
+            var item = dataItems[i];
+
+            // 🔴 Code Required Check
+            if (!item.Code || item.Code.trim() === "") {
+                ShowNotification(3, "Details Code is required");
+                return;
+            }
+
+            // 🔴 Name Required Check
+            if (!item.Name || item.Name.trim() === "") {
+                ShowNotification(3, " Name is required");
+                return;
+            }
+
+            details.push({
+                COAId: item.COAId || 0,
+                Code: item.Code.trim(),
+                Name: item.Name.trim(),
+                Remarks: item.Remarks || ""
+            });
+        }
+
+        // Checkbox values
         model.IsActive = $('#IsActive').prop('checked');
         model.IsRetainedEarning = $('#IsRetainedEarning').prop('checked');
         model.IsNetProfit = $('#IsNetProfit').prop('checked');
         model.IsDepreciation = $('#IsDepreciation').prop('checked');
         model.IsNonOperatingIncome = $('#IsNonOperatingIncome').prop('checked');
 
-        debugger;
+        model.SabreDetails = details;
+
         var url = "/SetUp/COA/CreateEdit";
+
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }
 
-    // Handle success
     function saveDone(result) {
         if (result.Status == 200) {
             ShowNotification(1, result.Message);

@@ -21,8 +21,7 @@
             var status = "Save";
             if (getId != '') {
                 status = "Update";
-            }
-            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
+            }          
             Confirmation("Are you sure? Do You Want to " + status + " Data?",
 
                 function (result) {

@@ -321,9 +321,10 @@
             return;
         }
 
-        if ($('#IsActive').prop('checked')) {
-            model.IsActive = true;
-        }
+        //if ($('#ActiveStatus').prop('checked')) {
+        //    model.ActiveStatus = true;
+        //}
+        model.ActiveStatus = $('#ActiveStatus').prop('checked');
 
         var url = "/SetUp/BranchProfile/CreateEdit";
 
