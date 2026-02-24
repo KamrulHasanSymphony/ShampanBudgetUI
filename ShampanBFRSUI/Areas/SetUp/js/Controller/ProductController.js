@@ -177,6 +177,9 @@
                             if (param.field === "ConversionFactor") {
                                 param.field = "M.ConversionFactor";
                             }
+                            if (param.field === "UOM") {
+                                param.field = "M.UOM";
+                            }
                          
                             if (param.field === "CIFCharge") {
                                 param.field = "M.CIFCharge";
@@ -215,6 +218,9 @@
                             }
                             if (param.field === "ConversionFactor") {
                                 param.field = "M.ConversionFactor";
+                            }
+                            if (param.field === "UOM") {
+                                param.field = "M.UOM";
                             }
 
                             if (param.field === "CIFCharge") {
@@ -326,7 +332,7 @@
                
                 {
                     title: "Action",
-                    width: 40,
+                    width: 30,
                     template: function (dataItem) {
                         
                         return `
@@ -336,10 +342,11 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Code", title: "Code", width: 150, sortable: true },
-                { field: "Name", title: "Name", sortable: true, width: 200 },
+                { field: "Code", title: "Code", width: 60, sortable: true },
+                { field: "Name", title: "Name", sortable: true, width: 150 },
                 { field: "ProductGroupName", title: "Product Group Name", sortable: true, width: 200 },
-                { field: "ConversionFactor", title: "Conversion Factor", sortable: true, width: 200 },
+                { field: "ConversionFactor", title: "Conversion Factor", sortable: true, width: 50 },
+                { field: "UOM", title: "UOM", sortable: true, width: 50 },
                 
               
                

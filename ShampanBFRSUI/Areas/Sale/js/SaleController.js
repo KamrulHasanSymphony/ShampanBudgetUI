@@ -869,6 +869,7 @@
             ShowNotification(3, "Product Name is required.");
             return;
         }
+       
 
         var details = [];
         var grid = $("#kDetails").data("kendoGrid");

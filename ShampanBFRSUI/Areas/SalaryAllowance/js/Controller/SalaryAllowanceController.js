@@ -858,10 +858,16 @@
             ShowNotification(3, "Please add details before saving.");
             return;
         }
+
         if (item.CategoryOfPersonnel === 0 || item.CategoryOfPersonnel === undefined || item.CategoryOfPersonnel === null || item.CategoryOfPersonnel === "") {
             ShowNotification(3, "Personnel Categories is required.");
             return;
         }
+        if (item.BasicWagesSalaries === 0 || item.BasicWagesSalaries === undefined || item.basicWagesSalaries === null || item.basicWagesSalaries === "") {
+            ShowNotification(3, "Basic Wages Salaries is required.");
+            return;
+        }
+
         var details = [];
         console.log(details);
         var grid = $("#kDetails").data("kendoGrid");

@@ -22,6 +22,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         [Required(ErrorMessage = "Conversion Factor is required")]
         [Range(typeof(decimal), "-999999999999999.99999", "999999999999999.99999", ErrorMessage = "Conversion Factor must have up to 15 digits before the decimal and 5 digits after the decimal")]
         public decimal? ConversionFactor { get; set; }
+        public string UOM { get; set; }
         [Display(Name= "CIF Price")]
         public decimal? CIFCharge { get; set; }
 

@@ -209,11 +209,11 @@
                                 param.field = "H.YearName";
                             }
                             if (param.field === "YearStart" && param.value) {
-                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd HH:mm:ss.fff");
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd ");
                                 param.field = "H.YearStart";
                             }
                             if (param.field === "YearEnd" && param.value) {
-                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd HH:mm:ss.fff");
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd ");
                                 param.field = "H.YearEnd";
                             }
                         });
@@ -229,11 +229,11 @@
                                 param.field = "H.YearName";
                             }
                             if (param.field === "YearStart" && param.value) {
-                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd HH:mm:ss.fff");
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd");
                                 param.field = "H.YearStart";
                             }
                             if (param.field === "YearEnd" && param.value) {
-                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd HH:mm:ss.fff");
+                                param.value = kendo.toString(new Date(param.value), "yyyy-MM-dd ");
                                 param.field = "H.YearEnd";
                             }
                         });
@@ -308,7 +308,7 @@
               
                 {
                     title: "Action",
-                    width: 60,
+                    width: 30,
                     template: function (dataItem) {
                         return `
                             <a href="/SetUp/FiscalYear/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit" title="Edit Fiscal Year">
@@ -320,23 +320,27 @@
                     field: "Id", width: 150, hidden: true, sortable: true
                 },
                 {
-                    field: "Year", title: "Year", width: 150, sortable: true
+                    field: "Year", title: "Year", width: 40, sortable: true
                 },
                 {
-                    field: "YearName", title: "Year Name", width: 150, sortable: true
+                    field: "YearName", title: "Year Name", width: 60, sortable: true
                 },
                 {
-                    field: "YearStart", title: "Year Start", sortable: true, width: 150, template: '#= kendo.toString(kendo.parseDate(YearStart), "yyyy-MM-dd HH:mm:ss.fff") #',
+                    field: "YearStart", title: "Year Start", sortable: true, width: 80, template: '#= kendo.toString(kendo.parseDate(YearStart), "yyyy-MM-dd") #',
                     filterable: {
                         ui: "datepicker"
                     }
                 },
                 {
-                    field: "YearEnd", title: "Year End", sortable: true, width: 150, template: '#= kendo.toString(kendo.parseDate(YearEnd), "yyyy-MM-dd HH:mm:ss.fff") #',
+                    field: "YearEnd", title: "Year End", sortable: true, width: 80, template: '#= kendo.toString(kendo.parseDate(YearEnd), "yyyy-MM-dd") #',
                     filterable: {
                         ui: "datepicker"
                     }
                 },
+                {
+                    field: "YearLock", title: "Year Lock", sortable: true, width: 40
+                },
+
                 {
                     field: "Remarks", title: "Remarks", sortable: true, width: 200
                 }

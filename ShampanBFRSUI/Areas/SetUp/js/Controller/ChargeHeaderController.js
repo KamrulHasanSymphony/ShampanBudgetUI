@@ -209,6 +209,13 @@
                     width: 120
                 },
                 {
+                    field: "CPACharge",
+                    title: "CPA Charge",
+                    format: "{0:n2}",
+                    attributes: { style: "text-align:right;" },
+                    width: 120
+                },
+                {
                     field: "HandelingCharge",
                     title: "Handeling Charge",
                     format: "{0:n2}",
@@ -858,15 +865,7 @@
             ShowNotification(3, "Product Name is required.");
             return;
         }
-        if (item.CIFCharge === 0 || item.CIFCharge === undefined || item.CIFCharge === null || item.CIFCharge === "") {
-            ShowNotification(3, "Conversion Factor is required.");
-            return;
-        }
-
-        if (item.ConversionFactor === 0 || item.ConversionFactor === undefined || item.ConversionFactor === null || item.ConversionFactor === "") {
-            ShowNotification(3, "Conversion Factor is required.");
-            return;
-        }
+        
     
 
         model.IsActive = $('#IsActive').prop('checked');
