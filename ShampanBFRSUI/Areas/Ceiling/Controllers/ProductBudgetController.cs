@@ -103,7 +103,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                         model.LastModifiedOn = DateTime.Now.ToString();
                         model.LastUpdateFrom = Ordinary.GetLocalIpAddress();
 
-                        //resultVM = _repo.Update(model);
+                        resultVM = _repo.Update(model);
 
                         if (resultVM.Status == ResultStatus.Success.ToString())
                         {
