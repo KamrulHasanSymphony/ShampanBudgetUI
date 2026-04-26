@@ -750,7 +750,7 @@
                 {
 
                     title: "Action",
-                    width: 30,
+                    width: 40,
                     template: function (dataItem) {
                         console.log(dataItem);
                         return `

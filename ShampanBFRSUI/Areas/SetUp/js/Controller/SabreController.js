@@ -284,7 +284,7 @@
             columns: [
                 {
                     title: "Action",
-                    width: 40,
+                    width: 30,
                     template: function (dataItem) {
                         console.log(dataItem);
                         return `
@@ -294,10 +294,10 @@
                     }
                 },
               /*  { field: "Id", width: 50, hidden: true, sortable: true },*/
-                { field: "Code", title: "Sabre Code", sortable: true, width: 60 },
-                { field: "Name", title: "Sabre Name", sortable: true, width: 200 },
+                { field: "Code", title: "SABRE+&nbsp;&nbsp;Code", sortable: true, width: 60 },
+                { field: "Name", title: "SABRE+&nbsp;&nbsp;Name", sortable: true, width: 80 },
                 { field: "iBASCode", title: "iBAS Code", sortable: true, width: 60 },
-                { field: "iBASName", title: "iBAS Name", sortable: true, width: 200 },
+                { field: "iBASName", title: "iBAS Name", sortable: true, width: 80 },
             ],
             editable: false,
             selectable: "row",

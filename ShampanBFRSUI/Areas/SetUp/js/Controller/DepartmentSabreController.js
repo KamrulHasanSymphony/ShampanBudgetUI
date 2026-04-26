@@ -125,9 +125,9 @@
                     },
                     editable: false
                 },
-                { field: "Code", title: "Sabre Code", width: 80, editable: false },
+                { field: "Code", title: "SABRE+ Code", width: 80, editable: false },
                 { field: "DepartmentId", hidden: true },
-                { field: "Name", title: "Sabre Name", width: 80, editable: false },
+                { field: "Name", title: "SABRE+ Name", width: 80, editable: false },
                 {
                     title: "&nbsp;",
                     width: 40,
@@ -489,8 +489,8 @@
                     }
                 },
                 { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "SabreCode", title: "Sabre Code", sortable: true, hidden: true },
-                { field: "SabreName", title: "Sabre Name", sortable: true, hidden: true },
+                { field: "SabreCode", title: "SABRE+ Code", sortable: true, hidden: true },
+                { field: "SabreName", title: "SABRE+ Name", sortable: true, hidden: true },
                 { field: "DepName", title: "Department Name", sortable: true, width: 200 },
                 { field: "Remark", title: "Remark", sortable: true, width: 200 },
                 { field: "DepartmentId", title: "Department", sortable: true,hidden:true },

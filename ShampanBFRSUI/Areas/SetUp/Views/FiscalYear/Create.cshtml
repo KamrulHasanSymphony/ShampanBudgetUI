@@ -1,6 +1,6 @@
 ﻿@model ShampanBFRS.Models.SetUpVMs.FiscalYearVM
 @{
-        ViewBag.Title = "Fiscal Year Create";
+    ViewBag.Title = "Fiscal Year Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -51,20 +51,21 @@
             <div class="card-body">
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.YearPeriod)
+                @Html.HiddenFor(model => model.Year)
                 @Html.HiddenFor(model => model.Operation)
 
                 <div class="form-group row">
 
 
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.Year)
-                        <div class="input-group ">
-                            @Html.TextBoxFor(model => model.Year, new { placeholder = "Enter Year Name", @class = "  form-control form-control-sm ", @readonly = "readonly" })
+                    @*<div class="col-sm-2">
+                @Html.LabelFor(model => model.Year)
+                <div class="input-group ">
+                    @Html.TextBoxFor(model => model.Year, new { placeholder = "Enter Year Name", @class = "  form-control form-control-sm ", @readonly = "readonly" })
 
-                        </div>
-                        @Html.ValidationMessageFor(model => model.Year)
-                    </div>
-                   
+                </div>
+                @Html.ValidationMessageFor(model => model.Year)
+            </div>*@
+
 
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearName)
@@ -80,8 +81,8 @@
                         <div class="input-group date">
                             @Html.TextBoxFor(model => model.YearStart, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                             @*<div class="input-group-append">
-                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                </div>*@
+                        <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                    </div>*@
                         </div>
                     </div>
 
@@ -90,8 +91,8 @@
                         <div class="input-group date">
                             @Html.TextBoxFor(model => model.YearEnd, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                             @*<div class="input-group-append">
-                    <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                </div>*@
+                        <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                    </div>*@
                         </div>
                     </div>
                     <div class="col-sm-2">

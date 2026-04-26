@@ -319,9 +319,9 @@
                 {
                     field: "Id", width: 150, hidden: true, sortable: true
                 },
-                {
-                    field: "Year", title: "Year", width: 40, sortable: true
-                },
+                //{
+                //    field: "Year", title: "Year", width: 40, sortable: true
+                //},
                 {
                     field: "YearName", title: "Year Name", width: 60, sortable: true
                 },

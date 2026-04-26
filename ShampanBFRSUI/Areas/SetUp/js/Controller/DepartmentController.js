@@ -115,9 +115,9 @@
                 { field: "iBASCode", title: "iBAS Code", width: 40, editable: false },
                 { field: "iBASName", title: "iBAS Name", width: 80, editable: false },
 
-                { field: "Code", title: "Sabre Code", width: 40, editable: false },
+                { field: "Code", title: "SABRE+ Code", width: 40, editable: false },
                 { field: "DepartmentId", hidden: true },
-                { field: "Name", title: "Sabre Name", width: 80, editable: false },
+                { field: "Name", title: "SABRE+ Name", width: 80, editable: false },
                 {
                     title: "&nbsp;",
                     width: 20,
@@ -216,13 +216,13 @@
             toolbar: ["excel", "pdf", "search"],
             columns: [
                 { field: "Id", hidden: true },
-                { field: "iBASCode", title: "iBAS Code", width: 60},
-                { field: "iBASName", title: "iBas Name", width: 100 },
-                { field: "Code", title: "Sabre Code", width: 62},
-                { field: "Name", title: " Sabre Name", width: 100 },
+                { field: "iBASCode", title: "iBAS Code", width: 62},
+                { field: "iBASName", title: "iBas Name", width: 80 },
+                { field: "Code", title: "SABRE+ Code", width: 62},
+                { field: "Name", title: " SABRE+ Name", width: 80 },
                 {
                     title: "Action",
-                    width: 50,
+                    width: 55,
                     template:
                         `<button class='k-button k-primary addToDetails'
                          data-id='#: Id #'
@@ -230,7 +230,7 @@
                          data-ibasname='#: iBASName #'
                          data-code='#: Code #'
                          data-name='#: Name #'
-                         > Add </button>`
+                         >Add</button>`
                 }
             ],
             editable: false,

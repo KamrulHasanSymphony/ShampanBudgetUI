@@ -8,20 +8,24 @@
         if (parseInt(getId) == 0 && getOperation == '') {
             GetGridDataList();
         }
-        // Save button click handler
-        $('.btnsave').click('click', function () {
-            var getId = $('#Id').val();
-            var status = "Save";
-            if (parseInt(getId) > 0) {
-                status = "Update";
+   
+        $('.btnsave').on('click', function () {
+            var validator = $("#frmEntry").validate();
+            var isValid = validator.form();
+            if (!isValid) {
+                validator.focusInvalid();
+                return;
             }
-            Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
-                if (result) {
-                    save();
+            var getId = $('#Id').val();
+            var status = (parseInt(getId) > 0) ? "Update" : "Save";
+            Confirmation("Are you sure? Do You Want to " + status + " Data?",function (result) {
+                    if (result) {
+                        save();
+                    }
                 }
-            });
-        });
+            );
 
+        });
         // Delete button click handler
         $('.btnDelete').on('click', function () {
             Confirmation("Are you sure? Do You Want to Delete Data?", function (result) {
@@ -266,18 +270,7 @@
     // Save the form data
 
     function save() {
-        debugger;
-        var validator = $("#frmEntry").validate();
         var model = serializeInputs("frmEntry");
-
-        var result = validator.form();
-
-        if (!result) {
-            validator.focusInvalid();
-            return;
-        }
-
-        // Append checkbox values directly into model
         model.IsActive = $('#IsActive').prop('checked');
         var url = "/SetUp/Segment/CreateEdit";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
