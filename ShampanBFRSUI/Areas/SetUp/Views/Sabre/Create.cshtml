@@ -14,11 +14,11 @@
             <div class="col-sm-6">
                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                 {
-                  <h1 class="m-0">SABRE+<span style="display:inline-block; width:12px;"></span>Edit</h1>
+                    <h1 class="m-0">SABRE+<span style="display:inline-block; width:12px;"></span>Edit</h1>
                 }
                 else
                 {
-                  <h1 class="m-0">SABRE+<span style="display:inline-block; width:12px;"></span>Add</h1>
+                    <h1 class="m-0">SABRE+<span style="display:inline-block; width:12px;"></span>Add</h1>
                 }
             </div>
             <div class="col-sm-6">
@@ -52,7 +52,7 @@
                 </button>
 
             </div>
-            
+
             <div class="divSave">
                 <button class="button btnsave sslSave" type="button" id="">Save</button>
             </div>
@@ -82,17 +82,17 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Code)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Enter Code", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;" })
+                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Enter Code", @class = "form-control form-control-sm", @style = "width: 95%;height: 26px;" })
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.Code)
                         </div>
 
                         <div class="col-sm-3">
                             @Html.LabelFor(model => model.Name)
                             <div class="input-group ">
-                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name", @class = " required form-control form-control-sm", @style = "width: 95%;height: 26px;" })
+                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Name", @class = "form-control form-control-sm", @style = "width: 95%;height: 26px;" })
                             </div>
-                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.Name)
                         </div>
 
                         <div class="col-sm-3">
@@ -109,7 +109,7 @@
                             <div class="input-group">
                                 @Html.TextBoxFor(model => model.Remarks, new { placeholder = "Enter Remarks", @class = "form-control form-control-sm" })
                             </div>
-                            <span id="PolicyNameError" class="text-danger" style="display:none;"></span>
+                            @Html.ValidationMessageFor(model => model.Remarks)
 
                         </div>
                         @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
@@ -156,12 +156,12 @@
 
 
                     </div>
-                    
+
                 </div>
             </div>
         </form>
 
-       
+
 
 
 
@@ -192,8 +192,8 @@
 
             </div>
 
-                @*<div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>*@ 
-        
+            @*<div class="auditshow"> <img src="~/Content/Images/audit.png" title="Click for Audit" /> </div>*@
+
         </div>
 
 
@@ -259,6 +259,7 @@
 @section scripts {
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonValidationHelper.js"></script>
     <script src="~/Areas/SetUp/js/Controller/SabreController.js"></script>
     <script>
         $(document).ready(function () {

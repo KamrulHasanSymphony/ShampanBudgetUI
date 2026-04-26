@@ -16,12 +16,22 @@
             GetGridDataList();
         }
 
-        $('.btnsave').click('click', function () {
+        $('.btnsave').on('click', function (e) {
+            e.preventDefault(); 
+
+            var form = $("#frmEntry");
+            var mvcValid = form.valid();
+            var customValid = CommonValidationHelper.CheckValidation("#frmEntry");
+
+            if (!mvcValid || !customValid) {
+                return false;
+            }
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
+
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
                     save();
@@ -308,19 +318,8 @@
 
     // Save the form data
     function save() {
-        var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
-
-        var result = validator.form();
-
-        if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
-            return;
-        }
-
         for (var key in model) {
             formData.append(key, model[key]);
         }
