@@ -13,7 +13,17 @@
             GetCOAGroupComboBox(); //this
         }
         // Save button click handler
-        $('.btnsave').click('click', function () {
+        $('.btnsave').on('click', function () {
+            var validator = $("#frmEntry").validate();
+            var result = validator.form();
+
+            if (!result) {
+                if (!result) {
+                    validator.focusInvalid();
+                }
+                return;
+            }
+
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
@@ -500,19 +510,8 @@
 
     // Save the form data
     function save() {
-        var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
-
-        var result = validator.form();
-
-        if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
-            return;
-        }
-
         var department = model.DepartmentId;
 
         var grid = $("#sabres").data("kendoGrid");
@@ -538,7 +537,6 @@
             ShowNotification(3, "At least one detail entry is required.");
             return;
         }
-        debugger;
         model.SabreList = details;
 
 
