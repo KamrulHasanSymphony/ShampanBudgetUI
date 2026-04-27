@@ -108,7 +108,7 @@
                         @Html.ValidationMessageFor(model => model.Code)
                     </div>
 
-                   
+
 
                     <div class="col-sm-2 hidden-field">
                         @Html.LabelFor(model => model.TransactionDate)
@@ -133,6 +133,14 @@
                             @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Budget Type", @class = "form-control form-control-sm" })
                         </div>
                         @Html.ValidationMessageFor(model => model.BudgetType)
+                    </div>
+
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.PayScale)
+                        <div class="input-group">
+                            @Html.TextBoxFor(model => model.PayScale, new { placeholder = "Enter Pay Scale", @class = "form-control form-control-sm" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.PayScale)
                     </div>
 
 

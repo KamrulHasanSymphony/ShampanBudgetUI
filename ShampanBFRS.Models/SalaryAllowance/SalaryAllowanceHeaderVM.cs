@@ -25,6 +25,9 @@ namespace ShampanBFRS.Models.SalaryAllowance
 
         public string? YearName { get; set; }
 
+        [Display(Name = "Pay Scale")]
+        public string? PayScale { get; set; }
+
 
         [DisplayName("Budget Type")]
         public string BudgetType { get; set; }

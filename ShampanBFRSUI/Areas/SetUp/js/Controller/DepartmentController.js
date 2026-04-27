@@ -34,22 +34,19 @@
                 calculateTotal();
             }
 
-            // INIT state
+
             $(".fund-check").each(function () {
                 toggleField(this);
             });
 
-            // CHECKBOX CHANGE
             $(".fund-check").on("change", function () {
                 toggleField(this);
             });
 
-            // INPUT CHANGE
             $(document).on("keyup change", ".fund-input", function () {
                 calculateTotal();
             });
 
-            // TOTAL CALCULATION
             function calculateTotal() {
 
                 var total = 0;
@@ -114,13 +111,25 @@
         });
 
         //-
-        $('.ProjectName').change(function () {
-            var isChecked = $(this).is(':checked');
-            if (isChecked) {
-                $('.showorhide').hide();
-            } else {
-                $('.showorhide').show();
-            }
+        //$('.ProjectName').change(function () {
+        //    var isChecked = $(this).is(':checked');
+        //    if (isChecked) {
+        //        $('.showorhide').hide();
+        //    } else {
+        //        $('.showorhide').show();
+        //    }
+        //});
+        $(document).ready(function () {
+            $('.showorhide').hide();
+            $(document).on('change', '.ProjectName', function () {
+                if ($(this).is(':checked')) {
+                    $('.showorhide').show();
+                } else {
+                    $('.showorhide').hide();
+                }
+
+            });
+
         });
 
 
@@ -607,7 +616,6 @@
         for (var key in model) {
             formData.append(key, model[key]);
         }
-        debugger;
         model.IsActive = $('#IsActive').prop('checked');
         model.DepartmentType = $("input[name='DepartmentType']:checked").val();
         model.ApprovalStatus = $("input[name='ApprovalStatus']:checked").val();
