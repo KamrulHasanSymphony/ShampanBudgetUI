@@ -10,19 +10,71 @@
         }
         if (getOperation != "") {            
             LoadItemsGrid();
-            GetCOAGroupComboBox(); //this
+            GetCOAGroupComboBox(); 
         }
+
+
+
+        $(document).ready(function () {
+
+            function toggleField(checkbox) {
+
+                var target = $(checkbox).data("target");
+
+                if (!target) return;
+
+                var input = $("input[name='" + target + "']");
+
+                if ($(checkbox).is(":checked")) {
+                    input.prop("disabled", false).closest(".col-sm-5").show();
+                } else {
+                    input.prop("disabled", true).val("");
+                }
+
+                calculateTotal();
+            }
+
+            // INIT state
+            $(".fund-check").each(function () {
+                toggleField(this);
+            });
+
+            // CHECKBOX CHANGE
+            $(".fund-check").on("change", function () {
+                toggleField(this);
+            });
+
+            // INPUT CHANGE
+            $(document).on("keyup change", ".fund-input", function () {
+                calculateTotal();
+            });
+
+            // TOTAL CALCULATION
+            function calculateTotal() {
+
+                var total = 0;
+
+                $(".fund-input:not(:disabled)").each(function () {
+                    total += parseFloat($(this).val()) || 0;
+                });
+
+                $("#TotalValue").val(total.toFixed(2));
+            }
+
+        });
+
+
         // Save button click handler
         $('.btnsave').on('click', function () {
-            var validator = $("#frmEntry").validate();
-            var result = validator.form();
+            //var validator = $("#frmEntry").validate();
+            //var result = validator.form();
 
-            if (!result) {
-                if (!result) {
-                    validator.focusInvalid();
-                }
-                return;
-            }
+            //if (!result) {
+            //    if (!result) {
+            //        validator.focusInvalid();
+            //    }
+            //    return;
+            //}
 
             var getId = $('#Id').val();
             var status = "Save";
@@ -60,6 +112,17 @@
                 window.location.href = "/SetUp/Department/NextPrevious?id=" + getId + "&status=Next";
             }
         });
+
+        //-
+        $('.ProjectName').change(function () {
+            var isChecked = $(this).is(':checked');
+            if (isChecked) {
+                $('.showorhide').hide();
+            } else {
+                $('.showorhide').show();
+            }
+        });
+
 
         $("#sabres").on("click", ".custom-delete", function (e) {
             e.preventDefault();
@@ -510,6 +573,7 @@
 
     // Save the form data
     function save() {
+        debugger;
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
         var department = model.DepartmentId;
@@ -543,11 +607,18 @@
         for (var key in model) {
             formData.append(key, model[key]);
         }
-
+        debugger;
         model.IsActive = $('#IsActive').prop('checked');
-        //formData.append("IsActive", $('#IsActive').prop('checked'));
-        //formData.append("IsChangePassword", $('#IsChangePassword').prop('checked'));
+        model.DepartmentType = $("input[name='DepartmentType']:checked").val();
+        model.ApprovalStatus = $("input[name='ApprovalStatus']:checked").val();
 
+        model.OwnFund = $("#OwnFund").is(":checked");
+        model.GovernmentGrant = $("#GovernmentGrant").is(":checked");
+        model.GovernmentLoan = $("#GovernmentLoan").is(":checked");
+        model.ForeignGrant = $("#ForeignGrant").is(":checked");
+        model.ForeignLoan = $("#ForeignLoan").is(":checked");
+        model.ShareCapital = $("#ShareCapital").is(":checked");
+        
         var url = "/SetUp/Department/CreateEdit";
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);
     }

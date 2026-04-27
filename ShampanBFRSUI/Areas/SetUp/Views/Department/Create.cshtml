@@ -86,6 +86,17 @@
         .tab-content.active {
             display: block;
         }
+
+    .radio-group label {
+        margin-right: 10px;
+        display: inline-flex;
+        align-items: center;
+        font-weight: normal;
+    }
+
+    .radio-group input {
+        margin-right: 5px;
+    }
 </style>
 
 <div id="tabs">
@@ -154,7 +165,7 @@
 
                             <div class="form-group row">
 
-                                <div class="col-sm-2 codeWidth">
+                                <div class="col-sm- codeWidth">
                                     @Html.LabelFor(model => model.Code)
                                     <div style="display: flex; align-items: center;">
                                         <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
@@ -172,13 +183,20 @@
                                 </div>
 
                                 <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.DepartmentName)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.DepartmentName, new { placeholder = "Enter Name", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.DepartmentName)
+                                </div>
+
+                                <div class="col-sm-2">
                                     @Html.LabelFor(model => model.Description)
                                     <div class="input-group">
                                         @Html.TextBoxFor(model => model.Description, new { placeholder = "Enter Description", @class = "form-control form-control-sm" })
                                     </div>
                                     @Html.ValidationMessageFor(model => model.Description)
                                 </div>
-
                                 <div class="col-sm-2">
                                     @Html.LabelFor(model => model.Reference)
                                     <div class="input-group">
@@ -195,6 +213,204 @@
                                     @Html.ValidationMessageFor(model => model.Remarks)
                                 </div>
 
+                               
+                            </div>
+                            <div class="form-group row">
+
+                                <div class="col-sm-2">
+                                    <div class="col-sm-5 d-flex align-items-center">
+
+                                        @Html.CheckBoxFor(m => m.ProjectName, new { @class = "ProjectName" })
+                                        <label class="ml-2 mb-0">ProjectName</label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-2 showorhide">
+                                    @Html.LabelFor(model => model.StartDate)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control form-control-sm dateRange", @readonly = "readonly" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 showorhide">
+                                    @Html.LabelFor(model => model.EndDate)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control form-control-sm dateRange" })
+                                        <div class="input-group-append">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-3 showorhide">
+                                    @Html.Label("Department Type :")
+
+                                    <div class="input-group radio-group">
+                                        <label>
+                                            @Html.RadioButtonFor(model => model.DepartmentType, "Investment") Investment
+                                        </label>
+
+                                        <label>
+                                            @Html.RadioButtonFor(model => model.DepartmentType, "Technical") Technical
+                                        </label>
+
+                                        <label>
+                                            @Html.RadioButtonFor(model => model.DepartmentType, "Survey") Survey
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 showorhide">
+                                    @Html.Label("Approval Status:")
+
+                                    <div class="input-group radio-group">
+
+                                        <label>
+                                            @Html.RadioButtonFor(model => model.ApprovalStatus, "Approved") Approved
+                                        </label>
+
+                                        <label>
+                                            @Html.RadioButtonFor(model => model.ApprovalStatus, "Non-Approved") Non-Approved
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                               
+                            <div class="form-group row showorhide">
+
+                                @Html.Label("Funding Source:", new { @class = "" })
+
+                                <div class="col-sm-10">
+
+                                    <!-- Own Fund -->
+                                    <div class="row align-items-center mb-2 fund-row">
+                                        <div class="col-sm-5 d-flex align-items-center">
+                                            @Html.CheckBoxFor(m => m.OwnFund, new { @class = "fund-check", data_target = "OwnFundAmt" })
+                                            <label class="ml-2 mb-0">Own Fund</label>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.OwnFundAmt, new
+                                            {
+                                                @class = "form-control form-control-sm fund-input",
+                                                placeholder = "Amount"
+                                            })
+                                        </div>
+                                    </div>
+
+                                    <!-- Government Grant -->
+                                    <div class="row align-items-center mb-2 fund-row">
+                                        <div class="col-sm-5 d-flex align-items-center">
+                                            @Html.CheckBoxFor(m => m.GovernmentGrant, new { @class = "fund-check", data_target = "GovernmentAmt" })
+                                            <label class="ml-2 mb-0">Government Grant</label>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.GovernmentAmt, new
+                                            {
+                                                @class = "form-control form-control-sm fund-input",
+                                                placeholder = "Amount"
+                                            })
+                                        </div>
+                                    </div>
+
+                                    <!-- Government Loan -->
+                                    <div class="row align-items-center mb-2 fund-row">
+                                        <div class="col-sm-5 d-flex align-items-center">
+                                            @Html.CheckBoxFor(m => m.GovernmentLoan, new { @class = "fund-check", data_target = "GovernmentLoanAmt" })
+                                            <label class="ml-2 mb-0">Government Loan</label>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.GovernmentLoanAmt, new
+                                            {
+                                                @class = "form-control form-control-sm fund-input",
+                                                placeholder = "Amount"
+                                            })
+                                        </div>
+                                    </div>
+
+                                    <!-- Foreign Grant -->
+                                    <div class="row align-items-center mb-2 fund-row">
+                                        <div class="col-sm-5 d-flex align-items-center">
+                                            @Html.CheckBoxFor(m => m.ForeignGrant, new { @class = "fund-check", data_target = "ForeignGrantAmt" })
+                                            <label class="ml-2 mb-0">Foreign Grant</label>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.ForeignGrantAmt, new
+                                            {
+                                                @class = "form-control form-control-sm fund-input",
+                                                placeholder = "Amount"
+                                            })
+                                        </div>
+                                    </div>
+
+                                    <!-- Foreign Loan -->
+                                    <div class="row align-items-center mb-2 fund-row">
+                                        <div class="col-sm-5 d-flex align-items-center">
+                                            @Html.CheckBoxFor(m => m.ForeignLoan, new { @class = "fund-check", data_target = "ForeignLoanAmt" })
+                                            <label class="ml-2 mb-0">Foreign Loan</label>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.ForeignLoanAmt, new
+                                            {
+                                                @class = "form-control form-control-sm fund-input",
+                                                placeholder = "Amount"
+                                            })
+                                        </div>
+                                    </div>
+
+                                    <!-- Share Capital -->
+                                    <div class="row align-items-center mb-2 fund-row">
+                                        <div class="col-sm-5 d-flex align-items-center">
+                                            @Html.CheckBoxFor(m => m.ShareCapital, new { @class = "fund-check", data_target = "ShareCapitalAmt" })
+                                            <label class="ml-2 mb-0">Share Capital</label>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.ShareCapitalAmt, new
+                                            {
+                                                @class = "form-control form-control-sm fund-input",
+                                                placeholder = "Amount"
+                                            })
+                                        </div>
+                                    </div>
+
+                                    <!-- Others -->
+                                    <div class="row align-items-center mb-2 fund-row">
+                                        <div class="col-sm-5 d-flex align-items-center">
+                                            @Html.CheckBoxFor(m => m.Others, new { @class = "fund-check" })
+                                            <label class="ml-2 mb-0">Others (Please Specify)</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Total -->
+                                    <div class="row mt-3">
+                                        <div class="col-sm-5">
+                                            <strong>Total Value :</strong>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            @Html.TextBoxFor(m => m.TotalValue, new
+                                            {
+                                                @class = "form-control form-control-sm",
+                                                @readonly = "readonly",
+                                                id = "TotalValue"
+                                            })
+                                        </div>
+                                    </div>
+
+                                </div>
                                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
                                 {
                                     <div class="col-sm-2">
@@ -237,10 +453,14 @@
                                 }
                             </div>
 
+                               
+                         </div>
 
-                        </div>
 
+                        
                     </div>
+
+                    
                 </form>
                 
                 <div class="row">
