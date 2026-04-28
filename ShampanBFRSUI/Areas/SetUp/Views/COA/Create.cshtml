@@ -84,7 +84,7 @@
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.Code)
                             <div class="input-group">
-                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Enter Code", @class = "required form-control form-control-sm",})
+                                @Html.TextBoxFor(model => model.Code, new { placeholder = "Enter Code", @class = "required form-control form-control-sm", })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
@@ -93,6 +93,15 @@
                             @Html.LabelFor(model => model.Name)
                             <div class="input-group">
                                 @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Account Name", @class = "required form-control form-control-sm" })
+                            </div>
+                            <span id="titleError2" class="text-danger" style="display:none;"></span>
+
+                        </div>
+
+                        <div class="col-sm-2">
+                            @Html.LabelFor(model => model.BanglaName)
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.BanglaName, new { placeholder = "Enter Bangla Name", @class = "form-control form-control-sm" })
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
 
@@ -125,6 +134,12 @@
 
                         </div>
 
+                       
+                    </div>
+
+
+                    <div class="form-group row">
+
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.ReportType)
                             <div class="input-group">
@@ -132,11 +147,6 @@
                             </div>
                             <span id="titleError2" class="text-danger" style="display:none;"></span>
                         </div>
-                    </div>
-
-
-                    <div class="form-group row">
-
 
                         <div class="col-sm-2">
                             @Html.LabelFor(model => model.StructureId)
@@ -189,7 +199,7 @@
             <div class="card card-secondary">
 
                 <div class="card-header">
-                    <h3 class="card-title">SABRE+ COA Entry</h3>
+                    <h3 class="card-title">SABRE Entry</h3>
                 </div>
 
                 <div class="card-body">

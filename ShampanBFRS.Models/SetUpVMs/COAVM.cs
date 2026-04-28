@@ -28,6 +28,9 @@ namespace ShampanBFRS.Models.SetUpVMs
         [Display(Name = "iBAS Name")]
         public string? Name { get; set; }
 
+        [Display(Name = "iBAS Name (Bangla)")]
+        public string? BanglaName { get; set; }
+
         [Display(Name = "Account Nature")]
         public string? Nature { get; set; }
 

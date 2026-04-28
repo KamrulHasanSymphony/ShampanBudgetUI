@@ -28,6 +28,7 @@
 
         // Save button click handler
         $('.btnsave').click('click', function () {
+
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
@@ -41,39 +42,9 @@
                     save();
                 }
             });
-            });
 
-            ////$('.btnsave').on('click', function (e) {
+        });
 
-            ////    e.preventDefault();   // Prevent normal submit
-
-            ////    var form = $("#frmEntry");
-
-            ////    // Trigger MVC validation
-            ////    var mvcValid = form.valid();
-
-            ////    // Trigger your custom validation
-            ////    var customValid = CommonValidationHelper.CheckValidation("#frmEntry");
-
-            ////    if (!mvcValid || !customValid) {
-            ////        return false;
-            ////    }
-
-            ////    var getId = $('#Id').val();
-            ////    var status = "Save";
-            ////    if (parseInt(getId) > 0) {
-            ////        status = "Update";
-            ////    }
-
-            ////    Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
-            ////        if (result) {
-            ////            save();
-            ////        }
-            ////    });
-            ////});
-
-
-        // Delete button click handler
         $('.btnDelete').on('click', function () {
             Confirmation("Are you sure? Do You Want to Delete Data?", function (result) {
                 if (result) {
@@ -175,11 +146,16 @@
                 },
                 {
                     field: "Name",
-                    title: "Name",
+                    title: "SABRE Name",
                     //editor: segmentSelectorEditor,
                     //template: function (dataItem) {
                     //    return dataItem.Name || "";
                     //},
+                    width: 80
+                },
+                {
+                    field: "BanglaName",
+                    title: "SABRE Name(Bangla)",           
                     width: 80
                 },
                 
@@ -585,6 +561,7 @@
                 /*{ field: "id", title: "ID", width: 50, hidden: true },*/
                 { field: "Code", title: "iBAS Code", width: 80, sortable: true },
                 { field: "Name", title: "iBAS Name", width: 250, sortable: true },
+                { field: "BanglaName", title: "iBAS Name(Bangla)", width: 250, sortable: true },
                 { field: "Nature", title: "Account Nature", width: 110 },
                 { field: "GroupName", title: "iBAS Group Name", width: 110 },
                 { field: "COAType", title: "Account Type", width: 110 },
@@ -656,6 +633,7 @@
                 COAId: item.COAId || 0,
                 Code: item.Code.trim(),
                 Name: item.Name.trim(),
+                BanglaName: item.BanglaName.trim()||"",
                 Remarks: item.Remarks || ""
             });
         }
@@ -668,7 +646,8 @@
         model.IsNonOperatingIncome = $('#IsNonOperatingIncome').prop('checked');
 
         model.SabreDetails = details;
-
+        console.log(details);
+        debugger;
         var url = "/SetUp/COA/CreateEdit";
 
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);

@@ -39,7 +39,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             vm.Operation = "add";
             vm.IsActive = true;
 
-            return View("Create", vm);
+            return View(vm);
         }
 
         [HttpPost]
