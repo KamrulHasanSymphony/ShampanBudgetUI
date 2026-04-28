@@ -119,6 +119,7 @@
         //        $('.showorhide').show();
         //    }
         //});
+
         $(document).ready(function () {
             $('.showorhide').hide();
             $(document).on('change', '.ProjectName', function () {
@@ -197,9 +198,9 @@
                 { field: "iBASCode", title: "iBAS Code", width: 40, editable: false },
                 { field: "iBASName", title: "iBAS Name", width: 80, editable: false },
 
-                { field: "Code", title: "SABRE+ Code", width: 40, editable: false },
+                { field: "Code", title: "SABRE Code", width: 40, editable: false },
                 { field: "DepartmentId", hidden: true },
-                { field: "Name", title: "SABRE+ Name", width: 80, editable: false },
+                { field: "Name", title: "SABRE Name", width: 80, editable: false },
                 {
                     title: "&nbsp;",
                     width: 20,
@@ -300,8 +301,8 @@
                 { field: "Id", hidden: true },
                 { field: "iBASCode", title: "iBAS Code", width: 62},
                 { field: "iBASName", title: "iBas Name", width: 80 },
-                { field: "Code", title: "SABRE+ Code", width: 62},
-                { field: "Name", title: " SABRE+ Name", width: 80 },
+                { field: "Code", title: "SABRE Code", width: 62},
+                { field: "Name", title: " SABRE Name", width: 80 },
                 {
                     title: "Action",
                     width: 55,
@@ -569,6 +570,7 @@
 
                 { field: "Code", title: "Code", sortable: true, width: 100 },
                 { field: "Name", title: "Name", sortable: true, width: 150 },
+                { field: "DepartmentName", title: "Department Name(Bangla)", sortable: true, width: 150 },
                 { field: "Description", title: "Description", sortable: true, width: 200 },
                 { field: "Reference", title: "Reference", sortable: true, width: 200 },
                 { field: "Remarks", hidden: true, title: "Remarks", sortable: true, width: 100 },

@@ -234,7 +234,7 @@
             columns: [
                 {
                     title: "Action",
-                    width: 20,
+                    width: 10,
                     template: function (dataItem) {
                         return `
                             <a href="/SetUp/ProductGroup/Edit/${dataItem.Id}" class="btn btn-primary btn-sm mr-2 edit">
@@ -242,9 +242,9 @@
                             </a>`;
                     }
                 },
-                { field: "Id", width: 50, hidden: true, sortable: true },
-                { field: "Name", title: "Name", sortable: true, width: 200 },
-                { field: "Remarks", title: "Remarks", sortable: true, width: 200 },
+                { field: "Id", width: 40, hidden: true, sortable: true },
+                { field: "Name", title: "Name", sortable: true, width: 50 },
+                { field: "Remarks", title: "Remarks", sortable: true, width: 120 },
             ],
             editable: false,
             selectable: "multiple row",

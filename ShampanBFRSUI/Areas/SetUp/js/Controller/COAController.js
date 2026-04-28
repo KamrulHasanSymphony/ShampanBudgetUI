@@ -560,8 +560,8 @@
                 },
                 /*{ field: "id", title: "ID", width: 50, hidden: true },*/
                 { field: "Code", title: "iBAS Code", width: 80, sortable: true },
-                { field: "Name", title: "iBAS Name", width: 250, sortable: true },
-                { field: "BanglaName", title: "iBAS Name(Bangla)", width: 250, sortable: true },
+                { field: "Name", title: "iBAS Name", width: 120, sortable: true },
+                { field: "BanglaName", title: "iBAS Name(Bangla)", width: 120, sortable: true },
                 { field: "Nature", title: "Account Nature", width: 110 },
                 { field: "GroupName", title: "iBAS Group Name", width: 110 },
                 { field: "COAType", title: "Account Type", width: 110 },
