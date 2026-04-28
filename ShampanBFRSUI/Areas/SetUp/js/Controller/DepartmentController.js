@@ -63,15 +63,15 @@
 
         // Save button click handler
         $('.btnsave').on('click', function () {
-            //var validator = $("#frmEntry").validate();
-            //var result = validator.form();
+            var validator = $("#frmEntry").validate();
+            var result = validator.form();
 
-            //if (!result) {
-            //    if (!result) {
-            //        validator.focusInvalid();
-            //    }
-            //    return;
-            //}
+            if (!result) {
+                if (!result) {
+                    validator.focusInvalid();
+                }
+                return;
+            }
 
             var getId = $('#Id').val();
             var status = "Save";

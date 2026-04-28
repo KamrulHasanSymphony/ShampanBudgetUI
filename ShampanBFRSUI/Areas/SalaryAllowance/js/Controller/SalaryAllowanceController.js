@@ -19,44 +19,42 @@
         };
 
         GetFiscalYear();
-        //GetBudgetTypeComboBox();
         GenerateDatepicker();
-
-
-        //$(document).on('click', '.edit-sale-order', function () {
-        //    kendo.alert("You can't edit this order because it has already been delivered.");
-        //});
-
         var $table = $('#details');
-
         var table = initEditTable($table, { searchHandleAfterEdit: false });
-
-
         $('#addRows').on('click', function (e) {
             debugger;
             addRow($table);
 
         });
 
-        $('.btnsave').click('click', function () {
-            debugger;
+
+        $('.btnsave').on('click', function (e) {
+
+            e.preventDefault(); 
+
+            var form = $("#frmEntry");
+            var mvcValid = form.valid();
+            var customValid = CommonValidationHelper.CheckValidation("#frmEntry");
+
+            if (!mvcValid || !customValid) {
+                return false;
+            }
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
                 status = "Update";
             }
-            if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
 
-            Confirmation("Are you sure? Do You Want to " + status + " Data?",
-                function (result) {
-                    if (result) {
-                        save($table);
-                    }
-                });
+            Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
+                if (result) {
+                    save();
+                }
+            });
         });
 
         $('#btnPost').on('click', function () { 
-            debugger;
+
             Confirmation("Are you sure? Do You Want to Post Data?",
                 function (result) {
 

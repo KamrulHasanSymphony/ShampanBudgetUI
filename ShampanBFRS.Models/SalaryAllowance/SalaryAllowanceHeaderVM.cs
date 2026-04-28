@@ -24,8 +24,8 @@ namespace ShampanBFRS.Models.SalaryAllowance
         public int? FiscalYearId { get; set; }
 
         public string? YearName { get; set; }
-
         [Display(Name = "Pay Scale")]
+        [Required(ErrorMessage ="Pay Scale is required")]
         public string? PayScale { get; set; }
 
 

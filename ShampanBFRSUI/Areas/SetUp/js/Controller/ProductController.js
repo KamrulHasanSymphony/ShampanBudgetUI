@@ -15,32 +15,12 @@
             GetGridDataList();
         };
 
-        //$('.btnsave').click('click', function () {
-        //    debugger;
-        //    var getId = $('#Id').val();
-        //    var status = "Save";
-        //    if (parseInt(getId) > 0) {
-        //        status = "Update";
-        //    }
-        //    if (!CommonValidationHelper.CheckValidation("#frmEntry")) return;
-        //    Confirmation("Are you sure? Do You Want to " + status + " Data?",
-        //        function (result) {
-        //            if (result) {
-        //                save();
-        //            }
-        //        });
-        //});
-
         $('.btnsave').on('click', function (e) {
 
             e.preventDefault();   // Prevent normal submit
 
             var form = $("#frmEntry");
-
-            // Trigger MVC validation
             var mvcValid = form.valid();
-
-            // Trigger your custom validation
             var customValid = CommonValidationHelper.CheckValidation("#frmEntry");
 
             if (!mvcValid || !customValid) {

@@ -8,12 +8,19 @@
             GetGridDataList();
         }
         // Save button click handler
-        $('.btnsave').click('click', function () {
-            var getId = $('#Id').val();
-            var status = "Save";
-            if (parseInt(getId) > 0) {
-                status = "Update";
+        $('.btnsave').on('click', function (e) {
+            e.preventDefault();
+
+            var validator = $("#frmEntry").validate();
+            var isValid = $("#frmEntry").valid();
+            if (!isValid) {
+                validator.focusInvalid();
+                return;
             }
+
+            var getId = $('#Id').val();
+            var status = (parseInt(getId) > 0) ? "Update" : "Save";
+
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
                     save();
@@ -247,19 +254,9 @@
 
     // Save the form data
     function save() {
-        var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
-
-        var result = validator.form();
-
-        if (!result) {
-            if (!result) {
-                validator.focusInvalid();
-            }
-            return;
-        }
-
+        
         for (var key in model) {
             formData.append(key, model[key]);
         }

@@ -602,10 +602,9 @@
         }
 
         var model = serializeInputs("frmEntry");
-
         var grid = $("#kDetails").data("kendoGrid");
 
-        // 🔴 Check grid empty
+
         if (!grid || grid.dataSource.total() === 0) {
             ShowNotification(3, "Please add details before saving.");
             return;
@@ -616,14 +615,11 @@
         for (var i = 0; i < dataItems.length; i++) {
 
             var item = dataItems[i];
-
-            // 🔴 Code Required Check
             if (!item.Code || item.Code.trim() === "") {
                 ShowNotification(3, "Details Code is required");
                 return;
             }
 
-            // 🔴 Name Required Check
             if (!item.Name || item.Name.trim() === "") {
                 ShowNotification(3, " Name is required");
                 return;
