@@ -17,8 +17,11 @@ namespace ShampanBFRS.Models.Ceiling
         [Display(Name = "Fiscal Year")]
         public int? FiscalYearId { get; set; }
         public int? BudgetSetNo { get; set; }
-
+        [Display(Name = "Budget Type")]
         public string? BudgetType { get; set; }
+
+        [Display(Name = "Charge Group")]
+        public string? ChargeGroup { get; set; }
         public string? YearName { get; set; }
         public string? Code { get; set; }
 
@@ -31,20 +34,20 @@ namespace ShampanBFRS.Models.Ceiling
         public int? ApproveLevelRequired { get; set; }
         public int? CompletedApproveLevel { get; set; }
 
+        [Display(Name = "Report Type")]
+        public string ?ReportType { get; set; }
+
         public string? ApprovalStatus { get; set; }
         public bool? IsApproveFinal { get; set; }
         public string? TransactionType { get; set; }
 
         public string? Operation { get; set; }
-
         public PeramModel? PeramModel { get; set; }
 
         public List<BudgetDetailVM>? DetailList { get; set; }
 
         public string? MenuType { get; set; }
 
-        [Display(Name = "Report Type")]
-        public string? ReportType { get; set; }
 
         public int? ToFiscalYearId { get; set; }
         public string? ToBudgetType { get; set; }

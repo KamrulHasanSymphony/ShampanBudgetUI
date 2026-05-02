@@ -39,13 +39,14 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
                     string YearName = "";
                     string CompanyName = "";
+                    string BudgetType = "";
 
 
                     CommonVM commonVM = new CommonVM();
 
                     commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    commonVM.BudgetType = model.BudgetType.ToString();
+                    //commonVM.BudgetType = model.BudgetType.ToString();
                     resultVM = _repo.IncomeStatementReport(commonVM);
 
                     var json = Newtonsoft.Json.JsonConvert.SerializeObject(resultVM.DataVM);

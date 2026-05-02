@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Non Operating Income Report</h1>
+                    <h1 class="m-0">Budget Report</h1>
 
                 </div>
                 <div class="col-sm-6">
@@ -28,7 +28,7 @@
                 <form id="frmEntry">
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">Non Operating Income Info</h3>
+                            <h3 class="card-title">Budget Report Info</h3>
                         </div>
                         <div class="card-body">
 
@@ -50,40 +50,262 @@
                                     @Html.ValidationMessageFor(model => model.ReportType)
                                 </div>
 
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.BudgetType)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.BudgetType, new { placeholder = "Enter Report Type", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.BudgetType)
+                                </div>
+
+                                <div class="col-sm-2">
+                                    @Html.LabelFor(model => model.ChargeGroup)
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.ChargeGroup, new { placeholder = "select Charge Group", @class = "form-control form-control-sm" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ChargeGroup)
+                                </div>
 
                             </div>
 
                         </div>
 
-
                     </div>
 
-                </form>
+                    <div class="card card-secondary">
 
-                <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
-                    <div class="card-header p-2">
+                        <!-- Main Header -->
+                        <div class="card-header text-center">
+                            <h3 class="card-title mb-0 w-100">--------------REPORT--------------</h3>
+                        </div>
 
-                        <div class="divSave">
-                            <button class="button btnDownload sslSave" type="button" id="">Download</button>
+                        <div class="card-body">
+
+                            <!-- Budget Report Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5" id="budgetreport">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Budget Report</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnbudgetReportDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Non Operating Income Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5" id="nonoperating">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Non Operating Income Report</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnNonOperationDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Income Statement All Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5" id="incomesatementall">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Income Statement All Report</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnIncomeStatementAllDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Operating Details Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5" id="operatingdetail">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Operating Details Statement</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnOperationDetailStatementDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment to government statement Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5" id="paymentgovernment">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Payment To Government Statement</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnpaymentToGovernmentStatementDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Income statement Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5" id="productincome">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Product Income Statement</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnProductIncomeStatementDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Cash Flow statement Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5" id="cashflow">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Cash Flow Statement</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnCashFlowStatementDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Sales statement Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5" id="salestatement">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Sales Statement</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnSaleStatementDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Income statement Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5"id="incomestatement">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Income Statement</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnIncomeStatementDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Salary Allowance Report Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5"id="salayallowance">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Salary Allowance Report</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnSalaryAllowanceReportDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cost Statement Report Section -->
+                            <div class="row justify-content-center">
+                                <div class="col-md-5"id="coststatement">
+                                    <div class="border rounded p-1 my-2">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h5 class="mb-0">Cost Statement Report</h5>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-primary btn-sm btnCostStatementReportDownload sslSave" type="button" style="margin-left: auto; display: block">
+                                                    Download
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
 
                     </div>
+
+
+                    </form>
+                
                 </div>
-
-
             </div>
-        </div>
+
     </div>
 </div>
 
 @section scripts{
     <script src="~/Areas/Common/js/Services/CommonService.js"></script>
     <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
-    <script src="~/Areas/Reports/js/NonOperatingIncomeReportController.js"></script>
+    @*<script src="~/Areas/Reports/js/NonOperatingIncomeReportController.js"></script>*@
+    <script src="~/Areas/Reports/js/ReportTypeController.js"></script>
 
     <script>
         $(document).ready(function () {
-            NonOperatingIncomeReportController.init();
+            ReportTypeController.init();
         });
 
     </script>

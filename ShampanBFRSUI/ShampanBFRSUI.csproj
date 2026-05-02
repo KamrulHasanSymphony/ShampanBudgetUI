@@ -426,6 +426,7 @@
     <Content Include="Areas\Ceiling\js\Controllers\BudgetAllController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetTransferController.js" />
+    <Content Include="Areas\Reports\js\ReportTypeController.js" />
     <Content Include="Areas\Reports\js\OperatingDetailStatementReportController.js" />
     <Content Include="Areas\Reports\js\PaymentToGovernmentStatementReportController.js" />
     <Content Include="Areas\Reports\js\CashFlowStatementReportController.js" />

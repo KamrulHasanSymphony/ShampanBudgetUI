@@ -53,7 +53,8 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
                     return RedirectToAction("Index");
                 }
 
-                return View(lst);
+                //return View(lst);
+                return View("~/Areas/SetUp/Views/Settings/Index.cshtml", lst);
             }
             catch (Exception ex)
             {

@@ -39,13 +39,13 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
                     string YearName = "";
                     string CompanyName = "";
-                   /* string ChargeGroup = ""*/;
+                    string ReportType = "";
 
                     CommonVM commonVM = new CommonVM();
 
                     commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    commonVM.ReportType = model.ReportType.ToString();
+                    //commonVM.ReportType = model.ReportType.ToString();
                     //commonVM.ChargeGroup = model.ChargeGroup.ToString();
 
                     resultVM = _repo.CashFlowStatementReport(commonVM);
