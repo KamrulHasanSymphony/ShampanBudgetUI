@@ -29,8 +29,8 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
 
                 SettingsModel model = new SettingsModel()
                 {
-                    SettingGroup = "DMSApiUrl",
-                    SettingName = "DMSApiUrl",
+                    SettingGroup = "BudgetApiUrl",
+                    SettingName = "BudgetApiUrl",
                     SettingType = "String",
                     SettingValue = "-",
                     IsActive = true
@@ -53,8 +53,8 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
                     return RedirectToAction("Index");
                 }
 
-                //return View(lst);
-                return View("~/Areas/SetUp/Views/Settings/Index.cshtml", lst);
+                return View(lst);
+               
             }
             catch (Exception ex)
             {
@@ -67,8 +67,8 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
         {
             try
             {
-                model.LastModifiedOn = DateTime.Now.ToString();
-                model.LastModifiedBy = Session["UserId"].ToString();
+                model.LastUpdateAt = DateTime.Now.ToString();
+                model.LastUpdateBy = Session["UserId"].ToString();
                 model.LastUpdateFrom = Ordinary.GetLocalIpAddress();
 
                 ResultVM result = _repo.Update(model);
