@@ -25,7 +25,8 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
         // GET: Reports/SalaryAllowanceReport
         public ActionResult Index()
         {
-            return View();
+            var model = new SalaryAllowanceHeaderVM();
+            return View(model);
         }
 
         public ActionResult SalaryAllowanceReport(SalaryAllowanceHeaderVM model)

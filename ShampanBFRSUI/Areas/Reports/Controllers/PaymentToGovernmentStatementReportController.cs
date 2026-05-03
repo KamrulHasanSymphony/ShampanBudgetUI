@@ -21,7 +21,8 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
         // GET: Reports/CostStatementReport
         public ActionResult Index()
         {
-            return View();
+            var model = new BudgetHeaderVM();
+            return View(model);
         }
 
         public ActionResult PaymentToGovernmentStatementReport(BudgetHeaderVM model)
@@ -45,7 +46,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    //commonVM.ReportType = model.ReportType.ToString();
+                    commonVM.ReportType = model.ReportType.ToString();
                     //commonVM.ChargeGroup = model.ChargeGroup.ToString();
 
                     resultVM = _repo.PaymentToGovernmentStatementReport(commonVM);

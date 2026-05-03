@@ -22,7 +22,8 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
         // GET: Reports/Budget
         public ActionResult Index()
         {
-            return View();
+            var model = new BudgetHeaderVM();
+            return View(model);
         }
 
         [HttpPost]
