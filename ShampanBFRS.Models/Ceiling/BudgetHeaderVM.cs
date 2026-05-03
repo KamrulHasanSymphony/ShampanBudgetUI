@@ -35,7 +35,7 @@ namespace ShampanBFRS.Models.Ceiling
         public int? CompletedApproveLevel { get; set; }
 
         [Display(Name = "Report Type")]
-        public string ?ReportType { get; set; }
+        public string? ReportType { get; set; }
 
         public string? ApprovalStatus { get; set; }
         public bool? IsApproveFinal { get; set; }

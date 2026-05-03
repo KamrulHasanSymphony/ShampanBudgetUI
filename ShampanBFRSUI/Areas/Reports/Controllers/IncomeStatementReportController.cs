@@ -47,7 +47,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    commonVM.BudgetType = model.BudgetType.ToString();
+                   // commonVM.BudgetType = model.BudgetType.ToString();
                     resultVM = _repo.IncomeStatementReport(commonVM);
 
                     var json = Newtonsoft.Json.JsonConvert.SerializeObject(resultVM.DataVM);

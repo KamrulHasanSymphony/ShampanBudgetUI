@@ -50,7 +50,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    commonVM.BudgetType = model.BudgetType.ToString();
+                    //commonVM.BudgetType = model.BudgetType.ToString();
                     //commonVM.ChargeGroup = model.ChargeGroup.ToString();
 
                     resultVM = _repo.SalesStatementReport(commonVM);

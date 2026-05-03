@@ -452,34 +452,6 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
         form.remove();
     }
 
-    //function BudgetReportDownload() {
-    //    var model = serializeInputs("frmEntry");
-
-    //    var text = document.querySelector("#budgetreport h5").innerText;
-    //    if (text === "Budget Report") {
-    //        if (model.FiscalYearId === "" || model.FiscalYearId === null) {
-    //            ShowNotification(3, "Please Select Fiscal Year");
-    //            return;
-    //        }
-    //        if (model.ReportType === "" || model.ReportType === null) {
-    //            ShowNotification(3, "Please Select ReportType");
-    //            return;
-    //        }
-    //    }
-
-    //    var form = $('<form method="post" action="/Reports/Budget/BudgetFinalReport"></form>');
-
-    //    for (var key in model) {
-    //        if (model.hasOwnProperty(key)) {
-    //            form.append('<input type="hidden" name="' + key + '" value="' + model[key] + '" />');
-    //        }
-    //    }
-
-    //    $('body').append(form);
-    //    form.submit();
-    //    form.remove();
-    //}
-
     function NonOperatingDownload(model) {
        
         var form = $('<form method="post" action="/Reports/NonOperatingIncomeReport/NonOperatingIncomeReport"></form>');

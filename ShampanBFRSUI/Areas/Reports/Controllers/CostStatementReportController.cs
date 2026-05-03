@@ -51,8 +51,8 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     commonVM.YearId = model.GLFiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    commonVM.BudgetType = model.BudgetType.ToString();
-                    commonVM.ChargeGroup = model.ChargeGroup.ToString();
+                    //commonVM.BudgetType = model.BudgetType.ToString();
+                    //commonVM.ChargeGroup = model.ChargeGroup.ToString();
 
                     resultVM = _repo.CostStatementReport(commonVM);
 
