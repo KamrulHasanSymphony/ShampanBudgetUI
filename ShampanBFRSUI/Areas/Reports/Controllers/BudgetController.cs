@@ -254,7 +254,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                             Response.Clear();
                             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                            string fileName = $"OperatingCost_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                            string fileName = $"BudgetReport_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
                             Response.AddHeader("content-disposition", $"attachment; filename={fileName}");
                             memoryStream.WriteTo(Response.OutputStream);
                             Response.Flush();

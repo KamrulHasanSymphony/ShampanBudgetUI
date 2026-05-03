@@ -28,9 +28,9 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             return View(model);
         }
 
-        public ActionResult SalesStatementReport(SaleHeaderVM model)
+        public ActionResult SalesStatementReport(BudgetHeaderVM model)
         {
-            ResultModel<SaleHeaderVM> result = new ResultModel<SaleHeaderVM>();
+            ResultModel<BudgetHeaderVM> result = new ResultModel<BudgetHeaderVM>();
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ReportRepo();
 
@@ -43,14 +43,12 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
                     string YearName = "";
                     string CompanyName = "";
-                    string BudgetType = "";
-                    string ChargeGroup = "";
 
                     CommonVM commonVM = new CommonVM();
 
                     commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    //commonVM.BudgetType = model.BudgetType.ToString();
+                    commonVM.BudgetType = model.BudgetType.ToString();
                     //commonVM.ChargeGroup = model.ChargeGroup.ToString();
 
                     resultVM = _repo.SalesStatementReport(commonVM);
@@ -103,7 +101,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     if (dt.Rows.Count == 0)
                     {
-                        result = new ResultModel<SaleHeaderVM>()
+                        result = new ResultModel<BudgetHeaderVM>()
                         {
                             Status = Status.Fail,
                             Message = "No data found.",
@@ -292,7 +290,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         }
                     }
 
-                    result = new ResultModel<SaleHeaderVM>()
+                    result = new ResultModel<BudgetHeaderVM>()
                     {
                         Status = Status.Fail,
                         Message = resultVM.Message,
@@ -310,7 +308,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             }
             else
             {
-                result = new ResultModel<SaleHeaderVM>()
+                result = new ResultModel<BudgetHeaderVM>()
                 {
                     Success = false,
                     Status = Status.Fail,

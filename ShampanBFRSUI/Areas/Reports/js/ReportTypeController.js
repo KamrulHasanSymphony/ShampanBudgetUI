@@ -453,6 +453,19 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
     }
 
     function NonOperatingDownload(model) {
+
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#nonoperating h5").innerText;
+        if (text === "Non Operating Income Report") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.ReportType) {
+                ShowNotification(3, "Please Select ReportType");
+                return;
+            }
+        }
        
         var form = $('<form method="post" action="/Reports/NonOperatingIncomeReport/NonOperatingIncomeReport"></form>');
         for (var key in model) {
@@ -466,6 +479,18 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
     }
 
     function IncomeStatementAllDownload(model) {
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#incomesatementall h5").innerText;
+        if (text === "Income Statement All Report") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.ReportType) {
+                ShowNotification(3, "Please Select ReportType");
+                return;
+            }
+        }
         var form = $('<form method="post" action="/Reports/IncomeStatementAllReport/IncomeStatementAllReport"></form>');
 
         for (var key in model) {
@@ -479,6 +504,18 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
     }
 
     function OperationDetailStatementDownload(model) {
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#operatingdetail h5").innerText;
+        if (text === "Operating Details Statement") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.ReportType) {
+                ShowNotification(3, "Please Select ReportType");
+                return;
+            }
+        }
 
         var form = $('<form method="post" action="/Reports/OperatingDetailStatementReport/OperatingDetailStatementReport"></form>');
 
@@ -494,6 +531,18 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
     }
 
     function PaymentToGovernmentStatementDownload(model) {
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#paymentgovernment h5").innerText;
+        if (text === "Payment To Government Statement") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.ReportType) {
+                ShowNotification(3, "Please Select ReportType");
+                return;
+            }
+        }
 
         var form = $('<form method="post" action="/Reports/PaymentToGovernmentStatementReport/PaymentToGovernmentStatementReport"></form>');
         for (var key in model) {
@@ -508,6 +557,18 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
     }
 
     function ProductIncomeStatementDownload(model) {
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#productincome h5").innerText;
+        if (text === "Product Income Statement") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.ReportType) {
+                ShowNotification(3, "Please Select ReportType");
+                return;
+            }
+        }
 
         var form = $('<form method="post" action="/Reports/ProductIncomeStatementReport/ProductIncomeStatementReport"></form>');
 
@@ -524,6 +585,18 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
     
 
     function CashFlowStatementDownload(model) {
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#cashflow h5").innerText;
+        if (text === "Cash Flow Statement") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.ReportType) {
+                ShowNotification(3, "Please Select Report Type");
+                return;
+            }
+        }
 
         var form = $('<form method="post" action="/Reports/CashFlowStatementReport/CashFlowStatementReport"></form>');
 
@@ -538,6 +611,18 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
     }
 
     function SaleStatementDownload(model) {
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#salestatement h5").innerText;
+        if (text === "Sales Statement") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.BudgetType) {
+                ShowNotification(3, "Please Select Budget Type");
+                return;
+            }
+        }
 
         var form = $('<form method="post" action="/Reports/SalesStatementReport/SalesStatementReport"></form>');
 
@@ -552,6 +637,18 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
         form.remove();
     }
     function IncomeStatementDownload(model) {
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#incomestatement h5").innerText;
+        if (text === "Income Statement") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.BudgetType) {
+                ShowNotification(3, "Please Select Budget Type");
+                return;
+            }
+        }
 
         var form = $('<form method="post" action="/Reports/IncomeStatementReport/IncomeStatementReport"></form>');
 
@@ -568,6 +665,20 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
 
     function SalaryAllowanceReportDownload(model) {
 
+        var model = serializeInputs("frmEntry");
+            var text = document.querySelector("#salayallowance h5").innerText;
+            if (text === "Salary Allowance Report") {
+                if (!model.FiscalYearId) {
+                    ShowNotification(3, "Please Select Fiscal Year");
+                    return;
+                }
+                if (!model.BudgetType) {
+                    ShowNotification(3, "Please Select Budget Type");
+                    return;
+                }
+            }
+            var status = "Download";
+
         var form = $('<form method="post" action="/Reports/SalaryAllowanceReport/SalaryAllowanceReport"></form>');
 
         for (var key in model) {
@@ -582,6 +693,22 @@ var ReportTypeController = function (CommonService, CommonAjaxService) {
     }
 
     function CostStatementReportDownload(model) {
+        var model = serializeInputs("frmEntry");
+        var text = document.querySelector("#coststatement h5").innerText;
+        if (text === "Cost Statement Report") {
+            if (!model.FiscalYearId) {
+                ShowNotification(3, "Please Select Fiscal Year");
+                return;
+            }
+            if (!model.BudgetType) {
+                ShowNotification(3, "Please Select Budget Type");
+                return;
+            }
+            if (!model.ChargeGroup) {
+                ShowNotification(3, "Please Select Charge Group");
+                return;
+            }
+        }
 
         var form = $('<form method="post" action="/Reports/CostStatementReport/CostStatementReport"></form>');
 

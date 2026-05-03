@@ -29,9 +29,9 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             return View(model);
         }
 
-        public ActionResult SalaryAllowanceReport(SalaryAllowanceHeaderVM model)
+        public ActionResult SalaryAllowanceReport(BudgetHeaderVM model)
         {
-            ResultModel<SalaryAllowanceHeaderVM> result = new ResultModel<SalaryAllowanceHeaderVM>();
+            ResultModel<BudgetHeaderVM> result = new ResultModel<BudgetHeaderVM>();
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ReportRepo();
 
@@ -80,7 +80,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     if (dt.Rows.Count == 0)
                     {
-                        result = new ResultModel<SalaryAllowanceHeaderVM>()
+                        result = new ResultModel<BudgetHeaderVM>()
                         {
                             Status = Status.Fail,
                             Message = "No data found.",
@@ -267,7 +267,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         }
                     }
 
-                    result = new ResultModel<SalaryAllowanceHeaderVM>()
+                    result = new ResultModel<BudgetHeaderVM>()
                     {
                         Status = Status.Fail,
                         Message = resultVM.Message,
@@ -285,7 +285,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             }
             else
             {
-                result = new ResultModel<SalaryAllowanceHeaderVM>()
+                result = new ResultModel<BudgetHeaderVM>()
                 {
                     Success = false,
                     Status = Status.Fail,

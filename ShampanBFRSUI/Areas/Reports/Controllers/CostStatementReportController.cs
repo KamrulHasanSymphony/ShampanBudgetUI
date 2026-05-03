@@ -25,13 +25,13 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
         // GET: Reports/CostStatementReport
         public ActionResult Index()
         {
-            var model = new ProductBudgetMasterVM();
+            var model = new BudgetHeaderVM();
             return View(model);
         }
 
-        public ActionResult CostStatementReport(ProductBudgetMasterVM model)
+        public ActionResult CostStatementReport(BudgetHeaderVM model)
         {
-            ResultModel<ProductBudgetMasterVM> result = new ResultModel<ProductBudgetMasterVM>();
+            ResultModel<BudgetHeaderVM> result = new ResultModel<BudgetHeaderVM>();
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ReportRepo();
 
@@ -44,15 +44,13 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         int.TryParse(Session["CurrentBranch"].ToString(), out currentBranchId);
                     string YearName = "";
                     string CompanyName = "";
-                    string BudgetType = "";
                     string ChargeGroup = "";
-
                     CommonVM commonVM = new CommonVM();
 
-                    commonVM.YearId = model.GLFiscalYearId.ToString();
+                    commonVM.YearId = model.FiscalYearId.ToString();
                     commonVM.BranchId = currentBranchId.ToString();
-                    //commonVM.BudgetType = model.BudgetType.ToString();
-                    //commonVM.ChargeGroup = model.ChargeGroup.ToString();
+                    commonVM.BudgetType = model.BudgetType.ToString();
+                    commonVM.ChargeGroup = model.ChargeGroup.ToString();
 
                     resultVM = _repo.CostStatementReport(commonVM);
 
@@ -67,7 +65,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     FiscalYearVM FYVM = new FiscalYearVM();
                     CommonVM param = new CommonVM();
-                    param.Id = model.GLFiscalYearId.ToString();
+                    param.Id = model.FiscalYearId.ToString();
                     ResultVM FiscalYearresult = _FiscalYearsrepo.List(param);
                     if (FiscalYearresult.Status == MessageModel.Success && FiscalYearresult.DataVM != null)
                     {
@@ -125,7 +123,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
 
                     if (dt.Rows.Count == 0)
                     {
-                        result = new ResultModel<ProductBudgetMasterVM>()
+                        result = new ResultModel<BudgetHeaderVM>()
                         {
                             Status = Status.Fail,
                             Message = "No data found.",
@@ -314,7 +312,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
                         }
                     }
 
-                    result = new ResultModel<ProductBudgetMasterVM>()
+                    result = new ResultModel<BudgetHeaderVM>()
                     {
                         Status = Status.Fail,
                         Message = resultVM.Message,
@@ -332,7 +330,7 @@ namespace ShampanBFRSUI.Areas.Reports.Controllers
             }
             else
             {
-                result = new ResultModel<ProductBudgetMasterVM>()
+                result = new ResultModel<BudgetHeaderVM>()
                 {
                     Success = false,
                     Status = Status.Fail,
