@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var branchChanged = TempData["BranchChanged"] as bool?;
 }
 
 <style>
@@ -22,7 +23,7 @@
 
     canvas {
         width: 100% !important;
-        height: auto !important;
+        height: calc(100% - 64px) !important;
     }
 
     .pie-chart-container {
@@ -34,12 +35,11 @@
     .small-box {
         position: relative;
         overflow: hidden;
-        Prevents content from overflowing padding: 15px;
-        Adds spacing inside
     }
 
         .small-box .inner {
             text-align: center;
+            height: 400px
         }
 
     #orderPurchasePieChart {
@@ -116,70 +116,21 @@
 
 <div class="container-fluid">
 
-    <!--<div class="row">        
-        <div class="col-lg-3 col-6">-->
-            <!-- small box -->
-            <!--<div class="small-box bg-primary">
-                <div class="inner">
-                    <h3>0<sup style="font-size: 20px">%</sup></h3>
-
-                    <p>Quantity</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>-->
-        <!-- ./col -->
-        <!--<div class="col-lg-3 col-6">-->
-            <!-- small box -->
-            <!--<div class="small-box bg-success">
-                <div class="inner">
-                    <h3>0<sup style="font-size: 20px">%</sup></h3>
-
-                    <p>Rate</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>-->
-        <!-- ./col -->
-        <!--<div class="col-lg-3 col-6">-->
-            <!-- small box -->
-            <!--<div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>0</h3>
-
-                    <p>User Registrations</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>-->
-        <!-- ./col -->
-        <!--<div class="col-lg-3 col-6">-->
-            <!-- small box -->
-            <!--<div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>0</h3>
-
-                    <p>Unique Visitors</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>-->
-        <!-- ./col -->
-    <!--</div>-->
-
     <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h4>Total Budget(Last Fiscal Year)</h4>
+                    <canvas id="budgetChart" style="height:300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
 
     <div class="modal fade" id="branchProfiles" tabindex="-1" role="dialog" aria-labelledby="Branch Profiles" data-backdrop="static">
         <div class="modal-dialog draggable modal-lg" role="document">
@@ -220,6 +171,10 @@
 
             // Dashboard Initialization
             DashController.init(@Model.Count);
+            setTimeout(function () {
+                loadBudgetData();
+
+            }, 500);
 
             // TempData Message Handling
             var message = '@(TempData["DbUpdate"])';
@@ -277,9 +232,171 @@
                     var selectedValue = this.value();
                     $("#BranchId").val(selectedValue);
                 }
-            });            
+            });
 
-           
+            
+
+            //------------Dashboard-------------//
+            window.charts = {}
+
+            function loadBudgetData(companyId) {
+                $.ajax({
+                    url: '/Home/GetBudgetPieChart',
+                    type: 'GET',
+                    data: { companyId: companyId },
+                    success: function (data) {
+
+                        if (!data || data.length === 0) {
+                            console.warn("No data found");
+                            return;
+                        }
+
+                        // ✅ No filtering / grouping
+                        let labels = data.map(x => x.Particular);
+                        let values = data.map(x => Number(x.TotalValue));
+
+                        // ✅ Dynamic unique colors for each slice
+                        let colors = labels.map((_, i) =>
+                            `hsl(${(i * 360 / labels.length)}, 70%, 55%)`
+                        );
+
+                        const canvas = document.getElementById('budgetChart');
+                        if (!canvas) return;
+
+                        const ctx = canvas.getContext('2d');
+
+
+                        const now = new Date();
+                        const lastYearDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+                        const lastYearName = lastYearDate.toLocaleString('default', {
+                            month: 'long',
+                            year: 'numeric'
+                        });
+
+                        if (window.budgetChart instanceof Chart) {
+                            window.budgetChart.destroy();
+                        }
+
+                        window.budgetChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Budget Value ',
+                                    data: values,
+                                    backgroundColor: colors,
+                                    borderColor: '#fff',
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: `Total Budget`,
+                                        font: { size: 18, weight: 'bold' },
+                                        padding: { top: 10, bottom: 20 }
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (tooltipItem) {
+                                                const value = tooltipItem.raw || 0;
+                                                return `High Selling Products: ${value}`;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.error("Error:", err);
+                    }
+                });
+            }
+
+            // Utility function to create a pie chart
+            function createPieChart(ctx, labels, data, colors) {
+                return new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data.map(Number),
+                            backgroundColor: colors,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (tooltipItem) {
+                                        const value = tooltipItem.raw || 0;
+                                        const total = data.reduce((a, b) => a + b, 1);
+                                        return `${tooltipItem.label}: ${value} (${((value / total) * 100).toFixed(2)}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Generic function to fetch data and create charts
+            function fetchAndCreateChart(url, chartId, label, isPieChart = false) {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (data) {
+
+                        console.log(`Received Data from ${url}:`, data);
+
+                        let labels, values;
+                        if (isPieChart) {
+                            labels = Object.keys(data);
+                            values = Object.values(data).map(Number);
+                        } else {
+                            labels = data.map(item => item.CustomerName || item.ProductName || item.SalePersonName);
+                            values = data.map(item => item.TotalGrandTotalAmount || item.TotalSaleValue || item.GrandTotalAmount);
+                        }
+
+                        if (values.some(v => isNaN(v))) {
+                            console.error(`Invalid data from ${url}:`, data);
+                            return;
+                        }
+
+                        const colors = ['#007bff', '#28a745', '#dc3545', '#ff5733', '#17a2b8', '#ffc107', '#6610f2', '#e83e8c', '#6f42c1', '#20c997'];
+                        const ctx = document.getElementById(chartId)?.getContext('2d');
+
+                        if (!ctx) {
+                            console.error(`Canvas element not found: ${chartId}`);
+                            return;
+                        }
+
+                        if (window[chartId] instanceof Chart) {
+                            window[chartId].destroy();
+                        }
+
+                        window[chartId] = isPieChart
+                            ? createPieChart(ctx, labels, values, colors)
+                            : createBarChart(ctx, labels, values, label, colors);
+                    },
+                    error: function (error) {
+                        console.error(`Error fetching data from ${url}:`, error);
+                    }
+                });
+            }
 
 });
     </script>

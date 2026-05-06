@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using ShampanBFRS.Models.CommonVMs;
+using ShampanBFRS.Models.SalaryAllowance;
 using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.CommonRepo;
 using ShampanBFRS.Repo.SetUpRepo;
@@ -226,6 +227,37 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             }
 
             return RedirectToAction("Index", "Home", new { area = "Common", branchChange = false });
+        }
+
+        [HttpGet]
+        public ActionResult GetBudgetPieChart(PieChartVM Vm)
+        {
+            try
+            {
+                List<PieChartVM> lst = new List<PieChartVM>();
+
+                CommonVM param = new CommonVM
+                {
+                    BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0",
+                    CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "0",
+
+
+                };
+
+                ResultVM result = _repo.GetBudgetPieChart(param);
+
+                  if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<PieChartVM>>(result.DataVM.ToString());
+                }
+
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
 
