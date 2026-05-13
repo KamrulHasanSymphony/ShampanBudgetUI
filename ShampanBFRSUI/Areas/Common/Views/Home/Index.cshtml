@@ -119,62 +119,96 @@
     <div class="clearfix"></div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h4>Total Budget(Last Fiscal Year)</h4>
+                    <h4>Total Budget (Fiscal Year)</h4>
                     <canvas id="budgetChart" style="height:300px;"></canvas>
                 </div>
             </div>
         </div>
+        
 
 
     </div>
+    <div class="row">
 
-
-    <div class="modal fade" id="branchProfiles" tabindex="-1" role="dialog" aria-labelledby="Branch Profiles" data-backdrop="static">
-        <div class="modal-dialog draggable modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"> Select Branch </h4>
-                </div>
-                <div class="modal-body">
-                    @Html.Hidden("md-branch", Model)
-                    <table class="table table-bordered  table-sm table-hover full-width" id="tBranchProfiles">
-                        <thead>
-                            <tr>
-                                <th> Branch Code</th>
-                                <th> Branch Name</th>
-                                <th style="display: none;">User Id</th>  <!-- Hides the header for 'User Id' -->
-                            </tr>
-                        </thead>
-                        <tbody id="tbdBranchProfiles" class="cursorHand">
-                        </tbody>
-                    </table>
+        <div class="col-md-4">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h4>Total Salary Allowance (Fiscal Year)</h4>
+                    <canvas id="salaryAllowanceChart" style="height:300px;"></canvas>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h4>Total Product Budget (Fiscal Year)</h4>
+                    <canvas id="productBudgetChart" style="height:300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h4>Total Sale Budget (Fiscal Year)</h4>
+                    <canvas id="saleBudgetChart" style="height:300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
-</div>
+        <div class="modal fade" id="branchProfiles" tabindex="-1" role="dialog" aria-labelledby="Branch Profiles" data-backdrop="static">
+            <div class="modal-dialog draggable modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"> Select Branch </h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.Hidden("md-branch", Model)
+                        <table class="table table-bordered  table-sm table-hover full-width" id="tBranchProfiles">
+                            <thead>
+                                <tr>
+                                    <th> Branch Code</th>
+                                    <th> Branch Name</th>
+                                    <th style="display: none;">User Id</th>  <!-- Hides the header for 'User Id' -->
+                                </tr>
+                            </thead>
+                            <tbody id="tbdBranchProfiles" class="cursorHand">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 
 
 
-@section scripts{
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="~/Content/js/app/Controllers/DashController.js"></script>
+    @section scripts{
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="~/Content/js/app/Controllers/DashController.js"></script>
 
-    <script>
+        <script>
 
         $(document).ready(function () {
 
-            // Dashboard Initialization
-            DashController.init(@Model.Count);
-            setTimeout(function () {
-                loadBudgetData();
-
-            }, 500);
+    // Dashboard Initialization
+    DashController.init(@Model.Count);
+    var currentBranch = '@Session["CurrentBranch"]';
+    if (currentBranch && currentBranch !== "0") {
+        loadBudgetData();
+        loadSalaryAllowanceData();
+        loadProductBudgetData();
+        loadSaleBudgetData();
+    }
 
             // TempData Message Handling
             var message = '@(TempData["DbUpdate"])';
@@ -185,8 +219,6 @@
                     window.location.href = urlWithoutMessage + "?branchChange=False";
                 }
             }
-
-
             //Branch Combo
             var branch = new kendo.data.DataSource({
                 transport: {
@@ -233,15 +265,109 @@
                     $("#BranchId").val(selectedValue);
                 }
             });
-
-            
-
             //------------Dashboard-------------//
             window.charts = {}
-
             function loadBudgetData(companyId) {
                 $.ajax({
                     url: '/Home/GetBudgetPieChart',
+                    type: 'GET',
+                    data: { companyId: companyId },
+                    success: function (data) {
+
+                        if (!data || data.length === 0) {
+                            console.warn("No data found");
+                            return;
+                        }
+
+                        // Labels + Values
+                        let labels = data.map(x => x.Particular);
+                        let values = data.map(x => Number(x.TotalValue));
+
+                        // Dynamic colors
+                        let colors = labels.map((_, i) =>
+                            `hsl(${(i * 360 / labels.length)}, 70%, 55%)`
+                        );
+
+                        const canvas = document.getElementById('budgetChart');
+                        if (!canvas) return;
+
+                        const ctx = canvas.getContext('2d');
+
+                        // Destroy old chart if exists
+                        if (window.budgetChart instanceof Chart) {
+                            window.budgetChart.destroy();
+                        }
+
+                        // BAR CHART
+                        window.budgetChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Total Budget',
+                                    data: values,
+                                    backgroundColor: colors,
+                                    borderColor: '#ffffff',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: 'Total Budget (Fiscal Year)',
+                                        font: {
+                                            size: 18,
+                                            weight: 'bold'
+                                        },
+                                        padding: {
+                                            top: 10,
+                                            bottom: 20
+                                        }
+                                    },
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (tooltipItem) {
+                                                return `Budget: ${tooltipItem.raw}`;
+                                            }
+                                        }
+                                    }
+                                },
+
+                                scales: {
+                                    x: {
+                                        title: {
+                                            display: true,
+                                            text: 'Particular'
+                                        }
+                                    },
+                                    y: {
+                                        beginAtZero: true,
+                                        title: {
+                                            display: true,
+                                            text: 'Amount'
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.error("Error:", err);
+                    }
+                });
+            }
+            
+            //For SalaryAllowance
+            function loadSalaryAllowanceData(companyId) {
+                $.ajax({
+                    url: '/Home/GetSalaryAllowancePieChart',
                     type: 'GET',
                     data: { companyId: companyId },
                     success: function (data) {
@@ -260,7 +386,7 @@
                             `hsl(${(i * 360 / labels.length)}, 70%, 55%)`
                         );
 
-                        const canvas = document.getElementById('budgetChart');
+                        const canvas = document.getElementById('salaryAllowanceChart');
                         if (!canvas) return;
 
                         const ctx = canvas.getContext('2d');
@@ -274,16 +400,16 @@
                             year: 'numeric'
                         });
 
-                        if (window.budgetChart instanceof Chart) {
-                            window.budgetChart.destroy();
+                        if (window.salaryAllowanceChart instanceof Chart) {
+                            window.salaryAllowanceChart.destroy();
                         }
 
-                        window.budgetChart = new Chart(ctx, {
+                        window.salaryAllowanceChart = new Chart(ctx, {
                             type: 'pie',
                             data: {
                                 labels: labels,
                                 datasets: [{
-                                    label: 'Budget Value ',
+                                    label: 'Salary Allowance Value ',
                                     data: values,
                                     backgroundColor: colors,
                                     borderColor: '#fff',
@@ -296,7 +422,7 @@
                                 plugins: {
                                     title: {
                                         display: true,
-                                        text: `Total Budget`,
+                                        text: `Total Salary Allowance`,
                                         font: { size: 18, weight: 'bold' },
                                         padding: { top: 10, bottom: 20 }
                                     },
@@ -307,7 +433,172 @@
                                         callbacks: {
                                             label: function (tooltipItem) {
                                                 const value = tooltipItem.raw || 0;
-                                                return `High Selling Products: ${value}`;
+                                                return `Total Salary Allowance: ${value}`;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.error("Error:", err);
+                    }
+                });
+            }
+
+            // For Product Budget
+            function loadProductBudgetData(companyId) {
+                $.ajax({
+                    url: '/Home/GetProductBudgetPieChart',
+                    type: 'GET',
+                    data: { companyId: companyId },
+                    success: function (data) {
+
+                        if (!data || data.length === 0) {
+                            console.warn("No data found");
+                            return;
+                        }
+
+                        // ✅ No filtering / grouping
+                        let labels = data.map(x => x.Particular);
+                        let values = data.map(x => Number(x.TotalValue));
+
+                        // ✅ Dynamic unique colors for each slice
+                        let colors = labels.map((_, i) =>
+                            `hsl(${(i * 360 / labels.length)}, 70%, 55%)`
+                        );
+
+                        const canvas = document.getElementById('productBudgetChart');
+                        if (!canvas) return;
+
+                        const ctx = canvas.getContext('2d');
+
+
+                        const now = new Date();
+                        const lastYearDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+                        const lastYearName = lastYearDate.toLocaleString('default', {
+                            month: 'long',
+                            year: 'numeric'
+                        });
+
+                        if (window.productBudgetChart instanceof Chart) {
+                            window.productBudgetChart.destroy();
+                        }
+
+                        window.productBudgetChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Total Product Budget Value ',
+                                    data: values,
+                                    backgroundColor: colors,
+                                    borderColor: '#fff',
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: `Total Product Budget Value`,
+                                        font: { size: 18, weight: 'bold' },
+                                        padding: { top: 10, bottom: 20 }
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (tooltipItem) {
+                                                const value = tooltipItem.raw || 0;
+                                                return `Total Product Budget: ${value}`;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.error("Error:", err);
+                    }
+                });
+            }
+            // For Sale Budget
+            function loadSaleBudgetData(companyId) {
+                $.ajax({
+                    url: '/Home/GetSaleBudgetPieChart',
+                    type: 'GET',
+                    data: { companyId: companyId },
+                    success: function (data) {
+
+                        if (!data || data.length === 0) {
+                            console.warn("No data found");
+                            return;
+                        }
+
+                        // ✅ No filtering / grouping
+                        let labels = data.map(x => x.Particular);
+                        let values = data.map(x => Number(x.TotalValue));
+
+                        // ✅ Dynamic unique colors for each slice
+                        let colors = labels.map((_, i) =>
+                            `hsl(${(i * 360 / labels.length)}, 70%, 55%)`
+                        );
+
+                        const canvas = document.getElementById('saleBudgetChart');
+                        if (!canvas) return;
+
+                        const ctx = canvas.getContext('2d');
+
+
+                        const now = new Date();
+                        const lastYearDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+                        const lastYearName = lastYearDate.toLocaleString('default', {
+                            month: 'long',
+                            year: 'numeric'
+                        });
+
+                        if (window.saleBudgetChart instanceof Chart) {
+                            window.saleBudgetChart.destroy();
+                        }
+
+                        window.saleBudgetChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Total Sale Budget Value ',
+                                    data: values,
+                                    backgroundColor: colors,
+                                    borderColor: '#fff',
+                                    borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: `Total Sale Budget Value`,
+                                        font: { size: 18, weight: 'bold' },
+                                        padding: { top: 10, bottom: 20 }
+                                    },
+                                    legend: {
+                                        position: 'bottom'
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (tooltipItem) {
+                                                const value = tooltipItem.raw || 0;
+                                                return `Total Sale Budget: ${value}`;
                                             }
                                         }
                                     }
@@ -353,52 +644,8 @@
                 });
             }
 
-            // Generic function to fetch data and create charts
-            function fetchAndCreateChart(url, chartId, label, isPieChart = false) {
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (data) {
-
-                        console.log(`Received Data from ${url}:`, data);
-
-                        let labels, values;
-                        if (isPieChart) {
-                            labels = Object.keys(data);
-                            values = Object.values(data).map(Number);
-                        } else {
-                            labels = data.map(item => item.CustomerName || item.ProductName || item.SalePersonName);
-                            values = data.map(item => item.TotalGrandTotalAmount || item.TotalSaleValue || item.GrandTotalAmount);
-                        }
-
-                        if (values.some(v => isNaN(v))) {
-                            console.error(`Invalid data from ${url}:`, data);
-                            return;
-                        }
-
-                        const colors = ['#007bff', '#28a745', '#dc3545', '#ff5733', '#17a2b8', '#ffc107', '#6610f2', '#e83e8c', '#6f42c1', '#20c997'];
-                        const ctx = document.getElementById(chartId)?.getContext('2d');
-
-                        if (!ctx) {
-                            console.error(`Canvas element not found: ${chartId}`);
-                            return;
-                        }
-
-                        if (window[chartId] instanceof Chart) {
-                            window[chartId].destroy();
-                        }
-
-                        window[chartId] = isPieChart
-                            ? createPieChart(ctx, labels, values, colors)
-                            : createBarChart(ctx, labels, values, label, colors);
-                    },
-                    error: function (error) {
-                        console.error(`Error fetching data from ${url}:`, error);
-                    }
-                });
-            }
 
 });
-    </script>
-}
+        </script>
+    }
 

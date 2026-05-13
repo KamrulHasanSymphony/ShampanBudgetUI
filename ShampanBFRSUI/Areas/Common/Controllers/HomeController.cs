@@ -239,14 +239,108 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 CommonVM param = new CommonVM
                 {
                     BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0",
-                    CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "0",
+                    CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "",
 
 
                 };
 
                 ResultVM result = _repo.GetBudgetPieChart(param);
 
-                  if (result.Status == "Success" && result.DataVM != null)
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<PieChartVM>>(result.DataVM.ToString());
+                }
+
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GetSalaryAllowancePieChart(PieChartVM Vm)
+        {
+            try
+            {
+                List<PieChartVM> lst = new List<PieChartVM>();
+
+                CommonVM param = new CommonVM
+                {
+                    BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0",
+                    CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "",
+
+
+                };
+
+                ResultVM result = _repo.GetSalaryAllowancePieChart(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<PieChartVM>>(result.DataVM.ToString());
+                }
+
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GetProductBudgetPieChart(PieChartVM Vm)
+        {
+            try
+            {
+                List<PieChartVM> lst = new List<PieChartVM>();
+
+                CommonVM param = new CommonVM
+                {
+                    BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0",
+                    CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "",
+
+
+                };
+
+                ResultVM result = _repo.GetProductBudgetPieChart(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<PieChartVM>>(result.DataVM.ToString());
+                }
+
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult GetSaleBudgetPieChart(PieChartVM Vm)
+        {
+            try
+            {
+                List<PieChartVM> lst = new List<PieChartVM>();
+
+                CommonVM param = new CommonVM
+                {
+                    BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0",
+                    CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "",
+
+
+                };
+
+                ResultVM result = _repo.GetSaleBudgetPieChart(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
                 {
                     lst = JsonConvert.DeserializeObject<List<PieChartVM>>(result.DataVM.ToString());
                 }

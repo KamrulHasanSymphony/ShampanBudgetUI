@@ -104,7 +104,7 @@ namespace ShampanBFRS.Repo.CommonRepo
             }
         }
 
-         public ResultVM GetSegmentData(SegmentVM model)
+        public ResultVM GetSegmentData(SegmentVM model)
         {
             try
             {
@@ -162,7 +162,7 @@ namespace ShampanBFRS.Repo.CommonRepo
                     Data = null
                 };
             }
-        }   
+        }
 
         public ResultVM GetEnumTypeList(CommonVM model)
         {
@@ -229,7 +229,7 @@ namespace ShampanBFRS.Repo.CommonRepo
                 AuthModel authModel = httpRequestHelper.GetAuthentication(new CredentialModel { UserName = "erp", Password = "123456" });
                 #region Invoke API
                 string url = "api/Common/ParentBranchProfileList";
-                if(!string.IsNullOrEmpty(model.UserId) && model.UserId.ToLower() != "erp")
+                if (!string.IsNullOrEmpty(model.UserId) && model.UserId.ToLower() != "erp")
                 {
                     url = "api/Common/AssingedBranchList";
                 }
@@ -845,7 +845,7 @@ namespace ShampanBFRS.Repo.CommonRepo
                 HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
                 AuthModel authModel = new AuthModel { token = ClaimNames.token };
                 #region Invoke API
-                var data = httpRequestHelper.PostData("api/Common/GetBudgetPieChart", authModel, JsonConvert.SerializeObject(model));
+                var data = httpRequestHelper.PostData("api/PieChart/GetBudgetPieChart", authModel, JsonConvert.SerializeObject(model));
                 ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
                 #endregion
 
@@ -859,7 +859,68 @@ namespace ShampanBFRS.Repo.CommonRepo
             }
         }
 
+        public ResultVM GetSalaryAllowancePieChart(CommonVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/PieChart/GetSalaryAllowancePieChart", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
 
+
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public ResultVM GetProductBudgetPieChart(CommonVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/PieChart/GetProductBudgetPieChart", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public ResultVM GetSaleBudgetPieChart(CommonVM model)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+                #region Invoke API
+                var data = httpRequestHelper.PostData("api/PieChart/GetSaleBudgetPieChart", authModel, JsonConvert.SerializeObject(model));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+                #endregion
+
+
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
 }

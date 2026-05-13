@@ -2,9 +2,9 @@
 
     var init = function (count) {
         if (count == 0) {
-            //$("#branchProfiles").modal("show");
             loadBranchProfiles();
         }
+
 
         $("#tBranchProfiles").on("dblclick", "td",
             function () {
