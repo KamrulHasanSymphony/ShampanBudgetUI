@@ -100,7 +100,6 @@
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            debugger;
 
                             if (param.field === "Code") {
                                 param.field = "H.Code";

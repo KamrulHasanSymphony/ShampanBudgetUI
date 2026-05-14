@@ -5,7 +5,6 @@
     var getBudgetType = '';
 
     var init = function () {
-        debugger;
 
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
@@ -255,7 +254,6 @@
 
 
     function PersonnelCategoriesSelectorEditor(container, options) {
-        debugger;
         var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
 
         // Create input (you can bind value if needed)
@@ -269,7 +267,6 @@
                 $('<button class="btn btn-outline-secondary" type="button">')
                     .append('<i class="fa fa-search"></i>')
                     .on("click", function () {
-                        debugger;
                         openPersonnelCategoriesModal(options.model);
                     })
             )
@@ -281,7 +278,6 @@
     var selectedGridModel = null;
 
     function openPersonnelCategoriesModal(gridModel) {
-        debugger;
         selectedGridModel = gridModel;
 
         $("#PersonnelCategoriesWindow").kendoWindow({
@@ -322,7 +318,6 @@
  
 
                     var dataItem = grid.dataItem(this);
-                    debugger;
                     if (dataItem && selectedGridModel) {
 
                         selectedGridModel.set("PersonnelCategoriesId", dataItem.Id);
@@ -447,7 +442,6 @@
  
 
     var GetGridDataList = function () {
-        debugger;
         var budgetType = getBudgetType;
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
@@ -801,8 +795,6 @@
 
     function save($table) {
 
-        debugger;
-
         var model = serializeInputs("frmEntry");
 
 
@@ -937,7 +929,6 @@
 
         selectedRows.each(function () {
             var dataItem = grid.dataItem(this);
-            debugger;
 
             if (dataItem.Status == "Posted") {
                 postedItems.push(dataItem);
@@ -960,7 +951,6 @@
     $('.btnPost').on('click', function () { //for create form
         Confirmation("Are you sure? Do You Want to Post Data?",
             function (result) {
-                debugger;
 
                 if (result) {
                     var model = serializeInputs("frmEntry");

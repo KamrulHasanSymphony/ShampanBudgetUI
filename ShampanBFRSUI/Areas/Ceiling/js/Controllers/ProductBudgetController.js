@@ -129,7 +129,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         };
 
         function validateAndFetchProductBudgetData() {
-            debugger;
             var isValid = true;
             var yearId = $('#GLFiscalYearId').val() || 0;
             //var ProductGroup = $('#ProductGroupId').val() || '';
@@ -156,7 +155,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
 
 
         $(document).on("click", ".action-edit", function () {
-            debugger;
             var productId = $(this).data("id");
             var groupId = $("#ChargeGroup").val();
             $.ajax({

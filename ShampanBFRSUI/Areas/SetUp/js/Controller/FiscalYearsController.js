@@ -57,11 +57,9 @@
                 $(".YearLock").attr('checked', true);
             }
         });
-        debugger;
+
         $("#Year").on('change', function () {
 
-            debugger;
-            
             var year = $('#Year').val();
             var yearStartDate = $('#YearStart').val();
             var updatedYearStartDate = yearStartDate.replace(/^(\d{4})/, year.toString());
@@ -85,8 +83,6 @@
         $("#btnFDt").on('click', function () {
             $('#fiscalYearDetails').show();           
             //$("#dtMHeader").show();
-            
-            debugger;
             var yearStart = $('#YearStart').val();
             var yearEnd = $('#YearEnd').val();
 
@@ -197,7 +193,6 @@
                 },
 
                 parameterMap: function (options) {
-                    debugger;
                     if (options.sort) {
 
                         options.sort.forEach(function (param) {
@@ -425,7 +420,6 @@
         if (operation == 'add') {
             $('#fiscalYearDetails .card-body').each(function () {
                 var row = $(this);
-                debugger;
                 // Create an object for each row's data
                 var detail = {
                     Id: row.find('input[name$=".Id"]').val(),

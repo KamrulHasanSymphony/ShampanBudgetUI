@@ -1,7 +1,6 @@
 ﻿var SabreController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
-        debugger;
         var getId = $("#Id").val() || 0;
         getCOAId = $("#COAId").val() || 0;
         if (getOperation != "") {
@@ -116,7 +115,6 @@
     };
 
     var GetGridDataList = function () {
-        debugger;
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,

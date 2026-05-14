@@ -3,7 +3,6 @@
 
 
     var init = function () {
-        debugger;
 
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
@@ -25,13 +24,11 @@
 
 
         $('#addRows').on('click', function (e) {
-            debugger;
             addRow($table);
             //addRowStructure($table);
         });
 
         $('.btnsave').click('click', function () {
-            debugger;
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
@@ -154,7 +151,6 @@
 
     };
     function segmentSelectorEditor(container, options) {
-        debugger;
         var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
 
         // Create input (you can bind value if needed)
@@ -168,7 +164,6 @@
                 $('<button class="btn btn-outline-secondary" type="button">')
                     .append('<i class="fa fa-search"></i>')
                     .on("click", function () {
-                        debugger;
                         openSegmentModal(options.model);
                     })
             )
@@ -180,7 +175,6 @@
 
     var selectedGridModel = null;
     function openSegmentModal(gridModel) {
-        debugger;
         selectedGridModel = gridModel;
 
         $("#SegmentWindow").kendoWindow({
@@ -221,7 +215,6 @@
                     var grid = $("#Segmentgrid").data("kendoGrid");
 
                     var dataItem = grid.dataItem(this);
-                    debugger;
                     if (dataItem && selectedGridModel) {
 
                         selectedGridModel.set("SegmentId", dataItem.Id);
@@ -455,8 +448,6 @@
 
     function save($table) {
 
-        debugger;
-
         var model = serializeInputs("frmEntry");
         var details = [];
         var grid = $("#kDetails").data("kendoGrid");
@@ -547,7 +538,6 @@
 
         selectedRows.each(function () {
             var dataItem = grid.dataItem(this);
-            debugger;
 
             if (dataItem.Status == "Posted") {
                 postedItems.push(dataItem);
@@ -570,7 +560,6 @@
     $('.btnPost').on('click', function () { //for create form
         Confirmation("Are you sure? Do You Want to Post Data?",
             function (result) {
-                debugger;
 
                 if (result) {
                     var model = serializeInputs("frmEntry");

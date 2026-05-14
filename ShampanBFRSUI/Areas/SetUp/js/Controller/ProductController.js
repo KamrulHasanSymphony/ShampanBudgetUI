@@ -340,8 +340,7 @@
     };
 
 
-    function save() {       
-        debugger;
+    function save() {     
         var validator = $("#frmEntry").validate();
         var model = serializeInputs("frmEntry");
 

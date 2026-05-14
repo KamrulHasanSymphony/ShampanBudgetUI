@@ -165,7 +165,6 @@
 
             ,
           change: function (e) {
-              debugger;
               var selectedValue = this.value();
               if (selectedValue) {
                   LoadItemsGrid(selectedValue);
@@ -547,8 +546,6 @@
         }
 
         model.SabreList = details;
-
-        debugger;
 
 
         var url = "/SetUp/DepartmentSabre/CreateEdit";

@@ -14,7 +14,7 @@
     };
 
     var finalImageSave = function (url, masterObj, done, fail) {
-        debugger;
+
         $.ajax({
             url: url,
             method: 'post',

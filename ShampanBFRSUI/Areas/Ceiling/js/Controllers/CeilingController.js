@@ -83,12 +83,9 @@ var CeilingController = function (CommonService, CommonAjaxService) {
         //btn post
 
         $('#btnPost').on('click', function () {
-            debugger;
-
             Confirmation("Are you sure? Do You Want to Post Data?",
                 function (result) {
                     if (result) {
-                        debugger;
                         SelectDataPost();
                     }
                 });
@@ -115,7 +112,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
 
         function GetFiscalYearComboBox() {
-            debugger;
             var FiscalYearComboBox = $("#GLFiscalYearId").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -243,7 +239,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
         $('#GLFiscalYearId, #BudgetSetNo, #BudgetType').on('change', validateAndFetchCeilingData);
         function validateAndFetchCeilingData() {
-            debugger;
             var isValid = true;
             var yearId = $('#GLFiscalYearId').val() || 0;
             var budgetSetNo = $('#BudgetSetNo').val() || 0;
@@ -307,7 +302,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
     };
 
     function SelectDataPost() {
-        debugger;
 
         var IDs = [];
 
@@ -600,7 +594,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
     // Save the form data
     function save() {
-        debugger;
 
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
@@ -1105,8 +1098,6 @@ var CeilingController = function (CommonService, CommonAjaxService) {
 
                         var dataItem = e.model;
                         var perMonth = parseFloat(e.values.InputTotal) / 12;
-
-                        debugger;
 
                         // Set each month
                         dataItem.January = perMonth;

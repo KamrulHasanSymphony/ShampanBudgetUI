@@ -349,7 +349,6 @@
     // Save the form data
 
     function save() {
-        debugger;
         var validator = $("#frmEntry").validate();
         var model = serializeInputs("frmEntry");
 

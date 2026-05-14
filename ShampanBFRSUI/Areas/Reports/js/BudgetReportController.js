@@ -44,7 +44,6 @@
         });
 
         $(document).on('click', '.btnLoad', function () {
-            debugger;
             Load();
         });
  
@@ -166,7 +165,6 @@
     
     function Load() {
         var model = serializeInputs("frmEntry");
-        debugger;
         $.ajax({
             url: "/Reports/Budget/BudgetLoadFinalReport",
             type: "POST",

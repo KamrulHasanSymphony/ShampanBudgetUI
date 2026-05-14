@@ -90,7 +90,6 @@
     };
 
     function GenerateDetailsGrid() {
-        debugger;
         var detailsList = JSON.parse($("#detailsListJson").val() || "[]");
 
         var detailsGridDataSource = new kendo.data.DataSource({
@@ -643,7 +642,7 @@
 
         model.SabreDetails = details;
         console.log(details);
-        debugger;
+ 
         var url = "/SetUp/COA/CreateEdit";
 
         CommonAjaxService.finalSave(url, model, saveDone, saveFail);

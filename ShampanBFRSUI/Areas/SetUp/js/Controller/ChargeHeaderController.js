@@ -4,7 +4,6 @@
     var getChargeGroup = "";
 
     var init = function () {
-        debugger;
 
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
@@ -28,13 +27,11 @@
 
 
         $('#addRows').on('click', function (e) {
-            debugger;
             addRow($table);
 
         });
 
         $('.btnsave').click('click', function () {
-            debugger;
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
@@ -424,7 +421,6 @@
     };
 
     function GetChargeGroup() {
-        debugger;
         var COAGroupComboBox = $("#ChargeGroup").kendoMultiColumnComboBox({
             dataTextField: "ChargeGroupValue",
             dataValueField: "ChargeGroupValue",
@@ -449,7 +445,6 @@
         }).data("kendoMultiColumnComboBox");
     };
     function productSelectorEditor(container, options) {
-        debugger;
         var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
 
         // Create input (you can bind value if needed)
@@ -463,7 +458,6 @@
                 $('<button class="btn btn-outline-secondary" type="button">')
                     .append('<i class="fa fa-search"></i>')
                     .on("click", function () {
-                        debugger;
                         openProductModal(options.model);
                     })
             )
@@ -474,7 +468,6 @@
 
     var selectedGridModel = null;
     function openProductModal(gridModel) {
-        debugger;
         selectedGridModel = gridModel;
 
         $("#ProductWindow").kendoWindow({
@@ -514,7 +507,6 @@
                     var grid = $("#Productgrid").data("kendoGrid");
 
                     var dataItem = grid.dataItem(this);
-                    debugger;
                     if (dataItem && selectedGridModel) {
                         
                         selectedGridModel.set("ProductId", dataItem.Id);
@@ -925,7 +917,6 @@
 
         selectedRows.each(function () {
             var dataItem = grid.dataItem(this);
-            debugger;
 
             if (dataItem.Status == "Posted") {
                 postedItems.push(dataItem);
@@ -948,7 +939,6 @@
     $('.btnPost').on('click', function () { //for create form
         Confirmation("Are you sure? Do You Want to Post Data?",
             function (result) {
-                debugger;
 
                 if (result) {
                     var model = serializeInputs("frmEntry");

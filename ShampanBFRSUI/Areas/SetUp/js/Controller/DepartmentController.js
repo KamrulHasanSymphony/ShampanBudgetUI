@@ -237,8 +237,7 @@
             }
 
             ,
-            change: function (e) {
-                debugger;
+            change: function (e) {       
                 var selectedValue = this.value();
                 if (selectedValue) {
                     LoadItemsGrid(selectedValue);
@@ -584,14 +583,12 @@
 
     // Save the form data
     function save() {
-        debugger;
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
         var department = model.DepartmentId;
 
         var grid = $("#sabres").data("kendoGrid");
         var details = [];
-        debugger;
 
 
         if (grid) {

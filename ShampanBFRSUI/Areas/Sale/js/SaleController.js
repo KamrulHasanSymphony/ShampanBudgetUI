@@ -69,7 +69,6 @@
         $('.btnPost').on('click', function () { //for create form
             Confirmation("Are you sure? Do You Want to Post Data?",
                 function (result) {
-                    debugger;
 
                     if (result) {
                         var model = serializeInputs("frmEntry");
@@ -288,7 +287,6 @@
     };
 
     function productSelectorEditor(container, options) {
-        debugger;
         var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
 
         // Create input (you can bind value if needed)
@@ -302,7 +300,6 @@
                 $('<button class="btn btn-outline-secondary" type="button">')
                     .append('<i class="fa fa-search"></i>')
                     .on("click", function () {
-                        debugger;
                         openProductModal(options.model);
                     })
             )
@@ -313,7 +310,6 @@
 
     var selectedGridModel = null;
     function openProductModal(gridModel) {
-        debugger;
         selectedGridModel = gridModel;
 
         $("#ProductWindow").kendoWindow({
@@ -353,7 +349,6 @@
                     var grid = $("#Productgrid").data("kendoGrid");
 
                     var dataItem = grid.dataItem(this);
-                    debugger;
                     if (dataItem && selectedGridModel) {
 
                         selectedGridModel.set("ProductId", dataItem.Id);
@@ -378,7 +373,6 @@
         var priceLTR = parseFloat($row.find(".td-PriceLTR").text().replace(/,/g, '')) || 0;
         var salesImportMT = parseFloat($row.find(".td-SalesExImport_LocalMT").text().replace(/,/g, '')) || 0;
 
-        debugger;
         var priceMT = priceLTR * conversionFactor;
         var salesExERLValue = priceMT * productionMT;
         var salesExImportLocalValue = salesImportMT * priceMT;
@@ -486,7 +480,6 @@
 
     
     var GetGridDataList = function (getBudgetType) {
-        debugger;
         var gridDataSource = new kendo.data.DataSource({
             type: "json",
             serverPaging: true,
@@ -967,7 +960,6 @@
 
         selectedRows.each(function () {
             var dataItem = grid.dataItem(this);
-            debugger;
 
             if (dataItem.Status == "Posted") {
                 postedItems.push(dataItem);

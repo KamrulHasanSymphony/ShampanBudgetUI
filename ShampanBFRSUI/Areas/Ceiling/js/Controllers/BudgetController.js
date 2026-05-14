@@ -25,13 +25,11 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
         console.log(getFiscalYearId);
         $("[data-bootstrap-switch]").bootstrapSwitch();
-        debugger;
 
         
 
         // Save button click handler
         $('.btnsave').click('click', function () {
-            debugger;
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
@@ -41,7 +39,6 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
-                    debugger;
                     save();
                 }
             });
@@ -77,12 +74,9 @@ var BudgetController = function (CommonService, CommonAjaxService) {
         });
 
         $('#btnPost').on('click', function () {
-            debugger;
-
             Confirmation("Are you sure? Do You Want to Post Data?",
                 function (result) {
                     if (result) {
-                        debugger;
                         SelectDataPost();
                     }
                 });
@@ -110,7 +104,6 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
 
         function GetFiscalYearComboBox() {
-            debugger;
             var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -154,8 +147,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
     };
 
     function SelectDataPost() {
-        debugger;
-
+      
         var IDs = [];
 
         var selectedRows = $("#GridDataList").data("kendoGrid").select();
@@ -208,7 +200,6 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 parameterMap: function (options) {
                     if (options.sort) {
                         options.sort.forEach(function (param) {
-                            debugger;
                             
                             if (param.field === "Code") {
                                 param.field = "M.Code";
@@ -240,11 +231,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
                     if (options.filter && options.filter.filters) {
                         options.filter.filters.forEach(function (param) {
-
-
-                            debugger;
-
-                           
+                          
                             if (param.field === "Id") {
                                 param.field = "M.Id";
                             }
@@ -460,7 +447,6 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
     var GetEditGridDataList = function () {
         // Parse the local JSON data
-        debugger;
         var detailsList = JSON.parse($("#detailsListJson").val() || "[]");
 
         var gridDataSource = new kendo.data.DataSource({

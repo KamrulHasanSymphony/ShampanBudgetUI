@@ -25,13 +25,12 @@ var BudgetAllController = function (CommonService, CommonAjaxService) {
 
         console.log(getFiscalYearId);
         $("[data-bootstrap-switch]").bootstrapSwitch();
-        debugger;
+
 
         
 
         // Save button click handler
         $('.btnsave').click('click', function () {
-            debugger;
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
@@ -40,7 +39,6 @@ var BudgetAllController = function (CommonService, CommonAjaxService) {
             
             Confirmation("Are you sure? Do You Want to " + status + " Data?", function (result) {
                 if (result) {
-                    debugger;
                     save();
                 }
             });
@@ -76,7 +74,6 @@ var BudgetAllController = function (CommonService, CommonAjaxService) {
         });
 
         function GetFiscalYearComboBox() {
-            debugger;
             var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -320,7 +317,6 @@ var BudgetAllController = function (CommonService, CommonAjaxService) {
 
     var GetEditGridDataList = function () {
         // Parse the local JSON data
-        debugger;
         var detailsList = JSON.parse($("#detailsListJson").val() || "[]");
 
         var gridDataSource = new kendo.data.DataSource({
@@ -420,8 +416,6 @@ var BudgetAllController = function (CommonService, CommonAjaxService) {
 
     // Save the form data
     function save() {
-        debugger;
-
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");
@@ -436,7 +430,6 @@ var BudgetAllController = function (CommonService, CommonAjaxService) {
         if (operation == 'update') {
             var grid = $("#updtBudgetDetailsData").data("kendoGrid");
 
-            debugger;
             if (grid) {
 
                 var items = grid.dataSource.view();
@@ -476,7 +469,6 @@ var BudgetAllController = function (CommonService, CommonAjaxService) {
         {
             var grid = $("#BudgetDetailsData").data("kendoGrid");
 
-            debugger;
             if (grid) {
 
                 var items = grid.dataSource.view();
