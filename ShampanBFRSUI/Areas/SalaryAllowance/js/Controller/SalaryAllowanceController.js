@@ -23,7 +23,6 @@
         var $table = $('#details');
         var table = initEditTable($table, { searchHandleAfterEdit: false });
         $('#addRows').on('click', function (e) {
-            debugger;
             addRow($table);
 
         });
@@ -64,25 +63,6 @@
                 });
         });
 
-        $('.btnPost').on('click', function () { //for create form
-            Confirmation("Are you sure? Do You Want to Post Data?",
-                function (result) {
-                    debugger;
-
-                    if (result) {
-                        var model = serializeInputs("frmEntry");
-                        if (model.IsPost == "True") {
-                            ShowNotification(3, "Data has already been Posted.");
-                        }
-                        else {
-                            model.IDs = model.Id;
-                            var url = "/Sale/Sale/MultiplePost";
-                            CommonAjaxService.multiplePost(url, model, postDone, fail);
-                        }
-                    }
-                });
-        });
-       
 
         $('#details').on('blur',
             '.td-BasicWagesSalaries, .td-OtherCash',

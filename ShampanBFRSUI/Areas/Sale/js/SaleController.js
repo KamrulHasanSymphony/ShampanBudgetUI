@@ -1,7 +1,7 @@
 ﻿var SaleController = function (CommonService, CommonAjaxService) {
 
     var init = function () {
-        debugger;
+
 
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
@@ -32,14 +32,14 @@
 
 
         $('#addRows').on('click', function (e) {
-            debugger;
+
             addRow($table);
 
         });
 
        
         $('.btnsave').click('click', function () {
-            debugger;
+     
             var getId = $('#Id').val();
             var status = "Save";
             if (parseInt(getId) > 0) {
