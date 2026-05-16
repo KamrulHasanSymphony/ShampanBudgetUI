@@ -13,7 +13,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Only letters are allowed")]
         [StringLength(50, ErrorMessage = "Name must be between 3 and 50 characters")]
         public string Name { get; set; }
-
+        [Display(Name = "Product Group Name")]
         public string? ProductGroupName { get; set; }
 
         [Display(Name = "Product Group")]

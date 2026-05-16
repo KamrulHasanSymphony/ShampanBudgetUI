@@ -49,6 +49,8 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
             });
         });
 
+       
+
         $('.btnLoad').click('click', function () {
             validateAndFetchProductBudgetData();
         });
