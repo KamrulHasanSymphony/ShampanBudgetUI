@@ -171,6 +171,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
                 vm.ChargeGroup = chargeGroup;
                 vm.BudgetType = budgetType;
                 vm.BranchId = currentBranchId;
+                vm.BudgetSetNo = "1";
 
                 //ResultVM result = _repo.ProductBudgeDistincttList(vm);
 
