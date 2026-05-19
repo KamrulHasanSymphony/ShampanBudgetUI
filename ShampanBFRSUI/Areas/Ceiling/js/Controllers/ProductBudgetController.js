@@ -157,12 +157,13 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
 
 
         $(document).on("click", ".action-edit", function () {
-            var productId = $(this).data("id");
+            debugger;
+            var chargeHeaderId = $(this).data("id");
             var groupId = $("#ChargeGroup").val();
             $.ajax({
-                url: '/SetUp/Product/CreatePartial',
+                url: '/SetUp/ChargeHeader/CreatePartial',
                 type: 'GET',
-                data: { id: productId, groupId },
+                data: { id: chargeHeaderId, groupId },
                 success: function (html) {
                     $("#productModalBody").html(html);
                     $("#productModal").modal("show");
@@ -635,6 +636,8 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                     }, 0);
                 },
                 columns: [
+                    { field: "ChargeHeaderId", width: 50, hidden: true, sortable: true },
+                    { field: "Id", width: 50, hidden: true, sortable: true },
 
                     { field: "ProductId", width: 50, hidden: true, sortable: true },
                     { field: "Serial", title: "SL", sortable: true, width: 35, editable: false },
@@ -643,10 +646,11 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                         title: "Action",
                         width: 60,
                         template: function (dataItem) {
+                            debugger;
                             return `
                             <a href="javascript:void(0);"
                            class="btn btn-primary btn-sm action-edit"
-                           data-id="${dataItem.ProductId}">
+                           data-id="${dataItem.Id}">
                             <i class="fas fa-search"></i>
                         </a>
 

@@ -16,6 +16,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         public string? ChargeGroupText { get; set; }
         //public string ?ProductName { get; set; }
         public int? ChargeGroupId { get; set; }
+        public bool? IsHeaderUpdate { get; set; }
 
         public List<ChargeDetailVM> ChargeDetails { get; set; }
         public ChargeHeaderVM()

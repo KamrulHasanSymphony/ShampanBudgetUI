@@ -57,7 +57,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             ResultVM resultVM = new ResultVM { Status = MessageModel.Fail, Message = "Error", ExMessage = null, Id = "0", DataVM = null };
             _repo = new ChargeHeaderRepo();
 
-
+            model.IsHeaderUpdate = true;
             try
             {
                 if (model.Operation.ToLower() == "add")
@@ -424,6 +424,42 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             }
         }
 
+        public ActionResult CreatePartial(int? id, string groupId)
+        {
+            ChargeDetailVM vm;
 
+            if (groupId != null)
+            {
+                //CommonVM param = new CommonVM { Id = groupId };
+                CommonVM param = new CommonVM { Id = id.ToString() };
+                ResultVM result = _repo.ChargeDetailList(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    vm = JsonConvert.DeserializeObject<List<ChargeDetailVM>>(result.DataVM.ToString()).FirstOrDefault();
+                    vm.Operation = "update";
+
+
+                }
+                else
+                {
+                    vm = new ChargeDetailVM
+                    {
+                        Operation = "add",
+
+                    };
+                }
+            }
+            else
+            {
+                vm = new ChargeDetailVM
+                {
+                    Operation = "add",
+
+                };
+            }
+
+            return PartialView("~/Areas/SetUp/Views/ChargeHeader/_CreatePartial.cshtml", vm);
+        }
     }
 }

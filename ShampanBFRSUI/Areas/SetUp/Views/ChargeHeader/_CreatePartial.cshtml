@@ -1,0 +1,646 @@
+﻿
+@model ShampanBFRS.Models.SetUpVMs.ChargeDetailVM
+@{
+    ViewBag.Title = "Product Create";
+}
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                {
+                    <h1 class="m-0"> Product Charge Update </h1>
+                }
+                else
+                {
+                    <h1 class="m-0"> Product Charge Add</h1>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header p-2">
+
+        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+        {
+            <button type="button" class="button productsave sslUpdate">Update</button>
+
+        }
+        else
+        {
+            <div style="display:none;" class="divUpdate">
+                <button type="button" class="button productsave sslUpdate">Update</button>
+            </div>
+
+            <div class="divSave">
+                <button class="button productsave sslSave" type="button" id="">Save</button>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="mt-3">
+        <div id="tabs-1">
+
+            <form id="productFrmEntry">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"> Product Charge Info</h3>
+                    </div>
+                    <div class="card-body">
+
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.Operation)
+                        @Html.HiddenFor(model => model.ChargeHeaderId)
+                        @Html.HiddenFor(model => model.ProductId)
+                        @Html.HiddenFor(model => model.ChargeGroupId)
+                        @Html.HiddenFor(model => model.ChargeGroup)
+
+
+                        <div class="form-group row">
+
+                            <div class="col-sm-2 codeWidth">
+                                @Html.LabelFor(model => model.Code)
+                                <div style="display: flex; align-items: center;">
+                                    <span id="btnPrevious" class="fa fa-backward" style="color: darkseagreen;"></span>&nbsp;
+                                    @Html.TextBoxFor(model => model.Code, new { placeholder = "Code Auto Generate", @class = " csCode  form-control form-control-sm", @readonly = "readonly", @style = "width:140px;" }) &nbsp;
+                                    <span id="btnNext" class="fa fa-forward" style="color: darkseagreen;"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.Name)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter Product Name", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ProductGroupName)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ProductGroupName, new { placeholder = "Enter Group Name", @class = "form-control form-control-sm", @readonly = "readonly" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ProductGroupName)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ConversionFactor)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ConversionFactor, new { placeholder = "Enter Conversion Factor", @class = "form-control form-control-sm", type = "number", step = "any", @readonly = "readonly" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ConversionFactor)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.CIFCharge)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.CIFCharge, new { placeholder = "Enter CIF Charge", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.CIFCharge)
+                            </div>                          
+
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.BankCharge)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.BankCharge, new { placeholder = "Enter Bank Charge", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.BankCharge)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.CPACharge)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.CPACharge, new { placeholder = "Enter CPA Charge", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.CPACharge)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.OceanLoss)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.OceanLoss, new { placeholder = "Enter Ocean Loss", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.OceanLoss)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.HandelingCharge)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.HandelingCharge, new { placeholder = "Enter Handeling Charge", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.HandelingCharge)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.LightCharge)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.LightCharge, new { placeholder = "Enter Light Charge", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.LightCharge)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.Survey)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.Survey, new { placeholder = "Enter Survey", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Survey)
+                            </div>
+
+                            
+
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ExERLRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ExERLRate, new { placeholder = "Enter ExERL Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ExERLRate)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.DutyPerLiter)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.DutyPerLiter, new { placeholder = "Enter Duty PerLiter", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.DutyPerLiter)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.Refined)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.Refined, new { placeholder = "Enter Refined", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Refined)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.Crude)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.Crude, new { placeholder = "Enter Crude", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Crude)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.SDRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.SDRate, new { placeholder = "Enter SD Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.SDRate)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.InsuranceRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.InsuranceRate, new { placeholder = "Enter Insurance Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.InsuranceRate)
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.DutyInTariff)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.DutyInTariff, new { placeholder = "Enter Duty In Tariff", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.DutyInTariff)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ATRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ATRate, new { placeholder = "Enter AT Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ATRate)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.VATRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.VATRate, new { placeholder = "Enter VAT Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.VATRate)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ExchangeRateUsd)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ExchangeRateUsd, new { placeholder = "Enter Exchange Rate Usd", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ExchangeRateUsd)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.AITRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.AITRate, new { placeholder = "Enter AIT Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.AITRate)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ConversionFactorFixedValue)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ConversionFactorFixedValue, new { placeholder = "Enter Conversion Factor Fixed Value", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ConversionFactorFixedValue)
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group row">
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.VATRateFixed)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.VATRateFixed, new { placeholder = "Enter VAT Rate Fixed", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.VATRateFixed)
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.RiverDues)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.RiverDues, new { placeholder = "Enter River Dues", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.RiverDues)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.TariffRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.TariffRate, new { placeholder = "Enter Tariff Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.TariffRate)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.FobPriceBBL)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.FobPriceBBL, new { placeholder = "Enter Fob Price BBL", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FobPriceBBL)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.FreightUsd)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.FreightUsd, new { placeholder = "Enter Freight Usd", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FreightUsd)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ServiceCharge)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ServiceCharge, new { placeholder = "Enter Service Charge", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ServiceCharge)
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ProcessFee)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ProcessFee, new { placeholder = "Enter Process Fee", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ProcessFee)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.RcoTreatmentFee)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.RcoTreatmentFee, new { placeholder = "Enter Rco Treatment Fee", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.RcoTreatmentFee)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.AbpTreatmentFee)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.AbpTreatmentFee, new { placeholder = "Enter Abp Treatment Fee", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.AbpTreatmentFee)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ProcessFeeRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ProcessFeeRate, new { placeholder = "Enter Process Fee Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ProcessFeeRate)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.RcoTreatmentFeeRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.RcoTreatmentFeeRate, new { placeholder = "Enter Rco Treatment Fee Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.RcoTreatmentFeeRate)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.AbpTreatmentFeeRate)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.AbpTreatmentFeeRate, new { placeholder = "Enter Abp Treatment Fee Rate", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.AbpTreatmentFeeRate)
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.CostLiterExImport)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.CostLiterExImport, new { placeholder = "Enter CostLiter ExImport", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.CostLiterExImport)
+                            </div>
+
+                            <div class="col-sm-2">
+                                @Html.LabelFor(model => model.ProductImprovementFee)
+                                <div class="input-group">
+                                    @Html.TextBoxFor(model => model.ProductImprovementFee, new { placeholder = "Enter Product Improvement Fee", @class = "form-control form-control-sm", type = "number", step = "any" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.ProductImprovementFee)
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="card" style="flex-direction: row; justify-content: space-between; align-items: center;">
+                <div class="card-header p-2">
+
+                    @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <button type="button" class="button productsave sslUpdate">Update</button>
+                        @*<button style="float: right; margin-left: 4px;" type="button" title="Add New" data-url="/SetUp/ChargeHeader/Create" onclick="GoTo(this)" class="button productsave sslUpdate">
+                                Update
+                            </button>*@
+                    }
+                    else
+                    {
+                        <div style="display:none;" class="divUpdate">
+                            <button type="button" class="button productsave sslUpdate">Update</button>
+                        </div>
+                        <div class="divSave">
+                            <button class="button productsave sslSave" type="button" id="">Save</button>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="card card-secondary auditcard">
+
+                <div class="card-header">
+                    <h3 class="card-title">Audit Details</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="row">
+                                @Html.Label("Type")
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    @Html.Label("Created")
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.Label("Updated")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @Html.Label("By")<br /><div class="clearfix">&nbsp;</div>
+                                    @Html.Label("On")<br /><div class="clearfix">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    @Html.TextBoxFor(model => model.CreatedBy, new { @class = "CreatedBy  form-control form-control-sm ", @readonly = "readonly" })
+                                    <div class="clearfix">&nbsp;</div>
+                                    @Html.TextBoxFor(model => model.CreatedOn, new { @class = "CreatedOn  form-control form-control-sm ", @readonly = "readonly" })
+                                </div>
+
+                                <div class="col-sm-3">
+                                    @Html.TextBoxFor(model => model.LastModifiedBy, new { @class = "LastUpdateBy  form-control form-control-sm lub", @readonly = "readonly" })
+                                    <div class="clearfix">&nbsp;</div>
+                                    @Html.TextBoxFor(model => model.LastModifiedOn, new { @class = "LastUpdateOn  form-control form-control-sm luo", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/Areas/Common/js/Services/CommonService.js"></script>
+<script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+<script src="~/Areas/SetUp/js/Controller/ChargeHeaderController.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('.productsave').off('click').on('click', function () {
+            var getId = $("#Id").val() || 0;
+            var status = parseInt(getId) > 0
+                ? "update" : "Save";
+
+            Confirmation(
+                "Are you sure you want to " + status + " this entry?",
+                function (result) {
+                    if (result) {
+                        saveOrUpdate();
+                    }
+                });
+        });
+
+        function saveOrUpdate() {
+            debugger;
+            var validator = $("#productFrmEntry").validate();
+            var isValid = validator.form();
+            if (!isValid) {
+                validator.focusInvalid();
+                return;
+            }
+            debugger;
+            // This gives you ONLY ChargeDetailVM fields
+            var detail = serializeInputs("productFrmEntry");
+
+            console.log("Detail:", detail);
+
+            // 🔥 Wrap into ChargeHeaderVM
+            var model = {
+      
+                Id: detail.ChargeHeaderId || 0,   // or header id from hidden field if exists
+                ChargeGroup: detail.ChargeGroup || null,
+                ChargeGroupId: detail.ChargeGroupId || null,
+                Operation: "update",
+                IsHeaderUpdate: false,
+
+                // ✅ IMPORTANT: list wrapper
+                ChargeDetails: [
+                    {
+                        Id: detail.Id || 0,
+                        Code: detail.Code,
+                        Name: detail.Name,
+                        ProductGroupName: detail.ProductGroupName,
+                        ConversionFactor: detail.ConversionFactor,
+                        ChargeHeaderId: detail.ChargeHeaderId,
+                        ProductId: detail.ProductId,
+                        ProductName: detail.ProductName,
+                        ChargeGroupId: detail.ChargeGroupId,
+                        ChargeGroup: detail.ChargeGroup,
+
+                        CIFCharge: detail.CIFCharge,
+                        ExchangeRateUsd: detail.ExchangeRateUsd,
+                        InsuranceRate: detail.InsuranceRate,
+                        BankCharge: detail.BankCharge,
+                        OceanLoss: detail.OceanLoss,
+                        CPACharge: detail.CPACharge,
+                        HandelingCharge: detail.HandelingCharge,
+                        LightCharge: detail.LightCharge,
+                        Survey: detail.Survey,
+                        CostLiterExImport: detail.CostLiterExImport,
+                        ExERLRate: detail.ExERLRate,
+                        DutyPerLiter: detail.DutyPerLiter,
+                        Refined: detail.Refined,
+                        Crude: detail.Crude,
+                        SDRate: detail.SDRate,
+                        DutyInTariff: detail.DutyInTariff,
+                        ATRate: detail.ATRate,
+                        AITRate: detail.AITRate,
+                        VATRate: detail.VATRate,
+                        ConversionFactorFixedValue: detail.ConversionFactorFixedValue,
+                        VATRateFixed: detail.VATRateFixed,
+                        RiverDues: detail.RiverDues,
+
+                        TariffRate: detail.TariffRate,
+                        FobPriceBBL: detail.FobPriceBBL,
+                        FreightUsd: detail.FreightUsd,
+                        ServiceCharge: detail.ServiceCharge,
+                        ProcessFee: detail.ProcessFee,
+                        RcoTreatmentFee: detail.RcoTreatmentFee,
+                        AbpTreatmentFee: detail.AbpTreatmentFee,
+
+                        ProcessFeeRate: detail.ProcessFeeRate,
+                        RcoTreatmentFeeRate: detail.RcoTreatmentFeeRate,
+                        AbpTreatmentFeeRate: detail.AbpTreatmentFeeRate,
+                        ProductImprovementFee: detail.ProductImprovementFee
+                    }
+                ]
+            };
+
+            console.log("Final Model:", model);
+
+            var url = "/SetUp/ChargeHeader/CreateEdit";
+
+            CommonAjaxService.finalSave(url, model, saveDone, saveFail
+            );
+        }
+        function saveDone(result) {
+            debugger;
+            console.log(result);
+            if (result.Status == 200) {
+                ShowNotification(1, result.Message);
+                if (result.Data != null) {
+                    $("#Id").val(result.Data.Id);
+                }
+
+                $("#Operation").val("update");
+                $(".divSave").hide();
+                $(".divUpdate").show();
+                //reloadPartial($("#Id").val());
+
+            }
+            else {
+
+                ShowNotification(3, result.Message);
+            }
+
+        }
+
+        function saveFail(result) {
+            console.log(result);
+            ShowNotification(3, "Query Exception!");
+
+        };
+
+        function reloadPartial(id) {
+            debugger;
+            $.ajax({
+                url: '/SetUp/ChargeHeader/CreatePartial',
+                type: 'GET',
+                data: { id: id },
+                cache: false,
+                success: function (response) {
+                    var html = $(response).find("#tabs-1").html();
+                    $("#tabs-1").html(html);
+                },
+
+                error: function (xhr) {
+
+                    debugger;
+
+                    console.log(xhr);
+
+                    ShowNotification(3, "Partial Reload Failed!");
+
+                }
+
+            });
+
+        }
+
+    });
+
+</script>
+
+
+
+

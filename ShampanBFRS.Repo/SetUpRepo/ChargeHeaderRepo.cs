@@ -6,6 +6,7 @@ using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.Configuration;
 using System;
 using System.IO;
+using System.Reflection;
 using static ShampanBFRS.Models.CommonVMs.CommonModel;
 
 namespace ShampanBFRS.Repo.SetUpRepo
@@ -192,7 +193,39 @@ namespace ShampanBFRS.Repo.SetUpRepo
                 throw e;
             }
         }
-       
 
+        public ResultVM EstimatedList(CommonVM param)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+                var data = httpRequestHelper.PostData("api/ChargeHeader/List", authModel, JsonConvert.SerializeObject(param));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public ResultVM ChargeDetailList(CommonVM param)
+        {
+            try
+            {
+                HttpRequestHelper httpRequestHelper = new HttpRequestHelper();
+                AuthModel authModel = new AuthModel { token = ClaimNames.token };
+                var data = httpRequestHelper.PostData("api/ChargeHeader/ChargeDetailList", authModel, JsonConvert.SerializeObject(param));
+                ResultVM result = JsonConvert.DeserializeObject<ResultVM>(data);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
