@@ -157,7 +157,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
 
 
         $(document).on("click", ".action-edit", function () {
-            debugger;
             var chargeHeaderId = $(this).data("id");
             var groupId = $("#ChargeGroup").val();
             $.ajax({
@@ -646,7 +645,6 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
                         title: "Action",
                         width: 60,
                         template: function (dataItem) {
-                            debugger;
                             return `
                             <a href="javascript:void(0);"
                            class="btn btn-primary btn-sm action-edit"

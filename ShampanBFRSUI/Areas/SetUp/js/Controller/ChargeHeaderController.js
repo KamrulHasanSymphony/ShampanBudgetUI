@@ -4,7 +4,7 @@
     var getChargeGroup = "";
 
     var init = function () {
-
+       
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
         getChargeGroup = $("#ChargeGroup").val() || 0;
