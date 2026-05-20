@@ -92,28 +92,24 @@
                         ExchangeRateUsd: { type: "number", defaultValue:0 },
                         InsuranceRate: { type: "number", defaultValue: 0 },
                         BankCharge: { type: "number", defaultValue: 0 },
-
                         OceanLoss: { type: "number", defaultValue: 0 },
                         CPACharge: { type: "number", defaultValue: 0 },
                         HandelingCharge: { type: "number", defaultValue: 0 },
                         LightCharge: { type: "number", defaultValue: 0 },
                         Survey: { type: "number", defaultValue: 0 },
                         CostLiterExImport: { type: "number", defaultValue: 0 },
-
                         ExERLRate: { type: "number", defaultValue: 0 },
                         DutyPerLiter: { type: "number", defaultValue: 0 },
                         Refined: { type: "number", defaultValue: 0 },
                         Crude: { type: "number", defaultValue: 0 },
                         SDRate: { type: "number", defaultValue: 0 },
                         DutyInTariff: { type: "number", defaultValue: 0 },
-
                         ATRate: { type: "number", defaultValue: 0 },
                         AITRate: { type: "number", defaultValue: 0 },
                         VATRate: { type: "number", defaultValue: 0 },
                         ConversionFactorFixedValue: { type: "number", defaultValue: 0 },
                         VATRateFixed: { type: "number", defaultValue: 0 },
                         RiverDues: { type: "number", defaultValue: 0 },
-
                         TariffRate: { type: "number", defaultValue: 0 },
                         FobPriceBBL: { type: "number", defaultValue: 0 },
                         FreightUsd: { type: "number", defaultValue: 0 },
@@ -121,7 +117,6 @@
                         ProcessFee: { type: "number", defaultValue: 0 },
                         RcoTreatmentFee: { type: "number", defaultValue: 0 },
                         AbpTreatmentFee: { type: "number", defaultValue: 0 },
-
                         ProcessFeeRate: { type: "number", defaultValue: 0 },
                         RcoTreatmentFeeRate: { type: "number", defaultValue: 0 },
                         AbpTreatmentFeeRate: { type: "number", defaultValue: 0 },
@@ -366,8 +361,6 @@
                     attributes: { style: "text-align:right;" },
                     width: 120
                 },
-
-
                 {
                     field: "AbpTreatmentFee",
                     title: "Abp Treatment Fee",
@@ -452,7 +445,7 @@
             .attr("data-bind", "value:ProductName")
             .appendTo(wrapper);
 
-        // Create button inside an addon span eii monir..Monir
+        // Create button inside an addon span 
         $('<div class="input-group-append">')
             .append(
                 $('<button class="btn btn-outline-secondary" type="button">')
