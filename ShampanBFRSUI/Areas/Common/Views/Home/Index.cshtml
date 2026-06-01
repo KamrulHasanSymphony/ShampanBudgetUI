@@ -267,11 +267,12 @@
             });
             //------------Dashboard-------------//
             window.charts = {}
-            function loadBudgetData(companyId) {
+        function loadBudgetData(companyId) {
+            debugger;
                 $.ajax({
                     url: '/Home/GetBudgetPieChart',
                     type: 'GET',
-                    data: { companyId: companyId },
+                    data: { companyId: companyId },      
                     success: function (data) {
 
                         if (!data || data.length === 0) {

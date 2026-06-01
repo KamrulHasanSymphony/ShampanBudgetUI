@@ -240,7 +240,8 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 {
                     BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0",
                     CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "",
-
+                    FiscalYearId = "6",
+                    ReportType = "1st_6months_actual"
 
                 };
 
@@ -271,7 +272,7 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 {
                     BranchId = Session["CurrentBranch"] != null ? Session["CurrentBranch"].ToString() : "0",
                     CompanyId = Session["CompanyId"] != null ? Session["CompanyId"].ToString() : "",
-
+                 
 
                 };
 
