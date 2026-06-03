@@ -145,7 +145,7 @@
                 },
                 {
                     field: "Name",
-                    title: "SABRE Name",
+                    title: "SABRE+ Name",
                     //editor: segmentSelectorEditor,
                     //template: function (dataItem) {
                     //    return dataItem.Name || "";
@@ -154,7 +154,7 @@
                 },
                 {
                     field: "BanglaName",
-                    title: "SABRE Name(Bangla)",           
+                    title: "SABRE+ Name(Bangla)",           
                     width: 80
                 },
                 

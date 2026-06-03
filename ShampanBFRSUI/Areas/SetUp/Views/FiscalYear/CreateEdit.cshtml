@@ -51,16 +51,17 @@
             <div class="card-body">
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.YearPeriod)
+                @Html.HiddenFor(model => model.Year)
                 @Html.HiddenFor(model => model.Operation)
 
                 <div class="form-group row">
 
                     @*<div class="col-sm-2">
-                        @Html.LabelFor(model => model.Year)
-                        <div class="input-group">
-                            @Html.DropDownListFor(model => model.Year, new List<SelectListItem>(), "Select Year", new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                        </div>
-                    </div>*@
+                @Html.LabelFor(model => model.Year)
+                <div class="input-group">
+                    @Html.DropDownListFor(model => model.Year, new List<SelectListItem>(), "Select Year", new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                </div>
+            </div>*@
 
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.YearName)
@@ -101,7 +102,7 @@
 
                     <div class="col-sm-1">
                         <div class="input-group">
-                            @Html.CheckBoxFor(model => model.YearLock, new { placeholder = "Enter Remarks", @class = "md-md-2 form-control form-control-sm", style = "margin-top: 29px;position: absolute;width:25%;", id = "YearLockCheckbox" })
+                            @Html.CheckBoxFor(model => model.YearLock, new { placeholder = "Enter Remarks", @class = "md-md-2 form-control form-control-sm", style = "margin-top: 29px;position: absolute;width:25%;" })
                             @Html.LabelFor(model => model.YearLock, "Year Lock")
                         </div>
                     </div>

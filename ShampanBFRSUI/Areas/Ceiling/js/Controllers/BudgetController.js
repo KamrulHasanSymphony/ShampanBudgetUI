@@ -359,8 +359,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                         { field: "Id", hidden: true, sortable: true, width: 50 },
                         { field: "iBASCode", title: "iBAS Code", sortable: true, width: 150 },
                         { field: "iBASName", title: "iBAS Name", sortable: true, width: 150 },
-                        { field: "SabreCode", title: "Sabre Code", sortable: true, width: 150 },
-                        { field: "SabreName", title: "Sabre Name", sortable: true, width: 200 },
+                        { field: "SabreCode", title: "Sabre+ Code", sortable: true, width: 150 },
+                        { field: "SabreName", title: "Sabre+ Name", sortable: true, width: 200 },
                         { field: "InputTotal", title: "Input Total", sortable: true, width: 120, format: "{0:n2}" }
                     ]
                 });
@@ -490,8 +490,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                 { field: "Id", width: 50, hidden: true },
                 { field: "iBASCode", title: "iBAS Code", width: 200, editable: true },
                 { field: "iBASName", title: "iBAS Name", width: 200, editable: true },
-                { field: "SabreCode", title: "Sabre Code", width: 200, editable: true },
-                { field: "SabreName", title: "Sabre Name", width: 200, editable: true },
+                { field: "SabreCode", title: "Sabre+ Code", width: 200, editable: true },
+                { field: "SabreName", title: "Sabre+ Name", width: 200, editable: true },
                 {
                     field: "InputTotal",
                     title: "Input Total",
@@ -888,8 +888,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                     { field: "SabreId", hidden:true, sortable: true, width: 60, editable: false },  
                     { field: "iBASCode", title: "iBAS Code", sortable: true, width: 170, editable: false },
                     { field: "iBASName", title: "iBAS Name", sortable: true, width: 170, editable: false },
-                    { field: "SabreCode", title: "Sabre Code", sortable: true, width: 170, editable: false },
-                    { field: "SabreName", title: "Sabre Name", sortable: true, width: 170, editable: false },
+                    { field: "SabreCode", title: "Sabre+ Code", sortable: true, width: 170, editable: false },
+                    { field: "SabreName", title: "Sabre+ Name", sortable: true, width: 170, editable: false },
 
                     {
                         field: "InputTotal", title: "Input Value", sortable: true, width: 160, aggregates: ["sum"], format: "{0:n2}", groupFooterTemplate: "#=kendo.toString(sum, 'n2')#", attributes: { style: "text-align: right;" }

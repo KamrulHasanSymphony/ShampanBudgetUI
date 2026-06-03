@@ -198,9 +198,9 @@
                 { field: "iBASCode", title: "iBAS Code", width: 40, editable: false },
                 { field: "iBASName", title: "iBAS Name", width: 80, editable: false },
 
-                { field: "Code", title: "SABRE Code", width: 40, editable: false },
+                { field: "Code", title: "SABRE+ Code", width: 40, editable: false },
                 { field: "DepartmentId", hidden: true },
-                { field: "Name", title: "SABRE Name", width: 80, editable: false },
+                { field: "Name", title: "SABRE+ Name", width: 80, editable: false },
                 {
                     title: "&nbsp;",
                     width: 20,
@@ -300,8 +300,8 @@
                 { field: "Id", hidden: true },
                 { field: "iBASCode", title: "iBAS Code", width: 62},
                 { field: "iBASName", title: "iBas Name", width: 80 },
-                { field: "Code", title: "SABRE Code", width: 62},
-                { field: "Name", title: " SABRE Name", width: 80 },
+                { field: "Code", title: "SABRE+ Code", width: 62},
+                { field: "Name", title: " SABRE+ Name", width: 80 },
                 {
                     title: "Action",
                     width: 55,

@@ -9,7 +9,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         public int Id { get; set; }
 
         [Display(Name = "Year")]
-        public int Year { get; set; }
+        public int? Year { get; set; }
 
         [Display(Name = "Year Name")]
         public string? YearName { get; set; }
