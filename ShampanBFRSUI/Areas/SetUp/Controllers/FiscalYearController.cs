@@ -41,7 +41,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
             List<FiscalYearDetailVM> detailVMs = new List<FiscalYearDetailVM>();
             vm.Operation = "add";
             if (result.Status == "Success" && result.DataVM != null)
-            {           
+            {
                 vm = JsonConvert.DeserializeObject<List<FiscalYearVM>>(result.DataVM.ToString()).FirstOrDefault();
                 vm.Operation = "add";
             }
@@ -52,7 +52,7 @@ namespace ShampanBFRSUI.Areas.SetUp.Controllers
 
             return View("Create", vm);
 
-            //yearStartDate = new DateTime(DateTime.Now.Year, 7, 1).ToString("yyyy-MM-dd");
+            //yearStartDate = new DateTime(2023, 7, 1).ToString("yyyy-MM-dd");
             //vm.YearStart = yearStartDate;
             //year = DateTime.ParseExact(yearStartDate, "yyyy-MM-dd", null).Year;
             //vm.Year = year;
