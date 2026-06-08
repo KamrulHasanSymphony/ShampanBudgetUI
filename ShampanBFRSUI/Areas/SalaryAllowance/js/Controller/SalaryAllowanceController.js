@@ -9,7 +9,8 @@
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
         var getOperation = $("#Operation").val() || '';
-        getFiscalYearId = $("#FiscalYearId").val() || 0;
+        /* getFiscalYearId = $("#FiscalYearId").val() || 0;*/
+        getFiscalYearId = $("#SelectedFiscalYearId").val() || 0;
         getBudgetType = $("#BudgetType").val() || '';
 
         if (parseInt(getId) == 0 && getOperation == '') {
@@ -17,7 +18,7 @@
 
         };
 
-        GetFiscalYear();
+        GetFiscalYearComboBox();
         GenerateDatepicker();
         var $table = $('#details');
         var table = initEditTable($table, { searchHandleAfterEdit: false });
@@ -347,7 +348,33 @@
     }
  
    
-    function GetFiscalYear() {
+    //function GetFiscalYear() {
+    //    //make dropdown
+    //    var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
+    //        dataTextField: "Name",
+    //        dataValueField: "Id",
+    //        height: 400,
+    //        columns: [
+    //            { field: "Name", title: "Name", width: 150 }
+    //        ],
+    //        filter: "contains",
+    //        filterFields: ["Name"],
+    //        dataSource: {
+    //            transport: {
+    //                read: "/Common/Common/GetFiscalYearComboBox"
+    //            }
+    //        },
+    //        placeholder: "Select Fiscal Year",
+    //        value: "",
+    //        dataBound: function (e) {
+    //            if (getFiscalYearId) {
+    //                this.value(parseInt(getFiscalYearId));
+    //            }
+    //        }
+    //    }).data("kendoMultiColumnComboBox");
+    //}
+
+    function GetFiscalYearComboBox() {
         //make dropdown
         var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
             dataTextField: "Name",
@@ -372,7 +399,6 @@
             }
         }).data("kendoMultiColumnComboBox");
     }
-
     function GetBudgetTypeComboBox() {
         var BudgetTypeComboBox = $("#BudgetType").kendoMultiColumnComboBox({
             dataTextField: "Name",

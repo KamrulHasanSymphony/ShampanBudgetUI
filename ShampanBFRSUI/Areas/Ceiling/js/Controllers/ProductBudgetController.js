@@ -12,8 +12,9 @@ var ProductBudgetController = function (CommonService, CommonAjaxService) {
         var getId = $("#Id").val() || 0;
         var getOperation = $("#Operation").val() || '';
 
-        getFiscalYearId = $("#GLFiscalYearId").val() || 0;
+       // getFiscalYearId = $("#GLFiscalYearId").val() || 0;
         //getProductGroupId = $("#ProductGroupId").val() || 0;
+        getFiscalYearId = $("#SelectedFiscalYearId").val() || 0;
         getBudgetType = $("#BudgetType").val() || 0;
         getTransactionType = $("#TransactionType").val() || '';
         getChargeGroup = $("#ChargeGroup").val() || 0;

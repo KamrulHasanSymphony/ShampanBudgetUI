@@ -22,7 +22,9 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
         public ActionResult Index(bool branchChange = false)
         {
             try
+
             {
+                ViewBag.DashboardFiscalYearId = Convert.ToInt32(Session["DashboardFiscalYearId"] ?? 0);
                 if (User.Identity.IsAuthenticated || (Session["UserId"] != null && !string.IsNullOrEmpty(Session["UserId"].ToString())))
                 {
                     List<BranchProfileVM> branchProfiles = new List<BranchProfileVM>();
@@ -353,6 +355,19 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(e);
                 return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+
+
+        [HttpPost]
+        public JsonResult SetDashboardFiscalYear(int fiscalYearId)
+        {
+            Session["DashboardFiscalYearId"] = fiscalYearId;
+
+            return Json(new
+            {
+                success = true
+            });
         }
 
 

@@ -3,6 +3,7 @@ using ShampanBFRS.Models.Ceiling;
 using ShampanBFRS.Models.CommonVMs;
 using ShampanBFRS.Models.Helper;
 using ShampanBFRS.Models.KendoCommon;
+using ShampanBFRS.Models.SetUpVMs;
 using ShampanBFRS.Repo.Ceiling;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             vm.BudgetType = BudgetType;
             vm.TransactionDate = DateTime.Now.ToString("yyyy-MM-dd");
             vm.MenuType = MenuType;
+            vm.FiscalYearId = Convert.ToInt32(Session["DashboardFiscalYearId"] ?? 0);
 
             return View("Create", vm);
         }

@@ -39,7 +39,7 @@ namespace ShampanBFRSUI.Areas.Ceiling.Controllers
             vm.TransactionType = TransactionType;
             vm.BudgetSetNo = "1";
             vm.BudgetType = BudgetType;
-
+            vm.GLFiscalYearId = Convert.ToInt32(Session["DashboardFiscalYearId"] ?? 0);
             return View("Create", vm);
         }
 

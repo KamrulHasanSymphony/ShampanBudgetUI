@@ -43,7 +43,7 @@ namespace ShampanBFRSUI.Areas.SalaryAllowance.Controllers
             SalaryAllowanceHeaderVM vm = new SalaryAllowanceHeaderVM();
             vm.Operation = "add";
             vm.BudgetType = BudgetType;
-
+            vm.FiscalYearId = Convert.ToInt32(Session["DashboardFiscalYearId"] ?? 0);
             return View("Create", vm);
         }
 

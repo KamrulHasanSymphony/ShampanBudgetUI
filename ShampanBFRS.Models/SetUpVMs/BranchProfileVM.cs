@@ -10,6 +10,9 @@ namespace ShampanBFRS.Models.SetUpVMs
         [Display(Name = "Branch Code")]
         public string? Code { get; set; }
 
+        [Display(Name = "Fiscal Year")]
+        public int? FiscalYearId { get; set; }
+
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Name is required")]
         public string? Name { get; set; }
@@ -67,6 +70,7 @@ namespace ShampanBFRS.Models.SetUpVMs
         public int? BranchID { get; set; }
         public string BranchCode { get; set; }
         public string BranchName { get; set; }
+
 
     }
 

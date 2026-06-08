@@ -116,51 +116,64 @@
 
 <div class="container-fluid">
 
-    <div class="clearfix"></div>
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-md-12 text-center">
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h4>Total Budget (Fiscal Year)</h4>
-                    <canvas id="budgetChart" style="height:300px;"></canvas>
+                <div class="box box-primary"
+                     style="display:inline-block; min-width:170px;">
+                    <div class="box-body">
+                        <label for="FiscalYearId">Fiscal Year</label>
+                        <input id="FiscalYearId"name="FiscalYearId"style="width:100%;" />
+                    </div>
+
                 </div>
-            </div>
-        </div>
-        
 
-
-    </div>
-    <div class="row">
-
-        <div class="col-md-4">
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h4>Total Salary Allowance (Fiscal Year)</h4>
-                    <canvas id="salaryAllowanceChart" style="height:300px;"></canvas>
-                </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h4>Total Product Budget (Fiscal Year)</h4>
-                    <canvas id="productBudgetChart" style="height:300px;"></canvas>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h4>Total Budget (Fiscal Year)</h4>
+                        <canvas id="budgetChart" style="height:300px;"></canvas>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-        <div class="col-md-4">
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h4>Total Sale Budget (Fiscal Year)</h4>
-                    <canvas id="saleBudgetChart" style="height:300px;"></canvas>
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h4>Total Salary Allowance (Fiscal Year)</h4>
+                        <canvas id="salaryAllowanceChart" style="height:300px;"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
+            <div class="col-md-4">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h4>Total Product Budget (Fiscal Year)</h4>
+                        <canvas id="productBudgetChart" style="height:300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h4>Total Sale Budget (Fiscal Year)</h4>
+                        <canvas id="saleBudgetChart" style="height:300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
         <div class="modal fade" id="branchProfiles" tabindex="-1" role="dialog" aria-labelledby="Branch Profiles" data-backdrop="static">
@@ -186,11 +199,7 @@
                 </div>
             </div>
         </div>
-
-
-    </div>
-
-
+</div>
 
     @section scripts{
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -198,17 +207,19 @@
 
         <script>
 
-    $(document).ready(function () {
-
-    // Dashboard Initialization
-    DashController.init(@Model.Count);
-    var currentBranch = '@Session["CurrentBranch"]';
-    if (currentBranch && currentBranch !== "0") {
-        loadBudgetData();
-        loadSalaryAllowanceData();
-        loadProductBudgetData();
-        loadSaleBudgetData();
-    }
+            $(document).ready(function () {
+               /* var getFiscalYearId = 0;*/
+                var getFiscalYearId = parseInt('@(ViewBag.DashboardFiscalYearId ?? 0)') || 0;
+            // Dashboard Initialization
+            DashController.init(@Model.Count);
+            var currentBranch = '@Session["CurrentBranch"]';
+        if (currentBranch && currentBranch !== "0") {
+            loadBudgetData();
+            loadSalaryAllowanceData();
+            loadProductBudgetData();
+            loadSaleBudgetData();
+            GetFiscalYearComboBox();
+        }
 
             // TempData Message Handling
             var message = '@(TempData["DbUpdate"])';
@@ -272,7 +283,7 @@
                 $.ajax({
                     url: '/Home/GetBudgetPieChart',
                     type: 'GET',
-                    data: { companyId: companyId },      
+                    data: { companyId: companyId },
                     success: function (data) {
 
                         if (!data || data.length === 0) {
@@ -364,7 +375,7 @@
                     }
                 });
             }
-            
+
             //For SalaryAllowance
             function loadSalaryAllowanceData(companyId) {
                 $.ajax({
@@ -644,7 +655,104 @@
                     }
                 });
             }
+            //function GetFiscalYearComboBox() {
+            //    var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
+            //        dataTextField: "Name",
+            //        dataValueField: "Id",
+            //        height: 400,
+            //        columns: [
+            //            { field: "Name", title: "Name", width: 150 }
+            //        ],
+            //        filter: "contains",
+            //        filterFields: ["Name"],
+            //        dataSource: {
+            //            transport: {
+            //                read: "/Common/Common/GetFiscalYearComboBox"
+            //            }
+            //        },
+            //        placeholder: "Select Fiscal Year",
+            //        value: "",
+            //        dataBound: function (e) {
+            //            if (getFiscalYearId) {
+            //                this.value(parseInt(getFiscalYearId));
+            //            }
+            //        }
+            //    }).data("kendoMultiColumnComboBox");
+            //};
 
+                function GetFiscalYearComboBox() {
+
+                    $("#FiscalYearId").kendoMultiColumnComboBox({
+                        dataTextField: "Name",
+                        dataValueField: "Id",
+                        height: 400,
+                        columns: [
+                            { field: "Name", title: "Name", width: 150 }
+                        ],
+                        filter: "contains",
+                        filterFields: ["Name"],
+                        dataSource: {
+                            transport: {
+                                read: "/Common/Common/GetFiscalYearComboBox"
+                            }
+                        },
+                        placeholder: "Select Fiscal Year",
+
+             
+                        dataBound: function () {
+
+                            var data = this.dataSource.data();
+
+                            if (parseInt(getFiscalYearId) > 0) {
+                                this.value(getFiscalYearId);
+                                return;
+                            }
+
+                            if (data.length > 0) {
+
+                                var currentYear = new Date().getFullYear();
+                                var match = data.find(function (item) {
+                                    if (!item.Name) return false;
+                                    var parts = item.Name.split('-');
+                                    if (parts.length !== 2) return false;
+                                    var endYear = parseInt(parts[1]);
+                                    return currentYear === endYear;
+                                });
+
+                                var fiscalYearId = match ? match.Id : data[data.length - 1].Id;
+
+                                this.value(fiscalYearId);
+                                getFiscalYearId = fiscalYearId;
+
+                                $.post('/Home/SetDashboardFiscalYear', {
+                                    fiscalYearId: fiscalYearId
+                                });
+                            }
+                        },
+                        change: function (e) {
+                            if (e.sender.value() == getFiscalYearId) {
+                                return;
+                            }
+                            var fiscalYearId = this.value();
+                            getFiscalYearId = fiscalYearId;
+
+                            $.ajax({
+                                url: '/Home/SetDashboardFiscalYear',
+                                type: 'POST',
+                                data: {
+                                    fiscalYearId: fiscalYearId
+                                },
+                                success: function () {
+
+                                    loadBudgetData();
+                                    loadSalaryAllowanceData();
+                                    loadProductBudgetData();
+                                    loadSaleBudgetData();
+                                }
+                            });
+                        }
+                    });
+                }
 
 });
         </script>

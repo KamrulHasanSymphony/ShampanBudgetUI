@@ -6,7 +6,8 @@
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
         var getOperation = $("#Operation").val() || '';
-        getFiscalYearId = $("#FiscalYearId").val() || 0;
+        /* getFiscalYearId = $("#FiscalYearId").val() || 0;*/
+        getFiscalYearId = $("#SelectedFiscalYearId").val() || 0;
         getBudgetType = $("#BudgetType").val() || '';
 
         if (parseInt(getId) == 0 && getOperation == '') {
@@ -14,7 +15,7 @@
 
         };
 
-        GetFiscalYear();
+        GetFiscalYearComboBox();
         GenerateDatepicker();
 
         var IsPost = $('#IsPost').val();
@@ -387,7 +388,7 @@
         $row.find(".td-TotalValueTK_LAC").text(totalValueTK_LAC.toFixed(decimalPlace));
     }
 
-    function GetFiscalYear() {
+    function GetFiscalYearComboBox() {
         //make dropdown
         var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
             dataTextField: "Name",

@@ -45,7 +45,7 @@ namespace ShampanBFRSUI.Areas.Sale.Controllers
             SaleHeaderVM vm = new SaleHeaderVM();
             vm.Operation = "add";
             vm.BudgetType = BudgetType;
-
+            vm.FiscalYearId = Convert.ToInt32(Session["DashboardFiscalYearId"] ?? 0);
             return View("Create", vm);
         }
 

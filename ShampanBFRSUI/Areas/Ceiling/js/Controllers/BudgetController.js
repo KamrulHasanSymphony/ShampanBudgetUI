@@ -8,7 +8,8 @@ var BudgetController = function (CommonService, CommonAjaxService) {
     var init = function () {
         var getId = $("#Id").val() || 0;
         var getOperation = $("#Operation").val() || '';
-        getFiscalYearId = $("#FiscalYearId").val() || 0;
+       /* getFiscalYearId = $("#FiscalYearId").val() || 0;*/
+        getFiscalYearId = $("#SelectedFiscalYearId").val() || 0;
         getBudgetType = $("#BudgetType").val() || 0;
         getTransactionType = $("#TransactionType").val() || '';
 
@@ -103,7 +104,32 @@ var BudgetController = function (CommonService, CommonAjaxService) {
 
 
 
+        //function GetFiscalYearComboBox() {
+        //    var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
+        //        dataTextField: "Name",
+        //        dataValueField: "Id",
+        //        height: 400,
+        //        columns: [
+        //            { field: "Name", title: "Name", width: 150 }
+        //        ],
+        //        filter: "contains",
+        //        filterFields: ["Name"],
+        //        dataSource: {
+        //            transport: {
+        //                read: "/Common/Common/GetFiscalYearComboBox"
+        //            }
+        //        },
+        //        placeholder: "Select Fiscal Year",
+        //        value: "",
+        //        dataBound: function (e) {
+        //            if (getFiscalYearId) {
+        //                this.value(parseInt(getFiscalYearId));
+        //            }
+        //        }
+        //    }).data("kendoMultiColumnComboBox");
+        //};
         function GetFiscalYearComboBox() {
+            //make dropdown
             var FiscalYearComboBox = $("#FiscalYearId").kendoMultiColumnComboBox({
                 dataTextField: "Name",
                 dataValueField: "Id",
@@ -126,11 +152,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
                     }
                 }
             }).data("kendoMultiColumnComboBox");
-        };
-        
-
-   
-
+        }
         function validateAndFetchBudgetData() {
 
             GetBudgetDetailsData();
@@ -545,7 +567,7 @@ var BudgetController = function (CommonService, CommonAjaxService) {
     };
     
     function save() {
-
+        debugger;
         var validator = $("#frmEntry").validate();
         var formData = new FormData();
         var model = serializeInputs("frmEntry");

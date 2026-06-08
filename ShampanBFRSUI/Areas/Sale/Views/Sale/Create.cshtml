@@ -97,6 +97,7 @@
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.Operation)
                 @Html.HiddenFor(model => model.BudgetType)
+                @Html.Hidden("SelectedFiscalYearId", Model.FiscalYearId)
                 @Html.Hidden("detailsListJson", JsonConvert.SerializeObject(Model.SaleDetail ?? new List<ShampanBFRS.Models.Sale.SaleDetailVM>()))
 
 
@@ -123,7 +124,7 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.FiscalYearId)
                         <div class="input-group">
-                            @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "required form-control form-control-sm" })
+                            @Html.TextBoxFor(model => model.FiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "required form-control form-control-sm", @readonly = "readonly" })
                         </div>
                         <span id="titleError2" class="text-danger" style="display:none;"></span>
                     </div>

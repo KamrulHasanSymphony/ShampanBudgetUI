@@ -76,7 +76,7 @@
                             @Html.HiddenFor(model => model.TransactionType)
                             @Html.HiddenFor(model => model.BudgetType)
                             @Html.HiddenFor(model => model.BudgetSetNo)
-
+                            @Html.Hidden("SelectedFiscalYearId", Model.GLFiscalYearId)
                             <div class="form-group row">
 
                                 @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
@@ -103,7 +103,7 @@
                                     <div class="col-sm-2">
                                         @Html.LabelFor(model => model.GLFiscalYearId)
                                         <div class="input-group">
-                                            @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "required form-control form-control-sm" })
+                                            @Html.TextBoxFor(model => model.GLFiscalYearId, new { placeholder = "Enter Fiscal Year", @class = "required form-control form-control-sm", @readonly = "readonly" })
                                         </div>
                                         <span id="titleError2" class="text-danger" style="display:none;"></span>
                                     </div>
