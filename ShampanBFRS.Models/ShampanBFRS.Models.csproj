@@ -86,7 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountVMs\ApplicationUser.cs" />
+    <Compile Include="Ceiling\BudgetOtherDepartmentDetailVM.cs" />
     <Compile Include="Ceiling\BudgetDetailVM.cs" />
+    <Compile Include="Ceiling\BudgetOtherDepartmentHeaderVM.cs" />
     <Compile Include="Ceiling\BudgetHeaderVM.cs" />
     <Compile Include="Ceiling\CeilingDetailVM.cs" />
     <Compile Include="Ceiling\CeilingVM.cs" />

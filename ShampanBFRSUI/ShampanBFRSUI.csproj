@@ -404,6 +404,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Areas\Ceiling\CeilingAreaRegistration.cs" />
     <Compile Include="Areas\Ceiling\Controllers\BudgetAllController.cs" />
+    <Compile Include="Areas\Ceiling\Controllers\BudgetOtherDepartmentController.cs" />
     <Compile Include="Areas\Ceiling\Controllers\CeilingController.cs" />
     <Compile Include="Areas\Ceiling\Controllers\BudgetController.cs" />
     <Compile Include="Areas\Ceiling\Controllers\ProductBudgetController.cs" />
@@ -424,6 +425,7 @@
     <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Areas\SalaryAllowance\Controllers\PersonnelCategoriesController.cs" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetAllController.js" />
+    <Content Include="Areas\Ceiling\js\Controllers\BudgetOtherDepartmentController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetTransferController.js" />
     <Content Include="Areas\Reports\js\ReportTypeController.js" />
@@ -2687,6 +2689,8 @@
     <Content Include="Areas\Ceiling\Views\BudgetAll\Index.cshtml" />
     <Content Include="Areas\Ceiling\Views\BudgetAll\Create.cshtml" />
     <Content Include="Areas\SetUp\Views\ChargeHeader\_CreatePartial.cshtml" />
+    <Content Include="Areas\Ceiling\Views\BudgetOtherDepartment\Index.cshtml" />
+    <Content Include="Areas\Ceiling\Views\BudgetOtherDepartment\Create.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />

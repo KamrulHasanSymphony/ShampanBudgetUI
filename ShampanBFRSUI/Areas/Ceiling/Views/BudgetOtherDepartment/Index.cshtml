@@ -1,0 +1,60 @@
+﻿@model ShampanBFRS.Models.Ceiling.BudgetOtherDepartmentHeaderVM
+@{
+    ViewBag.Title = "Initial Budget List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(model => model.TransactionType)
+@Html.HiddenFor(model => model.MenuType)
+@Html.HiddenFor(model => model.BudgetType)
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Initial Budget(@Model.BudgetType)</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header p-2">
+            <button type="button" title="Add New" data-url="/Ceiling/BudgetOtherDepartment/Create?TransactionType=@Model.TransactionType&BudgetType=@Model.BudgetType"
+                    onclick="GoTo(this)" class="button NewButton addNewButton">
+                New
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card card-secondary">
+        <div class="card-header">
+            <h3 class="card-title">
+                List Of Data
+            </h3>
+        </div>
+        <div class="card-body">
+            <div id="GridDataList"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Areas/Common/js/Services/CommonService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Ceiling/js/Controllers/BudgetOtherDepartmentController.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            BudgetOtherDepartmentController.init();
+        });
+    </script>
+}
+
+
+
+
