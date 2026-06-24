@@ -1,0 +1,85 @@
+﻿@model ShampanBFRS.Models.SetUpVMs.OrganogramSettingsVM
+
+@using (Html.BeginForm("Edit", "OrganogramSetting", FormMethod.Post, new { @Id = "frmSettings" }))
+{
+    <div class="row mt-1">
+        <div class="col-3">
+            @Html.HiddenFor(model => model.Id)
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Module, new { @class = " required form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.Module)
+            </div>
+        </div>
+
+        <div class="col-3 ">
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.TransactionType, new { @class = " required form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.TransactionType)
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="editor-field">
+
+                <select asp-for="ApprovalRequired"
+                        name="ApprovalRequired"
+                        class="required form-control">
+
+                    @foreach (var option in Model.ApprovalOptions)
+                    {
+                        <option value="@option.Key"
+                                @(Model.ApprovalRequired == option.Key ? "selected" : "")>
+                            @option.Value
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="ApprovalRequired"
+                      class="text-danger">
+                </span>
+
+            </div>
+        </div>
+
+
+        <div class="col-2">
+            <div class="editor-field">
+
+                <select asp-for="ApprovalLevel"
+                        name="ApprovalLevel"
+                        class="required form-control">
+
+
+                    @foreach (var option in Model.ApprovalLevels)
+                    {
+
+                        <option value="@option.Key"
+                                @(Model.ApprovalLevel.ToString() == option.Key ? "selected" : "")>
+
+                            @option.Value
+
+                        </option>
+
+                    }
+
+
+                </select>
+
+
+                <span asp-validation-for="ApprovalLevel"
+                      class="text-danger">
+                </span>
+
+
+            </div>
+        </div>
+        <div class="col-1">
+            <button type="submit" onclick="pageSubmit('frmSettings');" value="Update" class="btn btn-success">Update</button>
+        </div>
+    </div>
+}
+
+
+
+
+

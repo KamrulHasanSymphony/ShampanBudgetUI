@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ShampanBFRS.Models.SetUpVMs.OrganogramSettingsVM>
+@{
+    ViewBag.Title = "Organogram Settings Model Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-secondary">
+
+                <div class="card-header">
+                    <p class="card-title">
+                        <strong>All Organogram Settings</strong>
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <div class="organorgamFields">
+                        <div class="organorgamTable">
+
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="editor-label">
+                                        <label> Module </label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="editor-label">
+                                        <label> Transaction Type </label>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="editor-label">
+                                        <label>Approval Required</label>
+                                        <span class="text-red">*</span>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="editor-label">
+                                        <label>Approval Level</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @foreach (var item in Model)
+                            {
+                                @Html.Partial("~/Areas/SetUp/Views/OrganogramSetting/_OrganogramSettings.cshtml", item);
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        searchButton.addEventListener("click", function () {
+            var url = "/OrganogramSetting/UpdateOrganogram";
+            window.location.href = url;
+        });
+        var message = '@(TempData["UpdateOrganogram"])';
+        if (message) {
+            alert(message);
+            if (window.location.search.includes('message=')) {
+                var urlWithoutMessage = window.location.origin + window.location.pathname;
+                window.location.href = urlWithoutMessage;
+            }
+
+        };
+
+    });
+</script>
+
+
+

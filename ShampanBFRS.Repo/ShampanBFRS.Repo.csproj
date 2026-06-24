@@ -64,7 +64,9 @@
     <Compile Include="SalaryAllowance\SalaryAllowanceRepo.cs" />
     <Compile Include="Sale\SaleRepo.cs" />
     <Compile Include="SetUpRepo\ChargeHeaderRepo.cs" />
+    <Compile Include="SetUpRepo\ApprovalOrganogramRepo.cs" />
     <Compile Include="SetUpRepo\ProductGroupRepo.cs" />
+    <Compile Include="SetUpRepo\OrganogramSettingRepo.cs" />
     <Compile Include="SetUpRepo\StructureRepo.cs" />
     <Compile Include="SetUpRepo\SegementRepo.cs" />
     <Compile Include="SetUpRepo\COARepo.cs" />

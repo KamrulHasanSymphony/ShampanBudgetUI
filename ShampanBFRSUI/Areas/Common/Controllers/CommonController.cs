@@ -101,7 +101,11 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             return PartialView("_getPersonnelCategoriesList");
         }
 
-
+        [HttpGet]
+        public ActionResult _getUserNameList()
+        {
+            return PartialView("_getUserNameList");
+        }
 
         public ActionResult _getProductBudget()
         {
@@ -777,7 +781,28 @@ namespace ShampanBFRSUI.Areas.Common.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult UserNameList()
+        {
+            try
+            {
+                List<UserInformationVM> lst = new List<UserInformationVM>();
+                CommonVM param = new CommonVM();
 
+                ResultVM result = _repo.UserNameList(param);
+
+                if (result.Status == "Success" && result.DataVM != null)
+                {
+                    lst = JsonConvert.DeserializeObject<List<UserInformationVM>>(result.DataVM.ToString());
+                }
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(e);
+                return Json(new { Error = true, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
 
     }

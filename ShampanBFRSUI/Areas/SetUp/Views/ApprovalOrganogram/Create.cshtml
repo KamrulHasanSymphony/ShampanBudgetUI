@@ -1,0 +1,261 @@
+﻿@using Newtonsoft.Json
+@model ShampanBFRS.Models.SetUpVMs.ApprovalOrganogramVM
+
+@{
+    ViewBag.Title = "Approval Organogram Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var serial = 1;
+}
+
+<style>
+    .k-dropdown-wrap .k-input {
+        line-height: 1.6em !important;
+    }
+
+    .k-picker-wrap.k-state-default {
+        width: 90% !important;
+    }
+
+    .hidden-field {
+        display: none;
+    }
+</style>
+@*<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+                {
+                    <h1 class="m-0"> Salary Allowance  Edit (@Model.BudgetType) </h1>
+                }
+                else
+                {
+                    <h1 class="m-0"> Salary Allowance Add (@Model.BudgetType)</h1>
+                }
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+<div class="card">
+    <div class="card-header p-2">
+
+        @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+        {
+            <button type="button" class="button btnsave sslUpdate">Update</button>
+
+            <button style="float:right;" type="button" title="Add New"
+                    data-url="/SetUp/ApprovalOrganogram/Create"
+                    onclick="GoTo(this)"
+                    class="button NewButton addNewButton">
+                New
+            </button>
+        }
+        else
+        {
+            <div style="display:none;" class="divUpdate">
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                <button style="float:right;" type="button" title="Add New"
+                        data-url="/SetUp/ApprovalOrganogram/Create"
+                        onclick="GoTo(this)"
+                        class="button NewButton addNewButton">
+                    New
+                </button>
+            </div>
+
+            <div class="divSave">
+                <button class="button btnsave sslSave" type="button" id="">
+                    Save
+                </button>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <form id="frmEntry">
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Approval Organogram Info </h3>
+            </div>
+            <div class="card-body">
+
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.TransactionType)
+                @Html.HiddenFor(model => model.Operation)
+                @Html.Hidden("detailsListJson", JsonConvert.SerializeObject(Model.ApprovalOrganogramDetails ?? new List<ShampanBFRS.Models.SetUpVMs.ApprovalOrganogramDetailVM>()))
+
+                <div class="form-group row">
+
+
+
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.Module)
+                        <div class="input-group">
+                            @Html.TextBoxFor(model => model.Module, new { placeholder = "Enter Module", @class = "required form-control form-control-sm" })
+                        </div>
+
+                        <span id="titleError2" class="text-danger" style="display:none;"></span>
+
+                    </div>
+
+                    @*<div class="col-sm-2">
+                @Html.LabelFor(model => model.TransactionType)
+                <div class="input-group">
+                    @Html.TextBoxFor(model => model.TransactionType, new { placeholder = "Enter Transaction Type", @class = "required form-control form-control-sm" })
+                </div>
+                <span id="titleError2" class="text-danger" style="display:none;"></span>
+
+            </div>*@
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="card card-secondary">
+
+            <div class="card-header">
+                <h3 class="card-title"> Details</h3>
+            </div>
+
+            <div class="card-body">
+                <div id="kDetails"></div>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div id="UserNameWindow" style="display:none;">
+        <div id="UserNamegrid"></div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header p-2">
+
+            @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
+            {
+                <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                <button style="float:right;" type="button" title="Add New"
+                        data-url="/SetUp/ApprovalOrganogram/Create"
+                        onclick="GoTo(this)"
+                        class="button NewButton addNewButton">
+                    New
+                </button>
+            }
+            else
+            {
+                <div style="display:none;" class="divUpdate">
+                    <button type="button" class="button btnsave sslUpdate">Update</button>
+
+                    <button style="float:right;" type="button" title="Add New"
+                            data-url="/SetUp/ApprovalOrganogram/Create"
+                            onclick="GoTo(this)"
+                            class="button NewButton addNewButton">
+                        New
+                    </button>
+                </div>
+
+                <div class="divSave">
+                    <button class="button btnsave sslSave" type="button" id="">
+                        Save
+                    </button>
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+    <div class="card card-secondary auditcard">
+
+        <div class="card-header">
+            <h3 class="card-title">Audit Details</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="row">
+                        @Html.Label("Type")
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.Label("Created")
+                        </div>
+                        <div class="col-sm-3">
+                            @Html.Label("Updated")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @Html.Label("By")<br /><div class="clearfix">&nbsp;</div>
+                            @Html.Label("On")<br /><div class="clearfix">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(model => model.CreatedBy, new { @class = "CreatedBy  form-control form-control-sm ", @readonly = "readonly" })
+                            <div class="clearfix">&nbsp;</div>
+                            @Html.TextBoxFor(model => model.CreatedOn, new { @class = "CreatedOn  form-control form-control-sm ", @readonly = "readonly" })
+                        </div>
+
+                        <div class="col-sm-3">
+                            @Html.TextBoxFor(model => model.LastModifiedBy, new { @class = "LastUpdateBy  form-control form-control-sm lub", @readonly = "readonly" })
+                            <div class="clearfix">&nbsp;</div>
+                            @Html.TextBoxFor(model => model.LastModifiedOn, new { @class = "LastUpdateOn  form-control form-control-sm luo", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+
+
+    <script src="~/Areas/Common/js/Services/CommonService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonValidationHelper.js"></script>
+    <script src="~/Areas/SetUp/js/Controller/ApprovalOrganogramController.js"></script>
+    <script>
+        $(document).ready(function () {
+            ApprovalOrganogramController.init();
+        });
+
+    </script>
+
+
+}
+
+
+

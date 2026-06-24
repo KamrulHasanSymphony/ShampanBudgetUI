@@ -112,6 +112,8 @@
     <Compile Include="SalaryAllowance\SalaryAllowanceHeaderVM.cs" />
     <Compile Include="Sale\SaleDetailVM.cs" />
     <Compile Include="Sale\SaleHeaderVM.cs" />
+    <Compile Include="SetUpVMs\ApprovalOrganogramDetailVM.cs" />
+    <Compile Include="SetUpVMs\ApprovalOrganogramVM.cs" />
     <Compile Include="SetUpVMs\ChargeDetailVM.cs" />
     <Compile Include="SetUpVMs\ChargeGroupVM.cs" />
     <Compile Include="SetUpVMs\ChargeHeaderVM.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="SetUpVMs\ProductGroupVM.cs" />
     <Compile Include="SetUpVMs\SabresVM.cs" />
     <Compile Include="SetUpVMs\SegmentVM.cs" />
+    <Compile Include="SetUpVMs\OrganogramSettingsVM.cs" />
     <Compile Include="SetUpVMs\StructureDetailsVM.cs" />
     <Compile Include="SetUpVMs\StructureVM.cs" />
     <Compile Include="SetUpVMs\UserBranchProfileVM.cs" />
