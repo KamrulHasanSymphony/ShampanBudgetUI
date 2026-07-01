@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ceiling\ApprovalRepo.cs" />
     <Compile Include="Ceiling\BudgetOtherDepartmentRepo.cs" />
     <Compile Include="Ceiling\CeilingRepo.cs" />
     <Compile Include="Ceiling\BudgetRepo.cs" />

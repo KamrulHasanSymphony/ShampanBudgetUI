@@ -1,0 +1,51 @@
+﻿@model ShampanBFRS.Models.Ceiling.BudgetOtherDepartmentHeaderVM
+@{
+    ViewBag.Title = "Self Index List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(model => model.TransactionType)
+@Html.HiddenFor(model => model.MenuType)
+@Html.HiddenFor(model => model.BudgetType)
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Initial Budget(@Model.BudgetType)</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="card card-secondary">
+        <div class="card-header">
+            <h3 class="card-title">
+                List Of Data
+            </h3>
+        </div>
+        <div class="card-body">
+            <div id="GridDataList"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Areas/Common/js/Services/CommonService.js"></script>
+    <script src="~/Areas/Common/js/Services/CommonAjaxService.js"></script>
+    <script src="~/Areas/Ceiling/js/Controllers/ApprovalController.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            ApprovalController.init();
+        });
+    </script>
+}
+
+
+
+
+
+

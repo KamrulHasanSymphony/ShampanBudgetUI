@@ -405,6 +405,7 @@
     <Compile Include="Areas\Ceiling\CeilingAreaRegistration.cs" />
     <Compile Include="Areas\Ceiling\Controllers\BudgetOtherDepartmentAllController.cs" />
     <Compile Include="Areas\Ceiling\Controllers\BudgetAllController.cs" />
+    <Compile Include="Areas\Ceiling\Controllers\ApprovalController.cs" />
     <Compile Include="Areas\Ceiling\Controllers\BudgetOtherDepartmentController.cs" />
     <Compile Include="Areas\Ceiling\Controllers\CeilingController.cs" />
     <Compile Include="Areas\Ceiling\Controllers\BudgetController.cs" />
@@ -427,6 +428,7 @@
     <Compile Include="Areas\SalaryAllowance\Controllers\PersonnelCategoriesController.cs" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetOtherDepartmentAllController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetAllController.js" />
+    <Content Include="Areas\Ceiling\js\Controllers\ApprovalController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetOtherDepartmentController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetController.js" />
     <Content Include="Areas\Ceiling\js\Controllers\BudgetTransferController.js" />
@@ -2701,6 +2703,8 @@
     <Content Include="Areas\SetUp\Views\ApprovalOrganogram\Create.cshtml" />
     <Content Include="Areas\Ceiling\Views\BudgetOtherDepartmentAll\Index.cshtml" />
     <Content Include="Areas\Ceiling\Views\BudgetOtherDepartmentAll\Create.cshtml" />
+    <Content Include="Areas\Ceiling\Views\Approval\Index.cshtml" />
+    <Content Include="Areas\Ceiling\Views\Approval\Create.cshtml" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all-vsdoc.js" />
     <None Include="Content\assets\kendoUI2021\kendo\kendo.all.min.intellisense.js" />
     <Content Include="Content\assets\kendoUI2021\kendo\kendo.all.min.js" />

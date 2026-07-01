@@ -7,11 +7,13 @@
         decimalPlace = $("#DecimalPlace").val() || 2;
         var getId = $("#Id").val() || 0;
         getModuleType = $("#Module").val() || 0;
+        getTransactionType = $("#TransactionType").val() || 0;
         var getOperation = $("#Operation").val() || '';
        
 
         if (getOperation != "") {
             GetModuleComboBox();
+            GetTransactionType();
         }
 
         if (parseInt(getId) == 0 && getOperation == '') {
@@ -99,8 +101,8 @@
                         ApprovalOrganogramId: { type: "number", defaultValue: null },
                         UserId: { type: "number", defaultValue: 0 },
                         UserName: { type: "string", defaultValue: "" },
-                        ApprovalLevel: { type: "number", defaultValue: 0 }
-             
+                        //ApprovalLevel: { type: "number", defaultValue: 0 }
+                        ApprovalLevel: { type: "string", defaultValue: "1" }
                     }
                 }
             },
@@ -157,14 +159,7 @@
                     attributes: { style: "text-align:right;" },
                     width: 150
                 }, 
-                //{
-                //    field: "ApprovalLevel",
-                //    title: "Approval Level",
-                //    editable: false,
-                //    format: "{0:n2}",
-                //    attributes: { style: "text-align:right;" },
-                //    width: 150
-                //},
+           
                 {
                     field: "ApprovalLevel",
                     title: "Approval Level",
@@ -190,9 +185,12 @@
 
 
     };
+    var selectedModule = "";
+    var selectedTransactionType = "";
+
     function GetModuleComboBox() {
 
-        var ModuleComboBox = $("#Module").kendoMultiColumnComboBox({
+        $("#Module").kendoMultiColumnComboBox({
             dataTextField: "Name",
             dataValueField: "Name",
             height: 400,
@@ -221,23 +219,72 @@
             },
             placeholder: "Select Module",
             value: "",
-            dataBound: function (e) {
+            dataBound: function () {
 
-                if (getModuleType && getModuleType !== 0) {
+                if (getModuleType && getModuleType !== "0") {
                     this.value(getModuleType);
+                    selectedModule = getModuleType;                    
                 }
             },
-            change: function (e) {
-                var selectedDiseaseId = this.value();
-                console.log("Selected Disease ID:", selectedDiseaseId);
+            change: function () {
+                selectedModule = this.value();
+                moduleName = selectedModule;
+                var transactionCombo = $("#TransactionType").data("kendoMultiColumnComboBox");
+
+                transactionCombo.dataSource.read().then(function () {
+                    transactionCombo.value(selectedModule);
+                    transactionCombo.trigger("change");
+                });
             }
-        }).data("kendoMultiColumnComboBox");
+        });
+    }
+
+
+    function GetTransactionType(moduleName) {
+
+        $("#TransactionType").kendoMultiColumnComboBox({
+            dataTextField: "Name",
+            dataValueField: "Name",
+            height: 400,
+            columns: [
+                { field: "Name", title: "Name", width: 150 }
+            ],
+            filter: "contains",
+            filterFields: ["Name"],
+            autoBind: true,
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Common/Common/GetEnumTypeList",
+                        data: function () {
+                            return {
+                                EnumType: "TransactionType",
+                                Module: moduleName
+                            };
+                        },
+                        dataType: "json"
+                    }
+                }
+            },
+            placeholder: "Select Transaction Type",
+            value: "",
+            dataBound: function () {
+                debugger;
+                var combo = this;
+                var data = combo.dataSource.data();
+
+                if (getTransactionType && getTransactionType !== "0") {
+                    combo.value(getTransactionType);
+                    selectedTransactionType = getTransactionType;
+                }
+            }
+        });
     }
 
     // 👉 GRID EDITOR FUNCTION (PUT HERE)
     function ApprovalLevelEditor(container, options) {
 
-        $('<input name="' + options.field + '"/>')
+        var input = $('<input name="' + options.field + '"/>')
             .appendTo(container)
             .kendoDropDownList({
                 dataSource: [
@@ -248,8 +295,17 @@
                     { text: "5", value: "5" }
                 ],
                 dataTextField: "text",
-                dataValueField: "value"
+                dataValueField: "value",
+                value: options.model.ApprovalLevel || "1"
             });
+
+        var ddl = input.data("kendoDropDownList");
+
+        // 🔥 ensure default always set
+        if (!options.model.ApprovalLevel || options.model.ApprovalLevel === "0") {
+            ddl.value("1");
+            options.model.set("ApprovalLevel", "1");
+        }
     }
     function UserNameSelectorEditor(container, options) {
         var wrapper = $('<div class="input-group input-group-sm full-width">').appendTo(container);
@@ -629,7 +685,8 @@
                     ApprovalOrganogramId: item.Id,
                     UserId: item.UserId,
                     UserName: item.FullName,
-                    ApprovalLevel: item.ApprovalLevel  
+                    //ApprovalLevel: item.ApprovalLevel  
+                    ApprovalLevel: (!item.ApprovalLevel || item.ApprovalLevel === "0")? "1": item.ApprovalLevel
                 });
             }
         }

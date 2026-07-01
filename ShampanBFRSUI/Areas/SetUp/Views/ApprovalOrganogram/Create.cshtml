@@ -23,28 +23,6 @@
         display: none;
     }
 </style>
-@*<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                @if (Model.Operation.Equals("update", StringComparison.OrdinalIgnoreCase))
-                {
-                    <h1 class="m-0"> Salary Allowance  Edit (@Model.BudgetType) </h1>
-                }
-                else
-                {
-                    <h1 class="m-0"> Salary Allowance Add (@Model.BudgetType)</h1>
-                }
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li id="btnBack"><img src="~/Content/css/ButtonsIcons/back-icon.png" title="Click for Go Back" /></li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>*@
-
 
 <div class="card">
     <div class="card-header p-2">
@@ -93,7 +71,6 @@
             <div class="card-body">
 
                 @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.TransactionType)
                 @Html.HiddenFor(model => model.Operation)
                 @Html.Hidden("detailsListJson", JsonConvert.SerializeObject(Model.ApprovalOrganogramDetails ?? new List<ShampanBFRS.Models.SetUpVMs.ApprovalOrganogramDetailVM>()))
 
@@ -111,14 +88,14 @@
 
                     </div>
 
-                    @*<div class="col-sm-2">
-                @Html.LabelFor(model => model.TransactionType)
-                <div class="input-group">
-                    @Html.TextBoxFor(model => model.TransactionType, new { placeholder = "Enter Transaction Type", @class = "required form-control form-control-sm" })
-                </div>
-                <span id="titleError2" class="text-danger" style="display:none;"></span>
+                    <div class="col-sm-2">
+                        @Html.LabelFor(model => model.TransactionType)
+                        <div class="input-group">
+                            @Html.TextBoxFor(model => model.TransactionType, new { placeholder = "Enter Transaction Type", @class = "required form-control form-control-sm" })
+                        </div>
+                        <span id="titleError2" class="text-danger" style="display:none;"></span>
 
-            </div>*@
+                    </div>
 
                 </div>
 

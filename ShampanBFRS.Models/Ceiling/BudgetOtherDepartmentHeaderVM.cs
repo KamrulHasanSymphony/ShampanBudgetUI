@@ -33,18 +33,18 @@ namespace ShampanBFRS.Models.Ceiling
 
         public int? ApproveLevelRequired { get; set; }
         public int? CompletedApproveLevel { get; set; }
-
+        public string? ApprovalStatus { get; set; }
+        public bool? IsApproveFinal { get; set; }
+        public bool? IsApprove { get; set; }
         [Display(Name = "Report Type")]
         public string? ReportType { get; set; }
 
-        public string? ApprovalStatus { get; set; }
-        public bool? IsApproveFinal { get; set; }
         public string? TransactionType { get; set; }
 
         public string? Operation { get; set; }
         public PeramModel? PeramModel { get; set; }
 
-        public List<BudgetOtherDepartmentDetailVM>? DetailList { get; set; }
+        public List<BudgetOtherDepartmentDetailVM>? detailList { get; set; }
 
         public string? MenuType { get; set; }
 
