@@ -31,11 +31,12 @@ namespace ShampanBFRS.Models.Ceiling
         public string? Remarks { get; set; }
         public string? UserId { get; set; }
 
-        public int? ApproveLevelRequired { get; set; }
+        public bool ApproveLevelRequired { get; set; }
         public int? CompletedApproveLevel { get; set; }
         public string? ApprovalStatus { get; set; }
-        public bool? IsApproveFinal { get; set; }
-        public bool? IsApprove { get; set; }
+        public bool IsApproveFinal { get; set; }
+        public string? Module { get; set; }
+        public bool IsApprove { get; set; }
         [Display(Name = "Report Type")]
         public string? ReportType { get; set; }
 
